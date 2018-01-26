@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>docs</title>
+    <link rel="stylesheet" href="./asset/docute.css">
+    <style>
+        .markdown-body h4 {
+            font-size: 1.2em;
+        }
+        .markdown-body h5 {
+            font-size: 1em;
+            color: #C43C3C;
+        }
+        .markdown-body h6 {
+            font-size: .85em;
+            color: #0080FF;
+        }
+        .markdown-body code{
+            background-color:#f9f2f4;
+            color: #c7254e;
+        }
+        .markdown-body a{
+            color: #42b983;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="./asset/docute.js"></script>
+    <script>
+    docute.init({
+        nav: [
+            {title: 'Home', path: '/'},
+            {title: '基础知识', type: 'dropdown', items: [
+                {type: 'label', title: '语言基础'},
+                {title: '函数', path: '/note/basis/func'},
+                {title: '数组', path: '/note/basis/array'},
+                {title: '字符串', path: '/note/basis/string'},
+                {title: '正则表达式', path: '/note/basis/regexp'},
+                {title: 'cookie和storage', path: '/note/basis/cookie-storage'},
+                {title: '异步处理', path: '/note/basis/async'},
+
+                {type: 'label', title: 'DOM'},
+                {title: 'DOM操作', path: '/note/dom/dom'},
+                {title: 'DOM事件', path: '/note/dom/dom-event'},
+
+                {type: 'label', title: 'AdvanceJS'},
+                {title: 'JS进阶', path: '/note/advanceJS/advance-base'},
+                {title: 'improvement', path: '/note/advanceJS/useful-tips'},
+
+                {type: 'label', title: '规范与概念'},
+                {title: 'js编码规范 .eslitrc.js', path: '/note/specification/eslintrc'},
+                {title: '无障碍访问与ARIA', path: '/note/specification/aria'},
+                {title: '文档模式', path: '/note/specification/dtd'},
+
+                {type: 'label', title: '计算机基础'},
+                {title: '计算机是怎样跑起来的', path: '/note/'}
+            ]},
+            {title: 'H5/CSS', type: 'dropdown', items: [
+                {type: 'label', title: 'CSS'},
+                {title: 'CSS选择器整理', path: '/note/css3/selector'},
+                {title: 'transform', path: '/note/css3/transform'},
+                {title: '从矩阵与空间操作的关系理解CSS3的transform', path: '/note/css3/matrix'},
+                {title: 'BFC', path: '/note/css3/bfc'},
+                {title: '常见布局', path: '/note/css3/layout'},
+                {type: 'label', title: 'H5'}
+            ]},
+            {title: 'Git', type: 'dropdown', items: [
+                {title: 'git简明', path: '/note/git/git-base'},
+                {title: 'git常用命令及技巧', path: '/note/git/commonly-used'},
+                {title: 'config配置项', path: '/note/git/config'},
+                {title: 'Git版本控制管理', path: '/note/'}
+            ]},
+            {title: '网络与安全', type: 'dropdown', items: [
+                {type: 'label', title: '网络'},
+                {title: 'http相关基本概念', path: '/note/http/http-concepts'},
+                {title: 'get和post请求的区别', path: '/note/http/get-post'},
+                {title: '从输入URL到页面加载完成的过程中都发生了什么事情？', path: '/note/http/url-render'},
+                {title: 'ajax及其优缺点', path: '/note/http/ajax'},
+                {title: '跨域及跨域的方案', path: '/note/http/cross-domain'},
+                {title: '强缓存与协商缓存', path: '/note/http/cache'},
+
+                {type: 'label', title: '安全'},
+                {title: 'CSP(内容安全策略)', path: '/note/security/csp'}
+            ]},
+            {title: 'Linux', type: 'dropdown', items: [
+                {title: 'Ubuntu使用知识积累', path: '/note/linux/ubuntu-utils'}
+            ]},
+            {title: '性能、兼容性', type: 'dropdown', items: [
+                {title: 'ECMAScript', path: '/note/performance/ECMAScript'},
+                {title: 'DOM', path: '/note/performance/DOM'},
+                {title: 'H5 性能优化整理', path: '/note/performance/h5-perf'},
+                {title: '基础性能知识', path: '/note/performance/performance'},
+                {title: '浏览器渲染页面的过程', path: '/note/performance/render-page'},
+                {title: '重排和重绘的概念及触发条件查看这里', path: '/note/performance/reflow-repaint'},
+                {title: '数据直出与服务端渲染的首屏优化', path: '/note/performance/ssr'},
+                {title: '兼容性', path: '/note/compatibility/compatibility'}
+            ]},
+            {title: '算法/数据结构', type: 'dropdown', items: [
+                {type: 'label', title: '数据结构'},
+                {title: '数据结构以及相关术语的概念', path: '/note/algorithm/data-structure'},
+                {title: '栈', path: '/note/algorithm/stack'},
+                {title: '队列', path: '/note/algorithm/queue'},
+                {title: '链表', path: '/note/algorithm/linked-list'},
+                {title: '二叉树和二叉查找树', path: '/note/algorithm/bst'},
+                {title: '图', path: '/note/algorithm/graph'},
+                {type: 'label', title: '算法'},
+                {title: '算法的时间复杂度和空间复杂度', path: '/note/algorithm/time-space'},
+                {type: 'label', title: '排序算法'},
+                {title: '基本排序算法', path: '/note/algorithm/basic-sort'},
+                {title: '高级排序算法', path: '/note/algorithm/advance-sort'},
+                {type: 'label', title: '检索算法'}
+            ]},
+            {title: 'Vue和React', type: 'dropdown', items: [
+                {type: 'label', title: 'Vue'},
+                {title: 'Vue实例与生命周期', path: '/note/vue/cycle-life'},
+                {title: '数据双向绑定', path: '/note/vue/data-bind'},
+
+                {type: 'label', title: 'React'},
+                {title: 'React基础', path: '/note/react/react-base'},
+                {title: 'Redux', path: '/note/react/redux-base'},
+            ]},
+            {title: 'collect', type: 'dropdown', items: [
+                {type: 'label', title: '前端和计算机相关知识'},
+                {title: '前端和计算机相关知识', path: '/note/collect/related-work'},
+                {type: 'label', title: 'css'},
+                {title: 'CSS-Collect', path: '/note/collect/css'},
+                {type: 'label', title: 'html'},
+                {title: 'HTML-Collect', path: '/note/collect/html'},
+                {type: 'label', title: 'javascript'},
+                {title: 'JavaScript-Collect', path: '/note/collect/javascript'},
+                {type: 'label', title: 'jquery'},
+                {title: 'jQuery-Collect', path: '/note/collect/jquery'},
+            ]},
+        ],
+        icons: [{
+            icon: 'link',
+            label: 'heydadaya',
+            link: 'http://www.baidu.com'
+        },{
+            icon: 'github',
+            label: 'Star me on GitHub',
+            link: 'https://github.com/heydadaya/footprint'
+        }],
+        tocVisibleDepth: 6
+    })
+    </script>
+</body>
+</html>
