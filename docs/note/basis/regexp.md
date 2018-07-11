@@ -336,5 +336,6 @@ console.log(formatCash('1234567890')) // 1,234,567,890
 ```
 
 #### 参考
-(正则表达式30分钟入门教程)[https://deerchao.net/tutorials/regex/regex.htm]
+
+[正则表达式30分钟入门教程](https://deerchao.net/tutorials/regex/regex.htm)
 

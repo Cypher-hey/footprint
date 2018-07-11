@@ -98,7 +98,7 @@ c=someObject.toString() //将对象转换为字符串, 显式转换
 
 2. true、1、'somestring'、[Object] 为 true
 
-对null与undefined等其他用隐式转换的值，用!操作符时都会产生true的结果，所以用两个感叹号的作用就在于将这些值转换为“等价”的布尔值;
+** 对null与undefined等其他用隐式转换的值，用!操作符时都会产生true的结果，所以用两个感叹号的作用就在于将这些值转换为`“等价”`的布尔值; **
 
 ```js
 var foo;  
@@ -109,3 +109,21 @@ var test=!!o.flag;//等效于var test=o.flag||false;
 alert(test); // true
 ```
 这段例子，演示了在undifined和null时，用一个感叹号返回的都是true,用两个感叹号返回的就是false,所以两个感叹号的作用就在于，如果明确设置了变量的值（非null/undifined/0/''等值),结果就会根据变量的实际值来返回，如果没有设置，结果就会返回false。
+
+## == 与 ===
+
+### == 比较
+
+可以转自动换数据类型，undefined和null与其他数在进行相等判断时不进行类型转换。
+
+The ECMAScript language types are Undefined, Null, Boolean, String, Symbol, Number, and Object. An ECMAScript language value is a value that is characterized by an ECMAScript language type.
+
+0 == null // false (不满足前21条，跳到22，return false) [ECMAScript Spec](http://interglacial.com/javascript_spec/a-11.html#a-11.9.3)
+
+1. undefined == null，且与其他类型比较时，都不会转化，即为false；
+
+2. 基本类型比较。向Number转。NaN不等于任何。
+
+3. 引用数据类型比较。比较指针地址。
+
+4. 2和3之间比较，引用数据类型会先调用valueOf()方法，再调用toString方法(已经是String则不调)，然后调用Number()方法转为Number类型。需要注意的是Date类型会直接调用toString。

@@ -28,6 +28,8 @@ cat ~/.ssh/id_rsa.pub
 
 1.如果通过上面的方式找不到公钥，你就需要先生成公钥了：ssh-keygen
 
+`ssh-keygen -t rsa -C "youremail@example.com"`
+
 2.接着会确认存放公钥的地址，默认就是上面说的路径，直接enter键确认
 
 3.接着会要求输入密码和确认密码，如果不想设置密码直接不输入内容 按enter键
