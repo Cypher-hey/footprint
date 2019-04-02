@@ -129,7 +129,7 @@ definitions:  memory leaks are pieces of memory that the application have used i
 
 The four types of common JavaScript leaks: 
 
-#### Global variables
+#### 1. Global variables
 
 JavaScript handles undeclared variables in an interesting way: when a undeclared variable is referenced, a new variable gets created in the global object. In a browser, the global object would be window:
 
@@ -157,7 +157,7 @@ foo();
 
 Use global variables to store data if you must but when you do, make sure to `assign it as null or reassign it` once you are done with it.
 
-#### Timers or callbacks that are forgotten
+#### 2. Timers or callbacks that are forgotten
 
 ```js
 // problems caused: 
@@ -189,6 +189,29 @@ element.parentNode.removeChild(element);
 // both element and onClick will be collected even in old browsers // that don't handle cycles well.
 ```
 
-#### Closures
+#### 3. Closures
 
-`**closures**`: an inner function that has access to the outer (enclosing) function’s variables.
+`closures`: an inner function that has access to the outer (enclosing) function’s variables.
+
+Due to the implementation details of the JavaScript runtime, it is possible to leak memory in the following way:
+
+```js
+var theThing = null;
+var replaceThing = function () {
+  var originalThing = theThing;
+  var unused = function () {
+    if (originalThing) // a reference to 'originalThing'
+      console.log("hi");
+  };
+  theThing = {
+    longStr: new Array(1000000).join('*'),
+    someMethod: function () {
+      console.log("message");
+    }
+  };
+};
+setInterval(replaceThing, 1000);
+```
+
+#### 4. Out of DOM references
+
