@@ -90,8 +90,11 @@ var backbone = require('backbone');
 console.log(backbone.VERSION);
 ```
 
+#### package.json简介
 
-**包说明文件：`package.json`简介**
+**包说明文件：`package.json`**
+
+1. 简介
 
 * 产品的说明书：package.json 文件。该文件一般只存在于**项目的根路径**下，定义了这个项目所需要的各种模块，以及项目的配置信息（比如名称、版本、依赖项等信息）。可以通过` npm init [-y] `命令使用向导的形式创建该文件。
 
@@ -102,6 +105,31 @@ console.log(backbone.VERSION);
 * 甚至可以完全把 node_modules 目录删除掉，只要 package.json 文件还在，就可以执行 npm install 安装包说明文件中的所有的依赖项。执行 npm install 命令的时候，它会自动查询当前目录下的 package.json 文件，然后找到里面的 dependencies 属性，依次下载到 node_modules 目录下。
 
 * 建议的使用方法：使用 npm 的时候，首先用 npm init -y 初始化一个 package.json， 然后使用 npm install 包名 --save
+
+2. 语义化版本
+
+使用第三方依赖时，通常需要指定依赖的版本范围，例如：
+
+```js
+"dependencies": {
+    "antd": "3.1.2",
+    "react": "~16.0.1",
+    "redux": "^3.7.2",
+    "lodash": "*"
+  }
+```
+
+语义化版本规则规定，版本格式为：主版本号.次版本号.修订号，并且版本号的递增规则如下：
+
+* 主版本号：当做了不兼容的 API 修改
+* 次版本号：当做了向下兼容的功能性新增
+* 修订号：当做了向下兼容的问题修正
+
+上例这三个依赖分别使用了三个符号来表明依赖的版本范围。语义化版本范围规定：
+
+* ~：只升级修订号
+* ^：升级次版本号和修订号
+* *：升级到最新版本
 
 #### 常用命令
 

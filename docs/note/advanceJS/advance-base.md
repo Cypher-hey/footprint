@@ -1,7 +1,7 @@
 ## 一、惰性载入
 
 #### 惰性函数定义
-假如同一个函数被大量范围，并且这个函数内部又有许多判断来来检测函数，这样对于一个调用会浪费时间和浏览器资源，所有当第一次判断完成后，直接把这个函数改写，不在需要判断。
+假如**同一个函数被大量范围，并且这个函数内部又有许多判断来来检测函数**，这样对于一个调用会浪费时间和浏览器资源，所有当第一次判断完成后，直接把这个函数改写，不在需要判断。
 
 #### 两种实现惰性载入的方式
 1. 第一种是函数在第一次调用时，对函数本身进行二次处理（`重写函数`），该函数会被覆盖为符合分支条件的函数，这样对原函数的调用就不用再经过执行的分支了
@@ -24,7 +24,7 @@ function addEvent (type, element, fun) {
     }
 }
 
-// 采用惰性函数重写函数本身，实现惰性载入
+// 1. 采用惰性函数重写函数本身，实现惰性载入
 function addEvent (type, element, fun) {
     if (element.addEventListener) {
         addEvent = function (type, element, fun) {
@@ -44,7 +44,7 @@ function addEvent (type, element, fun) {
     return addEvent(type, element, fun);
 }
 
-// 在声明函数时就指定适当的函数实现惰性载入
+// 2. 在声明函数时就指定适当的函数实现惰性载入
 var addEvent = (function () {
     if (document.addEventListener) {
         return function (type, element, fun) {
@@ -468,13 +468,13 @@ isElement = function(obj) {
 
 ## 四、深浅拷贝
 
-浅拷贝是一种复制引用的拷贝方法，如果数组元素是基本类型，就会拷贝一份，互不影响，而如果是对象或者数组，就会只拷贝对象和数组的引用，这样我们无论在新旧数组进行了修改，两者都会发生变化。
+浅拷贝: 是一种复制引用的拷贝方法，如果数组元素是基本类型，就会拷贝一份（值），互不影响；而如果是对象或者数组，就会只拷贝对象和数组的引用（内存地址），会导致互相影响。 （**拷贝第一层的基本类型值，以及第一层的引用类型地址**）
 
-深拷贝就是指完全的拷贝一个对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个。
+深拷贝: 就是指完全的拷贝一个对象（拷贝所有的属性，并拷贝属性指向的动态分配的内存），即使嵌套了对象，两者也相互分离，拷贝前后两个对象互不影响。
 
 #### 数组的浅拷贝
 
-如果是数组，我们可以利用数组的一些方法比如：slice (浅拷贝)、concat (浅拷贝)返回一个新数组的特性来实现拷贝，比如：
+如果是数组，我们可以利用数组的一些方法比如：slice （浅拷贝）、concat （浅拷贝）返回一个新数组的特性来实现拷贝，比如：
 
 ```js
 // concat 浅拷贝成功
@@ -502,9 +502,29 @@ console.log(arr) // [{old: 'new'}, ['new']]
 console.log(new_arr) // [{old: 'new'}, ['new']]
 ```
 
+#### 对象的浅拷贝 
+
+1. Object.assign
+
+>将所有可枚举属性的值从一个或多个源对象复制到目标对象，同时返回目标对象。（来自 MDN）
+
+语法如下：
+
+`Object.assign(target, ...sources)`
+
+其中 target 是目标对象，sources 是源对象，可以有多个，`返回修改后的目标对象 target`。
+
+如果目标对象中的属性具有**相同的键**，则属性将被源对象中的属性**覆盖**。
+
+2. 展开语法 Spread
+
+实际效果和 Object.assign() 是一样的。
+
+
+
 #### 数组的深拷贝
 
-简单粗暴 ：JSON.parse( JSON.stringify(arr) )
+简单粗暴 ：JSON.parse(JSON.stringify(arr))
 
 `适用于数组还适用于对象, 但不能用来拷贝函数`
 
@@ -515,6 +535,21 @@ var new_arr = JSON.parse( JSON.stringify(arr) );
 
 console.log(new_arr);
 ```
+
+
+但是该方法有以下几个问题
+
+1、会忽略 undefined
+
+2、会忽略 symbol
+
+3、不能序列化函数
+
+4、不能解决循环引用的对象
+
+5、不能正确处理new Date()
+
+6、不能处理正则
 
 #### 浅拷贝的实现
 
@@ -629,6 +664,102 @@ extend (深拷贝)的用法：
 jQuery.extend( [deep], target, object1 [, objectN ] )
 ```
 函数的第一个参数可以传一个布尔值，如果为 true，我们就会进行深拷贝，false 依然当做浅拷贝，这个时候，target 就往后移动到第二个参数。
+
+
+## 五、防抖 debounce 与节流 throttle
+
+防抖（Debounce）和节流 （Throttle） 都是**用来控制某个函数在一定时间内执行次数的多少以优化高频率执行js代码**的一种技巧，两者相似而又不同。
+
+#### 防抖（debounce）
+
+**防抖，就是指触发事件后在 n 秒内函数只能执行一次，`如果在 n 秒内又触发了事件，则会重新计算函数执行时间。`**
+
+**定义**：多次触发事件后，事件处理函数只执行一次，并且是在触发操作结束时执行。
+
+**原理**：对处理函数进行延时操作，若设定的延时到来之前，再次触发事件，则清除上一次的延时操作定时器，重新定时。
+
+1. **非立即执行**: 意思是触发事件后函数不会立即执行，而是在 n 秒后执行，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。
+
+2. **立即执行**: 意思是触发事件后函数会立即执行，然后 n 秒内不触发事件才能继续执行函数的效果。
+
+```js
+/**
+ * @desc 函数防抖
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param immediate true 表立即执行，false 表非立即执行
+ */
+function debounce(func,wait,immediate) {
+    var timeout;
+
+    return function () {
+        //防抖函数的代码使用这两行代码来获取 this 和 参数，是为了让 debounce 函数最终返回的函数 this 指向不变以及依旧能接受到 e 参数。
+        var context = this;
+        var args = arguments;
+
+        if (timeout) clearTimeout(timeout);
+        if (immediate) {
+            var callNow = !timeout;
+            // 在 wait 秒后将 timeout 置为 null
+            timeout = setTimeout(function(){
+                timeout = null;
+            }, wait);
+            if (callNow) func.apply(context, args);
+        }
+        else {
+            timeout = setTimeout(function(){
+                func.apply(context, args);
+            }, wait);
+        }
+    }
+}
+```
+
+#### 节流（throttle）
+
+**所谓节流，就是指连续触发事件但是`在 n 秒中只执行(且会执行)一次函数`。**节流用来`稀释函数的执行频率`
+
+1. 时间戳版本：在**持续触发事件**的过程中，函数会立即执行，并且每隔 wait 秒执行一次。
+
+2. 定时器版本：在**持续触发事件**的过程中，函数不会立即执行，并且每隔 wait 秒行一次，在停止触发事件后，函数还会再执行一次。
+
+```js
+/**
+ * @desc 函数节流
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param type 1 表时间戳版，2 表定时器版
+ */
+function throttle(func, wait ,type) {
+    if(type===1){
+        var previous = 0;
+    }else if(type===2){
+        var timeout;
+    }
+
+    return function() {
+        var context = this;
+        var args = arguments;
+        if(type===1){
+            var now = Date.now();
+
+            if (now - previous > wait) {
+                func.apply(context, args);
+                previous = now;
+            }
+        }else if(type===2){
+            if (!timeout) {
+                timeout = setTimeout(function(){
+                    timeout = null;
+                    func.apply(context, args)
+                }, wait)
+            }
+        }
+
+    }
+}
+```
+
 
 
 
