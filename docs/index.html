@@ -38,12 +38,12 @@
     <script>
       docute.init({
         nav: [
-          { title: 'Home', path: '/' },
+          //   { title: 'Home', path: '/' },
           {
-            title: '基础知识',
+            title: '基础',
             type: 'dropdown',
             items: [
-              { type: 'label', title: '语言基础' },
+              { type: 'label', title: 'BaseJS' },
               { title: '函数', path: '/note/basis/func' },
               { title: '数组', path: '/note/basis/array' },
               { title: '字符串', path: '/note/basis/string' },
@@ -81,6 +81,11 @@
             ],
           },
           {
+            title: 'TS',
+            type: 'dropdown',
+            items: [{ type: 'label', title: 'CSS' }],
+          },
+          {
             title: 'H5/CSS',
             type: 'dropdown',
             items: [
@@ -97,7 +102,7 @@
             ],
           },
           {
-            title: 'Lever',
+            title: 'Tools',
             type: 'dropdown',
             items: [
               { type: 'label', title: 'Git' },
@@ -112,12 +117,14 @@
               { title: 'Ubuntu使用知识积累', path: '/note/linux/ubuntu-utils' },
               { title: 'Linux基础', path: '/note/linux/linux-base' },
               { title: '常用命令', path: '/note/linux/linux-command' },
+              { type: 'label', title: 'Vim' },
+              { title: 'Vim基础', path: '/note/linux/vim' },
               { type: 'label', title: 'Nginx' },
               { title: 'nginx基础', path: '/note/nginx/nginx-base' },
             ],
           },
           {
-            title: '网络与安全',
+            title: '网络/安全',
             type: 'dropdown',
             items: [
               { type: 'label', title: '网络' },
@@ -140,7 +147,7 @@
           //     {title: 'Linux基础', path: '/note/linux/linux-base'}
           // ]},
           {
-            title: '性能、兼容性',
+            title: '性能/兼容',
             type: 'dropdown',
             items: [
               { title: 'ECMAScript', path: '/note/performance/ECMAScript' },
@@ -203,9 +210,10 @@
             ],
           },
           {
-            title: '英语',
+            title: '外语',
             type: 'dropdown',
             items: [
+              { type: 'label', title: 'English' },
               {
                 title: '音标与发音',
                 path: '/note/cultureLanguage/english/pronunciation',
@@ -214,12 +222,8 @@
                 title: '常用',
                 path: '/note/cultureLanguage/english/commonly-used',
               },
-            ],
-          },
-          {
-            title: '日语',
-            type: 'dropdown',
-            items: [
+
+              { type: 'label', title: 'Jap' },
               {
                 title: '音标与发音',
                 path: '/note/cultureLanguage/japanese/pronunciation',
@@ -231,16 +235,13 @@
             ],
           },
           {
-            title: 'YDKJS',
+            title: 'read',
             type: 'dropdown',
             items: [
+              { type: 'label', title: 'YDKJS' },
               {
                 title: 'this&OBJECT PROTOTYPE',
                 path: '/note/ydkJS/this&OBJECT PROTOTYPES',
-              },
-              {
-                title: '常用',
-                path: '/note/cultureLanguage/japanese/commonly-used',
               },
             ],
           },

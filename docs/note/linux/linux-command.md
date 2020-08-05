@@ -1,5 +1,20 @@
 # 常用命令
 
+## ctrl +
+
+- `Ctrl+c` 结束正在运行的程序
+- `Ctrl+d` 退出 shell
+- `Ctrl+l` 清屏 Clear
+- `Ctrl+a` 切换到命令行开始
+- `Ctrl+e` 切换到命令行末尾
+- `Ctrl+u` 清除鼠标之前的内容
+- `Ctrl+k` 清除鼠标及之后的内容
+- `Ctrl+y` 在鼠标处粘贴剪切的内容
+- `Ctrl+x+u` 撤销操作
+- `Ctrl+x+e` 打开编辑器输入命令并自动执行。如果未安装 emacs 编辑器，无法执行“ctrl+x+e”命令
+- `fc` 编辑并执行最近一条命令
+- `!!` 调用最近一次执行的命令
+
 ## 系统信息
 
 - arch 显示机器的处理器架构(1)
@@ -26,38 +41,51 @@
 
 **绝对路径：**
 
-**以斜线（ `/` ）开头** ，描述到文件位置的**完整说明** ，任何时候你想指定文件名的时候都可以使用
+**以斜线（ `/` ）开头** ，描述到文件位置的**完整路径名或绝对路径名** ，它指定了从根目录开始的完整路径信息，任何时候你想指定文件名的时候都可以使用
 
 **相对路径：**
 
-不以斜线（/）开头 ，指定**相对于你的当前工作目录而言的位置** ，可以被用作指定文件名的简捷方式
+不以斜线（/）开头 ，指定**相对于你的当前工作目录而言的位置** ，可以被用作指定文件名的快捷方式
 
 <p class="tip">输入命令的时候可以通过用tab键来补全</p>
 
 #### pwd
 
-`查看用户的当前目录`
+return working directory name
+
+`查看用户的当前目录的名字`, print working directory
 
 #### cd
 
-切换目录
+使用 cd 命名更改当前的工作目录，该命令使用目标目录名作为参数
 
 ```shell
-# 当前目录
+# SYNOPSIS
+cd [path]
+
+# 指向当前目录
 cd .
-# 当前目录的上一级目录（父目录）
+
+# 总是指向上一级目录
 cd ..
-# 切换到切换前的上一次目录
+
+# 指向切换前的上一次目录
 cd -
+
 # 切换到当前用户主目录的绝对路径
 cd ~
 ```
 
 #### ls
 
+list directory contents
+
 显示文件或目录信息
 
 ```shell
+# SYNOPSIS
+ls [-ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1%] [file ...]
+
 # 显示文件和目录的详细资料
 ls -l
 # 显示隐藏文件。隐藏文件以 . 开头命名
@@ -68,9 +96,14 @@ ls -F
 
 #### mkdir
 
+make directories
+
 当前目录下创建一个空目录
 
 ```shell
+# SYNOPSIS
+mkdir [-pv] [-m mode] directory_name ...
+
 # 当前目录创建一个文件夹
 mkdir filename
 
@@ -82,22 +115,41 @@ mkdir -p filename1/filename2
 
 #### rmdir
 
+remove directories
+
 删除文件夹，要求目录为空
 
+```shell
+# SYNOPSIS
+rmdir [-p] directory ...
+```
+
 #### touch
+
+change file access and modification times
 
 生成一个空文件或更改文件的时间（access time、modify time、change time）
 
 ```shell
+# SYNOPSIS
+touch [-A [-][[hh]mm]SS] [-acfhm] [-r file]
+      [-t [[CC]YY]MMDDhhmm[.SS]] file ...
+
 # 查看abc.txt 如果不存在则自动创建
 touch abc.txt
 ```
 
 #### cp
 
+copy files
+
 复制文件或目录
 
 ```shell
+# SYNOPSIS
+cp [-R [-H | -L | -P]] [-fi | -n] [-apvX] source_file target_file
+cp [-R [-H | -L | -P]] [-fi | -n] [-apvX] source_file ... target_directory
+
 # 复制filename文件至home目录下
 cp filename /home
 
@@ -165,12 +217,21 @@ rm -rf ./*
 
 #### find
 
+walk a file hierarchy
+
 查找文件
 
 ```shell
+# SYNOPSIS
+find [-H | -L | -P] [-EXdsx] [-f path] path ... [expression]
+find [-H | -L | -P] [-EXdsx] -f path [path ...] [expression]
+
 # .代表当前目录
 # 查找当前目录及其子目录下扩展名为txt的文件
 find . -name '*.txt'
+
+# 搜索当前目录含子目录中，所有文件名以my开头的文件
+find . -name 'my*'
 
 # 列出两天内修改过的文件
 find . -mtime -2
@@ -201,31 +262,162 @@ find . -empty
 
 #### cat
 
-查看文本文件内容
+concatenate and print files
+
+查看文本文件内容，cat 命令是整个文件的内容从上到下显示在屏幕上。还可以将多个文件连接起来显示，它常与重定向符号配合使用，适用于文件内容少的情况
 
 ```shell
+# SYNOPSIS
+cat [-benstuv] [file ...]
+
 # 查看test.log 的文件内容
 cat test.log
 
-# 查看test.log的文件内容并显示行号
+# 查看test.log的文件内容并显示行号，--number    对输出的所有行编号
 cat -n test.log
 
-# more、less和cat作用基本相同，只不过more可以按页码来查看。 都是按q退出查看
-# 使用命令时，空格键翻页(显示下一屏内容)
-# 回车：显示下一行内容
+# 查看test.log的文件内容并不输出多行空行， --squeeze-blank    不输出多行空行
+cat -n test.log
+
+# 如果你想要使cat命令显示非打印字符。可以使用-v命令行选项来完成，--number   对输出的所有行编号
+cat -v [filename]
+
+# cat是一次性显示整个文件的内容，more和less一般用于显示文件内容超过一屏的内容，并且提供翻页的功能。more比cat强大，提供分页显示的功能，less比more更强大，提供翻页，跳转，查找等命令。而且more和less都支持：用空格显示下一页，按键b显示上一页。
+
+# cat 有创建文件的功能，创建文件后，要以EOF或STOP结束；
+cat > cypher.txt << EOF
+```
+
+#### more
+
+more 命令会以一页一页的显示方便使用者逐页阅读，而最基本的指令就是按空白键（space）就往下一页显示，按 b 键就会往回（back）一页显示，而且还有搜寻字串的功能 。more 命令从前向后读取文件，因此在启动时就加载整个文件
+
+```shell
+# 命令格式
+more [-dlfpcsu][-num] [+/pattern][+linenum] [file ...]
+
+# 命令功能
+more 命令和 cat 的功能一样都是查看文件里的内容，但有所不同的是 more 可以按页来查看文件的内容，还支持直接跳转行等功能。
+
+# 常用参数列表
++num 从第 num 行开始显示
+-num 定义屏幕大小，为num行
+-d 在每屏的底部显示友好的提示信息
+-l 忽略 Ctrl+l （换页符）。如果没有给出这个选项，则 more 命令在显示了一个包含有 Ctrl+l 字符的行后将暂停显示，并等待接收命令。
+-f 计算行数时，以实际上的行数，而非自动换行过后的行数（有些单行字数太长的会被扩展为两行或两行以上）
+-p 显示下一屏之前先清屏。
+-c 从顶部清屏然后显示。
+-s 文件中连续的空白行压缩成一个空白行显示。
+-u 不显示下划线
++/pattern 先搜索 pattern 字符串，然后从字符串之后显示?
+```
+
+#### less
+
+opposite of more
+
+less 工具也是对文件或其它输出进行分页显示的工具，应该说是 linux 正统查看文件内容的工具，功能极其强大。less 的用法比起 more 更加的有弹性。在 more 的时候，我们并没有办法向前面翻， 只能往后面看，但若使用了 less 时，就可以使用 [pageup][pagedown] 等按键的功能来往前往后翻看文件，更容易用来查看一个文件的内容！除此之外，在 less 里头可以拥有更多的搜索功能，不止可以向下搜，也可以向上搜。
+
+```shell
+#SYNOPSIS
+less -?
+less --help
+less -V
+less --version
+less [-[+]aABcCdeEfFgGiIJKLmMnNqQrRsSuUVwWX~]
+    [-b space] [-h lines] [-j line] [-k keyfile]
+    [-{oO} logfile] [-p pattern] [-P prompt] [-t tag]
+    [-T tagsfile] [-x tab,...] [-y lines] [-[z] lines]
+    [-# shift] [+[+]cmd] [--] [filename]...
+
+# 命令格式：
+less [参数]  文件
+
+# 命令功能：
+less 与 more 类似，但使用 less 可以随意浏览文件，而 more 仅能向前移动，却不能向后移动，而且 less 在查看之前不会加载整个文件。
+
+# 命令参数：
+-b <缓冲区大小> 设置缓冲区的大小
+-e  当文件显示结束后，自动离开
+-f  强迫打开特殊文件，例如外围设备代号、目录和二进制文件
+-g  只标志最后搜索的关键词
+-i  忽略搜索时的大小写
+-m  显示类似more命令的百分比
+-N  显示每行的行号
+-o <文件名> 将less 输出的内容在指定文件中保存起来
+-Q  不使用警告音
+-s  显示连续空行为一行
+-S  行过长时间将超出部分舍弃
+-x <数字> 将“tab”键显示为规定的数字空格
+
+# 命令动作：
+/字符串：向下搜索“字符串”的功能
+?字符串：向上搜索“字符串”的功能
+n：重复前一个搜索（与 / 或 ? 有关）
+N：反向重复前一个搜索（与 / 或 ? 有关）
+b  向后翻一页
+d  向后翻半页
+h  显示帮助界面
+q  退出 less 命令
+v  调用 vim 编辑器
+u  向前滚动半页
+y  向前滚动一行
+g 跳到第一行
+G 跳到最后一行
+空格键 滚动一页
+回车键 滚动一行
+```
+
+#### head
+
+display first lines of a file
+
+显示一个文件的内容的前多少行
+
+```shell
+# SYNOPSIS
+head [-n count | -c bytes] [file ...]
+
+# 显示文件前10行
+head -n 10 cypher.txt
+```
+
+#### tail
+
+display the last part of a file
+
+显示一个文件的内容的最后多少行
+
+```shell
+# SYNOPSIS
+tail [-F | -f | -r] [-q] [-b number | -c number | -n number] [file ...]
+
+# 显示文件的最后五行
+tail -n 5 cypher.txt
+
+# 显示文件的动态最后五行
+tail -f 5 cypher.txt
+
+# tail -f 等同于--follow=descriptor，根据文件描述符进行追踪，当文件改名或被删除，追踪停止
+# tail -F 等同于--follow=name  --retry，根据文件名进行追踪，并保持重试，即该文件被删除或改名后，如果再次创建相同的文件名，会继续追踪
+# tailf 等同于tail -f -n 10（貌似tail -f或-F默认也是打印最后10行，然后追踪文件），与tail -f不同的是，如果文件不增长，它不会去访问磁盘文件，所以 tailf 特别适合那些便携机上跟踪日志文件，因为它减少了磁盘访问，可以省电
 ```
 
 ## 文本处理
 
-#### grep 命令
+#### grep
 
-grep(global search regular expression)是一个**强大的文本搜索工具**。grep 使用正则表达式搜索文本，并把匹配的行打印出来。
+grep（global search regular expression）是一个**强大的文本搜索工具**。grep 使用正则表达式搜索文本，并把匹配的行打印出来。
 
 格式：`grep [options] PATTERN [FILE...]`
 
 - PATTERN 是查找条件：**可以是普通字符串、可以是正则表达式**，通常用单引号将 RE 括起来。
 - FILE 是要查找的文件，可以是用空格间隔的多个文件，也可是使用 Shell 的通配符在多个文件中查找 PATTERN，省略时表示在标准输入中查找。
 - grep 命令**不会对输入文件进行任何修改或影响**，可以使用输出重定向将结果存为文件
+
+思维导图
+
+<img src="./asset/img/linux-shell-grep.jpg" width="1000" />
 
 ```shell
 // 应用
