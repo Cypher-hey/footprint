@@ -1,45 +1,43 @@
 ## 一、惰性载入
 
 #### 惰性函数定义
-假如**同一个函数被大量范围，并且这个函数内部又有许多判断来来检测函数**，这样对于一个调用会浪费时间和浏览器资源，所有当第一次判断完成后，直接把这个函数改写，不在需要判断。
+
+假如**同一个函数被大量范围重复使用，并且这个函数内部又有许多判断来来检测函数**，这样对于一个调用会浪费时间和浏览器资源，所有当第一次判断完成后，直接把这个函数改写，不在需要判断。
 
 #### 两种实现惰性载入的方式
+
 1. 第一种是函数在第一次调用时，对函数本身进行二次处理（`重写函数`），该函数会被覆盖为符合分支条件的函数，这样对原函数的调用就不用再经过执行的分支了
 
 2. 第二种实现惰性载入的方式是在声明函数时就指定适当的函数。这样在第一次调用函数时就不会损失性能了，只在代码加载时会损失一点性能。
 
-以常见的为dom节点添加事件的函数为例：
-```js
+以常见的为 dom 节点添加事件的函数为例：
 
+```js
 // 原方法
-function addEvent (type, element, fun) {
+function addEvent(type, element, fun) {
     if (element.addEventListener) {
         element.addEventListener(type, fun, false);
-    }
-    else if(element.attachEvent){
+    } else if (element.attachEvent) {
         element.attachEvent('on' + type, fun);
-    }
-    else{
+    } else {
         element['on' + type] = fun;
     }
 }
 
 // 1. 采用惰性函数重写函数本身，实现惰性载入
-function addEvent (type, element, fun) {
+function addEvent(type, element, fun) {
     if (element.addEventListener) {
         addEvent = function (type, element, fun) {
             element.addEventListener(type, fun, false);
-        }
-    }
-    else if(element.attachEvent){
+        };
+    } else if (element.attachEvent) {
         addEvent = function (type, element, fun) {
             element.attachEvent('on' + type, fun);
-        }
-    }
-    else{
+        };
+    } else {
         addEvent = function (type, element, fun) {
             element['on' + type] = fun;
-        }
+        };
     }
     return addEvent(type, element, fun);
 }
@@ -49,30 +47,26 @@ var addEvent = (function () {
     if (document.addEventListener) {
         return function (type, element, fun) {
             element.addEventListener(type, fun, false);
-        }
-    }
-    else if (document.attachEvent) {
+        };
+    } else if (document.attachEvent) {
         return function (type, element, fun) {
             element.attachEvent('on' + type, fun);
-        }
-    }
-    else {
+        };
+    } else {
         return function (type, element, fun) {
             element['on' + type] = fun;
-        }
+        };
     }
 })();
-
 ```
 
-> 惰性载入函数的优点：只执行一次if分支，避免了函数每次执行时候都要执行if分支和不必要的代码，因此提升了代码性能
+> 惰性载入函数的优点：只执行一次 if 分支，避免了函数每次执行时候都要执行 if 分支和不必要的代码，因此提升了代码性能
 
 ```js
-
 //写一个 foo 函数返回首次调用时的 Date 对象
-var foo = function() {
+var foo = function () {
     var t = new Date();
-    foo = function() {
+    foo = function () {
         return t;
     };
     return foo();
@@ -83,7 +77,7 @@ var foo = function() {
 
 ## 二、数组去重
 
-#### 双层循环 
+#### 双层循环
 
 1.原生
 
@@ -96,14 +90,14 @@ function unique(array) {
     // res用来存储结果
     var res = [];
     for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
-        for (var j = 0, resLen = res.length; j < resLen; j++ ) {
+        for (var j = 0, resLen = res.length; j < resLen; j++) {
             if (array[i] === res[j]) {
                 break;
             }
         }
         // 如果array[i]是唯一的，那么执行完循环，j等于resLen
         if (j === resLen) {
-            res.push(array[i])
+            res.push(array[i]);
         }
     }
     return res;
@@ -122,8 +116,8 @@ function unique(array) {
     for (var i = 0, len = array.length; i < len; i++) {
         var current = array[i];
         //用 indexOf 简化内层的循环
-        if (res.indexOf(current) === -1) {  
-            res.push(current)
+        if (res.indexOf(current) === -1) {
+            res.push(current);
         }
     }
     return res;
@@ -147,7 +141,7 @@ function unique(array) {
     for (var i = 0, len = sortedArray.length; i < len; i++) {
         // 如果是第一个元素或者相邻的元素不相同
         if (!i || seen !== sortedArray[i]) {
-            res.push(sortedArray[i])
+            res.push(sortedArray[i]);
         }
         seen = sortedArray[i];
     }
@@ -160,13 +154,14 @@ console.log(unique(array));
 4.`filter` 简化外层循环
 
 原理：ES5 提供了 filter 方法，可以用来简化外层循环：
+
 ```js
 var array = [1, 2, 1, 1, '1'];
 
 function unique(array) {
-    var res = array.filter(function(item, index, array){
+    var res = array.filter(function (item, index, array) {
         return array.indexOf(item) === index;
-    })
+    });
     return res;
 }
 
@@ -182,11 +177,13 @@ var array = [{value: 1}, {value: 1}, {value: 2}];
 
 function unique(array) {
     var obj = {};
-    return array.filter(function(item, index, array){
+    return array.filter(function (item, index, array) {
         // 使用item + something 区别类型；使用 JSON.stringify 将对象序列化,区别对象
-        console.log(typeof item + JSON.stringify(item))
-        return obj.hasOwnProperty(typeof item + JSON.stringify(item)) ? false : (obj[typeof item + JSON.stringify(item)] = true)
-    })
+        console.log(typeof item + JSON.stringify(item));
+        return obj.hasOwnProperty(typeof item + JSON.stringify(item))
+            ? false
+            : (obj[typeof item + JSON.stringify(item)] = true);
+    });
 }
 
 console.log(unique(array)); // [{value: 1}, {value: 2}]
@@ -202,7 +199,7 @@ console.log(unique(array)); // [{value: 1}, {value: 2}]
 var array = [1, 2, 1, 1, '1'];
 
 function unique(array) {
-   return Array.from(new Set(array));
+    return Array.from(new Set(array));
 }
 
 console.log(unique(array)); // [1, 2, "1"]
@@ -213,15 +210,15 @@ function unique(array) {
 }
 
 // more simplify
-var unique = (a) => [...new Set(a)]
+var unique = (a) => [...new Set(a)];
 ```
 
 Map:
 
 ```js
-function unique (arr) {
-    const seen = new Map()
-    return arr.filter((a) => !seen.has(a) && seen.set(a, 1))
+function unique(arr) {
+    const seen = new Map();
+    return arr.filter((a) => !seen.has(a) && seen.set(a, 1));
 }
 ```
 
@@ -254,8 +251,9 @@ console.log({} === {}); // false
 
 #### typeof
 
-引用《JavaScript权威指南》中对 typeof 的介绍：
->typeof 是一元`操作符`，放在其单个操作数的前面，操作数可以是任意类型。返回值为表示操作数类型的一个字符串。
+引用《JavaScript 权威指南》中对 typeof 的介绍：
+
+> typeof 是一元`操作符`，放在其单个操作数的前面，操作数可以是任意类型。返回值为表示操作数类型的一个字符串。
 
 在 ES6 前，JavaScript 共六种数据类型，分别是：
 
@@ -278,6 +276,7 @@ console.log(typeof a); // function
 所以 typeof 能检测出六种类型的值，但是，除此之外 Object 下还有很多细分的类型呐，如 Array、Function、Date、RegExp、Error 等。
 
 用 typeof 去检测这些类型:
+
 ```js
 var date = new Date();
 var error = new Error();
@@ -290,48 +289,50 @@ console.log(typeof arr); // object
 #### Obejct.prototype.toString
 
 [ES5 规范地址](https://es5.github.io/#x15.2.4.2)
->When the toString method is called, the following steps are taken:
 
->1. If the this value is undefined, return "[object Undefined]".
->2. If the this value is null, return "[object Null]".
->3. Let O be the result of calling ToObject passing the this value as the argument.
->4. Let class be the value of the [[Class]] internal property of O.
->5. Return the String value that is the result of concatenating the three Strings "[object ", class, and "]".
+> When the toString method is called, the following steps are taken:
+
+> 1.  If the this value is undefined, return "[object Undefined]".
+> 2.  If the this value is null, return "[object Null]".
+> 3.  Let O be the result of calling ToObject passing the this value as the argument.
+> 4.  Let class be the value of the [[Class]] internal property of O.
+> 5.  Return the String value that is the result of concatenating the three Strings "[object ", class, and "]".
 
 通过规范，我们至少知道了调用 Object.prototype.toString 会返回一个由 "[object " 和 class 和 "]" 组成的字符串，而 class 是要判断的对象的内部属性。
 
 ```js
 // 可以看到这个 class 值就是识别对象类型的关键！
 
-console.log(Object.prototype.toString.call(undefined)) // [object Undefined]
-console.log(Object.prototype.toString.call(null)) // [object Null]
+console.log(Object.prototype.toString.call(undefined)); // [object Undefined]
+console.log(Object.prototype.toString.call(null)); // [object Null]
 
 var date = new Date();
-console.log(Object.prototype.toString.call(date)) // [object Date]
+console.log(Object.prototype.toString.call(date)); // [object Date]
 ```
 
-可以用 Object.prototype.toString 方法识别出至少11种类型：
+可以用 Object.prototype.toString 方法识别出至少 11 种类型：
+
 ```js
 // 以下是11种：
-var number = 1;          // [object Number]
-var string = '123';      // [object String]
-var boolean = true;      // [object Boolean]
-var und = undefined;     // [object Undefined]
-var nul = null;          // [object Null]
-var obj = {a: 1}         // [object Object]
-var array = [1, 2, 3];   // [object Array]
-var date = new Date();   // [object Date]
+var number = 1; // [object Number]
+var string = '123'; // [object String]
+var boolean = true; // [object Boolean]
+var und = undefined; // [object Undefined]
+var nul = null; // [object Null]
+var obj = {a: 1}; // [object Object]
+var array = [1, 2, 3]; // [object Array]
+var date = new Date(); // [object Date]
 var error = new Error(); // [object Error]
-var reg = /a/g;          // [object RegExp]
-var func = function a(){}; // [object Function]
+var reg = /a/g; // [object RegExp]
+var func = function a() {}; // [object Function]
 
 function checkType() {
     for (var i = 0; i < arguments.length; i++) {
-        console.log(Object.prototype.toString.call(arguments[i]))
+        console.log(Object.prototype.toString.call(arguments[i]));
     }
 }
 
-checkType(number, string, boolean, und, nul, obj, array, date, error, reg, func)
+checkType(number, string, boolean, und, nul, obj, array, date, error, reg, func);
 
 // 除了以上 11 种之外，还有：
 console.log(Object.prototype.toString.call(Math)); // [object Math]
@@ -344,25 +345,26 @@ function a() {
 a();
 ```
 
-利用Object.prototype.toString，写个 type 函数识别各种类型的值：
+利用 Object.prototype.toString，写个 type 函数识别各种类型的值：
+
 ```js
-// 
+//
 var class2type = {};
 
 // 生成class2type映射
-"Boolean Number String Function Array Date RegExp Object Error".split(" ").map(function(item, index) {
-    class2type["[object " + item + "]"] = item.toLowerCase();
-})
+'Boolean Number String Function Array Date RegExp Object Error'.split(' ').map(function (item, index) {
+    class2type['[object ' + item + ']'] = item.toLowerCase();
+});
 
 function type(obj) {
     //  考虑到IE6 中，null 和 undefined 会被 Object.prototype.toString 识别成 [object Object]的兼容性
     // obj == null 为 true
     if (obj == null) {
-        return obj + "";
+        return obj + '';
     }
-    return typeof obj === "object" || typeof obj === "function" ?
-        class2type[Object.prototype.toString.call(obj)] || "object" :
-        typeof obj;
+    return typeof obj === 'object' || typeof obj === 'function'
+        ? class2type[Object.prototype.toString.call(obj)] || 'object'
+        : typeof obj;
 }
 ```
 
@@ -370,18 +372,18 @@ function type(obj) {
 
 plainObject 来自于 jQuery，可以翻译成纯粹的对象，所谓"纯粹的对象"，就是该对象是通过 "{}" 或 "new Object" 创建的，该对象含有零个或者多个键值对。
 
-之所以要判断是不是 plainObject，是为了跟其他的 JavaScript对象如 null，数组，宿主对象（documents）等作区分，因为这些用 typeof 都会返回object。
+之所以要判断是不是 plainObject，是为了跟其他的 JavaScript 对象如 null，数组，宿主对象（documents）等作区分，因为这些用 typeof 都会返回 object。
 
-jQuery提供了 isPlainObject 方法进行判断:
+jQuery 提供了 isPlainObject 方法进行判断:
 
 ```js
 function Person(name) {
     this.name = name;
 }
 
-console.log($.isPlainObject({})) // true
+console.log($.isPlainObject({})); // true
 
-console.log($.isPlainObject(new Object)) // true
+console.log($.isPlainObject(new Object())); // true
 
 console.log($.isPlainObject(Object.create(null))); // true
 
@@ -394,22 +396,22 @@ console.log($.isPlainObject(Object.create({}))); // false
 
 #### EmptyObject
 
-Query提供了 isEmptyObject 方法来判断是否是空对象，代码简单:
+Query 提供了 isEmptyObject 方法来判断是否是空对象，代码简单:
 
 ```js
-function isEmptyObject( obj ) {
+function isEmptyObject(obj) {
+    var name;
 
-        var name;
+    for (name in obj) {
+        return false;
+    }
 
-        for ( name in obj ) {
-            return false;
-        }
-
-        return true;
+    return true;
 }
 ```
 
-isEmptyObject实际上判断的并不仅仅是空对象:
+isEmptyObject 实际上判断的并不仅仅是空对象:
+
 ```js
 console.log(isEmptyObject({})); // true
 console.log(isEmptyObject([])); // true
@@ -420,12 +422,12 @@ console.log(isEmptyObject('')); // true
 console.log(isEmptyObject(true)); // true
 ```
 
-#### Window对象
+#### Window 对象
 
 Window 对象作为客户端 JavaScript 的全局对象，它有一个 window 属性指向自身,可以利用这个特性判断是否是 Window 对象。
 
 ```js
-function isWindow( obj ) {
+function isWindow(obj) {
     return obj != null && obj === obj.window;
 }
 ```
@@ -436,32 +438,31 @@ jQuery 实现的 isArrayLike，数组和类数组都会返回 true。
 
 ```js
 function isArrayLike(obj) {
-
     // obj 必须有 length属性
-    var length = !!obj && "length" in obj && obj.length;
+    var length = !!obj && 'length' in obj && obj.length;
     var typeRes = type(obj);
 
     // 排除掉函数和 Window 对象
-    if (typeRes === "function" || isWindow(obj)) {
+    if (typeRes === 'function' || isWindow(obj)) {
         return false;
     }
 
-    return typeRes === "array" || length === 0 ||
-        typeof length === "number" && length > 0 && (length - 1) in obj;
+    return typeRes === 'array' || length === 0 || (typeof length === 'number' && length > 0 && length - 1 in obj);
 }
 ```
 
-所以如果 isArrayLike 返回true，至少要满足三个条件之一：
+所以如果 isArrayLike 返回 true，至少要满足三个条件之一：
 
 1. 是数组
 2. 长度为 0
-3. lengths 属性是大于 0 的数字类型，并且obj[length - 1]必须存在
+3. lengths 属性是大于 0 的数字类型，并且 obj[length - 1]必须存在
 
 #### isElement
 
 isElement 判断是不是 DOM 元素:
+
 ```js
-isElement = function(obj) {
+isElement = function (obj) {
     return !!(obj && obj.nodeType === 1);
 };
 ```
@@ -484,8 +485,8 @@ var new_arr = arr.concat();
 
 new_arr[0] = 'new';
 
-console.log(arr) // ["old", 1, true, null, undefined]
-console.log(new_arr) // ["new", 1, true, null, undefined]
+console.log(arr); // ["old", 1, true, null, undefined]
+console.log(new_arr); // ["new", 1, true, null, undefined]
 
 // slice 浅拷贝成功
 var new_arr = arr.slice();
@@ -498,15 +499,15 @@ var new_arr = arr.concat();
 arr[0].old = 'new';
 arr[1][0] = 'new';
 
-console.log(arr) // [{old: 'new'}, ['new']]
-console.log(new_arr) // [{old: 'new'}, ['new']]
+console.log(arr); // [{old: 'new'}, ['new']]
+console.log(new_arr); // [{old: 'new'}, ['new']]
 ```
 
-#### 对象的浅拷贝 
+#### 对象的浅拷贝
 
 1. Object.assign
 
->将所有可枚举属性的值从一个或多个源对象复制到目标对象，同时返回目标对象。（来自 MDN）
+> 将所有可枚举属性的值从一个或多个源对象复制到目标对象，同时返回目标对象。（来自 MDN）
 
 语法如下：
 
@@ -520,8 +521,6 @@ console.log(new_arr) // [{old: 'new'}, ['new']]
 
 实际效果和 Object.assign() 是一样的。
 
-
-
 #### 数组的深拷贝
 
 简单粗暴 ：JSON.parse(JSON.stringify(arr))
@@ -529,13 +528,12 @@ console.log(new_arr) // [{old: 'new'}, ['new']]
 `适用于数组还适用于对象, 但不能用来拷贝函数`
 
 ```js
-var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}]
+var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}];
 
-var new_arr = JSON.parse( JSON.stringify(arr) );
+var new_arr = JSON.parse(JSON.stringify(arr));
 
 console.log(new_arr);
 ```
-
 
 但是该方法有以下几个问题
 
@@ -547,7 +545,7 @@ console.log(new_arr);
 
 4、不能解决循环引用的对象
 
-5、不能正确处理new Date()
+5、不能正确处理 new Date()
 
 6、不能处理正则
 
@@ -560,7 +558,7 @@ concat、slice、JSON.stringify 都算是技巧类,可以根据实际项目情�
 ```js
 // 遍历对象，然后把属性和属性值都放在一个新的对象
 
-var shallowCopy = function(obj) {
+var shallowCopy = function (obj) {
     // 只拷贝对象
     if (typeof obj !== 'object') return;
     // 根据obj的类型判断是新建一个数组还是对象
@@ -572,7 +570,7 @@ var shallowCopy = function(obj) {
         }
     }
     return newObj;
-}
+};
 ```
 
 #### 深拷贝的实现
@@ -582,7 +580,7 @@ var shallowCopy = function(obj) {
 ```js
 // 在拷贝的时候判断一下属性值的类型，如果是对象，递归调用深拷贝函数
 
-var deepCopy = function(obj) {
+var deepCopy = function (obj) {
     if (typeof obj !== 'object') return;
     var newObj = obj instanceof Array ? [] : {};
     for (var key in obj) {
@@ -591,37 +589,40 @@ var deepCopy = function(obj) {
         }
     }
     return newObj;
-}
+};
 ```
 
 #### jQuery.extend
 
 引用 jQuery 官网：
->Merge the contents of two or more objects together into the first object.
+
+> Merge the contents of two or more objects together into the first object.
 
 翻译过来就是，合并两个或者更多的对象的内容到第一个对象中。
 
 extend (浅拷贝)的用法：
+
 ```js
 jQuery.extend( target [, object1 ] [, objectN ] )
 ```
+
 第一个参数 target，表示要拓展的目标，可以称它为目标对象。
 后面的参数，都传入对象，内容都会复制到目标对象中，可以称它们为待复制对象
 
 ```js
 var obj1 = {
     a: 1,
-    b: { b1: 1, b2: 2 }
+    b: {b1: 1, b2: 2}
 };
 
 var obj2 = {
-    b: { b1: 3, b3: 4 },
+    b: {b1: 3, b3: 4},
     c: 3
 };
 
 var obj3 = {
     d: 4
-}
+};
 
 console.log($.extend(obj1, obj2, obj3));
 
@@ -636,6 +637,7 @@ console.log($.extend(obj1, obj2, obj3));
 当两个对象出现相同字段的时候，后者会覆盖前者，而不会进行深层次的覆盖。
 
 实现：
+
 ```js
 function extend() {
     var name, options, copy;
@@ -648,7 +650,7 @@ function extend() {
         if (options != null) {
             for (name in options) {
                 copy = options[name];
-                if (copy !== undefined){
+                if (copy !== undefined) {
                     target[name] = copy;
                 }
             }
@@ -656,19 +658,20 @@ function extend() {
     }
 
     return target;
-};
+}
 ```
 
 extend (深拷贝)的用法：
+
 ```js
 jQuery.extend( [deep], target, object1 [, objectN ] )
 ```
-函数的第一个参数可以传一个布尔值，如果为 true，我们就会进行深拷贝，false 依然当做浅拷贝，这个时候，target 就往后移动到第二个参数。
 
+函数的第一个参数可以传一个布尔值，如果为 true，我们就会进行深拷贝，false 依然当做浅拷贝，这个时候，target 就往后移动到第二个参数。
 
 ## 五、防抖 debounce 与节流 throttle
 
-防抖（Debounce）和节流 （Throttle） 都是**用来控制某个函数在一定时间内执行次数的多少以优化高频率执行js代码**的一种技巧，两者相似而又不同。
+防抖（Debounce）和节流 （Throttle） 都是**用来控制某个函数在一定时间内执行次数的多少以优化高频率执行 js 代码**的一种技巧，两者相似而又不同。
 
 #### 防抖（debounce）
 
@@ -689,7 +692,7 @@ jQuery.extend( [deep], target, object1 [, objectN ] )
  * @param wait 延迟执行毫秒数
  * @param immediate true 表立即执行，false 表非立即执行
  */
-function debounce(func,wait,immediate) {
+function debounce(func, wait, immediate) {
     var timeout;
 
     return function () {
@@ -701,17 +704,16 @@ function debounce(func,wait,immediate) {
         if (immediate) {
             var callNow = !timeout;
             // 在 wait 秒后将 timeout 置为 null
-            timeout = setTimeout(function(){
+            timeout = setTimeout(function () {
                 timeout = null;
             }, wait);
             if (callNow) func.apply(context, args);
-        }
-        else {
-            timeout = setTimeout(function(){
+        } else {
+            timeout = setTimeout(function () {
                 func.apply(context, args);
             }, wait);
         }
-    }
+    };
 }
 ```
 
@@ -730,36 +732,31 @@ function debounce(func,wait,immediate) {
  * @param wait 延迟执行毫秒数
  * @param type 1 表时间戳版，2 表定时器版
  */
-function throttle(func, wait ,type) {
-    if(type===1){
+function throttle(func, wait, type) {
+    if (type === 1) {
         var previous = 0;
-    }else if(type===2){
+    } else if (type === 2) {
         var timeout;
     }
 
-    return function() {
+    return function () {
         var context = this;
         var args = arguments;
-        if(type===1){
+        if (type === 1) {
             var now = Date.now();
 
             if (now - previous > wait) {
                 func.apply(context, args);
                 previous = now;
             }
-        }else if(type===2){
+        } else if (type === 2) {
             if (!timeout) {
-                timeout = setTimeout(function(){
+                timeout = setTimeout(function () {
                     timeout = null;
-                    func.apply(context, args)
-                }, wait)
+                    func.apply(context, args);
+                }, wait);
             }
         }
-
-    }
+    };
 }
 ```
-
-
-
-

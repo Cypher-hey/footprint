@@ -1,39 +1,50 @@
 #### 1.check a string contains a substring in JavaScript
 
 1. (ES6) includes
+
 ```js
-var string = "foo",
-    substring = "oo";
+var string = 'foo',
+    substring = 'oo';
 string.includes(substring);
 ```
+
 2. ES5 and older indexOf
+
 ```js
-var string = "foo",
-    substring = "oo";
+var string = 'foo',
+    substring = 'oo';
 string.indexOf(substring) !== -1;
 // String.prototype.indexOf returns the position of the string in the other string. If not found, it will return -1.
 ```
+
 3. search
+
 ```js
-var string = "foo",
+var string = 'foo',
     expr = /oo/;
 string.search(expr);
 ```
+
 4. lodash includes—go to answer
+
 ```js
-var string = "foo",
-    substring = "oo";
+var string = 'foo',
+    substring = 'oo';
 _.includes(string, substring);
 ```
+
 5. RegExp
+
 ```js
-var string = "foo",
-    expr = /oo/;  // no quotes here
+var string = 'foo',
+    expr = /oo/; // no quotes here
 expr.test(string);
 ```
+
 6. Match
+
 ```js
-var string = "foo",
+var string = 'foo',
     expr = /oo/;
 string.match(expr);
 ```
@@ -56,10 +67,10 @@ For example:
 
 ```js
 // similar behavior as an HTTP redirect
-window.location.replace("http://stackoverflow.com");
+window.location.replace('http://stackoverflow.com');
 
 // similar behavior as clicking on a link
-window.location.href = "http://stackoverflow.com";
+window.location.href = 'http://stackoverflow.com';
 ```
 
 [引用](https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage)
@@ -67,12 +78,13 @@ window.location.href = "http://stackoverflow.com";
 #### 3.deep clone an object in JavaScript
 
 ```js
-JSON.parse(JSON.stringify(obj))
+JSON.parse(JSON.stringify(obj));
 ```
 
 to be the `fastest` way to deep clone an object (it beats out jQuery.extend with deep flag set true by 10-20%).
 
- In order to clone JavaScript objects:
+In order to clone JavaScript objects:
+
 ```js
 // Shallow copy
 var newObject = jQuery.extend({}, oldObject);
@@ -94,7 +106,7 @@ The same is happening when you make a function call containing "normal" code:
 ```js
 function findItem() {
     var item;
-    while(item_not_found) {
+    while (item_not_found) {
         // search
     }
     return item;
@@ -115,23 +127,23 @@ You call your friend again for the same reason. But this time you tell him that 
 That's exactly what's happening when you do an Ajax request.
 
 ```js
-findItem(function(item) {
+findItem(function (item) {
     // Do something with item
 });
 doSomethingElse();
 ```
 
-Instead of waiting for the response, the execution continues immediately and the statement after the Ajax call is executed. To get the response eventually, you provide a function to be called once the response was received, a `callback `(notice something? call back ?). Any statement coming after that call is executed before the callback is called.
+Instead of waiting for the response, the execution continues immediately and the statement after the Ajax call is executed. To get the response eventually, you provide a function to be called once the response was received, a `callback`(notice something? call back ?). Any statement coming after that call is executed before the callback is called.
 
 **Embrace the asynchronous nature of JavaScript! **
 
->JavaScript runs in the UI thread of the browser and any long running process will lock the UI, making it unresponsive. Additionally, there is an upper limit on the execution time for JavaScript and the browser will ask the user whether to continue the execution or not.
+> JavaScript runs in the UI thread of the browser and any long running process will lock the UI, making it unresponsive. Additionally, there is an upper limit on the execution time for JavaScript and the browser will ask the user whether to continue the execution or not.
 
 In the following we will look at three different solutions that are all building on top of each other:
 
-* **Promises with**  `async/await` (ES2017+, available in older browsers if you use a transpiler or regenerator)
-* **Callbacks** (popular in node)
-* **Promises with** `then()` (ES2015+, available in older browsers if you use one of the many promise libraries)
+-   **Promises with** `async/await` (ES2017+, available in older browsers if you use a transpiler or regenerator)
+-   **Callbacks** (popular in node)
+-   **Promises with** `then()` (ES2015+, available in older browsers if you use one of the many promise libraries)
 
 All three are available in current browsers, and node 7+.
 
@@ -147,40 +159,38 @@ Here is an example that builds on top of delay above:
 
 ```js
 // Using 'superagent' which will return a promise.
-var superagent = require('superagent')
+var superagent = require('superagent');
 
 // This is isn't declared as `async` because it already returns a promise
 function delay() {
-  // `delay` returns a promise
-  return new Promise(function(resolve, reject) {
-    // Only `delay` is able to resolve or reject the promise
-    setTimeout(function() {
-      resolve(42); // After 3 seconds, resolve the promise with value 42
-    }, 3000);
-  });
+    // `delay` returns a promise
+    return new Promise(function (resolve, reject) {
+        // Only `delay` is able to resolve or reject the promise
+        setTimeout(function () {
+            resolve(42); // After 3 seconds, resolve the promise with value 42
+        }, 3000);
+    });
 }
 
-
 async function getAllBooks() {
-  try {
-    // GET a list of book IDs of the current user
-    var bookIDs = await superagent.get('/user/books');
-    // wait for a second (just for the sake of this example)
-    await delay(1000);
-    // GET information about each book
-    return await superagent.get('/books/ids='+JSON.stringify(bookIDs));
-  } catch(error) {
-    // If any of the awaited promises was rejected, this catch block
-    // would catch the rejection reason
-    return null;
-  }
+    try {
+        // GET a list of book IDs of the current user
+        var bookIDs = await superagent.get('/user/books');
+        // wait for a second (just for the sake of this example)
+        await delay(1000);
+        // GET information about each book
+        return await superagent.get('/books/ids=' + JSON.stringify(bookIDs));
+    } catch (error) {
+        // If any of the awaited promises was rejected, this catch block
+        // would catch the rejection reason
+        return null;
+    }
 }
 
 // Async functions always return a promise
-getAllBooks()
-  .then(function(books) {
+getAllBooks().then(function (books) {
     console.log(books);
-  });
+});
 ```
 
 ** Let functions accept callbacks **
@@ -197,12 +207,13 @@ var result = foo();
 becomes
 
 ```js
-foo(function(result) {
+foo(function (result) {
     // Code that depends on 'result'
 });
 ```
 
 Here we defined the function "inline" but you can pass any function reference:
+
 ```js
 function myCallback(result) {
     // Code that depends on 'result'
@@ -212,6 +223,7 @@ foo(myCallback);
 ```
 
 `foo` itself is defined as follows:
+
 ```js
 function foo(callback) {
     $.ajax({
@@ -224,17 +236,19 @@ function foo(callback) {
 `callback` will refer to the function we pass to `foo` when we call it and we simply pass it on to `success`. I.e. once the Ajax request is successful, `$.ajax` will call `callback` and pass the response to the callback (which can be referred to with `result`, since this is how we defined the callback).
 
 You can also process the response before passing it to the callback:
+
 ```js
 function foo(callback) {
     $.ajax({
         // ...
-        success: function(response) {
+        success: function (response) {
             // For example, filter the response
             callback(filtered_response);
         }
     });
 }
 ```
+
 It's easier to write code using callbacks than it may seem. After all, `JavaScript in the browser is heavily event-driven (DOM events). Receiving the Ajax response is nothing else but an event.`
 Difficulties could arise when you have to work with third-party code, but most problems can be solved by just thinking through the application flow.
 
@@ -250,50 +264,117 @@ Here is a simple example of using a promise:
 
 ```js
 function delay() {
-  // `delay` returns a promise
-  return new Promise(function(resolve, reject) {
-    // Only `delay` is able to resolve or reject the promise
-    setTimeout(function() {
-      resolve(42); // After 3 seconds, resolve the promise with value 42
-    }, 3000);
-  });
+    // `delay` returns a promise
+    return new Promise(function (resolve, reject) {
+        // Only `delay` is able to resolve or reject the promise
+        setTimeout(function () {
+            resolve(42); // After 3 seconds, resolve the promise with value 42
+        }, 3000);
+    });
 }
 
 delay()
-  .then(function(v) { // `delay` returns a promise
-    console.log(v); // Log the value once it is resolved
-  })
-  .catch(function(v) {
-    // Or do something else if it is rejected 
-    // (it would not happen in this example, since `reject` is not called).
-  });
+    .then(function (v) {
+        // `delay` returns a promise
+        console.log(v); // Log the value once it is resolved
+    })
+    .catch(function (v) {
+        // Or do something else if it is rejected
+        // (it would not happen in this example, since `reject` is not called).
+    });
 ```
 
 Applied to our Ajax call we could use promises like this:
+
 ```js
 function ajax(url) {
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      resolve(this.responseText);
-    };
-    xhr.onerror = reject;
-    xhr.open('GET', url);
-    xhr.send();
-  });
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(this.responseText);
+        };
+        xhr.onerror = reject;
+        xhr.open('GET', url);
+        xhr.send();
+    });
 }
 
-ajax("/echo/json")
-  .then(function(result) {
-    // Code depending on result
-  })
-  .catch(function() {
-    // An error occurred
-  });
+ajax('/echo/json')
+    .then(function (result) {
+        // Code depending on result
+    })
+    .catch(function () {
+        // An error occurred
+    });
 ```
 
- provide a great abstraction and separation of your code.
+provide a great abstraction and separation of your code.
 
 More information about promises: [HTML5 rocks - JavaScript Promises](http://www.html5rocks.com/en/tutorials/es6/promises/)
 
 [引用](https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call)
+
+#### 5. hasOwnProperty vs dot syntax vs in
+
+hasOwnProperty not check that property in the prototype chain, but dot will
+
+```js
+Object.prototype.baz = 100;
+var foo = {bar: 1};
+
+// will be false because in foo object there is no baz property
+// hasOwnProperty checks that the object has the specified property
+// and does not check that property in the prototype chain
+if (foo.hasOwnProperty('baz')) {
+    console.log('foo.hasOwnProperty("baz")');
+}
+
+//  will be true because baz property will be found
+//  in parent object through prototype chain
+if (foo.baz) {
+    console.log('foo.baz');
+}
+```
+
+[引用](https://stackoverflow.com/questions/34128945/javascript-hasownproperty-vs-dot-syntax)
+
+-   if(object.property)
+
+will fail in cases it is not set (which is what you want), and in cases it has been set to some falsey value, e.g. undefined, null, 0 etc (which is not what you want).
+
+```js
+var object = {property: 0};
+if(object.isNotSet) { ... } // will not run
+if(object.property) { ... } // will not run
+```
+
+-   if('property' in object)
+
+is slightly better, since it will actually return whether the object really has the property, not just by looking at its value.
+
+```js
+var object = {property: 0};
+if('property' in object) { ... } // will run
+if('toString' in object) { ... } // will also run; from prototype
+```
+
+-   if(object.hasOwnProperty('property'))
+
+is even better, since it will allow you to distinguish between instance properties and prototype properties.
+
+```js
+var object = {property: 0};
+if(object.hasOwnProperty('property')) { ... } // will run
+if(object.hasOwnProperty('toString')) { ... } // will not run
+```
+
+I would say performance is not that big of an issue here, unless you're checking thousands of time a second but in that case you should consider another code structure. All of these functions/syntaxes are supported by recent browsers, hasOwnProperty has been around for a long time, too.
+
+```js
+// for common use
+function has(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+```
+
+[引用](https://stackoverflow.com/questions/7174748/javascript-object-detection-dot-syntax-versus-in-keyword)
