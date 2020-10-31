@@ -1,0 +1,35 @@
+{
+  "name": "footprint",
+  "version": "1.0.0",
+  "description": "step by step",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@typescript-eslint/parser": "^3.9.1",
+    "add": "^2.0.6",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cypher-hey/footprint.git"
+  },
+  "keywords": [
+    "footprint"
+  ],
+  "author": "cypher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cypher-hey/footprint/issues"
+  },
+  "homepage": "https://github.com/Cypher-hey/footprint#readme"
+}

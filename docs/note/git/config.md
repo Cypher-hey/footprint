@@ -19,7 +19,7 @@ git config core.filemode false
 
 #### credential.helper
 
-认证助手，当我们使用HTTPS方式clone项目时，每次 pull、push 都会提示输入密码，为了不每次都输入密码，就需要配置 `credential.helper` 选项。
+认证助手，当我们使用 HTTPS 方式 clone 项目时，每次 pull、push 都会提示输入密码，为了不每次都输入密码，就需要配置 `credential.helper` 选项。
 
 ```sh
 # cache 将凭据存储在内存中
@@ -38,7 +38,7 @@ touch .git-credentials
 vim .git-credentials
 ```
 
-###### 把如下内容写入.git-credentials文件中，保存并退出
+###### 把如下内容写入.git-credentials 文件中，保存并退出
 
 ```
 # {username} 你的git账户名
@@ -51,13 +51,13 @@ https://{username}:{password}@example.com
 
 ###### 设置凭据存储方式
 
-```sh 
+```sh
 git config credential.helper store
 ```
 
 #### user.name
 
-配置git用户名
+配置 git 用户名
 
 #### user.email
 
