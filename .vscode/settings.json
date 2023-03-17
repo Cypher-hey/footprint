@@ -1,2 +1,7 @@
 {
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.syntaxProfiles": {
+    
+    },
+    "html-css-class-completion.enableEmmetSupport": true
 }

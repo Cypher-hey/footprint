@@ -378,3 +378,37 @@ function has(obj, prop) {
 ```
 
 [引用](https://stackoverflow.com/questions/7174748/javascript-object-detection-dot-syntax-versus-in-keyword)
+
+#### 6. >>> used in JavaScript
+
+```js
+var len = this.length >>> 0;
+```
+
+`It doesn't just convert non-Numbers to Number, it converts them to Numbers that can be expressed as 32-bit unsigned ints.`
+
+Although JavaScript's Numbers are double-precision floats(\*), the bitwise operators (<<, >>, &, | and ~) are defined in terms of operations on 32-bit integers. Doing a bitwise operation converts the number to a 32-bit signed int, losing any fractions and higher-place bits than 32, before doing the calculation and then converting back to Number.
+
+So doing a bitwise operation with no actual effect, like a rightward-shift of 0 bits >>0, is a `quick` way to round a number and ensure it is in the `32-bit int range`. Additionally, the triple >>> operator, after doing its unsigned operation, converts the results of its calculation to Number as an unsigned integer rather than the signed integer the others do, so it can be used to convert negatives to the 32-bit-two's-complement version as a large Number. Using >>>0 ensures you've got an integer between 0 and 0xFFFFFFFF.
+
+In this case this is useful because ECMAScript defines `Array` indexes in terms of 32 bit unsigned ints. So if you're trying to implement array.filter in a way that exactly duplicates what the ECMAScript Fifth Edition standard says, you would cast the number to 32-bit unsigned int like this.
+
+(In reality there's little practical need for this as hopefully people aren't going to be setting array.length to 0.5, -1, 1e21 or 'LEMONS'. But this is JavaScript authors we're talking about, so you never know...)
+
+`summary`
+
+```text
+1>>>0            === 1
+-1>>>0           === 0xFFFFFFFF          -1>>0    === -1
+1.7>>>0          === 1
+0x100000002>>>0  === 2
+1e21>>>0         === 0xDEA00000          1e21>>0  === -0x21600000
+Infinity>>>0     === 0
+NaN>>>0          === 0
+null>>>0         === 0
+'1'>>>0          === 1
+'x'>>>0          === 0
+Object>>>0       === 0
+```
+
+[ref](https://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it)
