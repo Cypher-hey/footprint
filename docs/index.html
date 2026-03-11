@@ -31,6 +31,7 @@
     <body>
         <div id="app"></div>
 
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
         <script src="./asset/docute.js"></script>
         <script>
             docute.init({
@@ -326,3 +327,64 @@
         </script>
     </body>
 </html>
+        <script>
+        // Mermaid 支持
+        (function(){
+            var log = function(msg) { console.log('[Mermaid]', msg); };
+            var done = false;
+            
+            log('加载，mermaid:', typeof mermaid);
+            
+            function findMermaidCodes() {
+                var codes = [];
+                ['code.lang-mermaid', 'code[class*="lang-mermaid"]'].forEach(function(sel) {
+                    document.querySelectorAll(sel).forEach(function(el) {
+                        if (!codes.includes(el)) codes.push(el);
+                    });
+                });
+                return codes;
+            }
+            
+            function render() {
+                if (done) return;
+                if (typeof mermaid === 'undefined') return;
+                
+                var codes = findMermaidCodes();
+                log('找到:', codes.length);
+                
+                if (codes.length > 0) {
+                    done = true;
+                    mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose', flowchart: { useMaxWidth: true, htmlLabels: true }, fontFamily: 'sans-serif' });
+                    
+                    codes.forEach(function(el) {
+                        var pre = el.parentElement;
+                        if (pre && !pre.classList.contains('mr')) {
+                            pre.classList.add('mr');
+                            var div = document.createElement('div');
+                            div.className = 'mermaid';
+                            div.textContent = el.textContent.trim();
+                            pre.parentNode.replaceChild(div, pre);
+                        }
+                    });
+                    
+                    log('渲染');
+                    mermaid.run({ querySelector: '.mermaid', onError: function(err) { console.error('Mermaid Error:', err); } });
+                }
+            }
+            
+            var observer = new MutationObserver(function() { render(); });
+            observer.observe(document.body, { childList: true, subtree: true });
+            
+            var count = 0;
+            var timer = setInterval(function() {
+                count++;
+                var codes = findMermaidCodes();
+                if (codes.length > 0) {
+                    log('检查', count, ': 找到', codes.length);
+                    render();
+                    if (done) { clearInterval(timer); log('完成'); }
+                }
+                if (count > 30) clearInterval(timer);
+            }, 300);
+        })();
+        </script>

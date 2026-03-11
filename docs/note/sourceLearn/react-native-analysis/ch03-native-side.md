@@ -14,20 +14,17 @@ graph TB
         JS[React Native JS]
         NM[NativeModules]
     end
-    
     subgraph "Bridge"
         B1[序列化]
         B2[消息队列]
         B3[反序列化]
     end
-    
     subgraph "原生侧"
         Bridge[Native Bridge]
         Registry[Module Registry]
         Modules[原生模块]
         UIManager[UIManager]
     end
-    
     JS --> NM
     NM --> B1
     B1 --> B2
@@ -36,7 +33,6 @@ graph TB
     Bridge --> Registry
     Registry --> Modules
     Registry --> UIManager
-    
     style JS fill:#e1f5ff
     style Bridge fill:#fff4e1
     style Registry fill:#fce4ec
@@ -290,7 +286,6 @@ sequenceDiagram
     participant UIManager as UIManagerModule
     participant ViewManager as ViewManager
     participant View as Native View
-    
     JS->>Bridge: UIManager.createView('RCTView', tag)
     Bridge->>UIManager: 调用 createView
     UIManager->>ViewManager: createViewInstance()
@@ -298,13 +293,11 @@ sequenceDiagram
     View-->>UIManager: 返回 View
     UIManager-->>Bridge: 返回 reactTag
     Bridge-->>JS: 创建完成
-    
     JS->>Bridge: UIManager.updateView(tag, props)
     Bridge->>UIManager: 调用 updateView
     UIManager->>ViewManager: updateProperties(view, props)
     ViewManager->>View: setProperty(props)
     View-->>UIManager: 更新完成
-    
     style JS fill:#e1f5ff
     style UIManager fill:#fce4ec
     style View fill:#e8f5e9
@@ -656,7 +649,6 @@ sequenceDiagram
     participant Manager as InstanceManager
     participant Registry as ModuleRegistry
     participant Module as NativeModule
-    
     App->>Pkg: createNativeModules()
     Pkg->>Module: 实例化模块
     Pkg->>Manager: 返回模块列表
@@ -664,7 +656,6 @@ sequenceDiagram
     Registry->>Registry: 存储 ModuleHolder
     Registry-->>Manager: 注册完成
     Manager-->>App: 初始化完成
-    
     style Registry fill:#fce4ec
     style Module fill:#e8f5e9
 ```
@@ -707,16 +698,13 @@ sequenceDiagram
     participant Bridge as RCTBridge
     participant Registry as ModuleRegistry
     participant Module as Module
-    
     App->>Bridge: initWithBundleURL
     Bridge->>Bridge: loadModules
     Bridge->>Registry: registerModule
     Registry->>Registry: 存储模块
     Registry-->>Bridge: 注册完成
     Bridge-->>App: 初始化完成
-    
     Note over Bridge: 自动扫描 RCT_EXTERN_MODULE 宏
-    
     style Registry fill:#fce4ec
     style Module fill:#e8f5e9
 ```

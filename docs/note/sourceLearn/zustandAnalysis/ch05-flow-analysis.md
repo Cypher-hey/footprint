@@ -13,26 +13,22 @@ graph TB
     subgraph "用户代码"
         User[用户调用 setState]
     end
-    
     subgraph "中间件层"
         MW1[devtools: 记录 action]
         MW2[persist: 保存 storage]
         MW3[immer: produce 更新]
     end
-    
     subgraph "核心层"
         SetState[setState]
         Merge[状态合并]
         Notify[通知 listeners]
     end
-    
     subgraph "React 层"
         OnChange[onChange 回调]
         GetSnap[getSnapshot]
         Schedule[调度更新]
         Render[组件重渲染]
     end
-    
     User --> MW1
     MW1 --> MW2
     MW2 --> MW3
@@ -43,7 +39,6 @@ graph TB
     OnChange --> GetSnap
     GetSnap --> Schedule
     Schedule --> Render
-    
     style User fill:#e1f5ff
     style MW1 fill:#fce4ec
     style MW2 fill:#fce4ec
@@ -82,9 +77,7 @@ sequenceDiagram
     participant S as Store (vanilla)
     participant L as Listeners
     participant R as React
-    
     Note over C,R: 阶段 1: 初始订阅
-    
     C->>H: 调用 useStore(selector)
     H->>S: subscribe(onStoreChange)
     S->>L: add(onStoreChange)
@@ -92,9 +85,7 @@ sequenceDiagram
     S-->>H: 当前状态
     H-->>C: 返回状态切片
     C->>C: 首次渲染完成
-    
     Note over C,R: 阶段 2: 状态更新
-    
     C->>M: setState(partial)
     M->>M: 中间件处理 (devtools/persist/immer)
     M->>S: setState(nextState)
@@ -110,7 +101,6 @@ sequenceDiagram
     C->>H: 读取新状态
     H-->>C: 返回新状态切片
     C->>C: 重新渲染
-    
     style C fill:#e1f5ff
     style H fill:#fff4e1
     style M fill:#fce4ec
@@ -249,42 +239,34 @@ graph LR
         API[API 响应]
         Timer[定时器]
     end
-    
     subgraph "状态更新"
         SetState[setState]
         Middleware[中间件处理]
         Merge[状态合并]
     end
-    
     subgraph "状态存储"
         CurrentState[当前状态]
         PrevState[上一状态]
         InitialState[初始状态]
     end
-    
     subgraph "数据消费"
         Selector[选择器]
         Component[组件]
         Storage[持久化存储]
         DevTools[DevTools]
     end
-    
     UserInput --> SetState
     API --> SetState
     Timer --> SetState
-    
     SetState --> Middleware
     Middleware --> Merge
     Merge --> CurrentState
-    
     CurrentState --> PrevState
     CurrentState --> Selector
     CurrentState --> Storage
     CurrentState --> DevTools
-    
     Selector --> Component
     Component --> UserInput
-    
     style CurrentState fill:#e8f5e9
     style PrevState fill:#fff9c4
     style InitialState fill:#fff9c4
@@ -606,7 +588,6 @@ graph TB
     Shallow -->|相同 | NoRender[不重渲染]
     Shallow -->|不同 | Schedule[调度更新]
     Schedule --> Render[组件重渲染]
-    
     style Start fill:#e1f5ff
     style MW fill:#fce4ec
     style Merge fill:#e8f5e9

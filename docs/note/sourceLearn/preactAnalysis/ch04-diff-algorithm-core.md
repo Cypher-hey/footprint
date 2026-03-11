@@ -61,19 +61,15 @@ Preact 将 VNode 分为三种类型，每种类型有不同的 diff 策略：
 ```mermaid
 flowchart TD
     A[diff 开始] --> B{判断 newVNode.type}
-    
     B -->|是函数 | C[组件节点]
     B -->|是字符串 | D[DOM 元素节点]
     B -->|是 null/文本 | E[文本节点]
-    
     C --> C1[实例化组件或复用]
     C1 --> C2[调用 render 获取渲染结果]
     C2 --> C3[递归 diff 子节点]
-    
     D --> D1[复用或创建 DOM]
     D1 --> D2[对比 props 差异]
     D2 --> D3[递归 diff children]
-    
     E --> E1[对比文本内容]
     E1 --> E2[更新 textContent]
 ```
@@ -252,7 +248,6 @@ sequenceDiagram
     participant Render as render()
     participant DOM as 真实 DOM
     participant Commit as commitRoot()
-    
     Note over Diff,C: 首次挂载
     Diff->>C: componentWillMount
     Diff->>C: render
@@ -260,11 +255,9 @@ sequenceDiagram
     Diff->>DOM: 创建 DOM 节点
     Diff->>Commit: 加入 commitQueue
     Commit->>C: componentDidMount
-    
     Note over Diff,C: 更新渲染
     Diff->>C: componentWillReceiveProps
     Diff->>C: shouldComponentUpdate
-    
     alt 返回 false
         C-->>Diff: Bailout
         Diff-->>Diff: 跳过渲染
@@ -606,13 +599,11 @@ graph TB
         O1 --> O2
         O2 --> O3
     end
-    
     subgraph NewTree
         N1[div]
         N2[p - New]
         N1 --> N2
     end
-    
     O1 -- "同层对比" --> N1
     O2 -- "类型不同，删除" --> X[❌]
     O3 -- "层级不同，忽略" --> Y[❌]
@@ -864,33 +855,25 @@ flowchart TD
     A[diff 开始] --> B{newVNode.constructor === UNDEFINED?}
     B -->|否 | C[返回 NULL JSON 注入]
     B -->|是 | D{oldVNode._flags & MODE_SUSPENDED?}
-    
     D -->|是 | E[恢复暂停状态]
     D -->|否 | F[调用 options._diff]
-    
     E --> G{newType 是函数？}
     F --> G
-    
     G -->|是组件 | H[组件 diff]
     G -->|否 | I{excessDomChildren == NULL && _original 相同？}
-    
     H --> H1[实例化或复用组件]
     H1 --> H2[调用生命周期]
     H2 --> H3[执行 render]
     H3 --> H4[递归 diff 子节点]
     H4 --> J
-    
     I -->|是快速路径 | K[直接复用旧 DOM]
     I -->|否 | L[DOM diff]
-    
     K --> J[调用 options.diffed]
-    
     L --> L1[复用或创建 DOM]
     L1 --> L2[对比 props 差异]
     L2 --> L3[处理 dangerouslySetInnerHTML]
     L3 --> L4[递归 diff children]
     L4 --> J
-    
     J --> M{MODE_SUSPENDED?}
     M -->|是 | N[返回 undefined]
     M -->|否 | O[返回 oldDom]

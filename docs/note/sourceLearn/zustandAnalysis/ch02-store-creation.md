@@ -28,13 +28,10 @@ graph LR
     vanilla[vanilla.ts 核心引擎]
     react[react.ts React 集成]
     middleware[middleware/* 中间件]
-    
     vanilla --> react
     vanilla --> middleware
-    
     react -.->|依赖| vanilla
     middleware -.->|增强| vanilla
-    
     style vanilla fill:#e8f5e9
     style react fill:#e1f5ff
     style middleware fill:#fce4ec
@@ -152,22 +149,16 @@ graph TD
     A[setState 调用] --> B{partial 是函数？}
     B -->|是 | C[执行函数获取 nextState]
     B -->|否 | D[nextState = partial]
-    
     C --> E{Object.is next, current}
     D --> E
-    
     E -->|相等 | F[不更新，不通知]
     E -->|不等 | G{replace === true}
-    
     G -->|是 | H[完全替换 state]
     G -->|否 | I{nextState 是对象？}
-    
     I -->|否 | H
     I -->|是 | J[Object.assign 合并]
-    
     J --> K[通知所有 listeners]
     H --> K
-    
     style F fill:#ffcdd2
     style K fill:#c8e6c9
     style J fill:#fff9c4
@@ -254,20 +245,16 @@ sequenceDiagram
     participant C as Component
     participant S as Store
     participant L as Listeners Set
-    
     C->>S: subscribe(listener)
     S->>L: add(listener)
     S-->>C: 返回 unsubscribe 函数
-    
     Note over C,S: 状态更新时
     C->>S: setState(newState)
     S->>L: forEach(listener)
     L-->>C: listener(newState, prevState)
-    
     Note over C,S: 取消订阅
     C->>C: unsubscribe()
     C->>L: delete(listener)
-    
     style C fill:#e1f5ff
     style S fill:#e8f5e9
     style L fill:#fff9c4

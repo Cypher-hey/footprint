@@ -170,12 +170,10 @@ flowchart TD
     C -->|render 调用 | D[diff 算法]
     D -->|对比新旧 VNode| E[计算差异]
     E -->|最小化操作 | F[真实 DOM 更新]
-    
     subgraph 首次渲染
         C --> D
         D --> F
     end
-    
     subgraph 更新渲染
         G[setState 触发] --> H[创建新 VNode 树]
         H --> D
@@ -245,13 +243,10 @@ sequenceDiagram
     participant CE as createElement(h)
     participant R as render
     participant D as diff
-    
     User->>CE: JSX → h('div', props, children)
     CE-->>User: 返回 VNode 树
-    
     User->>R: render(vnode, container)
     R->>D: diff(parentDom, newVNode, oldVNode)
-    
     alt 首次渲染
         D->>D: 创建 DOM 节点
         D-->>R: 返回创建的 DOM
@@ -261,7 +256,6 @@ sequenceDiagram
         D->>D: 计算最小 DOM 操作
         D-->>R: 更新完成
     end
-    
     R-->>User: 渲染完成
 ```
 

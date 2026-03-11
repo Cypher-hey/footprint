@@ -56,33 +56,28 @@ graph TB
         Plugin[插件 Skills]
         Remote[远程节点 Skills]
     end
-    
     subgraph "Skills 处理"
         Load[加载器]
         Parse[Frontmatter 解析]
         Filter[过滤器]
         Eligible[资格检查]
     end
-    
     subgraph "Skills 输出"
         Snapshot[技能快照]
         Prompt[系统 Prompt]
         Commands[命令注册]
     end
-    
     Bundled --> Load
     Global --> Load
     Workspace --> Load
     Plugin --> Load
     Remote --> Load
-    
     Load --> Parse
     Parse --> Filter
     Filter --> Eligible
     Eligible --> Snapshot
     Eligible --> Prompt
     Eligible --> Commands
-    
     style Load fill:#fff4e1
     style Parse fill:#fff4e1
     style Filter fill:#fce4ec
@@ -100,26 +95,21 @@ graph TB
 
 ```mermaid
 sequenceDiagram
-    participant WS as Workspace
-    participant Loader as loadSkillEntries
-    participant Parse as parseSkillFrontmatter
-    participant Meta as resolveOpenClawMetadata
-    participant Result as SkillEntry[]
-    
-    WS->>Loader: 扫描 skills 目录
-    Loader->>Loader: 查找 SKILL.md 文件
-    loop 每个技能目录
-        Loader->>Parse: parseFrontmatter(content)
-        Parse-->>Loader: frontmatter 对象
-        Loader->>Meta: resolveOpenClawMetadata(frontmatter)
-        Meta-->>Loader: metadata 对象
-        Loader->>Loader: 构建 SkillEntry
-    end
-    Loader-->>Result: 返回 SkillEntry[]
-    
-    style Loader fill:#fff4e1
-    style Parse fill:#e8f5e9
-    style Meta fill:#fce4ec
+participant WS as Workspace
+participant Loader as loadSkillEntries
+participant Parse as parseSkillFrontmatter
+participant Meta as resolveOpenClawMetadata
+participant Result as SkillEntry[]
+WS->>Loader: 扫描 skills 目录
+Loader->>Loader: 查找 SKILL.md 文件
+loop 每个技能目录
+Loader->>Parse: parseFrontmatter(content)
+Parse-->>Loader: frontmatter 对象
+Loader->>Meta: resolveOpenClawMetadata(frontmatter)
+Meta-->>Loader: metadata 对象
+Loader->>Loader: 构建 SkillEntry
+end
+Loader-->>Result: 返回 SkillEntry[]
 ```
 
 ### 2.2 核心加载函数
@@ -533,7 +523,6 @@ graph TB
     H -->|否 | E
     H -->|是 | C
     H -->|filter 未设置 | C
-    
     style C fill:#c8e6c9
     style E fill:#ffcdd2
     style H fill:#fff9c4
@@ -761,7 +750,6 @@ sequenceDiagram
     participant Registry as NodeRegistry
     participant Remote as 远程节点
     participant FS as 远程文件系统
-    
     Local->>Registry: invoke system.which
     Registry->>Remote: 发送命令
     Remote->>FS: which gh
@@ -770,10 +758,6 @@ sequenceDiagram
     Registry-->>Local: bins: ['gh']
     Local->>Local: 更新 remoteNodes.bins
     Local->>Local: bumpSkillsSnapshotVersion()
-    
-    style Local fill:#fff4e1
-    style Registry fill:#e8f5e9
-    style Remote fill:#e1f5ff
 ```
 
 ---

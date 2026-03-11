@@ -11,12 +11,14 @@
 在 OpenClaw 中，**Agent** 是一个**可配置、可扩展的 AI 助手实例**，类似于前端中的**应用实例**概念。
 
 **类比理解**：
+
 | OpenClaw Agent | 前端类比 | 说明 |
 |---------------|---------|------|
 | Agent 实例 | React App 实例 | 每个 Agent 是一个独立的 AI 助手 |
 | Agent 配置 | Webpack 配置 | 定义 Agent 的行为和约束 |
 | Skills | Webpack Plugins | 扩展 Agent 的能力 |
 | Workspace | 项目根目录 | Agent 的工作空间 |
+
 
 ### 1.2 Agent 的核心职责
 
@@ -27,45 +29,36 @@ graph TB
         Cmd[命令行参数]
         Event[系统事件]
     end
-    
     subgraph "Agent 核心"
         Config[配置解析]
         Model[模型选择]
         Skills[Skills 加载]
         Context[上下文构建]
     end
-    
     subgraph "执行层"
         PI[PI Agent 引擎]
         Tools[工具调用]
         Memory[记忆系统]
     end
-    
     subgraph "输出层"
         Reply[回复消息]
         Action[执行动作]
         State[状态持久化]
     end
-    
     User --> Config
     Cmd --> Config
     Event --> Config
-    
     Config --> Model
     Config --> Skills
     Config --> Context
-    
     Context --> PI
     Skills --> PI
     Model --> PI
-    
     PI --> Tools
     PI --> Memory
-    
     PI --> Reply
     PI --> Action
     PI --> State
-    
     style Config fill:#fff4e1
     style Model fill:#fff4e1
     style Skills fill:#fff4e1
@@ -112,6 +105,7 @@ graph TB
 
 ### 2.2 关键文件职责
 
+
 | 文件 | 职责 | 前端类比 |
 |------|------|---------|
 | `agent-scope.ts` | Agent 配置解析、ID 路由、工作空间解析 | `config/webpack.config.js` |
@@ -119,6 +113,7 @@ graph TB
 | `commands/agent.ts` | CLI 命令实现 | `commands/agent.command.ts` |
 | `skills/workspace.ts` | Skills 加载、过滤、快照 | `plugins/` 系统 |
 | `skills/filter.ts` | Skills 过滤器 | `webpack include/exclude` |
+
 
 ---
 
@@ -162,25 +157,21 @@ type ResolvedAgentConfig = {
 
 ```mermaid
 sequenceDiagram
-    participant User as 用户
-    participant AgentCmd as agent 命令
-    participant AgentScope as agent-scope.ts
-    participant Config as 配置文件
-    participant FS as 文件系统
-    
-    User->>AgentCmd: openclaw agent --id=my-agent
-    AgentCmd->>AgentScope: resolveAgentConfig(cfg, 'my-agent')
-    AgentScope->>Config: 读取 agents.list 配置
-    Config-->>AgentScope: 返回 Agent 配置项
-    AgentScope->>AgentScope: normalizeAgentId('my-agent')
-    AgentScope->>FS: resolveAgentWorkspaceDir()
-    FS-->>AgentScope: 返回工作空间路径
-    AgentScope->>FS: resolveAgentDir()
-    FS-->>AgentScope: 返回 Agent 目录
-    AgentScope-->>AgentCmd: ResolvedAgentConfig
-    
-    style AgentScope fill:#fff4e1
-    style Config fill:#e8f5e9
+participant User as 用户
+participant AgentCmd as agent 命令
+participant AgentScope as agent-scope.ts
+participant Config as 配置文件
+participant FS as 文件系统
+User->>AgentCmd: openclaw agent --id=my-agent
+AgentCmd->>AgentScope: resolveAgentConfig(cfg, 'my-agent')
+AgentScope->>Config: 读取 agents.list 配置
+Config-->>AgentScope: 返回 Agent 配置项
+AgentScope->>AgentScope: normalizeAgentId('my-agent')
+AgentScope->>FS: resolveAgentWorkspaceDir()
+FS-->>AgentScope: 返回工作空间路径
+AgentScope->>FS: resolveAgentDir()
+FS-->>AgentScope: 返回 Agent 目录
+AgentScope-->>AgentCmd: ResolvedAgentConfig
 ```
 
 ### 3.3 配置解析源码分析
@@ -274,11 +265,9 @@ graph TD
     B -->|否 | D{有 sessionKey?}
     D -->|是 | E[从 sessionKey 解析]
     D -->|否 | F[使用默认 Agent]
-    
     C --> G[resolveSessionAgentId]
     E --> G
     F --> G
-    
     style C fill:#c8e6c9
     style E fill:#fff9c4
     style F fill:#ffccbc
@@ -328,27 +317,20 @@ sequenceDiagram
     participant PI as pi-embedded.ts
     participant Model as AI 模型
     participant Store as Session Store
-    
     User->>Cmd: openclaw agent --message="hello"
     Cmd->>Scope: resolveSessionAgentId()
     Scope-->>Cmd: sessionAgentId
-    
     Cmd->>Scope: resolveAgentWorkspaceDir()
     Scope-->>Cmd: workspaceDir
-    
     Cmd->>Skills: buildWorkspaceSkillSnapshot()
     Skills-->>Cmd: skillsSnapshot
-    
     Cmd->>Cmd: resolveDefaultModelForAgent()
     Cmd->>PI: runEmbeddedPiAgent({...})
-    
     PI->>Model: 发送请求（含 Skills Prompt）
     Model-->>PI: 返回响应
-    
     PI->>Cmd: 返回结果
     Cmd->>Store: updateSessionStoreAfterAgentRun()
     Cmd->>User: 投递结果
-    
     style Cmd fill:#fff4e1
     style Scope fill:#e8f5e9
     style Skills fill:#fce4ec
@@ -473,6 +455,7 @@ const AgentWithLogging = withLogging(AgentWithSkills);
 
 ### 7.2 前端类比总结
 
+
 | OpenClaw 概念 | 前端类比 | 说明 |
 |--------------|---------|------|
 | Agent | React App | 独立的应用实例 |
@@ -481,6 +464,7 @@ const AgentWithLogging = withLogging(AgentWithSkills);
 | Workspace | 项目根目录 | 工作空间 |
 | Session | Browser Session | 会话状态 |
 | Model Selection | Dynamic Import | 按需加载模型 |
+
 
 ### 7.3 下章预告
 

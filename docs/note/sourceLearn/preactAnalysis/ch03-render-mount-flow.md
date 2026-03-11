@@ -305,23 +305,16 @@ sequenceDiagram
     participant Browser as 浏览器
     participant Preact as Preact hydrate()
     participant DOM as 真实 DOM
-    
     Server->>Browser: 返回 HTML 字符串
     Browser->>DOM: 解析并渲染 HTML
-    
     Note over Browser: 页面加载完成
-    
     Browser->>Preact: 调用 hydrate(&lt;App /&gt;, container)
     Preact->>Preact: 创建 VNode 树
-    
     Note over Preact: isHydrating = true
-    
     Preact->>DOM: 对比 VNode 与现有 DOM
     Note over Preact,DOM: 不创建新 DOM，只验证结构
-    
     Preact->>DOM: 绑定事件监听器
     Preact->>Preact: 执行 componentDidMount
-    
     Preact-->>Browser: 激活完成
 ```
 
@@ -373,13 +366,11 @@ graph TD
     AV[App VNode]
     DV[div VNode]
     D1[div DOM]
-    
     DOM -- "_children" --> FV
     FV -- "_children[0]" --> AV
     AV -- "_children[0]" --> DV
     DV -- "_dom" --> D1
     FV -- "_dom" --> D1
-    
     style DOM fill:#f9f,stroke:#333
     style D1 fill:#f9f,stroke:#333
     style FV fill:#bbf,stroke:#333
@@ -441,40 +432,27 @@ sequenceDiagram
     participant D as diff()
     participant DOM as 真实 DOM
     participant C as commitRoot()
-    
     User->>R: render(&lt;App /&gt;, container)
-    
     R->>R: 判断 isHydrating
     R->>R: 获取 oldVNode
-    
     R->>CE: createElement(Fragment, NULL, [&lt;App /&gt;])
     CE-->>R: 返回 FragmentVNode
-    
     R->>R: container._children = FragmentVNode
     R->>R: 初始化 commitQueue, refQueue
-    
     R->>D: diff(container, FragmentVNode, oldVNode, ...)
-    
     Note over D: diff 阶段开始
-    
     D->>D: 判断 VNode 类型
     D->>D: 组件：实例化 + 调用 render()
     D->>D: DOM 元素：创建/复用节点
     D->>D: 递归 diff 子节点
-    
     D->>DOM: 创建/更新 DOM 节点
     D-->>R: diff 完成
-    
     Note over D: diff 阶段结束
-    
     R->>C: commitRoot(commitQueue, FragmentVNode, refQueue)
-    
     Note over C: commit 阶段开始
-    
     C->>DOM: 执行 ref 回调
     C->>DOM: 执行 componentDidMount
     C-->>R: commit 完成
-    
     R-->>User: 渲染完成
 ```
 

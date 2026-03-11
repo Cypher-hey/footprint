@@ -18,21 +18,17 @@ sequenceDiagram
     participant PI as pi-embedded.ts
     participant Model as AI 模型
     participant Executor as Skill Executor
-    
     User->>Agent: openclaw agent --message="..."
     Agent->>Scope: resolveAgentSkillsFilter()
     Scope-->>Agent: skillFilter: ['github', 'git']
-    
     Agent->>Skills: buildWorkspaceSkillSnapshot()
     Skills->>Skills: loadWorkspaceSkillEntries()
     Skills->>Skills: filterWorkspaceSkillEntries()
     Skills->>Skills: buildWorkspaceSkillsPrompt()
     Skills-->>Agent: skillsSnapshot
-    
     Agent->>PI: runEmbeddedPiAgent({skillsSnapshot})
     PI->>PI: 解析 skillsSnapshot.prompt
     PI->>Model: 发送请求（含 Skills Prompt）
-    
     alt 模型需要调用 Skill
         Model-->>PI: 返回工具调用请求
         PI->>Executor: 执行 Skill 命令
@@ -42,10 +38,8 @@ sequenceDiagram
         PI->>Model: 发送工具调用结果
         Model-->>PI: 返回最终响应
     end
-    
     PI-->>Agent: 返回结果
     Agent-->>User: 投递响应
-    
     style Agent fill:#fff4e1
     style Skills fill:#fce4ec
     style PI fill:#e1f5ff
@@ -134,10 +128,8 @@ graph TD
     C -->|是 | D{版本匹配？}
     D -->|否 | B
     D -->|是 | E[使用缓存快照]
-    
     B --> F[持久化到 Session]
     E --> G[直接使用]
-    
     style B fill:#fff9c4
     style E fill:#c8e6c9
     style F fill:#e1f5ff
@@ -396,13 +388,11 @@ sequenceDiagram
     participant Executor as Skill Executor
     participant Skill as Skill 代码
     participant Shell as Shell/Binary
-    
     Model->>PI: Tool Call: github {action: "pr-create"}
     PI->>Executor: executeSkill('github', args)
     Executor->>Executor: 加载 SKILL.md
     Executor->>Executor: 解析 frontmatter
     Executor->>Executor: 检查 requires (bins, env)
-    
     alt 检查通过
         Executor->>Skill: 执行 skill 代码
         Skill->>Shell: 执行命令 (gh pr create)
@@ -416,7 +406,6 @@ sequenceDiagram
         PI->>Model: Tool Error
         Model-->>PI: 错误响应
     end
-    
     style Executor fill:#fff4e1
     style Skill fill:#e8f5e9
     style Shell fill:#e1f5ff
@@ -479,20 +468,17 @@ graph TB
         A1[commands/agent.ts]
         A2[pi-embedded.ts]
     end
-    
     subgraph "Skills 侧"
         S1[skills/workspace.ts]
         S2[skills/filter.ts]
         S3[skills/frontmatter.ts]
     end
-    
     subgraph "集成点"
         I1[buildWorkspaceSkillSnapshot]
         I2[skillsSnapshot 传递]
         I3[Skills Prompt 注入]
         I4[Tool Call 执行]
     end
-    
     A1 --> I1
     I1 --> S1
     S1 --> I2
@@ -501,7 +487,6 @@ graph TB
     I3 --> Model
     Model --> I4
     I4 --> S1
-    
     style I1 fill:#fff9c4
     style I2 fill:#fff9c4
     style I3 fill:#fff9c4
@@ -596,7 +581,6 @@ graph LR
     E --> F[Bin 检查]
     F --> G[gh, git, node 存在]
     G --> H[最终 Skills]
-    
     style H fill:#c8e6c9
 ```
 

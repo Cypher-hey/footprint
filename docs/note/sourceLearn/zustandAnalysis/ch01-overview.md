@@ -137,13 +137,11 @@ graph TB
     subgraph "用户代码"
         User[useBearStore()]
     end
-    
     subgraph "React 层 (react.ts)"
         create[create 函数]
         useStore[useStore Hook]
         useSyncExt[useSyncExternalStore]
     end
-    
     subgraph "Vanilla 层 (vanilla.ts)"
         createStore[createStore 函数]
         setState[setState]
@@ -151,13 +149,11 @@ graph TB
         subscribe[subscribe]
         listeners[Listeners Set]
     end
-    
     subgraph "中间件层 (middleware/)"
         persist[persist]
         devtools[devtools]
         immer[immer]
     end
-    
     User --> create
     create --> createStore
     useStore --> useSyncExt
@@ -166,11 +162,9 @@ graph TB
     createStore --> getState
     createStore --> subscribe
     subscribe --> listeners
-    
     createStore -.-> persist
     createStore -.-> devtools
     createStore -.-> immer
-    
     style User fill:#e1f5ff
     style create fill:#fff4e1
     style useStore fill:#fff4e1

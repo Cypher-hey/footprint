@@ -16,32 +16,27 @@ graph TB
         W3[Plugins]
         W4[Compilation]
         W5[Output]
-        
         W1 --> W2
         W2 --> W3
         W3 --> W4
         W4 --> W5
     end
-    
     subgraph "OpenClaw"
         O1[Agent Core]
         O2[Skills API]
         O3[Skills]
         O4[Execution]
         O5[Response]
-        
         O1 --> O2
         O2 --> O3
         O3 --> O4
         O4 --> O5
     end
-    
     W1 -.->|类比 | O1
     W2 -.->|类比 | O2
     W3 -.->|类比 | O3
     W4 -.->|类比 | O4
     W5 -.->|类比 | O5
-    
     style W1 fill:#e1f5ff
     style O1 fill:#e8f5e9
     style W3 fill:#fff4e1
@@ -49,6 +44,7 @@ graph TB
 ```
 
 ### 1.2 详细对比表
+
 
 | 维度 | Webpack Plugin | OpenClaw Skills | 说明 |
 |------|---------------|-----------------|------|
@@ -59,6 +55,7 @@ graph TB
 | **上下文** | Compilation Object | Skill Context | 执行环境 |
 | **过滤** | `include/exclude` | `skillFilter` | 按需加载 |
 | **依赖检查** | `peerDependencies` | `requires.bins/env` | 依赖验证 |
+
 
 ### 1.3 代码对比
 
@@ -111,12 +108,14 @@ export async function execute(args) {
 
 ### 1.4 设计模式对比
 
+
 | 模式 | Webpack | OpenClaw | 说明 |
 |------|---------|----------|------|
 | **Tapable** | Hooks 系统 | Skill Commands | 事件驱动 |
 | **Loader** | 文件转换 | Frontmatter 解析 | 预处理 |
 | **Plugin** | 功能扩展 | Skills | 能力扩展 |
 | **Compilation** | 构建上下文 | Agent Context | 执行上下文 |
+
 
 ---
 
@@ -132,30 +131,25 @@ graph TB
         R3[HOC 2: withTheme]
         R4[HOC 3: withData]
         R5[Enhanced Component]
-        
         R1 --> R2
         R2 --> R3
         R3 --> R4
         R4 --> R5
     end
-    
     subgraph "OpenClaw Skills"
         O1[Base Agent]
         O2[Skill 1: github]
         O3[Skill 2: git]
         O4[Skill 3: npm]
         O5[Enhanced Agent]
-        
         O1 --> O2
         O2 --> O3
         O3 --> O4
         O4 --> O5
     end
-    
     R1 -.->|类比 | O1
     R2 -.->|类比 | O2
     R5 -.->|类比 | O5
-    
     style R1 fill:#e1f5ff
     style O1 fill:#e8f5e9
     style R2 fill:#fff4e1
@@ -218,12 +212,14 @@ const enhancedAgent = createAgent({
 
 ### 2.3 设计模式对比
 
+
 | 模式 | React HOC | OpenClaw Skills | 说明 |
 |------|-----------|-----------------|------|
 | **组合** | `hoc1(hoc2(Component))` | `withSkill1(withSkill2(agent))` | 函数组合 |
 | **Props 注入** | `props.user` | `skill.context` | 上下文注入 |
 | **条件渲染** | `if (!user) return <Login />` | `if (!hasBinary) return error` | 条件执行 |
 | **生命周期** | `useEffect` | `onExecute` | 生命周期钩子 |
+
 
 ---
 
@@ -280,12 +276,14 @@ requires:
 ```
 
 **对比分析**：
+
 | 维度 | Vue Mixins | OpenClaw Skills |
 |------|-----------|-----------------|
 | **复用方式** | `mixins: []` | `skills: []` |
 | **命名冲突** | 可能冲突 | 唯一名称生成 |
 | **依赖检查** | 运行时检查 | 启动时检查 |
 | **文档** | 代码注释 | SKILL.md frontmatter |
+
 
 ---
 
@@ -300,37 +298,31 @@ graph TB
         C2[Agent 配置]
         C3[Skills 配置]
     end
-    
     subgraph "L2: 路由层"
         R1[agent-scope.ts]
         R2[ID 解析]
         R3[工作空间解析]
     end
-    
     subgraph "L3: 加载层"
         L1[skills/workspace.ts]
         L2[技能扫描]
         L3[Frontmatter 解析]
     end
-    
     subgraph "L4: 过滤层"
         F1[skills/filter.ts]
         F2[OS 过滤]
         F3[Bin 检查]
         F4[Env 检查]
     end
-    
     subgraph "L5: 执行层"
         E1[pi-embedded.ts]
         E2[Model API]
         E3[Skill Executor]
     end
-    
     C1 --> R1
     R1 --> L1
     L1 --> F1
     F1 --> E1
-    
     style C1 fill:#e3f2fd
     style R1 fill:#fff3e0
     style L1 fill:#f3e5f5
@@ -577,26 +569,22 @@ graph TB
         U1[用户消息]
         U2[CLI 命令]
     end
-    
     subgraph "Agent 层"
         A1[commands/agent.ts]
         A2[agent-scope.ts]
         A3[pi-embedded.ts]
     end
-    
     subgraph "Skills 层"
         S1[skills/workspace.ts]
         S2[skills/filter.ts]
         S3[skills/frontmatter.ts]
         S4[Skill Executor]
     end
-    
     subgraph "基础设施"
         I1[Session Store]
         I2[Model API]
         I3[Node Registry]
     end
-    
     U1 --> A1
     U2 --> A1
     A1 --> A2
@@ -607,13 +595,13 @@ graph TB
     A3 --> I2
     A1 --> I1
     S1 --> I3
-    
     style A1 fill:#fff4e1
     style S1 fill:#fce4ec
     style I1 fill:#e8f5e9
 ```
 
 ### 7.2 核心概念总结
+
 
 | 概念 | 说明 | 关键文件 |
 |------|------|---------|
@@ -624,7 +612,9 @@ graph TB
 | **Frontmatter** | 元数据 | `skills/frontmatter.ts` |
 | **Executor** | 执行器 | `pi-embedded.ts` |
 
+
 ### 7.3 前端类比总结
+
 
 | OpenClaw | 前端类比 | 核心思想 |
 |---------|---------|---------|
@@ -635,11 +625,13 @@ graph TB
 | Frontmatter | package.json | 配置元数据 |
 | Executor | Plugin Runner | 执行引擎 |
 
+
 ---
 
 ## 8. 输出文件清单
 
 本系列共 4 章，输出到以下文件：
+
 
 | 文件 | 章节 | 内容 |
 |------|------|------|
@@ -647,6 +639,7 @@ graph TB
 | `ch02-skills-system.md` | 第 2 章 | Skills 系统架构 |
 | `ch03-agent-skills-integration.md` | 第 3 章 | Agent 调用 Skills 机制 |
 | `ch04-architecture-comparison.md` | 第 4 章 | 架构对比与最佳实践 |
+
 
 **输出目录**：`/home/admin/.openclaw/workspace-source-code/output/openclaw-agent-skills/`
 

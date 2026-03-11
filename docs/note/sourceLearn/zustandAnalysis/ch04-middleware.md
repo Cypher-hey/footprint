@@ -27,7 +27,6 @@ graph TB
     subgraph "核心层"
         createStore[createStore]
     end
-    
     subgraph "中间件层"
         persist[persist]
         devtools[devtools]
@@ -35,21 +34,17 @@ graph TB
         combine[combine]
         subscribeWithSelector[subscribeWithSelector]
     end
-    
     subgraph "用户代码"
         user[create(...)]
     end
-    
     user --> devtools
     devtools --> persist
     persist --> immer
     immer --> createStore
-    
     createStore -.->|返回增强 API| immer
     immer -.->|返回增强 API| persist
     persist -.->|返回增强 API| devtools
     devtools -.->|返回增强 API| user
-    
     style createStore fill:#e8f5e9
     style persist fill:#fce4ec
     style devtools fill:#fce4ec
@@ -91,17 +86,14 @@ sequenceDiagram
     participant Devtools
     participant Persist
     participant CreateStore
-    
     User->>Devtools: devtools(persist(...), opts)
     Devtools->>Persist: persist(createState, opts)
     Persist->>CreateStore: createState
-    
     CreateStore-->>Persist: api (setState, getState, ...)
     Note over Persist: 包装 setState/getState
     Persist-->>Devtools: enhancedApi
     Note over Devtools: 再次包装
     Devtools-->>User: finalApi
-    
     Note over User: 调用 finalApi.setState()
     User->>Devtools: setState()
     Devtools->>Devtools: 记录到 DevTools
@@ -649,7 +641,6 @@ graph TB
     C --> D[immer: produce 不可变更新]
     D --> E[createStore: 更新状态]
     E --> F[通知订阅者]
-    
     style A fill:#e1f5ff
     style B fill:#fce4ec
     style C fill:#fce4ec

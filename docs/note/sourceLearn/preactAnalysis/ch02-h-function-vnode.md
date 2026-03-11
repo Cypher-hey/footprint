@@ -527,33 +527,27 @@ realVNode.constructor;  // undefined
 flowchart TD
     A[JSX 代码] -->|Babel 转换 | B[h 函数调用]
     B --> C[createElement 执行]
-    
     subgraph createElement
         C1[遍历 props] --> C2{是 key?}
         C2 -->|是 | C3[提取到 vnode.key]
         C2 -->|否 | C4{是 ref?}
         C4 -->|是 | C5[提取到 vnode.ref]
         C4 -->|否 | C6[保留到 normalizedProps]
-        
         C6 --> C7{有 children?}
         C7 -->|是 | C8[合并到 props.children]
         C7 -->|否 | C9[跳过]
-        
         C8 --> C10{是类组件？}
         C10 -->|是 | C11[合并 defaultProps]
         C10 -->|否 | C12[跳过]
     end
-    
     C11 --> D[调用 createVNode]
     C12 --> D
-    
     subgraph createVNode
         D1[创建 VNode 对象] --> D2[初始化 12 个字段]
         D2 --> D3{有 vnode 钩子？}
         D3 -->|是 | D4[调用 options.vnode]
         D3 -->|否 | D5[跳过]
     end
-    
     D4 --> E[返回 VNode]
     D5 --> E
 ```

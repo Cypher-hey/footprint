@@ -15,19 +15,16 @@ graph TB
         Reconciler[React Reconciler]
         ShadowRegistry[Shadow Registry]
     end
-    
     subgraph "C++ 层 (Fabric)"
         ShadowTree[Shadow Tree]
         Yoga[Yoga 布局引擎]
         ComponentRegistry[Component Registry]
     end
-    
     subgraph "Native 侧"
         Surface[Surface]
         Mounting[Mounting Layer]
         Platform[平台渲染]
     end
-    
     React --> Reconciler
     Reconciler --> ShadowRegistry
     ShadowRegistry --> ShadowTree
@@ -36,7 +33,6 @@ graph TB
     ComponentRegistry --> Surface
     Surface --> Mounting
     Mounting --> Platform
-    
     style React fill:#e1f5ff
     style Reconciler fill:#fff4e1
     style ShadowTree fill:#fce4ec
@@ -83,12 +79,10 @@ graph TB
         Text1[Text ShadowNode]
         Image1[Image ShadowNode]
     end
-    
     Root --> View1
     Root --> View2
     View1 --> Text1
     View2 --> Image1
-    
     style Root fill:#e1f5ff
     style View1 fill:#fff4e1
     style View2 fill:#fff4e1
@@ -143,20 +137,15 @@ sequenceDiagram
     participant ShadowTree as ShadowTree
     participant Yoga as Yoga
     participant Mounting as Mounting
-    
     React->>Reconciler: render()
     Reconciler->>ShadowTree: commit()
-    
     ShadowTree->>ShadowTree: 创建新 ShadowNode
     ShadowTree->>Yoga: calculateLayout()
     Yoga-->>ShadowTree: 返回布局结果
-    
     ShadowTree->>ShadowTree: 比较新旧树
     ShadowTree->>Mounting: 生成变更列表
-    
     Mounting->>Mounting: 应用变更
     Mounting-->>React: 渲染完成
-    
     style ShadowTree fill:#fce4ec
     style Yoga fill:#e8f5e9
     style Mounting fill:#c8e6c9
@@ -295,21 +284,17 @@ graph TB
     A[YGNodeCalculateLayout] --> B{有测量函数？}
     B -->|是 | C[调用 measure]
     B -->|否 | D[计算子节点]
-    
     D --> E{有子节点？}
     E -->|是 | F[Flexbox 算法]
     E -->|否 | G[使用样式尺寸]
-    
     F --> H[计算主轴]
     F --> I[计算交叉轴]
     F --> J[处理换行]
-    
     H --> K[设置布局结果]
     I --> K
     J --> K
     C --> K
     G --> K
-    
     style A fill:#e1f5ff
     style F fill:#fff4e1
     style K fill:#e8f5e9
@@ -481,20 +466,17 @@ graph TB
         React[React]
         Reconciler[React Reconciler]
     end
-    
     subgraph "C++ 层"
         ShadowTree[Shadow Tree]
         ComponentDescriptor[Component Descriptor]
         Props[Props]
         Event[Event]
     end
-    
     subgraph "Native 侧"
         SurfaceHandler[Surface Handler]
         Mounting[Mounting]
         Platform[平台视图]
     end
-    
     React --> Reconciler
     Reconciler --> ShadowTree
     ShadowTree --> ComponentDescriptor
@@ -503,7 +485,6 @@ graph TB
     ShadowTree --> SurfaceHandler
     SurfaceHandler --> Mounting
     Mounting --> Platform
-    
     style ShadowTree fill:#fce4ec
     style ComponentDescriptor fill:#fff4e1
     style SurfaceHandler fill:#e8f5e9
@@ -747,30 +728,22 @@ sequenceDiagram
     participant UIManager as UIManager
     participant ViewManager as ViewManager
     participant View as Native View
-    
     App->>Reconciler: render(<View><Text>Hello</Text></View>)
     Reconciler->>ShadowTree: commit()
-    
     ShadowTree->>ShadowTree: 创建 View ShadowNode
     ShadowTree->>ShadowTree: 创建 Text ShadowNode
-    
     ShadowTree->>Yoga: calculateLayout()
     Yoga->>Yoga: Flexbox 计算
     Yoga-->>ShadowTree: 返回布局结果
-    
     ShadowTree->>UIManager: 生成变更列表
     UIManager->>ViewManager: createViewInstance()
     ViewManager->>View: new View(context)
     View-->>UIManager: 返回 View
-    
     UIManager->>ViewManager: updateProperties()
     ViewManager->>View: setProps()
-    
     UIManager->>ViewManager: addView()
     ViewManager->>View: addView(child)
-    
     View-->>App: 渲染完成
-    
     style ShadowTree fill:#fce4ec
     style Yoga fill:#e8f5e9
     style View fill:#c8e6c9

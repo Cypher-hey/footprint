@@ -73,7 +73,6 @@ export function diffChildren(
 flowchart TD
     A[diffChildren 开始] --> B[获取 oldChildren]
     B --> C[constructNewChildrenArray]
-    
     subgraph 构建新数组
         C --> C1[遍历 renderResult]
         C1 --> C2{节点类型判断}
@@ -82,21 +81,17 @@ flowchart TD
         C2 -->|数组 | C5[包装成 Fragment]
         C2 -->|已复用 VNode| C6[克隆 VNode]
         C2 -->|普通 VNode| C7[直接使用]
-        
         C7 --> C8[findMatchingIndex 查找匹配]
         C8 --> C9{找到匹配？}
         C9 -->|是 | C10[标记 MATCHED]
         C9 -->|否 | C11[标记 INSERT_VNODE]
     end
-    
     C10 --> D[遍历新 children 递归 diff]
     C11 --> D
-    
     D --> D1[获取 oldVNode]
     D1 --> D2[调用 diff]
     D2 --> D3[处理 ref]
     D3 --> D4[调整 DOM 位置]
-    
     D4 --> E[设置 newParentVNode._dom]
     E --> F[返回 oldDom]
 ```
@@ -378,21 +373,16 @@ flowchart TD
     B --> C{当前位置匹配？}
     C -->|是 | D[返回 skewedIndex]
     C -->|否 | E{需要搜索？}
-    
     E -->|否 | F[返回 -1]
     E -->|是 | G[初始化 x = skewedIndex - 1, y = skewedIndex + 1]
-    
     G --> H{x >= 0 或 y < length?}
     H -->|否 | F
     H -->|是 | I[计算 childIndex]
-    
     I --> J{x >= 0?}
     J -->|是 | K[childIndex = x, x--]
     J -->|否 | L[childIndex = y, y++]
-    
     K --> M[获取 oldVNode[childIndex]]
     L --> M
-    
     M --> N{未匹配 且 key 相同 且 type 相同？}
     N -->|是 | O[返回 childIndex]
     N -->|否 | H
@@ -564,30 +554,24 @@ sequenceDiagram
     participant New as 新列表
     participant Skew as skew 计算
     participant DOM as DOM 操作
-    
     Note over Old,DOM: 示例：[A, B, C] → [X, A, B, C]
-    
     Old->>Skew: 初始 skew = 0
     New->>Skew: i=0, X 新增
     Skew->>Skew: matchingIndex = -1
     Skew->>Skew: skew-- → -1
     Skew->>DOM: 插入 X
-    
     New->>Skew: i=1, A 查找
     Skew->>Skew: skewedIndex = 1 + (-1) = 0
     Skew->>Skew: matchingIndex = 0 ✓
     Skew->>DOM: A 保持原位
-    
     New->>Skew: i=2, B 查找
     Skew->>Skew: skewedIndex = 2 + (-1) = 1
     Skew->>Skew: matchingIndex = 1 ✓
     Skew->>DOM: B 保持原位
-    
     New->>Skew: i=3, C 查找
     Skew->>Skew: skewedIndex = 3 + (-1) = 2
     Skew->>Skew: matchingIndex = 2 ✓
     Skew->>DOM: C 保持原位
-    
     Note over DOM: 最终：只插入 X，其他节点不动
 ```
 
@@ -742,19 +726,15 @@ flowchart TD
     B --> C{有 ref?}
     C -->|是 | D[调用 refNULL]
     C -->|否 | E
-    
     D --> E{有_children?}
     E -->|是 | F[递归卸载子节点]
     E -->|否 | G
-    
     F --> G{有_dom?}
     G -->|是 | H[从 DOM 移除]
     G -->|否 | I
-    
     H --> I{有_component?}
     I -->|是 | J[调用 componentWillUnmount]
     I -->|否 | K[结束]
-    
     J --> K
 ```
 

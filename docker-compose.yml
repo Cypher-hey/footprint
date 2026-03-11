@@ -1,0 +1,11 @@
+services:
+  footprint:
+    image: node:alpine
+    container_name: footprint
+    working_dir: /app
+    command: ["http-server", "docs", "-p", "8080", "-a", "0.0.0.0"]
+    ports:
+      - "3457:8080"
+    volumes:
+      - ./docs:/app/docs
+    restart: unless-stopped

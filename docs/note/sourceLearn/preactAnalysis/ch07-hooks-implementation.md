@@ -229,20 +229,15 @@ function invokeOrReturn(arg, f) {
 flowchart TD
     A[useStateinitialState] --> B[currentHook = 1]
     B --> C[useReducerinvokereduce, initialState]
-    
     C --> D[getHookStatecurrentIndex, 2]
     D --> E{hookState._component 存在？}
-    
     E -->|否，首次渲染 | F[初始化 hookState._value]
     F --> F1[计算初始 state]
     F1 --> F2[创建 dispatch 函数]
     F2 --> G[返回 hookState._value]
-    
     E -->|是，更新渲染 | H[直接返回 hookState._value]
-    
     G --> I[currentIndex++]
     I --> J[下次 Hook 使用新索引]
-    
     H --> I
 ```
 
@@ -388,13 +383,10 @@ sequenceDiagram
     participant RAF as requestAnimationFrame
     participant Effect as effect 回调
     participant Cleanup as cleanup 函数
-    
     Note over Render: 组件渲染
     Render->>Queue: 加入 _pendingEffects
-    
     Note over RAF: 等待下一帧
     RAF->>Queue: 触发 afterPaint
-    
     Queue->>Cleanup: 执行上次 cleanup
     Cleanup->>Effect: 执行本次 effect
     Effect->>Queue: 存储新 cleanup

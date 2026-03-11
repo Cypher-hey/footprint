@@ -14,31 +14,26 @@ flowchart TB
         A[render]
         B[hydrate]
     end
-    
     subgraph VNode 层
         C[createElement/h]
         D[createVNode]
         E[VNode 结构]
     end
-    
     subgraph 渲染层
         F[diff]
         G[diffChildren]
         H[diffElementNodes]
     end
-    
     subgraph 组件层
         I[Component]
         J[setState]
         K[生命周期]
     end
-    
     subgraph Hooks 层
         L[useState]
         M[useEffect]
         N[useContext]
     end
-    
     A --> C
     B --> C
     C --> D
@@ -92,7 +87,6 @@ flowchart LR
         P3[同步完成]
         P1 --> P2 --> P3
     end
-    
     subgraph React
         R1[Fiber 架构]
         R2[可中断恢复]

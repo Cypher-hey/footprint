@@ -15,27 +15,22 @@ graph TB
     subgraph "用户层"
         User[用户代码]
     end
-    
     subgraph "React 层"
         React[react.ts]
         Hook[useStore Hook]
         Sync[useSyncExternalStore]
     end
-    
     subgraph "Vanilla 层"
         Vanilla[vanilla.ts]
         Store[Store 核心]
         Subscribe[订阅系统]
     end
-    
     subgraph "中间件层"
         MW[中间件系统]
     end
-    
     User --> React
     React --> Vanilla
     MW -.->|增强 | Vanilla
-    
     style User fill:#e1f5ff
     style React fill:#fff4e1
     style Vanilla fill:#e8f5e9
@@ -540,7 +535,6 @@ graph LR
     C --> D[源码阅读]
     D --> E[自定义中间件]
     E --> F[性能调优]
-    
     style A fill:#e8f5e9
     style B fill:#fff9c4
     style C fill:#fff9c4

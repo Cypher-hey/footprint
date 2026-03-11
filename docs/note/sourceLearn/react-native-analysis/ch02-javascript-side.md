@@ -14,23 +14,19 @@ graph TB
         App[React Native App]
         Components[组件]
     end
-    
     subgraph "核心层"
         NM[NativeModules]
         NC[NativeComponents]
         EE[EventEmitter]
     end
-    
     subgraph "Bridge 层"
         MQ[MessageQueue]
         BB[BatchedBridge]
     end
-    
     subgraph "运行时"
         JSC[JavaScriptCore/Hermes]
         Polyfills[Polyfills]
     end
-    
     App --> Components
     Components --> NM
     Components --> NC
@@ -39,7 +35,6 @@ graph TB
     MQ --> BB
     BB --> JSC
     JSC --> Polyfills
-    
     style App fill:#e1f5ff
     style NM fill:#fff4e1
     style NC fill:#fff4e1
@@ -200,20 +195,16 @@ sequenceDiagram
     participant Wrapper as 方法包装器
     participant Bridge as BatchedBridge
     participant MQ as MessageQueue
-    
     User->>Wrapper: NativeModules.Alert.show(msg)
     Wrapper->>Wrapper: 检查参数类型
     Wrapper->>Bridge: enqueueNativeCall(moduleID, methodID, args)
     Bridge->>MQ: 添加到队列
     MQ->>MQ: 存储回调函数
-    
     Note over User,MQ: 批量收集调用
-    
     User->>Bridge: flushedQueue()
     Bridge->>MQ: 获取并清空队列
     MQ-->>Bridge: 返回队列数据
     Bridge-->>User: 返回队列供原生侧执行
-    
     style Wrapper fill:#fff4e1
     style Bridge fill:#fce4ec
     style MQ fill:#fce4ec
@@ -375,7 +366,6 @@ graph TB
     D --> F[传递给原生侧]
     E --> F
     F --> G[原生组件更新]
-    
     style A fill:#e1f5ff
     style B fill:#fff4e1
     style F fill:#fce4ec
@@ -478,23 +468,19 @@ sequenceDiagram
     participant Native as 原生侧
     participant NEE as NativeEventEmitter
     participant Listener as 监听器
-    
     Note over NEE: 初始化
     Native->>NEE: 事件发生
     NEE->>NEE: 查找监听器
     NEE->>Listener: 调用回调函数
-    
     Note over NEE,Listener: 订阅流程
     Listener->>NEE: addListener(eventType, callback)
     NEE->>NEE: 检查是否是第一次订阅
     NEE->>Native: startObserving(eventType)
     NEE->>Listener: 返回 subscription
-    
     Note over NEE,Listener: 取消订阅
     Listener->>NEE: removeSubscription()
     NEE->>NEE: 检查是否还有监听器
     NEE->>Native: stopObserving(eventType)
-    
     style NEE fill:#fff4e1
     style Native fill:#e8f5e9
 ```
@@ -566,14 +552,12 @@ sequenceDiagram
     participant Native as 原生侧
     participant JS as JavaScript
     participant Config as 配置对象
-    
     App->>Native: 启动应用
     Native->>Native: 扫描原生模块
     Native->>Config: 生成 __fbBatchedBridgeConfig
     Native->>JS: 注入全局配置
     JS->>JS: 解析配置创建 NativeModules
     JS-->>App: 应用就绪
-    
     style Config fill:#fff4e1
     style JS fill:#e1f5ff
     style Native fill:#e8f5e9

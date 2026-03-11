@@ -14,32 +14,27 @@ graph TB
         App[React Native App]
         Components[组件]
     end
-    
     subgraph "JavaScript 侧"
         NM[NativeModules]
         NC[NativeComponents]
         EE[EventEmitter]
         Polyfills[Polyfills]
     end
-    
     subgraph "Bridge 层"
         MQ[MessageQueue]
         BB[BatchedBridge]
     end
-    
     subgraph "C++ 层 (Fabric)"
         ShadowTree[Shadow Tree]
         Yoga[Yoga 布局]
         JSI[JSI 绑定]
     end
-    
     subgraph "原生侧"
         Android[Android]
         iOS[iOS]
         Modules[原生模块]
         Views[原生视图]
     end
-    
     App --> Components
     Components --> NM
     Components --> NC
@@ -55,7 +50,6 @@ graph TB
     Android --> Views
     iOS --> Modules
     iOS --> Views
-    
     style App fill:#e1f5ff
     style NM fill:#fff4e1
     style MQ fill:#fce4ec
@@ -92,28 +86,23 @@ graph LR
         RD2[Virtual DOM]
         RD3[ReactDOM]
         RD4[Browser DOM]
-        
         RD1 --> RD2
         RD2 --> RD3
         RD3 --> RD4
     end
-    
     subgraph "React Native"
         RN1[React Components]
         RN2[Shadow Tree]
         RN3[Fabric Renderer]
         RN4[Native Views]
-        
         RN1 --> RN2
         RN2 --> RN3
         RN3 --> RN4
     end
-    
     RD1 -.->|相同 | RN1
     RD2 -.->|类似 | RN2
     RD3 -.->|类似 | RN3
     RD4 -.->|不同 | RN4
-    
     style RD1 fill:#e1f5ff
     style RN1 fill:#e1f5ff
     style RD2 fill:#fff4e1
@@ -201,30 +190,25 @@ graph TB
         A2[Hooks]
         A3[Context]
     end
-    
     subgraph "L2: JavaScript 层"
         J1[NativeModules]
         J2[NativeComponents]
         J3[EventEmitter]
     end
-    
     subgraph "L3: Bridge 层"
         B1[MessageQueue]
         B2[BatchedBridge]
         B3[JSI]
     end
-    
     subgraph "L4: C++ 层"
         C1[ShadowTree]
         C2[Yoga]
         C3[Fabric]
     end
-    
     subgraph "L5: 原生层"
         N1[iOS]
         N2[Android]
     end
-    
     A1 --> J1
     A1 --> J2
     J1 --> B1
@@ -235,7 +219,6 @@ graph TB
     C1 --> C3
     C3 --> N1
     C3 --> N2
-    
     style A1 fill:#e1f5ff
     style J1 fill:#fff4e1
     style B1 fill:#fce4ec

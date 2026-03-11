@@ -199,24 +199,18 @@ export function enqueueRender(c) {
 flowchart TD
     A[setState 调用] --> B[enqueueRender component]
     B --> C{c._dirty?}
-    
     C -->|是 | D[已入队，跳过]
     C -->|否 | E[标记 c._dirty = true]
-    
     E --> F[推入 rerenderQueue]
     F --> G{process._rerenderCount == 0?}
-    
     G -->|是 | H[调度 process]
     G -->|否 | I[已有调度，跳过]
-    
     H --> J[Promise.then 或 setTimeout]
     J --> K[process 执行]
-    
     K --> L{rerenderQueue 非空？}
     L -->|是 | M[取出组件]
     M --> N[renderComponent]
     N --> L
-    
     L -->|否 | O[process._rerenderCount = 0]
     O --> P[结束]
 ```
@@ -364,23 +358,17 @@ function renderComponent(component) {
 ```mermaid
 flowchart TD
     A[renderComponent] --> B{component._parentDom && _dirty?}
-    
     B -->|否 | C[跳过渲染]
     B -->|是 | D[创建 newVNode 副本]
-    
     D --> E[newVNode._original++]
     E --> F[调用 options.vnode]
-    
     F --> G[调用 diff]
     G --> H[更新_children 引用]
-    
     H --> I[调用 commitRoot]
     I --> J[清理 oldVNode]
-    
     J --> K{newVNode._dom != oldDom?}
     K -->|是 | L[updateParentDomPointers]
     K -->|否 | M[结束]
-    
     L --> M
 ```
 
@@ -393,27 +381,22 @@ flowchart TD
 ```mermaid
 stateDiagram-v2
     [*] --> 挂载阶段
-    
     state 挂载阶段 {
         [*] --> componentWillMount
         componentWillMount --> render
         render --> componentDidMount
         componentDidMount --> [*]
     }
-    
     state 更新阶段 {
         [*] --> componentWillReceiveProps
         componentWillReceiveProps --> shouldComponentUpdate
-        
         shouldComponentUpdate -->|false| [*]
         shouldComponentUpdate -->|true| componentWillUpdate
-        
         componentWillUpdate --> render
         render --> getSnapshotBeforeUpdate
         getSnapshotBeforeUpdate --> componentDidUpdate
         componentDidUpdate --> [*]
     }
-    
     state 卸载阶段 {
         [*] --> componentWillUnmount
         componentWillUnmount --> [*]
@@ -541,12 +524,9 @@ sequenceDiagram
     participant R as render
     participant G as getSnapshotBeforeUpdate
     participant D as componentDidUpdate
-    
     Parent->>P: 传入新 props
     P->>P: componentWillReceiveProps
-    
     P->>S: shouldComponentUpdate
-    
     alt 返回 false
         S-->>Parent: Bailout，跳过渲染
     else 返回 true

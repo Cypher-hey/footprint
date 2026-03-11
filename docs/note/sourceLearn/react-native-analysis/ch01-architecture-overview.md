@@ -35,22 +35,18 @@ graph TB
         T3[热更新]
         T4[跨平台]
     end
-    
     subgraph "实现方式"
         I1[原生渲染]
         I2[Bridge 通信]
         I3[JS Bundle]
         I4[平台抽象]
     end
-    
     T1 --> I1
     T2 --> I1
     T3 --> I3
     T4 --> I4
-    
     I2 -.->|连接 | I1
     I2 -.->|连接 | I3
-    
     style T1 fill:#e1f5ff
     style T2 fill:#e1f5ff
     style T3 fill:#e1f5ff
@@ -111,19 +107,16 @@ react-native-analysis/              # React Native 源码 (v0.76.6)
 ```mermaid
 graph LR
     A[旧架构<br/>Bridge 架构] --> B[新架构<br/>Fabric + TurboModules]
-    
     subgraph A [旧架构特点]
         A1[异步 Bridge]
         A2[原生模块]
         A3[UIManager]
     end
-    
     subgraph B [新架构特点]
         B1[JSI 直接调用]
         B2[TurboModules]
         B3[Fabric 渲染]
     end
-    
     style A fill:#fff4e1
     style B fill:#e8f5e9
 ```
@@ -151,19 +144,16 @@ graph TB
         NM[NativeModules]
         MQ[MessageQueue]
     end
-    
     subgraph "Bridge"
         B1[序列化]
         B2[消息队列]
         B3[反序列化]
     end
-    
     subgraph "Native 侧"
         Native[原生代码]
         Registry[Module Registry]
         UIManager[UIManager]
     end
-    
     JS --> NM
     NM --> MQ
     MQ --> B1
@@ -172,7 +162,6 @@ graph TB
     B3 --> Native
     Native --> Registry
     Native --> UIManager
-    
     style JS fill:#e1f5ff
     style NM fill:#fff4e1
     style MQ fill:#fff4e1
@@ -188,23 +177,18 @@ sequenceDiagram
     participant MQ as MessageQueue
     participant Bridge as Bridge
     participant Native as Native 模块
-    
     React->>JS: 调用 NativeModules.Alert.show()
     JS->>MQ: enqueueNativeCall(moduleID, methodID, args)
     MQ->>MQ: 添加到队列 [moduleIDs, methodIDs, params]
-    
     Note over MQ: 批量收集调用
-    
     React->>JS: 渲染完成
     JS->>MQ: flushedQueue()
     MQ->>Bridge: 返回队列 [[1], [2], [["msg"]], callID]
     Bridge->>Native: 反序列化并执行
-    
     Native->>Bridge: 回调结果
     Bridge->>MQ: invokeCallback(cbID, result)
     MQ->>JS: 执行成功回调
     JS->>React: 触发状态更新
-    
     style JS fill:#e1f5ff
     style MQ fill:#fff4e1
     style Native fill:#e8f5e9
@@ -416,19 +400,16 @@ graph TB
         React[React 组件]
         JSI[JSI 绑定]
     end
-    
     subgraph "C++ 层"
         Fabric[Fabric Renderer]
         Shadow[Shadow Tree]
         Yoga[Yoga 布局]
     end
-    
     subgraph "Native 侧"
         Platform[平台渲染]
         UIKit[iOS UIKit]
         Android[Android View]
     end
-    
     React --> JSI
     JSI --> Fabric
     Fabric --> Shadow
@@ -436,7 +417,6 @@ graph TB
     Yoga --> Platform
     Platform --> UIKit
     Platform --> Android
-    
     style React fill:#e1f5ff
     style JSI fill:#fff4e1
     style Fabric fill:#e8f5e9

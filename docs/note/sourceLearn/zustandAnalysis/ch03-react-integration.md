@@ -31,29 +31,23 @@ graph TB
         subscribe[subscribe]
         getState[getState]
     end
-    
     subgraph "React 层"
         create[create 函数]
         useStore[useStore Hook]
         useSyncExt[useSyncExternalStore]
     end
-    
     subgraph "React 运行时"
         react[React 核心]
         concurrent[并发渲染器]
     end
-    
     createStore --> subscribe
     createStore --> getState
-    
     create --> useStore
     useStore --> useSyncExt
     useSyncExt --> subscribe
     useSyncExt --> getState
-    
     useSyncExt -.->|同步外部状态 | react
     react -.->|并发控制 | concurrent
-    
     style useStore fill:#fff4e1
     style useSyncExt fill:#fff4e1
     style subscribe fill:#e8f5e9
@@ -202,15 +196,11 @@ sequenceDiagram
     participant Store
     participant Parent
     participant Child
-    
     Note over Store,Child: ❌ 老方案：手动订阅
-    
     Store->>Parent: 状态变化通知
     Parent->>Parent: setState 触发重渲染
     Parent->>Child: 传递 props
-    
     Note over Store,Child: 问题：子组件可能读取过期状态
-    
     Child->>Store: getState()
     Store-->>Child: 旧状态（竞态条件）
 ```
@@ -227,14 +217,12 @@ sequenceDiagram
     participant USES as useSyncExternalStore
     participant React
     participant Component
-    
     Note over Store,Component: 初始渲染
     Component->>USES: 调用 Hook
     USES->>Store: subscribe(onStoreChange)
     USES->>Store: getSnapshot()
     Store-->>USES: 当前状态
     USES-->>Component: 返回状态
-    
     Note over Store,Component: 状态更新
     Store->>USES: onStoreChange()
     USES->>Store: getSnapshot()
@@ -243,7 +231,6 @@ sequenceDiagram
     React->>Component: 触发重渲染
     Component->>USES: 读取新状态
     USES-->>Component: 返回新状态
-    
     style USES fill:#fff4e1
     style React fill:#e1f5ff
 ```
@@ -348,28 +335,22 @@ graph TB
     subgraph "组件 A"
         A[useBearStore s => s.bears]
     end
-    
     subgraph "组件 B"
         B[useBearStore s => s.honey]
     end
-    
     subgraph "Store"
         S[Store State]
         L[Listeners Set]
     end
-    
     A -->|订阅 | L
     B -->|订阅 | L
     L -->|通知 | A
     L -->|通知 | B
-    
     S -.->|getState | A
     S -.->|getState | B
-    
     Note over A,B: 当 bears 变化时
     Note over A,B: A 的选择器返回值变化 → A 重渲染
     Note over A,B: B 的选择器返回值不变 → B 不重渲染
-    
     style A fill:#e1f5ff
     style B fill:#e8f5e9
 ```
@@ -452,19 +433,13 @@ sequenceDiagram
     participant Store
     participant Parent
     participant Child
-    
     Note over Store,Child: 初始状态：{ count: 0, show: false }
-    
     Store->>Parent: setState({ count: 1, show: true })
-    
     Parent->>Store: subscribe 通知
     Parent->>Parent: 开始渲染
-    
     Note over Child: ⚠️ 子组件还未收到 props
-    
     Child->>Store: getState() 读取状态
     Store-->>Child: { count: 0, show: false }（旧状态！）
-    
     Child->>Child: 基于旧状态渲染 → Bug！
 ```
 
