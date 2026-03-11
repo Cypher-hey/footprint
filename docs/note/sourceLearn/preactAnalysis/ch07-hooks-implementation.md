@@ -86,7 +86,6 @@ function MouseTracker() {
 ```
 
 ### 7.1.2 Hooks 的核心设计
-
 | 设计原则 | 说明 |
 |---------|------|
 | **顺序调用** | Hooks 必须按固定顺序调用 |
@@ -169,7 +168,6 @@ function getHookState(index, type) {
 ```
 
 **关键设计**：
-
 | 设计 | 说明 |
 |------|------|
 | **按索引访问** | `hooks._list[index]` |
@@ -647,7 +645,6 @@ function WorkingComponent({ condition }) {
 ```
 
 **规则检查**：
-
 | 规则 | 检查内容 |
 |------|---------|
 | `rules-of-hooks` | Hooks 不能条件调用、不能在循环中调用 |
@@ -706,7 +703,6 @@ function App() {
 ---
 
 ## 7.8 本章小结
-
 | 知识点 | 核心内容 |
 |--------|---------|
 | **Hooks 数据结构** | `__hooks._list` 数组存储所有 Hook 状态 |
@@ -732,7 +728,6 @@ function App() {
 ---
 
 **本章源码阅读清单**：
-
 | 文件 | 行数 | 阅读重点 |
 |------|------|---------|
 | `hooks/src/index.js` | 350+ 行 | useState + useEffect + useContext |

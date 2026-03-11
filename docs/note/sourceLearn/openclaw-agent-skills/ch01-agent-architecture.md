@@ -11,7 +11,6 @@
 在 OpenClaw 中，**Agent** 是一个**可配置、可扩展的 AI 助手实例**，类似于前端中的**应用实例**概念。
 
 **类比理解**：
-
 | OpenClaw Agent | 前端类比 | 说明 |
 |---------------|---------|------|
 | Agent 实例 | React App 实例 | 每个 Agent 是一个独立的 AI 助手 |
@@ -104,7 +103,6 @@ graph TB
 ```
 
 ### 2.2 关键文件职责
-
 
 | 文件 | 职责 | 前端类比 |
 |------|------|---------|
@@ -331,10 +329,6 @@ sequenceDiagram
     PI->>Cmd: 返回结果
     Cmd->>Store: updateSessionStoreAfterAgentRun()
     Cmd->>User: 投递结果
-    style Cmd fill:#fff4e1
-    style Scope fill:#e8f5e9
-    style Skills fill:#fce4ec
-    style PI fill:#e1f5ff
 ```
 
 ### 5.2 核心执行函数
@@ -454,7 +448,6 @@ const AgentWithLogging = withLogging(AgentWithSkills);
 5. **工作空间**：支持配置、回退、自动生成三种模式
 
 ### 7.2 前端类比总结
-
 
 | OpenClaw 概念 | 前端类比 | 说明 |
 |--------------|---------|------|

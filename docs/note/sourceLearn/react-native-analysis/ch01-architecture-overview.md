@@ -16,7 +16,6 @@
 - 🎯 **React 思维**：使用 React 的组件化和声明式编程
 
 ### 1.2 与前端技术的关系
-
 | 技术 | 渲染方式 | 性能 | 开发体验 |
 |------|---------|------|---------|
 | **React Native** | 原生组件 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
@@ -86,7 +85,6 @@ react-native-analysis/              # React Native 源码 (v0.76.6)
 ```
 
 ### 2.2 核心文件职责
-
 | 文件/目录 | 职责 | 前端类比 |
 |----------|------|---------|
 | `index.js` | 主入口，导出所有 API | `react/index.js` |
@@ -122,7 +120,6 @@ graph LR
 ```
 
 ### 3.2 架构对比表
-
 | 特性 | 旧架构 (Bridge) | 新架构 (Fabric) | 提升 |
 |------|---------------|----------------|------|
 | **通信方式** | 异步序列化 | JSI 直接调用 | ⚡️ 性能提升 |
@@ -189,9 +186,6 @@ sequenceDiagram
     Bridge->>MQ: invokeCallback(cbID, result)
     MQ->>JS: 执行成功回调
     JS->>React: 触发状态更新
-    style JS fill:#e1f5ff
-    style MQ fill:#fff4e1
-    style Native fill:#e8f5e9
 ```
 
 ### 4.3 Bridge 源码分析
@@ -276,6 +270,7 @@ class WebSocketQueue {
 **NativeModules** 是 JavaScript 访问原生功能的**代理对象**。
 
 **类比理解**：
+
 | React Native | 前端 Web | 说明 |
 |-------------|---------|------|
 | `NativeModules.Alert` | `window.alert` | 系统 API |
@@ -426,7 +421,6 @@ graph TB
 ```
 
 ### 6.2 Fabric 核心改进
-
 | 改进点 | 旧架构 | Fabric | 优势 |
 |--------|-------|--------|------|
 | **通信** | 异步 Bridge | JSI 直接调用 | 零序列化开销 |
@@ -508,7 +502,6 @@ export function getEnforcing(name) {
 ```
 
 ### 7.3 TurboModules 与 NativeModules 对比
-
 | 特性 | NativeModules | TurboModules |
 |------|--------------|--------------|
 | **加载方式** | 启动时加载 | 懒加载 |
@@ -530,7 +523,6 @@ export function getEnforcing(name) {
 5. **MessageQueue 管理 JS-Native 通信队列**
 
 ### 8.2 前端类比总结
-
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | NativeModules | 浏览器 API | `window.alert` / `navigator.clipboard` |

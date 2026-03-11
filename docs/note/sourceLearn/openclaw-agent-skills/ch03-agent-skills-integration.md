@@ -40,10 +40,6 @@ sequenceDiagram
     end
     PI-->>Agent: 返回结果
     Agent-->>User: 投递响应
-    style Agent fill:#fff4e1
-    style Skills fill:#fce4ec
-    style PI fill:#e1f5ff
-    style Executor fill:#e8f5e9
 ```
 
 ### 1.2 关键数据流
@@ -406,9 +402,6 @@ sequenceDiagram
         PI->>Model: Tool Error
         Model-->>PI: 错误响应
     end
-    style Executor fill:#fff4e1
-    style Skill fill:#e8f5e9
-    style Shell fill:#e1f5ff
 ```
 
 ### 5.2 执行器伪代码
@@ -597,7 +590,6 @@ graph LR
 5. **配置驱动**：Agent 级 skills 过滤器
 
 ### 8.2 前端类比总结
-
 | Skills 集成 | 前端类比 | 说明 |
 |------------|---------|------|
 | Snapshot | Build Manifest | 构建产物清单 |

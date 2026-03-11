@@ -44,7 +44,6 @@ graph TB
 ```
 
 ### 1.2 核心模块职责
-
 | 模块 | 文件路径 | 职责 | 前端类比 |
 |------|---------|------|---------|
 | **NativeModules** | `Libraries/BatchedBridge/NativeModules.js` | 原生模块代理 | `window.*` API |
@@ -205,9 +204,6 @@ sequenceDiagram
     Bridge->>MQ: 获取并清空队列
     MQ-->>Bridge: 返回队列数据
     Bridge-->>User: 返回队列供原生侧执行
-    style Wrapper fill:#fff4e1
-    style Bridge fill:#fce4ec
-    style MQ fill:#fce4ec
 ```
 
 ### 2.3 懒加载机制
@@ -373,7 +369,6 @@ graph TB
 ```
 
 ### 3.3 核心组件列表
-
 | 组件 | 文件路径 | 原生对应 |
 |------|---------|---------|
 | **View** | `Libraries/Components/View/View.js` | UIView / ViewGroup |
@@ -481,8 +476,6 @@ sequenceDiagram
     Listener->>NEE: removeSubscription()
     NEE->>NEE: 检查是否还有监听器
     NEE->>Native: stopObserving(eventType)
-    style NEE fill:#fff4e1
-    style Native fill:#e8f5e9
 ```
 
 ### 4.3 常用事件模块
@@ -558,9 +551,6 @@ sequenceDiagram
     Native->>JS: 注入全局配置
     JS->>JS: 解析配置创建 NativeModules
     JS-->>App: 应用就绪
-    style Config fill:#fff4e1
-    style JS fill:#e1f5ff
-    style Native fill:#e8f5e9
 ```
 
 ### 5.2 懒加载属性定义
@@ -640,7 +630,6 @@ Object.defineProperty(obj, 'lazyProp', {
 ### 6.2 Polyfills 列表
 
 **源码位置**：`packages/polyfills/`
-
 | Polyfill | 文件 | 用途 |
 |---------|------|------|
 | **console** | `console.js` | 控制台输出 |
@@ -697,7 +686,6 @@ module.exports = getPolyfills;
 6. **Polyfills** 提供标准 API 兼容层
 
 ### 7.2 前端类比总结
-
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | NativeModules | `window.*` API | 全局对象属性 |

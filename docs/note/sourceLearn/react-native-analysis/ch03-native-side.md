@@ -40,7 +40,6 @@ graph TB
 ```
 
 ### 1.2 核心组件职责
-
 | 组件 | Android | iOS | 职责 |
 |------|---------|-----|------|
 | **Bridge** | `ReactBridge.java` | `RCTBridge.m` | JS-Native 通信 |
@@ -298,9 +297,6 @@ sequenceDiagram
     UIManager->>ViewManager: updateProperties(view, props)
     ViewManager->>View: setProperty(props)
     View-->>UIManager: 更新完成
-    style JS fill:#e1f5ff
-    style UIManager fill:#fce4ec
-    style View fill:#e8f5e9
 ```
 
 ---
@@ -656,8 +652,6 @@ sequenceDiagram
     Registry->>Registry: 存储 ModuleHolder
     Registry-->>Manager: 注册完成
     Manager-->>App: 初始化完成
-    style Registry fill:#fce4ec
-    style Module fill:#e8f5e9
 ```
 
 **代码示例**：
@@ -705,8 +699,6 @@ sequenceDiagram
     Registry-->>Bridge: 注册完成
     Bridge-->>App: 初始化完成
     Note over Bridge: 自动扫描 RCT_EXTERN_MODULE 宏
-    style Registry fill:#fce4ec
-    style Module fill:#e8f5e9
 ```
 
 **代码示例**：
@@ -750,7 +742,6 @@ RCT_EXTERN_METHOD(showToast:(NSString *)message
 6. **模块注册通过 Package/Protocol**，自动扫描和注册
 
 ### 6.2 前端类比总结
-
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | Module Registry | Module Bundler | 模块管理 |

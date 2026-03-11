@@ -60,7 +60,6 @@ graph TB
 ```
 
 ### 1.2 核心模块职责
-
 | 层级 | 模块 | 职责 | 关键文件 |
 |------|------|------|---------|
 | **JavaScript** | NativeModules | 原生功能代理 | `NativeModules.js` |
@@ -112,7 +111,6 @@ graph LR
 ```
 
 **详细对比**：
-
 | 维度 | React DOM | React Native | 说明 |
 |------|-----------|--------------|------|
 | **渲染目标** | Browser DOM | Native Views | 平台不同 |
@@ -168,7 +166,6 @@ const styles = StyleSheet.create({
 ```
 
 ### 2.3 架构对比
-
 | 概念 | React DOM | React Native | 说明 |
 |------|-----------|--------------|------|
 | **Root** | `ReactDOM.createRoot()` | `AppRegistry.registerComponent()` | 应用入口 |
@@ -233,7 +230,6 @@ graph TB
 4. **可测试**：各层可独立测试
 
 ### 3.2 通信优化
-
 | 优化点 | 实现方式 | 效果 |
 |--------|----------|------|
 | **批量处理** | MessageQueue 收集调用 | 减少 Bridge 调用次数 |
@@ -242,7 +238,6 @@ graph TB
 | **JSI 直接调用** | C++ 绑定 | 零序列化开销 |
 
 ### 3.3 渲染优化
-
 | 优化点 | 实现方式 | 效果 |
 |--------|----------|------|
 | **Shadow Tree** | 不可变树结构 | 高效 diff |
@@ -251,7 +246,6 @@ graph TB
 | **视图回收** | FlatList 虚拟列表 | 减少内存 |
 
 ### 3.4 类型安全
-
 | 特性 | 实现方式 | 说明 |
 |------|----------|------|
 | **Flow/TypeScript** | 静态类型检查 | JS 侧类型 |
@@ -607,7 +601,6 @@ mindmap
 ```
 
 ### 6.2 核心概念总结
-
 | 概念 | 说明 | 关键文件 |
 |------|------|---------|
 | **NativeModules** | 原生功能 JS 代理 | `NativeModules.js` |
@@ -618,7 +611,6 @@ mindmap
 | **TurboModules** | 新一代模块系统 | `TurboModuleRegistry.js` |
 
 ### 6.3 前端类比总结
-
 | React Native | 前端 Web | 说明 |
 |-------------|---------|------|
 | NativeModules | `window.*` API | 全局对象 |
@@ -633,7 +625,6 @@ mindmap
 ## 7. 输出文件清单
 
 本系列共 5 章，输出到以下文件：
-
 | 文件 | 章节 | 内容 | 行数 |
 |------|------|------|------|
 | `ch01-architecture-overview.md` | 第 1 章 | 架构概览 | ~400 |

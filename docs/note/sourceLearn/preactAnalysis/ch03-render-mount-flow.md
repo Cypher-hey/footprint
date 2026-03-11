@@ -16,7 +16,6 @@ export function render(vnode, parentDom, replaceNode) {
 ```
 
 **参数说明**：
-
 | 参数 | 类型 | 作用 | 示例 |
 |------|------|------|------|
 | `vnode` | VNode | 要渲染的虚拟节点 | `<App />` |
@@ -77,7 +76,6 @@ export function hydrate(vnode, parentDom) {
 ```
 
 这是一个巧妙的**自引用标记**模式：
-
 | 调用方式 | replaceNode 值 | isHydrating |
 |---------|---------------|-------------|
 | `render(<App />, container)` | `undefined` | `false` |
@@ -94,7 +92,6 @@ let oldVNode = isHydrating
 **核心设计**：Preact 将上次渲染的 VNode 树存储在 DOM 元素的 `_children` 属性上。
 
 **三种场景**：
-
 | 场景 | oldVNode 来源 | 说明 |
 |------|-------------|------|
 | 首次渲染 | `NULL` | DOM 上没有 `_children` 属性 |
@@ -163,7 +160,6 @@ diff(
 ```
 
 **参数详解**（这是 diff 函数的完整签名）：
-
 | 参数 | 作用 | 首次渲染值 |
 |------|------|-----------|
 | `parentDom` | 父 DOM 容器 | `document.body` |
@@ -253,7 +249,6 @@ flowchart TD
 **Hydration（激活）** 是指：服务端已经渲染了 HTML，客户端 Preact 不需要重新创建 DOM，而是"激活"现有 DOM，绑定事件监听器。
 
 **对比**：
-
 | 方式 | 服务端 | 客户端 | DOM 操作 |
 |------|--------|--------|---------|
 | `render()` | 无 | 完整渲染 | 创建所有 DOM |
@@ -412,7 +407,6 @@ export function commitRoot(commitQueue, rootVNode, refQueue) {
 ```
 
 **为什么分两个阶段？**
-
 | 阶段 | 职责 | 是否阻塞渲染 |
 |------|------|-------------|
 | **diff** | 计算差异、修改 DOM | ✅ 是（必须同步） |
@@ -510,7 +504,6 @@ rerenderQueue.push(c);
 ---
 
 ## 3.9 本章小结
-
 | 知识点 | 核心内容 |
 |--------|---------|
 | **render() 参数** | vnode、parentDom、replaceNode（hydrate 标记） |
@@ -537,7 +530,6 @@ rerenderQueue.push(c);
 ---
 
 **本章源码阅读清单**：
-
 | 文件 | 行数 | 阅读重点 |
 |------|------|---------|
 | `src/render.js` | 60 行 | render + hydrate 完整实现 |

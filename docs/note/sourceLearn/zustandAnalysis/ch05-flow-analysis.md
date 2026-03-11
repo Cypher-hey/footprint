@@ -53,7 +53,6 @@ graph TB
 ```
 
 ### 1.2 流程分解
-
 | 阶段 | 模块 | 关键函数 | 作用 |
 |------|------|----------|------|
 | ① 用户调用 | 用户代码 | `store.setState()` | 触发状态更新 |
@@ -101,11 +100,6 @@ sequenceDiagram
     C->>H: 读取新状态
     H-->>C: 返回新状态切片
     C->>C: 重新渲染
-    style C fill:#e1f5ff
-    style H fill:#fff4e1
-    style M fill:#fce4ec
-    style S fill:#e8f5e9
-    style R fill:#e3f2fd
 ```
 
 ### 2.2 源码对照分析
@@ -386,6 +380,7 @@ state =
 ```
 
 **合并策略**：
+
 | 条件 | 结果 |
 |------|------|
 | `replace === true` | 完全替换 |
@@ -599,7 +594,6 @@ graph TB
 ```
 
 ### 7.2 关键节点总结
-
 | 节点 | 位置 | 作用 | 优化点 |
 |------|------|------|--------|
 | setState | `vanilla.ts L60` | 状态更新入口 | 函数式更新支持 |

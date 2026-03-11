@@ -124,7 +124,6 @@ const createStoreImpl: CreateStoreImpl = (createState) => {
 ```
 
 ### 3.2 关键代码解读
-
 | 步骤 | 代码 | 作用 | 设计亮点 |
 |------|------|------|----------|
 | ① | `let state: TState` | 闭包存储状态 | 无需 Context，避免 Provider 包裹 |
@@ -177,7 +176,6 @@ state =
 ```
 
 **逻辑拆解**：
-
 | 条件 | `replace` 值 | `nextState` 类型 | 结果 |
 |------|-------------|------------------|------|
 | 显式替换 | `true` | 任意 | 完全替换 |
@@ -255,9 +253,6 @@ sequenceDiagram
     Note over C,S: 取消订阅
     C->>C: unsubscribe()
     C->>L: delete(listener)
-    style C fill:#e1f5ff
-    style S fill:#e8f5e9
-    style L fill:#fff9c4
 ```
 
 ### 5.2 订阅系统源码
@@ -428,7 +423,6 @@ const enhancedCreate = devtools(persist(createState))
 ## 8. 学习要点
 
 ### 8.1 值得借鉴的设计
-
 | 设计点 | 实现方式 | 可复用场景 |
 |--------|----------|------------|
 | **闭包存储** | 模块级变量 + 闭包访问 | 任何需要单例状态的场景 |
@@ -438,7 +432,6 @@ const enhancedCreate = devtools(persist(createState))
 | **取消订阅模式** | 返回 cleanup 函数 | 资源清理、事件移除 |
 
 ### 8.2 可能的改进空间
-
 | 问题 | 现状 | 改进建议 |
 |------|------|----------|
 | **浅合并陷阱** | 嵌套对象会丢失字段 | 文档强调 + 推荐 Immer |
@@ -458,7 +451,6 @@ const enhancedCreate = devtools(persist(createState))
 5. **浅比较优化**：`Object.is` 判断状态是否变化
 
 ### 9.2 关键源码位置
-
 | 功能 | 文件 | 行号 |
 |------|------|------|
 | `createStoreImpl` | `src/vanilla.ts` | L55-85 |
