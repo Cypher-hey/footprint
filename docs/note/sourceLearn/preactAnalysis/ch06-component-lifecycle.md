@@ -19,6 +19,7 @@ export function BaseComponent(props, context) {
 ```
 
 **核心属性**（实例化时初始化）：
+
 | 属性 | 来源 | 作用 |
 |------|------|------|
 | `props` | 构造函数参数 | 父组件传入的属性 |
@@ -30,6 +31,7 @@ export function BaseComponent(props, context) {
 | `_globalContext` | 渲染时设置 | 全局 Context |
 
 **内部属性**（Preact 使用，不建议访问）：
+
 | 属性 | 作用 |
 |------|------|
 | `_nextState` | 下一次 state（用于批量更新） |
@@ -70,6 +72,7 @@ if (oldVNode._component) {
 ```
 
 **类组件 vs 函数组件**：
+
 | 方面 | 类组件 | 函数组件 |
 |------|--------|---------|
 | 实例化 | `new Component()` | `new BaseComponent()` |
@@ -155,6 +158,7 @@ this.setState({ count: 3 });  // 第 3 次
 ```
 
 **设计优势**：
+
 | 方面 | 无 _nextState | 有 _nextState |
 |------|-------------|--------------|
 | 多次 setState | 多次渲染 | 一次渲染 |
@@ -424,6 +428,7 @@ if (isNew) {
 ```
 
 **调用时机**：
+
 | 生命周期 | 调用时机 | DOM 状态 | 典型用途 |
 |---------|---------|---------|---------|
 | `componentWillMount` | render 之前 | 未创建 | ❌ 已废弃，不推荐使用 |
@@ -534,6 +539,7 @@ sequenceDiagram
 ```
 
 **生命周期对比表**：
+
 | 生命周期 | 调用时机 | 可调用 setState? | 典型用途 |
 |---------|---------|-----------------|---------|
 | `componentWillReceiveProps` | props 变化时 | ✅ | 根据 props 更新 state |
@@ -606,6 +612,7 @@ BaseComponent.prototype.forceUpdate = function (callback) {
 ```
 
 **与 setState 的区别**：
+
 | 方面 | setState | forceUpdate |
 |------|---------|-------------|
 | state 变化 | ✅ | ❌ |
@@ -633,6 +640,7 @@ component.forceUpdate();
 ---
 
 ## 6.6 本章小结
+
 | 知识点 | 核心内容 |
 |--------|---------|
 | **BaseComponent** | 所有类组件的基类，提供 props、context、setState |
@@ -660,6 +668,7 @@ component.forceUpdate();
 ---
 
 **本章源码阅读清单**：
+
 | 文件 | 行数 | 阅读重点 |
 |------|------|---------|
 | `src/component.js` | 200+ 行 | setState + enqueueRender + forceUpdate |

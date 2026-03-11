@@ -40,6 +40,7 @@ graph TB
 ```
 
 ### 1.2 核心组件职责
+
 | 组件 | Android | iOS | 职责 |
 |------|---------|-----|------|
 | **Bridge** | `ReactBridge.java` | `RCTBridge.m` | JS-Native 通信 |
@@ -742,6 +743,7 @@ RCT_EXTERN_METHOD(showToast:(NSString *)message
 6. **模块注册通过 Package/Protocol**，自动扫描和注册
 
 ### 6.2 前端类比总结
+
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | Module Registry | Module Bundler | 模块管理 |

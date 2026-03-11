@@ -45,6 +45,7 @@ graph TB
 
 ### 1.2 详细对比表
 
+
 | 维度 | Webpack Plugin | OpenClaw Skills | 说明 |
 |------|---------------|-----------------|------|
 | **扩展点** | Compilation Hooks | Skill Commands | 扩展入口 |
@@ -106,6 +107,7 @@ export async function execute(args) {
 ```
 
 ### 1.4 设计模式对比
+
 
 | 模式 | Webpack | OpenClaw | 说明 |
 |------|---------|----------|------|
@@ -210,6 +212,7 @@ const enhancedAgent = createAgent({
 
 ### 2.3 设计模式对比
 
+
 | 模式 | React HOC | OpenClaw Skills | 说明 |
 |------|-----------|-----------------|------|
 | **组合** | `hoc1(hoc2(Component))` | `withSkill1(withSkill2(agent))` | 函数组合 |
@@ -273,6 +276,7 @@ requires:
 ```
 
 **对比分析**：
+
 | 维度 | Vue Mixins | OpenClaw Skills |
 |------|-----------|-----------------|
 | **复用方式** | `mixins: []` | `skills: []` |
@@ -598,6 +602,7 @@ graph TB
 
 ### 7.2 核心概念总结
 
+
 | 概念 | 说明 | 关键文件 |
 |------|------|---------|
 | **Agent** | AI 助手实例 | `agent-scope.ts` |
@@ -609,6 +614,7 @@ graph TB
 
 
 ### 7.3 前端类比总结
+
 
 | OpenClaw | 前端类比 | 核心思想 |
 |---------|---------|---------|
@@ -625,6 +631,7 @@ graph TB
 ## 8. 输出文件清单
 
 本系列共 4 章，输出到以下文件：
+
 
 | 文件 | 章节 | 内容 |
 |------|------|------|

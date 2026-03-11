@@ -138,6 +138,7 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 ```
 
 ### 3.2 关键代码解读
+
 | 步骤 | 代码 | 作用 | 设计亮点 |
 |------|------|------|----------|
 | ① | `api.subscribe` | 订阅外部状态变化 | 直接复用 Vanilla 层的 subscribe |
@@ -506,6 +507,7 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 ```
 
 ### 8.2 与传统模式对比
+
 | 特性 | useSyncExternalStore | traditional (useEffect) |
 |------|---------------------|------------------------|
 | React 版本 | 18+ | 16.8+ |
@@ -519,6 +521,7 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 ## 9. 学习要点
 
 ### 9.1 值得借鉴的设计
+
 | 设计点 | 实现方式 | 可复用场景 |
 |--------|----------|------------|
 | **Hook + API 合一** | `Object.assign(hook, api)` | 任何需要双模式访问的场景 |
@@ -527,6 +530,7 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 | **SSR 支持** | `getInitialState` | 服务端渲染 hydration |
 
 ### 9.2 使用建议
+
 | 场景 | 推荐做法 | 原因 |
 |------|----------|------|
 | 原子状态 | `useStore(s => s.count)` | 精准订阅，性能最优 |
@@ -547,6 +551,7 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 5. **SSR 支持**：通过 `getInitialState` 实现 hydration
 
 ### 10.2 关键源码位置
+
 | 功能 | 文件 | 行号 |
 |------|------|------|
 | `useStore` Hook | `src/react.ts` | L16-27 |

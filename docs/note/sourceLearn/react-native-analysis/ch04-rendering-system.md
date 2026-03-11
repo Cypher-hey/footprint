@@ -41,6 +41,7 @@ graph TB
 ```
 
 ### 1.2 架构演进对比
+
 | 特性 | 旧架构 | 新架构 (Fabric) |
 |------|-------|----------------|
 | **渲染器** | UIManager | Fabric Renderer |
@@ -61,7 +62,6 @@ graph TB
 - 跨线程渲染
 
 **类比理解**：
-
 | React Native | React Web | 说明 |
 |-------------|-----------|------|
 | Shadow Tree | Virtual DOM | 虚拟树结构 |
@@ -200,7 +200,6 @@ public:
 - 🎯 可嵌入：可集成到任何项目
 
 **类比理解**：
-
 | Yoga | 浏览器 | 说明 |
 |------|-------|------|
 | YGNode | DOM Node | 布局节点 |
@@ -758,6 +757,7 @@ sequenceDiagram
 6. **Surface Handler** 管理渲染表面的生命周期
 
 ### 7.2 前端类比总结
+
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | Shadow Tree | Virtual DOM | 虚拟树结构 |
@@ -768,6 +768,7 @@ sequenceDiagram
 | Surface | Render Target | 渲染目标 |
 
 ### 7.3 性能优化建议
+
 | 优化点 | 方法 | 效果 |
 |--------|------|------|
 | **减少层级** | 使用 FlatList | 减少视图数量 |

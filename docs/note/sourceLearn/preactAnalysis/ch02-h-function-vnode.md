@@ -133,6 +133,7 @@ for (i in props) {
 ```
 
 **为什么要把 key 和 ref 从 props 中分离？**
+
 | 原因 | 说明 |
 |------|------|
 | **key 用于 diff 优化** | key 是 diff 算法的输入，不应该传递给组件 |
@@ -198,6 +199,7 @@ arguments[3] = h('span', null, 'Child 2')
 ```
 
 **处理逻辑**：
+
 | 场景 | arguments 长度 | 处理方式 |
 |------|---------------|---------|
 | 无子节点 | `length === 2` | 不处理，children 为 undefined |
@@ -311,6 +313,7 @@ export function createVNode(type, props, key, ref, original) {
 ```
 
 ### 2.4.1 字段初始化详解
+
 | 字段 | 初始值 | 作用 | 何时被赋值 |
 |------|--------|------|-----------|
 | `type` | 参数传入 | 节点类型 | createElement 时确定 |
@@ -593,6 +596,7 @@ for (i in props) {
 ```
 
 **为什么不用 `Object.keys(props).forEach()`？**
+
 | 方案 | 字节数 | 性能 |
 |------|--------|------|
 | `for...in` | ~30 字节 | ✅ 快 |
@@ -603,6 +607,7 @@ for (i in props) {
 ---
 
 ## 2.9 本章小结
+
 | 知识点 | 核心内容 |
 |--------|---------|
 | **JSX 转换** | Babel 将 JSX 转为 `h()` 调用 |
@@ -629,6 +634,7 @@ for (i in props) {
 ---
 
 **本章源码阅读清单**：
+
 | 文件 | 行数 | 阅读重点 |
 |------|------|---------|
 | `src/create-element.js` | 90 行 | createElement + createVNode 完整实现 |

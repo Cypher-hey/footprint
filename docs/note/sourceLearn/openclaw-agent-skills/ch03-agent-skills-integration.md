@@ -590,6 +590,7 @@ graph LR
 5. **配置驱动**：Agent 级 skills 过滤器
 
 ### 8.2 前端类比总结
+
 | Skills 集成 | 前端类比 | 说明 |
 |------------|---------|------|
 | Snapshot | Build Manifest | 构建产物清单 |

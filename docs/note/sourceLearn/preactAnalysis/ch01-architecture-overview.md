@@ -81,6 +81,7 @@ export { default as options } from './options';
 ```
 
 **解读**：
+
 | 导出项 | 作用 | 对应源码 |
 |--------|------|---------|
 | `render` | 将 VNode 树渲染到 DOM | `src/render.js` |
@@ -147,6 +148,7 @@ const vnode = {
 ```
 
 **重点字段解读**：
+
 | 字段 | 作用 | 示例 |
 |------|------|------|
 | `type` | 节点类型 | `'div'` 或 `function App()` |
@@ -256,6 +258,7 @@ sequenceDiagram
     end
     R-->>User: 渲染完成
 ```
+
 | 函数 | 职责 | 源码位置 |
 |------|------|---------|
 | `createElement()` | 创建 VNode 树 | `src/create-element.js` |
@@ -269,6 +272,7 @@ sequenceDiagram
 ### 1.7.1 极致轻量化策略
 
 Preact 通过以下手段实现 3kB 体积：
+
 | 策略 | 说明 | 示例 |
 |------|------|------|
 | **单字段命名** | 内部字段用 `_dom` 而非 `_domNode` | 节省字节 |
@@ -294,6 +298,7 @@ export const isValidElement = vnode =>
 ---
 
 ## 1.8 本章小结
+
 | 知识点 | 核心内容 |
 |--------|---------|
 | **Preact 定位** | 3kB 轻量化 React 替代方案 |
@@ -318,6 +323,7 @@ export const isValidElement = vnode =>
 ---
 
 **本章源码阅读清单**：
+
 | 文件 | 行数 | 阅读重点 |
 |------|------|---------|
 | `src/index.js` | 15 行 | 导出 API |

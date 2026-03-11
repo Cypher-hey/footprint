@@ -44,6 +44,7 @@ graph TB
 ```
 
 ### 1.2 核心模块职责
+
 | 模块 | 文件路径 | 职责 | 前端类比 |
 |------|---------|------|---------|
 | **NativeModules** | `Libraries/BatchedBridge/NativeModules.js` | 原生模块代理 | `window.*` API |
@@ -369,6 +370,7 @@ graph TB
 ```
 
 ### 3.3 核心组件列表
+
 | 组件 | 文件路径 | 原生对应 |
 |------|---------|---------|
 | **View** | `Libraries/Components/View/View.js` | UIView / ViewGroup |
@@ -630,6 +632,7 @@ Object.defineProperty(obj, 'lazyProp', {
 ### 6.2 Polyfills 列表
 
 **源码位置**：`packages/polyfills/`
+
 | Polyfill | 文件 | 用途 |
 |---------|------|------|
 | **console** | `console.js` | 控制台输出 |
@@ -686,6 +689,7 @@ module.exports = getPolyfills;
 6. **Polyfills** 提供标准 API 兼容层
 
 ### 7.2 前端类比总结
+
 | React Native 概念 | 前端类比 | 说明 |
 |------------------|---------|------|
 | NativeModules | `window.*` API | 全局对象属性 |
