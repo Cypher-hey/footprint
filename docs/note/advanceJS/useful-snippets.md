@@ -15,7 +15,7 @@
 
 
 - Use <kbd>Ctrl</kbd> + <kbd>F</kbd> or <kbd>command</kbd> + <kbd>F</kbd> to search for a snippet.
-- Contributions welcome, please read the [contribution guide](CONTRIBUTING.md).
+- Contributions welcome, please read the contribution guide（原上游贡献指南，未随归档保存）.
 - Snippets are written in ES6, use the [Babel transpiler](https://babeljs.io/) to ensure backwards-compatibility.
 - You can import these snippets into your text editor of choice (VSCode, Atom, Sublime) using the files found in [this repo](https://github.com/Rob-Rychs/30-seconds-of-code-texteditorsnippets).
 - You can import these snippets into Alfred 3, using [this file](https://github.com/lslvxy/30-seconds-of-code-alfredsnippets).
@@ -1596,7 +1596,7 @@ longestItem([1, 2, 3], 'foobar'); // 'foobar'
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### mapObject ![advanced](/advanced.svg)
+### mapObject 〔进阶〕
 
 Maps the values of an array to an object using a function, where the key-value pairs consist of the original value as the key and the mapped value.
 
@@ -1823,7 +1823,7 @@ let pulled = pullAtValue(myArray, ['b', 'd']); // myArray = [ 'a', 'c' ] , pulle
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### pullBy ![advanced](/advanced.svg)
+### pullBy 〔进阶〕
 
 Mutates the original array to filter out the values specified, based on a given iterator function.
 
@@ -2532,7 +2532,7 @@ unzip([['a', 1, true], ['b', 2]]); //[['a', 'b'], [1, 2], [true]]
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### unzipWith ![advanced](/advanced.svg)
+### unzipWith 〔进阶〕
 
 Creates an array of elements, ungrouping the elements in an array produced by [zip](#zip) and applying the provided function.
 
@@ -2664,7 +2664,7 @@ zipObject(['a', 'b'], [1, 2, 3]); // {a: 1, b: 2}
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### zipWith ![advanced](/advanced.svg)
+### zipWith 〔进阶〕
 
 Creates an array of elements, grouped based on the position in the original arrays and using function as the last value to specify how grouped values should be combined.
 
@@ -2754,7 +2754,7 @@ bottomVisible(); // true
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### copyToClipboard ![advanced](/advanced.svg)
+### copyToClipboard 〔进阶〕
 
 Copy a string to the clipboard. Only works as a result of user action (i.e. inside a `click` event listener).
 
@@ -2830,7 +2830,7 @@ console.log(el.className); // 'container'
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### createEventHub ![advanced](/advanced.svg)
+### createEventHub 〔进阶〕
 
 Creates a pub/sub ([publish–subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)) event hub with `emit`, `on`, and `off` methods.
 
@@ -3035,7 +3035,7 @@ hasClass(document.querySelector('p.special'), 'special'); // true
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### hashBrowser ![advanced](/advanced.svg)
+### hashBrowser 〔进阶〕
 
 Creates a hash for a value using the [SHA-256](https://en.wikipedia.org/wiki/SHA-2) algorithm. Returns a promise.
 
@@ -3110,7 +3110,7 @@ httpsRedirect(); // If you are on http://mydomain.com, you are redirected to htt
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### observeMutations ![advanced](/advanced.svg)
+### observeMutations 〔进阶〕
 
 Returns a new MutationObserver and runs the provided callback for each mutation on the specified element.
 
@@ -3208,7 +3208,7 @@ on(document.body, 'click', fn, { options: true }); // use capturing instead of b
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### onUserInputChange ![advanced](/advanced.svg)
+### onUserInputChange 〔进阶〕
 
 Run the callback whenever the user input type changes (`mouse` or `touch`). Useful for enabling/disabling code depending on the input device. This process is dynamic and works with hybrid devices (e.g. touchscreen laptops).
 
@@ -3271,7 +3271,7 @@ redirect('https://google.com');
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### runAsync ![advanced](/advanced.svg)
+### runAsync 〔进阶〕
 
 Runs a function in a separate thread by using a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers), allowing long running functions to not block the UI.
 
@@ -4356,7 +4356,7 @@ distance(1, 1, 2, 3); // 2.23606797749979
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### elo ![advanced](/advanced.svg)
+### elo 〔进阶〕
 
 Computes the new ratings between two or more opponents using the [Elo rating system](https://en.wikipedia.org/wiki/Elo_rating_system). It takes an array
 of pre-ratings and returns an array containing post-ratings.
@@ -5484,7 +5484,7 @@ defaults({ a: 1 }, { b: 2 }, { b: 6 }, { a: 3 }); // { a: 1, b: 2 }
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### equals ![advanced](/advanced.svg)
+### equals 〔进阶〕
 
 Performs a deep comparison between two values to determine if they are equivalent.
 
@@ -6223,7 +6223,7 @@ truthCheckCollection([{ user: 'Tinky-Winky', sex: 'male' }, { user: 'Dipsy', sex
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### unflattenObject ![advanced](/advanced.svg)
+### unflattenObject 〔进阶〕
 
 Unlatten an object with the paths for keys.
 
@@ -7584,7 +7584,7 @@ getURLParameters('google.com'); // {}
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### hexToRGB ![advanced](/advanced.svg)
+### hexToRGB 〔进阶〕
 
 Converts a color code to a `rgb()` or `rgba()` string if alpha value is provided.
 

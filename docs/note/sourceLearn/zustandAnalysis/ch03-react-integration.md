@@ -1,5 +1,15 @@
 # 第 3 章 React 集成层
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的第 3 章，聚焦于 React 集成层的实现。我们将深入分析 `useStore` Hook、`useSyncExternalStore` 的作用原理，以及 Zustand 如何解决"僵尸子组件"和并发渲染问题。
 
 ---
@@ -361,7 +371,7 @@ graph TB
 const prevSnapshot = useRef(null)
 const nextSnapshot = getSnapshot()
 
-// 浅比较（Object.is）
+// SameValue 比较（Object.is）
 if (!Object.is(prevSnapshot.current, nextSnapshot)) {
   // 触发重渲染
 }
@@ -475,48 +485,18 @@ function Child() {
 
 ---
 
-## 8. traditional.ts：传统模式
+## 8. traditional.ts：显式 equalityFn 的 React 绑定
 
-### 8.1 为什么需要 traditional？
+Zustand 5 的 traditional 不是 useEffect + useState 替代实现，也不能据此声称支持 React 16.8。当前核查的 package.json 对 React 声明 >=18。
 
-对于 React 18 以下版本，Zustand 提供 `traditional.ts` 作为兼容方案。
+它从 use-sync-external-store/shim/with-selector 导入 useSyncExternalStoreWithSelector，传入 subscribe、getState、getInitialState、selector 和 equalityFn。公开入口是 useStoreWithEqualityFn 与 createWithEqualityFn。默认 react.ts 则直接用 React.useSyncExternalStore。
 
-**源码位置**：`src/traditional.ts`
+| 入口 | 比较控制 | 注意点 |
+| --- | --- | --- |
+| zustand | 快照 Object.is；可组合 useShallow | 不接受旧版任意第二参数作为 equalityFn |
+| zustand/traditional | selector + equalityFn | 需要相应 use-sync-external-store 依赖 |
 
-```typescript
-// 文件：src/traditional.ts
-// 使用 useEffect + useState 模拟外部状态同步
-
-export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
-  api: S,
-  selector: (state: ExtractState<S>) => U = identity as any,
-) {
-  const [slice, setSlice] = useState(() => selector(api.getState()))
-  
-  useEffect(() => {
-    const listener = () => {
-      setSlice(selector(api.getState()))
-    }
-    
-    const unsubscribe = api.subscribe(listener)
-    return unsubscribe
-  }, [api, selector])
-  
-  return slice
-}
-```
-
-### 8.2 与传统模式对比
-
-| 特性 | useSyncExternalStore | traditional (useEffect) |
-|------|---------------------|------------------------|
-| React 版本 | 18+ | 16.8+ |
-| 并发安全 | ✅ | ❌ |
-| 僵尸子组件 | ✅ 已解决 | ⚠️ 可能存在 |
-| 代码复杂度 | 低 | 中 |
-| 推荐度 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-
----
+不要用 useEffect 订阅伪代码代替真实并发安全实现。早期读取与订阅之间的竞态、提交期检查等不能省略后再宣称等价。
 
 ## 9. 学习要点
 
@@ -570,3 +550,11 @@ export function useStore<S extends ReadonlyStoreApi<unknown>, U>(
 ---
 
 **本章是系列解析的第 3 章**，深入剖析了 Zustand 的 React 集成层实现。下一章我们将进入中间件系统的分析。
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

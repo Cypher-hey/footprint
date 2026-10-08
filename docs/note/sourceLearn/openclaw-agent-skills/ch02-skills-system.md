@@ -1,5 +1,19 @@
 # 第 2 章 Skills 系统架构
 
+## 版本范围与本轮校核
+
+原稿未固定 OpenClaw commit，本轮按官方 Skills 文档校正概念与目录要求。内部 resolve/load/build 函数名、配置键及完整时序没有做版本源码一致性验证；保留的 TypeScript 片段按教学草图阅读。
+
+### 先掌握这些边界
+
+- Skill 的基本载体是带元数据的 SKILL.md。package.json、index.js、execute 并非每个 skill 必须存在的入口；可选脚本与工具插件应分别理解。
+- Skill 主要提供任务知识与工作步骤。被加载不代表已执行，也不代表获得额外工具权限；能执行什么由 runtime、工具许可和沙箱决定。
+- 元数据发现、正文按需读取、脚本/资源访问是不同阶段；不要假设所有 skill 全文都同时进入系统提示词。
+- workspace/agentId 分开有助于管理，不构成操作系统安全隔离。外部 skill 与仓库指令需检查来源、注入风险和可执行代码。
+- Skill eligibility 与依赖检测是加载条件，不是安装授权。本文没有安装 skill、执行外部脚本或改变权限。
+
+核查日期：2026-10-08；[官方依据](https://docs.openclaw.ai/tools/skills)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > 本章是 OpenClaw Agent & Skills 源码解析系列的第 2 章，聚焦于 Skills 系统的完整架构。我们将深入分析 Skills 的加载机制、过滤策略、元数据系统以及快照管理。
 
 ---
@@ -30,8 +44,8 @@ export type SkillEntry = {
 ~/.openclaw/skills/                 # 全局 Skills 目录
 ├── github/                         # GitHub 技能
 │   ├── SKILL.md                    # ⭐ 技能定义（含 frontmatter）
-│   ├── package.json                # 依赖配置
-│   └── index.js                    # 实现代码
+│   ├── package.json                # 可选：附带脚本的依赖配置
+│   └── index.js                    # 可选资源：不是 Skill 标准入口
 ├── git/                            # Git 技能
 │   ├── SKILL.md
 │   └── index.js
@@ -145,7 +159,7 @@ function loadSkillEntries(
   // ③ 加载插件 Skills
   const pluginSkills = loadPluginSkills();
   
-  // ④ 合并（工作空间优先级 > 插件 > 内置）
+  // ④ 教学简化合并；不是现行完整优先级实现
   const merged = mergeSkillSources([
     ...bundledSkills,
     ...pluginSkills,
@@ -238,31 +252,22 @@ const context = dir.endsWith('/skills') ? dir : path.join(dir, 'skills');
 
 ### 3.1 Frontmatter 格式
 
-**示例**（`SKILL.md` 文件头部）：
+以下为自写最小示意，不声明安装器，也不需要 index.js。OpenClaw 扩展字段放在 metadata.openclaw 中；不要照抄旧稿把 requires、os、install 全部放在顶层。
 
 ```markdown
 ---
-name: github
-description: GitHub 操作技能
-emoji: 🐙
-homepage: https://github.com
-os: [darwin, linux, win32]
-requires:
-  bins: [gh]
-  env: [GITHUB_TOKEN]
-install:
-  - kind: brew
-    formula: gh
-    os: [darwin]
-  - kind: download
-    url: https://github.com/cli/cli/releases
-    extract: true
+name: review-notes
+description: 检查知识笔记的术语、出处与验证范围
+metadata: {"openclaw":{"requires":{"bins":["git"]}}}
 ---
 
-# GitHub Skill
+# 笔记审阅
 
-这个技能提供 GitHub 相关操作...
+先确认主题和版本，再读取相关文件；列出证据与待验证项。
+需要写入或执行工具时，遵守实际权限和用户授权。
 ```
+
+下面解析器与接口类型保留为旧版教学草图，不是当前 YAML/schema 的完整实现。
 
 ### 3.2 Frontmatter 解析
 
@@ -678,7 +683,7 @@ export function buildWorkspaceSkillsPrompt(
 ```typescript
 /**
  * 压缩技能路径（用 ~ 替换家目录）
- * 节省约 400-600 tokens
+ * 节省量需按实际路径、技能数和 tokenizer 测量
  */
 function compactSkillPaths(skills: Skill[]): Skill[] {
   const home = os.homedir();
@@ -699,7 +704,7 @@ function compactSkillPaths(skills: Skill[]): Skill[] {
 ```
 原始：/Users/admin/.openclaw/skills/github/SKILL.md
 压缩：~/.openclaw/skills/github/SKILL.md
-节省：~5-6 tokens/技能 × N 技能 ≈ 400-600 tokens
+不提供固定 token 收益：字符差、转义、模板和 tokenizer 都影响结果。
 ```
 
 ---
@@ -767,7 +772,7 @@ sequenceDiagram
 ### 8.1 核心要点
 
 1. **Skills 是能力扩展系统**，类似于 Webpack Plugins
-2. **加载机制**：内置 > 插件 > 工作空间（优先级递增）
+2. **加载机制**：区分来源优先级与 agent 可见性；具体顺序查官方 Loading order
 3. **Frontmatter**：YAML 元数据定义技能属性
 4. **过滤系统**：OS、bins、env、Agent 过滤器多层过滤
 5. **快照系统**：版本管理、增量更新

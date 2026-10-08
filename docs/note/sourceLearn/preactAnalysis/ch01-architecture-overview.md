@@ -1,17 +1,31 @@
 # 第 1 章：Preact 架构概览与虚拟 DOM 设计
 
+## 版本范围与本轮校核
+
+保留原系列 Preact 10.28.4 版本范围。本轮核对 create-element.js、diff/children.js、hooks/src/index.js 的核心结构；其余函数和历史行数仅作为导航，未逐行对齐或执行浏览器测试。
+
+### 先掌握这些边界
+
+- Preact core、compat 和 React 不是完全相同的实现。体积必须给出版本、入口和压缩口径；兼容 React 生态要验证事件、第三方组件及 SSR 行为。
+- JSX 可以走经典 h/createElement，也可以走自动 JSX runtime；h 不是唯一编译产物。VNode 是框架数据结构，不等于真实 DOM。
+- key 只在兄弟集合中表达稳定身份，还要结合 type 匹配；不要用随机数或会变化的数组下标掩盖身份问题。
+- 10.28.4 的 children 匹配使用位置/skew 与搜索启发式，不能保证任意排列全局最少 DOM 操作或一律 O(n)。
+- 10.28.4 Hooks 的状态/依赖检查可见 !==，不能照搬 React 的 Object.is 边界结论。effect 要验证清理、重渲染和卸载顺序。
+
+核查日期：2026-10-08；[官方依据](https://github.com/preactjs/preact/tree/10.28.4)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > **本章是《Preact 源码解析》系列的第 1 章**，聚焦于建立整体认知框架。在开始深入源码之前，我们需要理解 Preact 的设计哲学、核心模块划分，以及虚拟 DOM 的运作机制。
 
 ---
 
 ## 1.1 Preact 是什么？
 
-**Preact** 是一个只有 **3kB** 大小的轻量级前端框架，提供了与 React 相同的现代 API。它的核心设计目标是：
+**Preact** 是轻量级前端框架，提供与 React 相近的组件 API；具体兼容范围依赖版本与 compat 层。它的核心设计目标是：
 
-- ⚡ **极致轻量** - 压缩后仅 3kB，比 React 小 10 倍以上
+- ⚡ **极致轻量** - 以核心体积小为目标；生产体积需按同口径实测
 - 🎯 **API 兼容** - ES6 Class、Hooks、Functional Components 全部支持
 - 🚀 **高性能** - 高度优化的 diff 算法，无缝支持服务端渲染（SSR）
-- 🔧 **生态丰富** - 通过 `preact/compat` 可无缝使用 React 生态
+- 🔧 **生态丰富** - 通过 `preact/compat` 可兼容许多 React 生态库，仍需逐项验证
 
 ### 为什么选择 Preact？
 

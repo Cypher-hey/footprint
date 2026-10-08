@@ -25,6 +25,12 @@
 
 修订进阶 JS、问答合集、读书笔记，补全原空页面与懒加载等短主题；OpenClaw 实例模板注明历史性与权限边界。2018 年 30-seconds 片段保留出处并做风险筛查，未逐函数验证；两篇外语/作品摘记保留原文，不冒充完成语言学审校。
 
+## 批次 6：源码学习区定向纠错
+
+41 篇源码学习文档补充版本与验证边界。Zustand 对照固定提交修正比较、traditional 与异常传播；Preact 对照 10.28.4 修正兼容性、列表匹配与 Hook 比较；webpack 校正 Chunk/Asset、runtime 与副作用边界；MobX 修正 action 未调用示例；RN 区分旧 Bridge 与新架构；OpenClaw 修正 Skill 与工具插件混淆。
+
+这些是概念核查与关键源码抽查，不是 41 篇所有代码逐行复现。未固定提交的 MobX/OpenClaw 内部函数、RN 原生代码、构建性能数字仍须复现。
+
 ## 发现的展示问题（尚未修改运行时代码）
 
 - docs/index.html 使用 Docute；提交说明中的 Docusaurus 与实际入口不一致。
@@ -137,47 +143,47 @@
 | [docs/note/readings/lagou/js.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/readings/lagou/js.md) | 已修订；定向内容审阅 | 示例/原部署未实测 |
 | [docs/note/security/csp.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/security/csp.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/sourceLearn/mermaid-test.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mermaid-test.md) | 已修订；定向内容审阅 | 示例/原部署未实测 |
-| [docs/note/sourceLearn/mobxAnalysis/00-README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/00-README.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/mobxAnalysis/ch01-introduction.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch01-introduction.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/mobxAnalysis/ch02-core-algorithm.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch02-core-algorithm.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/mobxAnalysis/ch03-types-layer.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch03-types-layer.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/mobxAnalysis/ch04-api-layer.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch04-api-layer.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/mobxAnalysis/ch05-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch05-best-practices.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/openclaw-agent-skills/ch01-agent-architecture.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch01-agent-architecture.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/openclaw-agent-skills/ch02-skills-system.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch02-skills-system.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/openclaw-agent-skills/ch03-agent-skills-integration.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch03-agent-skills-integration.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/openclaw-agent-skills/ch04-architecture-comparison.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch04-architecture-comparison.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch01-architecture-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch01-architecture-overview.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch02-h-function-vnode.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch02-h-function-vnode.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch03-render-mount-flow.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch03-render-mount-flow.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch04-diff-algorithm-core.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch04-diff-algorithm-core.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch05-children-diff-keyed.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch05-children-diff-keyed.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch06-component-lifecycle.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch06-component-lifecycle.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch07-hooks-implementation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch07-hooks-implementation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/preactAnalysis/ch08-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch08-summary-best-practices.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/react-native-analysis/ch01-architecture-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch01-architecture-overview.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/react-native-analysis/ch02-javascript-side.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch02-javascript-side.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/react-native-analysis/ch03-native-side.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch03-native-side.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/react-native-analysis/ch04-rendering-system.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch04-rendering-system.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/react-native-analysis/ch05-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch05-summary-best-practices.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/00-README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/00-README.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/README.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch01-introduction.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch01-introduction.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch02-compiler-compilation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch02-compiler-compilation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch03-module-dependency.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch03-module-dependency.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch04-chunk-split.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch04-chunk-split.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch05-code-generation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch05-code-generation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch06-runtime-hmr.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch06-runtime-hmr.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch07-cache-optimization.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch07-cache-optimization.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch08-tree-shaking.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch08-tree-shaking.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch09-module-federation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch09-module-federation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/webpackAnalysis/ch10-summary.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch10-summary.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch01-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch01-overview.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch02-store-creation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch02-store-creation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch03-react-integration.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch03-react-integration.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch04-middleware.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch04-middleware.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch05-flow-analysis.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch05-flow-analysis.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/sourceLearn/zustandAnalysis/ch06-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch06-summary-best-practices.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/sourceLearn/mobxAnalysis/00-README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/00-README.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/mobxAnalysis/ch01-introduction.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch01-introduction.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/mobxAnalysis/ch02-core-algorithm.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch02-core-algorithm.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/mobxAnalysis/ch03-types-layer.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch03-types-layer.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/mobxAnalysis/ch04-api-layer.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch04-api-layer.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/mobxAnalysis/ch05-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/mobxAnalysis/ch05-best-practices.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/openclaw-agent-skills/ch01-agent-architecture.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch01-agent-architecture.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/openclaw-agent-skills/ch02-skills-system.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch02-skills-system.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/openclaw-agent-skills/ch03-agent-skills-integration.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch03-agent-skills-integration.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/openclaw-agent-skills/ch04-architecture-comparison.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/openclaw-agent-skills/ch04-architecture-comparison.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch01-architecture-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch01-architecture-overview.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch02-h-function-vnode.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch02-h-function-vnode.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch03-render-mount-flow.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch03-render-mount-flow.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch04-diff-algorithm-core.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch04-diff-algorithm-core.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch05-children-diff-keyed.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch05-children-diff-keyed.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch06-component-lifecycle.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch06-component-lifecycle.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch07-hooks-implementation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch07-hooks-implementation.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/preactAnalysis/ch08-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/preactAnalysis/ch08-summary-best-practices.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/react-native-analysis/ch01-architecture-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch01-architecture-overview.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/react-native-analysis/ch02-javascript-side.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch02-javascript-side.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/react-native-analysis/ch03-native-side.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch03-native-side.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/react-native-analysis/ch04-rendering-system.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch04-rendering-system.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/react-native-analysis/ch05-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/react-native-analysis/ch05-summary-best-practices.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/00-README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/00-README.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/README.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch01-introduction.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch01-introduction.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch02-compiler-compilation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch02-compiler-compilation.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch03-module-dependency.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch03-module-dependency.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch04-chunk-split.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch04-chunk-split.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch05-code-generation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch05-code-generation.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch06-runtime-hmr.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch06-runtime-hmr.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch07-cache-optimization.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch07-cache-optimization.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch08-tree-shaking.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch08-tree-shaking.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch09-module-federation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch09-module-federation.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/webpackAnalysis/ch10-summary.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/webpackAnalysis/ch10-summary.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch01-overview.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch01-overview.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch02-store-creation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch02-store-creation.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch03-react-integration.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch03-react-integration.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch04-middleware.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch04-middleware.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch05-flow-analysis.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch05-flow-analysis.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
+| [docs/note/sourceLearn/zustandAnalysis/ch06-summary-best-practices.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/sourceLearn/zustandAnalysis/ch06-summary-best-practices.md) | 定向纠错与版本边界已补充 | 全量源码一致性/运行复现未完成 |
 | [docs/note/specification/aria.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/aria.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [docs/note/specification/cypher.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/cypher.md) | 已修订；定向内容审阅 | 示例/原部署未实测 |
 | [docs/note/specification/dtd.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/dtd.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |

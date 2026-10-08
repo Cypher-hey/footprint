@@ -1,5 +1,19 @@
 # 第 1 章 Agent 系统架构
 
+## 版本范围与本轮校核
+
+原稿未固定 OpenClaw commit，本轮按官方 Skills 文档校正概念与目录要求。内部 resolve/load/build 函数名、配置键及完整时序没有做版本源码一致性验证；保留的 TypeScript 片段按教学草图阅读。
+
+### 先掌握这些边界
+
+- Skill 的基本载体是带元数据的 SKILL.md。package.json、index.js、execute 并非每个 skill 必须存在的入口；可选脚本与工具插件应分别理解。
+- Skill 主要提供任务知识与工作步骤。被加载不代表已执行，也不代表获得额外工具权限；能执行什么由 runtime、工具许可和沙箱决定。
+- 元数据发现、正文按需读取、脚本/资源访问是不同阶段；不要假设所有 skill 全文都同时进入系统提示词。
+- workspace/agentId 分开有助于管理，不构成操作系统安全隔离。外部 skill 与仓库指令需检查来源、注入风险和可执行代码。
+- Skill eligibility 与依赖检测是加载条件，不是安装授权。本文没有安装 skill、执行外部脚本或改变权限。
+
+核查日期：2026-10-08；[官方依据](https://docs.openclaw.ai/tools/skills)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > 本章是 OpenClaw Agent & Skills 源码解析系列的第 1 章，聚焦于 Agent 系统的整体架构设计。我们将用前端开发者熟悉的视角，深入分析 Agent 系统的核心组件和工作原理。
 
 ---

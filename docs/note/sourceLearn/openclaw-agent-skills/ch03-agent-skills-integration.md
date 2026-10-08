@@ -1,5 +1,19 @@
 # 第 3 章 Agent 调用 Skills 机制
 
+## 版本范围与本轮校核
+
+原稿未固定 OpenClaw commit，本轮按官方 Skills 文档校正概念与目录要求。内部 resolve/load/build 函数名、配置键及完整时序没有做版本源码一致性验证；保留的 TypeScript 片段按教学草图阅读。
+
+### 先掌握这些边界
+
+- Skill 的基本载体是带元数据的 SKILL.md。package.json、index.js、execute 并非每个 skill 必须存在的入口；可选脚本与工具插件应分别理解。
+- Skill 主要提供任务知识与工作步骤。被加载不代表已执行，也不代表获得额外工具权限；能执行什么由 runtime、工具许可和沙箱决定。
+- 元数据发现、正文按需读取、脚本/资源访问是不同阶段；不要假设所有 skill 全文都同时进入系统提示词。
+- workspace/agentId 分开有助于管理，不构成操作系统安全隔离。外部 skill 与仓库指令需检查来源、注入风险和可执行代码。
+- Skill eligibility 与依赖检测是加载条件，不是安装授权。本文没有安装 skill、执行外部脚本或改变权限。
+
+核查日期：2026-10-08；[官方依据](https://docs.openclaw.ai/tools/skills)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > 本章是 OpenClaw Agent & Skills 源码解析系列的第 3 章，聚焦于 Agent 如何加载、注册和调用 Skills。我们将深入分析 Skills 到系统 Prompt 的转换过程，以及 Skills 命令的注册和执行机制。
 
 ---
@@ -14,7 +28,7 @@ sequenceDiagram
     participant Agent as commands/agent.ts
     participant Scope as agent-scope.ts
     participant Skills as skills/workspace.ts
-    Snapshot as Skills Snapshot
+    participant Snapshot as Skills Snapshot
     participant PI as pi-embedded.ts
     participant Model as AI 模型
     participant Executor as Skill Executor
@@ -140,7 +154,9 @@ graph TD
 
 ## 3. Skills 到 Prompt 的转换
 
-### 3.1 Prompt 格式
+### 3.1 Prompt 格式（旧稿教学示意）
+
+官方文档描述的是紧凑 XML 技能目录；下列 Markdown 仅帮助理解字段，不能当成实际 system prompt。
 
 **示例输出**：
 
@@ -163,7 +179,7 @@ graph TD
 Total: 2 skills loaded
 ```
 
-### 3.2 Prompt 构建源码
+### 3.2 旧版 Prompt 构建草图（未对齐当前源码）
 
 **源码位置**：`skills/workspace.ts`
 
@@ -373,83 +389,31 @@ export function buildWorkspaceSkillCommandSpecs(
 
 ---
 
-## 5. Skills 执行机制
+## 5. Skills 如何影响执行
 
-### 5.1 执行流程图
+不要把 Skill 理解成自动 import index.js 后调用 execute(args) 的插件。通常是模型看到技能目录、读取正文，再通过已注册工具执行相应步骤。特定命令可以配置直接工具分发，但仍依赖工具契约与权限。
 
 ```mermaid
 sequenceDiagram
-    participant Model as AI 模型
-    participant PI as PI Agent
-    participant Executor as Skill Executor
-    participant Skill as Skill 代码
-    participant Shell as Shell/Binary
-    Model->>PI: Tool Call: github {action: "pr-create"}
-    PI->>Executor: executeSkill('github', args)
-    Executor->>Executor: 加载 SKILL.md
-    Executor->>Executor: 解析 frontmatter
-    Executor->>Executor: 检查 requires (bins, env)
-    alt 检查通过
-        Executor->>Skill: 执行 skill 代码
-        Skill->>Shell: 执行命令 (gh pr create)
-        Shell-->>Skill: 命令输出
-        Skill-->>Executor: 返回结果
-        Executor-->>PI: 返回执行结果
-        PI->>Model: Tool Result
-        Model-->>PI: 最终响应
-    else 检查失败
-        Executor-->>PI: 返回错误（缺少依赖）
-        PI->>Model: Tool Error
-        Model-->>PI: 错误响应
+    participant U as 用户
+    participant A as Agent
+    participant S as Skill 文档
+    participant P as 权限检查
+    participant T as 已注册工具
+    U->>A: 提出任务
+    A->>S: 按需读取适用说明
+    S-->>A: 约束、步骤与资源引用
+    A->>P: 请求执行具体动作
+    alt 允许或已获确认
+        P->>T: 执行动作
+        T-->>A: 返回结果或错误
+    else 不允许
+        P-->>A: 阻止或请求确认
     end
+    A-->>U: 交付结果与验证范围
 ```
 
-### 5.2 执行器伪代码
-
-```typescript
-/**
- * Skill 执行器（简化版）
- */
-async function executeSkill(
-  skillName: string,
-  args: unknown,
-): Promise<SkillResult> {
-  // ① 加载 Skill
-  const skillEntry = loadSkillEntry(skillName);
-  if (!skillEntry) {
-    throw new Error(`Skill not found: ${skillName}`);
-  }
-  
-  // ② 检查依赖
-  const { metadata } = skillEntry;
-  if (metadata?.requires?.bins) {
-    for (const bin of metadata.requires.bins) {
-      if (!hasBinary(bin)) {
-        throw new Error(`Missing required binary: ${bin}`);
-      }
-    }
-  }
-  
-  if (metadata?.requires?.env) {
-    for (const env of metadata.requires.env) {
-      if (!process.env[env]) {
-        throw new Error(`Missing required env: ${env}`);
-      }
-    }
-  }
-  
-  // ③ 执行 Skill 代码
-  const skillModule = await import(skillEntry.skill.filePath);
-  const result = await skillModule.execute(args);
-  
-  return {
-    success: true,
-    output: result,
-  };
-}
-```
-
----
+这是概念链路，不声称对应某个未固定提交的函数调用栈。权限检查位置和实现由 runtime 决定。正文中的指令不能覆盖上层授权。
 
 ## 6. Agent 与 Skills 集成点
 

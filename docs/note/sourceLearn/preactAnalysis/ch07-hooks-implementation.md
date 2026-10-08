@@ -1,5 +1,19 @@
 # 第 7 章：Hooks 实现原理与状态管理
 
+## 版本范围与本轮校核
+
+保留原系列 Preact 10.28.4 版本范围。本轮核对 create-element.js、diff/children.js、hooks/src/index.js 的核心结构；其余函数和历史行数仅作为导航，未逐行对齐或执行浏览器测试。
+
+### 先掌握这些边界
+
+- Preact core、compat 和 React 不是完全相同的实现。体积必须给出版本、入口和压缩口径；兼容 React 生态要验证事件、第三方组件及 SSR 行为。
+- JSX 可以走经典 h/createElement，也可以走自动 JSX runtime；h 不是唯一编译产物。VNode 是框架数据结构，不等于真实 DOM。
+- key 只在兄弟集合中表达稳定身份，还要结合 type 匹配；不要用随机数或会变化的数组下标掩盖身份问题。
+- 10.28.4 的 children 匹配使用位置/skew 与搜索启发式，不能保证任意排列全局最少 DOM 操作或一律 O(n)。
+- 10.28.4 Hooks 的状态/依赖检查可见 !==，不能照搬 React 的 Object.is 边界结论。effect 要验证清理、重渲染和卸载顺序。
+
+核查日期：2026-10-08；[官方依据](https://github.com/preactjs/preact/tree/10.28.4)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > **本章是《Preact 源码解析》系列的第 7 章**，深入 Preact Hooks 的完整实现。我们将理解 useState、useEffect、useReducer 等核心 Hooks 的工作原理，以及 Hooks 为什么不能条件调用。
 
 ---
@@ -376,6 +390,8 @@ function invokeCleanup(hook) {
 
 ### 7.4.2 执行时机
 
+图为常见延迟路径。10.28.4 的默认 afterNextFrame 组合 rAF 与 setTimeout，并有超时兜底；不是在 rAF 回调中保证已完成绘制。待处理 effect 也可能在下一次渲染前被冲刷，不能将“永远 paint 后”作为同步业务约束。
+
 ```mermaid
 sequenceDiagram
     participant Render as 渲染阶段
@@ -396,7 +412,7 @@ sequenceDiagram
 
 ```javascript
 // 文件：hooks/src/index.js
-// options._render 钩子中处理依赖
+// options._render 钩子中处理待定 Hook 值与 effect
 
 options._render = vnode => {
   currentComponent = vnode._component;
@@ -417,7 +433,7 @@ options._render = vnode => {
         hookItem._pendingArgs = hookItem._nextValue = undefined;
       });
     } else {
-      // 新组件，执行 cleanup
+      // 与上一次渲染组件不同，冲刷本组件待处理 effect；不等于首次创建组件
       hooks._pendingEffects.some(invokeCleanup);
       hooks._pendingEffects.some(invokeEffect);
       hooks._pendingEffects = [];
@@ -428,10 +444,10 @@ options._render = vnode => {
 };
 ```
 
-**依赖数组对比逻辑**：
+**提交依赖快照的逻辑**：
 
 ```javascript
-// options.diffed 钩子中处理依赖对比
+// options.diffed 提交 pendingArgs；真正的差异判断在 argsChanged 中
 
 options.diffed = vnode => {
   const c = vnode._component;

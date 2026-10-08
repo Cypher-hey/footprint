@@ -1,5 +1,15 @@
 # 第 5 章 关键流程串联
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的第 5 章，聚焦于关键业务流程的完整串联。我们将追踪从状态更新到组件重渲染的完整链路，深入分析每个环节的实现细节。
 
 ---
@@ -95,7 +105,7 @@ sequenceDiagram
     L->>H: onStoreChange()
     H->>S: getSnapshot()
     S-->>H: 新状态
-    H->>H: shallowEqual 比较
+    H->>H: Object.is 快照比较
     H->>R: 调度更新
     R->>C: 触发重渲染
     C->>H: 读取新状态
@@ -162,7 +172,7 @@ const setState: StoreApi<TState>['setState'] = (partial, replace) => {
       ? (partial as (state: TState) => TState)(state)
       : partial
   
-  // ⑧ 浅比较：状态未变化则跳过
+  // ⑧ Object.is 比较：状态未变化则跳过
   if (!Object.is(nextState, state)) {
     const previousState = state
     
@@ -309,7 +319,7 @@ useBearStore.getState().increasePopulation()
 // 5. React 层响应
 // useSyncExternalStore: 调用 getSnapshot()
 // selector: (state) => state.bears → 1
-// shallowEqual: Object.is(0, 1) → false → 触发重渲染
+// 快照比较: Object.is(0, 1) → false → 触发重渲染
 
 // 6. 调用后
 console.log('After:', useBearStore.getState())
@@ -353,15 +363,15 @@ if (!Object.is(nextState, state)) {
 ```
 
 **作用**：
-- 浅比较判断状态是否变化
+- Object.is 比较候选状态与当前状态
 - 避免不必要的通知
 
 **优化效果**：
 ```typescript
-// 相同状态：不通知
+// 字段相同但对象引用不同：仍会通知
 store.setState({ count: 0 })  // 当前 count 已经是 0
 // Object.is({count:0}, {count:0}) → false（对象引用不同）
-// ⚠️ 会通知！所以要用不可变更新
+// 会通知；若确实无变更，可返回原 state。不要原地改 state 后返回它。
 
 // 函数式更新返回相同引用：不通知
 store.setState((state) => state)  // 返回原状态
@@ -399,7 +409,7 @@ listeners.forEach((listener) => listener(state, previousState))
 **特点**：
 - 同步执行所有 listener
 - 传入新状态和旧状态
-- listener 异常不影响其他 listener
+- 核心没有逐 listener 的 try/catch；某个 listener 抛错会中断当前 forEach，状态已经赋值，不会自动回滚
 
 ### 4.5 节点 5：useSyncExternalStore 响应
 
@@ -413,9 +423,9 @@ const slice = React.useSyncExternalStore(
 )
 ```
 
-**React 内部逻辑**：
+**反例：不足以替代 React 的教学草图**：
 ```typescript
-// React 简化实现
+// 非 React 官方实现，缺失竞态检查、SSR 和并发保障，禁止直接替代内置 Hook
 function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
   const [state, setState] = useState(() => getSnapshot())
   
@@ -436,7 +446,7 @@ function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
 
 ## 5. 性能优化点分析
 
-### 5.1 优化点 1：浅比较跳过更新
+### 5.1 优化点 1：引用相同时跳过通知
 
 ```typescript
 // vanilla.ts L68
@@ -450,7 +460,7 @@ if (!Object.is(nextState, state)) {
 ```typescript
 // 相同状态：不触发重渲染
 set((state) => ({ count: state.count }))  // count 不变
-// Object.is 返回 true → 跳过通知
+// 返回了新对象：Object.is 为 false，仍通知；count 选择器可返回相同原始值。
 ```
 
 ### 5.2 优化点 2：选择器精准订阅
@@ -519,10 +529,10 @@ const listeners: Set<Listener> = new Set()
 
 ## 6. 异常处理流程
 
-### 6.1 中间件异常
+### 6.1 自定义存储适配器的错误处理示意
 
 ```typescript
-// persist 中间件的错误处理
+// 自定义同步存储包装示意，不是 persist.ts 源码；异步 Promise 拒绝需另行处理
 const saveState = (state) => {
   try {
     storage.setItem(name, JSON.stringify(state))
@@ -533,10 +543,10 @@ const saveState = (state) => {
 }
 ```
 
-### 6.2 Listener 异常
+### 6.2 自定义事件总线的异常隔离示意
 
 ```typescript
-// vanilla.ts L74
+// 非 Zustand 官方实现：如果另写事件总线，可显式决定是否隔离异常
 listeners.forEach((listener) => {
   try {
     listener(state, previousState)
@@ -579,7 +589,7 @@ graph TB
     Notify --> Hook[useSyncExternalStore 回调]
     Hook --> GetSnap[getSnapshot 读取新状态]
     GetSnap --> Selector[选择器处理]
-    Selector --> Shallow[shallowEqual 比较]
+    Selector --> Shallow[Object.is 快照比较]
     Shallow -->|相同 | NoRender[不重渲染]
     Shallow -->|不同 | Schedule[调度更新]
     Schedule --> Render[组件重渲染]
@@ -598,7 +608,7 @@ graph TB
 | 节点 | 位置 | 作用 | 优化点 |
 |------|------|------|--------|
 | setState | `vanilla.ts L60` | 状态更新入口 | 函数式更新支持 |
-| 比较 | `vanilla.ts L68` | 浅比较 | 跳过无变化更新 |
+| 比较 | `vanilla.ts L68` | Object.is 比较 | 跳过无变化更新 |
 | 合并 | `vanilla.ts L71` | 状态合并 | 支持 replace 模式 |
 | 通知 | `vanilla.ts L74` | 发布订阅 | Set 高效遍历 |
 | Hook | `react.ts L18` | React 集成 | useSyncExternalStore |
@@ -615,3 +625,11 @@ graph TB
 ---
 
 **本章是系列解析的第 5 章**，完整串联了 Zustand 的状态更新流程。下一章我们将总结设计亮点和最佳实践。
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

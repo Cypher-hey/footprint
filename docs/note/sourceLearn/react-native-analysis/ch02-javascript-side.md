@@ -1,5 +1,19 @@
 # 第 2 章 JavaScript 侧实现
 
+## 版本范围与本轮校核
+
+本系列保留 React Native 0.76.6 历史语境。0.76 已默认启用新架构；以下 BatchedBridge/旧 NativeModules 示例必须按 Legacy Architecture 理解，不能作为当前所有 RN 应用的调用链。本轮为概念/时效审阅，未逐行复现原生源码或构建 Android/iOS。
+
+### 先掌握这些边界
+
+- 旧 Bridge 的批量异步通信与新架构 JSI/Fabric/TurboModules 应分开画图，不能把 Fabric 渲染统一解释成 JSON 经 Bridge 传输。
+- JSI 是 JS 与 C++ 的接口层；Fabric 是渲染系统；TurboModules 是原生模块体系；Codegen 生成契约相关代码；Hermes 是 JS 引擎，职责不同。
+- Yoga 计算布局，不是浏览器 CSS 引擎；最终由原生平台创建/更新视图。Shadow Node、布局结果和原生 View 不能混为一个对象。
+- 不是所有调用都必须异步，也不是新架构就没有线程调度和序列化成本。避免耗时同步调用阻塞 JS/UI 线程。
+- 调试优先查目标 RN 版本对应的 React Native DevTools。旧 Flipper 安装片段仅供历史项目参考，不是新项目默认接入方案。
+
+核查日期：2026-10-08；[官方依据](https://reactnative.dev/blog/2024/10/23/release-0.76-new-architecture)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > 本章是 React Native 源码解析系列的第 2 章，聚焦于 JavaScript 侧的完整实现。我们将深入分析 NativeModules、NativeComponents、事件系统以及配置懒加载机制。
 
 ---

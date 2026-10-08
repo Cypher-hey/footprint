@@ -1,5 +1,15 @@
 # 第 6 章 总结与最佳实践
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的最后一章，聚焦于架构设计亮点总结、代码规范与最佳实践、性能优化技巧以及学习建议。
 
 ---
@@ -666,3 +676,11 @@ graph LR
 | `ch04-middleware.md` | 第 4 章：中间件系统 |
 | `ch05-flow-analysis.md` | 第 5 章：关键流程串联 |
 | `ch06-summary-best-practices.md` | 第 6 章：总结与最佳实践 |
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

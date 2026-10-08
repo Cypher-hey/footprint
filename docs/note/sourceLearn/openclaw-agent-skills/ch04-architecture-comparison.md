@@ -1,5 +1,19 @@
 # 第 4 章 架构对比与最佳实践
 
+## 版本范围与本轮校核
+
+原稿未固定 OpenClaw commit，本轮按官方 Skills 文档校正概念与目录要求。内部 resolve/load/build 函数名、配置键及完整时序没有做版本源码一致性验证；保留的 TypeScript 片段按教学草图阅读。
+
+### 先掌握这些边界
+
+- Skill 的基本载体是带元数据的 SKILL.md。package.json、index.js、execute 并非每个 skill 必须存在的入口；可选脚本与工具插件应分别理解。
+- Skill 主要提供任务知识与工作步骤。被加载不代表已执行，也不代表获得额外工具权限；能执行什么由 runtime、工具许可和沙箱决定。
+- 元数据发现、正文按需读取、脚本/资源访问是不同阶段；不要假设所有 skill 全文都同时进入系统提示词。
+- workspace/agentId 分开有助于管理，不构成操作系统安全隔离。外部 skill 与仓库指令需检查来源、注入风险和可执行代码。
+- Skill eligibility 与依赖检测是加载条件，不是安装授权。本文没有安装 skill、执行外部脚本或改变权限。
+
+核查日期：2026-10-08；[官方依据](https://docs.openclaw.ai/tools/skills)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > 本章是 OpenClaw Agent & Skills 源码解析系列的最后一章，聚焦于架构对比、设计亮点总结以及最佳实践建议。我们将用前端开发者熟悉的模式进行类比分析。
 
 ---
@@ -80,7 +94,7 @@ class MyPlugin {
 }
 ```
 
-**OpenClaw Skills**：
+**自定义 Skill 适配层类比（不是 OpenClaw API）**：
 ```typescript
 // openclaw.config.json
 {
@@ -99,7 +113,7 @@ requires:
   env: [GITHUB_TOKEN]
 ---
 
-// index.js
+// 自定义工具伪代码，非 OpenClaw Skill 的标准必选入口
 export async function execute(args) {
   // 执行 GitHub 操作
   return await gh(args);
@@ -186,7 +200,7 @@ function withTheme(WrappedComponent) {
 const EnhancedAgent = withTheme(withAuth(Agent));
 ```
 
-**OpenClaw Skills**：
+**自定义 Skill 适配层类比（不是 OpenClaw API）**：
 ```typescript
 // 基础 Agent
 const baseAgent = createAgent({ /* ... */ });
@@ -257,22 +271,17 @@ export default {
 };
 ```
 
-**OpenClaw Skills**：
+**自定义 Skill 适配层类比（不是 OpenClaw API）**：
 ```markdown
 ---
-name: github
-requires:
-  env: [GITHUB_TOKEN]
+name: review-notes
+description: 审阅笔记中的事实、版本和验证记录
+metadata: {"openclaw":{"requires":{"bins":["git"]}}}
 ---
 
-# GitHub Skill
+# 审阅流程
 
-提供 GitHub 操作能力。
-
-## Commands
-
-### gh-pr-create
-创建 Pull Request。
+读取相关资料，区分已验证结论与待复现内容。
 ```
 
 **对比分析**：
@@ -340,7 +349,7 @@ graph TB
 **亮点**：
 1. **增量更新**：版本管理，避免重复加载
 2. **持久化**：Session 级缓存
-3. **路径压缩**：节省 400-600 tokens
+3. **路径压缩**：节省量未实测
 
 ### 4.3 安全验证
 
@@ -366,21 +375,14 @@ graph TB
 
 ```markdown
 ---
-name: github
-description: GitHub 操作技能（PR、Issue、Repo）
-emoji: 🐙
-homepage: https://github.com
-os: [darwin, linux, win32]
-requires:
-  bins: [gh]
-  env: [GITHUB_TOKEN]
-install:
-  - kind: brew
-    formula: gh
-    os: [darwin]
-  - kind: download
-    url: https://github.com/cli/cli/releases
+name: review-notes
+description: 审阅笔记中的事实、版本和验证记录
+metadata: {"openclaw":{"requires":{"bins":["git"]}}}
 ---
+
+# 审阅流程
+
+读取相关资料，区分已验证结论与待复现内容。
 ```
 
 #### ✅ 推荐：错误处理
@@ -451,7 +453,9 @@ const ghPath = process.env.GH_PATH || 'gh';
 }
 ```
 
-#### ✅ 推荐：Skills 过滤器
+#### Skill 可见性示意
+
+下面仅限制技能清单，不能建立安全沙箱；sandbox 配置应依据目标版本单独核验。
 
 ```json
 {
@@ -460,7 +464,7 @@ const ghPath = process.env.GH_PATH || 'gh';
       {
         "id": "minimal-agent",
         "skills": ["files", "search"],
-        "sandbox": "strict"
+        "workspace": "~/workspace-minimal"
       }
     ]
   }
@@ -502,7 +506,7 @@ const compacted = compactSkillPaths(skills);
 #### 技巧 1：查看 Skills 状态
 
 ```bash
-openclaw skills status
+openclaw skills check
 ```
 
 #### 技巧 2：查看 Agent 配置
@@ -539,7 +543,7 @@ OPENCLAW_LOG_LEVEL=debug openclaw agent --message="..."
 OPENCLAW_LOG_LEVEL=debug openclaw agent --message="..."
 
 # 查看 Skills 状态
-openclaw skills status --verbose
+openclaw skills check
 ```
 
 ### Q3: 如何创建自定义 Skill？
@@ -547,14 +551,14 @@ openclaw skills status --verbose
 **步骤**：
 1. 创建目录：`mkdir -p ~/.openclaw/skills/my-skill`
 2. 创建 `SKILL.md`：编写 frontmatter 和文档
-3. 创建 `index.js`：实现 `execute` 函数
+3. 按需要附带脚本或资源：`index.js/execute` 不是 Skill 的必选入口；下例仅为自定义工具设计示意。
 4. 测试：`openclaw agent --message="使用 my-skill"`
 
 ### Q4: Skills 加载顺序是什么？
 
 **优先级**：
 ```
-工作空间 Skills > 插件 Skills > 全局 Skills > 内置 Skills
+此处旧四级排序不再适合作为现行规则。以官方 Loading order 与实际版本为准；插件目录并非固定高于 managed/bundled 来源。
 ```
 
 ---
@@ -645,6 +649,6 @@ graph TB
 
 ---
 
-**🎉 恭喜！OpenClaw Agent & Skills 源码解析系列已全部完成！**
+**本系列完成概念性整理；未固定版本的源码复现仍待补充。**
 
 希望本系列能帮助你深入理解 OpenClaw 的 Agent 和 Skills 系统设计，并在实际开发中更好地使用和扩展它。

@@ -16,10 +16,10 @@ sidebar_label: 📚 文档首页
 
 | 实例 | 说明 | 路径 |
 |-----|------|------|
-| **main** | 主 Agent 实例 | [查看](/note/openclaw-agent/main) |
-| **agent-frontend** | 前端开发 Agent | [查看](/note/openclaw-agent/agent-frontend) |
-| **agent-source-code** | 源码分析 Agent | [查看](/note/openclaw-agent/agent-source-code) |
-| **agent-invoice** | 发票处理 Agent | [查看](/note/openclaw-agent/agent-invoice) |
+| **main** | 主 Agent 实例 | [查看](main.md) |
+| **agent-frontend** | 前端开发 Agent | [查看](agent-frontend.md) |
+| **agent-source-code** | 源码分析 Agent | [查看](agent-source-code.md) |
+| **agent-invoice** | 发票处理 Agent | [查看](agent-invoice.md) |
 
 ## 📁 配置说明
 

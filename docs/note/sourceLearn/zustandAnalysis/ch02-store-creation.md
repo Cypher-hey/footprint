@@ -1,5 +1,15 @@
 # 第 2 章 核心 Store 创建机制
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的第 2 章，聚焦于核心 Store 的创建机制。我们将深入分析 `createStore` 函数的实现细节、状态订阅系统以及 `setState` 的合并逻辑。
 
 ---
@@ -85,7 +95,7 @@ const createStoreImpl: CreateStoreImpl = (createState) => {
         ? (partial as (state: TState) => TState)(state)
         : partial
     
-    // ④ 浅比较优化：状态未变化则不通知
+    // ④ Object.is 引用/值比较：状态未变化则不通知
     if (!Object.is(nextState, state)) {
       const previousState = state
       
@@ -130,7 +140,7 @@ const createStoreImpl: CreateStoreImpl = (createState) => {
 | ① | `let state: TState` | 闭包存储状态 | 无需 Context，避免 Provider 包裹 |
 | ② | `listeners: Set<Listener>` | 订阅者集合 | `Set` 保证订阅者唯一性，O(1) 增删 |
 | ③ | `setState` 函数 | 状态更新入口 | 支持函数式更新和部分更新 |
-| ④ | `Object.is(nextState, state)` | 浅比较优化 | 状态未变化时不触发重渲染 |
+| ④ | `Object.is(nextState, state)` | Object.is 比较 | 状态未变化时不触发重渲染 |
 | ⑤ | `Object.assign({}, state, nextState)` | 状态合并 | 默认合并，支持 `replace` 覆盖 |
 | ⑥ | `listeners.forEach(...)` | 发布通知 | 同步通知所有订阅者 |
 | ⑦ | `getState` | 读取当前状态 | 简单返回闭包变量 |
@@ -142,7 +152,9 @@ const createStoreImpl: CreateStoreImpl = (createState) => {
 
 ## 4. setState 合并逻辑详解
 
-### 4.1 合并策略判断树
+### 4.1 合并策略判断树（简化）
+
+显式 replace=false 强制走浅合并分支，即使候选值不是对象；下面图只展示 true 与默认 undefined 的常用路径。实际表达式以 4.2 为准。
 
 ```mermaid
 graph TD
@@ -185,7 +197,7 @@ state =
 | 默认 + null | `undefined` | `null` | 完全替换 |
 | 默认 + 对象 | `undefined` | `object` | 合并 |
 
-**示例**：
+**JavaScript 行为示例**：以下混合状态类型与不完整替换不是类型安全的 TypeScript 用法；生产代码必须保持 TState 完整。
 
 ```typescript
 // 初始状态
@@ -205,7 +217,7 @@ store.setState({ count: 2 }, true)
 
 // 示例 3：函数式更新
 store.setState((state) => ({ count: state.count + 1 }))
-// 结果：{ count: 3, name: 'bear', nested: { value: 1 } }
+// 若紧接示例 2 执行：{ count: 3 }，已丢失的字段不会回来。
 
 // 示例 4：非对象替换
 store.setState('string')
@@ -338,7 +350,7 @@ type SetStateInternal<T> = {
 
 **类型技巧解析**：
 - 使用辅助对象 `_` 定义**重载签名**
-- 最后通过 `['_']` 提取联合类型
+- 最后通过 `['_']` 提取该重载方法的类型（不是简单的函数联合）
 - 实现函数式更新和部分更新的类型推导
 
 **简化理解**：
@@ -430,7 +442,7 @@ const enhancedCreate = devtools(persist(createState))
 |--------|----------|------------|
 | **闭包存储** | 模块级变量 + 闭包访问 | 任何需要单例状态的场景 |
 | **Set 订阅者管理** | `Set<Listener>` | 事件系统、观察者模式 |
-| **浅比较优化** | `Object.is` | 避免不必要的更新 |
+| **引用/值比较** | `Object.is` | 避免不必要的更新 |
 | **函数式更新** | `setState((state) => ...)` | 依赖前值的更新场景 |
 | **取消订阅模式** | 返回 cleanup 函数 | 资源清理、事件移除 |
 
@@ -452,7 +464,7 @@ const enhancedCreate = devtools(persist(createState))
 2. **闭包存储状态**，无需 Context Provider
 3. **订阅 - 发布模式**基于 `Set` 实现，O(1) 增删订阅者
 4. **`setState` 默认合并对象**，支持 `replace` 完全替换
-5. **浅比较优化**：`Object.is` 判断状态是否变化
+5. **引用/值比较**：`Object.is` 判断状态是否变化
 
 ### 9.2 关键源码位置
 
@@ -475,3 +487,11 @@ const enhancedCreate = devtools(persist(createState))
 ---
 
 **本章是系列解析的第 2 章**，深入剖析了 Zustand 的核心 Store 创建机制。下一章我们将进入 React 集成层的分析。
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

@@ -1,5 +1,15 @@
 # 第 4 章 中间件系统
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的第 4 章，聚焦于中间件系统的实现原理。我们将深入分析中间件的函数组合机制，以及 `persist`、`devtools`、`immer` 等核心中间件的源码实现。
 
 ---
@@ -620,7 +630,7 @@ const store = create(
 ### 8.1 组合原则
 
 ```typescript
-// 推荐顺序（从外到内）
+// 常见组合示意（省略 persist 必填 options，不可直接复制执行）
 const useStore = create(
   devtools(           // ① 最外层：调试
     persist(          // ② 中间层：持久化
@@ -632,7 +642,10 @@ const useStore = create(
 )
 ```
 
-### 8.2 执行顺序
+### 8.2 组合关系示意（不是严格执行时序）
+
+包装器的创建、set 调用和调用返回后的副作用不同。persist 常在 set 后写存储；devtools 通常发送更新后的状态。不能从函数嵌套推断图中每一步严格先后。直接 api.setState 和传入 StateCreator 的 set 也可能被不同方式包装。
+
 
 ```mermaid
 graph TB
@@ -689,3 +702,11 @@ graph TB
 ---
 
 **本章是系列解析的第 4 章**，深入剖析了 Zustand 的中间件系统实现。下一章我们将串联所有知识点，完整追踪状态更新流程。
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

@@ -1,5 +1,15 @@
 # 第 1 章 项目概览与架构
 
+## 核查范围与阅读约定（2026-10-08）
+
+本轮对照 [Zustand 固定提交 d7a5583](https://github.com/pmndrs/zustand/tree/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce) 的 vanilla.ts、react.ts、traditional.ts 和 package.json 核查核心调用链；该提交 package.json 标记为 5.0.15，不代表本文验证了所有发布版本。以下旧笔记的行号、简化中间件和 React 内部代码不是逐行源码复刻，也没有执行完整测试套件。
+
+- Object.is 是 SameValue 判断，对对象比较引用，不遍历字段；浅合并、浅比较与快照引用比较是三个不同操作。
+- store 通知与 React 渲染不是一回事：新对象可触发 store 通知，而相同的选择器结果可让组件跳过该次外部状态更新；父组件、props、Context 仍可触发渲染。
+- 默认 Hook 的 getSnapshot 必须稳定；每次返回新对象不只是多渲染，还可能引起无限更新。用独立原始值选择器或 useShallow，不能在 selector 中做副作用。
+- SSR 应按请求创建 store，并让服务端与客户端初始快照一致。模块单例和 getInitialState 不自动提供跨用户隔离。
+
+
 > 本章是 Zustand 源码解析系列的第 1 章，聚焦于项目整体认知框架的建立。我们将了解 Zustand 的定位、技术栈、目录结构以及核心模块的关系。
 
 ---
@@ -12,7 +22,7 @@
 
 **核心定位**：
 - 🎯 **简化版 Flux 实现**：去除了 Redux 的繁琐样板代码
-- 🎯 **Hook 优先**：状态消费完全基于 React Hooks
+- 🎯 **Hook 优先**：React 绑定提供 Hooks；vanilla store 可独立使用
 - 🎯 **无 Provider 包裹**：不需要在应用顶层包裹 Context Provider
 - 🎯 **精准渲染**：组件只在订阅的状态变化时重渲染
 
@@ -32,7 +42,7 @@ Zustand 的设计哲学是：**用最少的 API，解决最常见的问题**。
 ### 1.3 核心特性
 
 ```markdown
-✅ 小巧：压缩后约 1KB
+✅ 小巧：体积取决于入口、版本和压缩口径，应实测
 ✅ 快速：基于订阅者模式，精准通知
 ✅ 简单：3 个核心 API（create、set、get）
 ✅ 灵活：支持中间件、持久化、DevTools
@@ -48,7 +58,7 @@ Zustand 的设计哲学是：**用最少的 API，解决最常见的问题**。
 
 从 `package.json` 可以看到，Zustand 的**peerDependencies**非常克制：
 
-```json
+```jsonc
 {
   "peerDependencies": {
     "@types/react": ">=18.0.0",        // 可选：TS 类型支持
@@ -61,11 +71,11 @@ Zustand 的设计哲学是：**用最少的 API，解决最常见的问题**。
 
 **关键洞察**：
 - 所有依赖都是**可选的**！这意味着 Zustand 可以在非 React 环境中使用（如 Vanilla JS、Vue 等）
-- `use-sync-external-store` 是 React 18 提供的 Hook，用于解决并发渲染下的外部状态同步问题
+- `useSyncExternalStore` 是 React 18 提供的 Hook；`use-sync-external-store` 是另一个提供 shim/with-selector 的包，用于解决并发渲染下的外部状态同步问题
 
 ### 2.2 构建工具链
 
-```json
+```jsonc
 {
   "devDependencies": {
     "rollup": "^4.57.1",              // 打包工具
@@ -99,7 +109,7 @@ zustandAnalysis/
 │   ├── react.ts              # React 集成层：useStore Hook
 │   ├── react/
 │   │   └── shallow.ts        # useShallow Hook（防止不必要的重渲染）
-│   ├── traditional.ts        # 传统模式（不使用 useSyncExternalStore）
+│   ├── traditional.ts        # 自定义 equalityFn 绑定（with-selector shim）
 │   ├── shallow.ts            # 浅比较导出
 │   ├── middleware.ts         # 中间件导出
 │   ├── middleware/
@@ -203,7 +213,7 @@ interface BearState {
   removeAllBears: () => void
 }
 
-const useBearStore = create<BearState>((set) => ({
+export const useBearStore = create<BearState>((set) => ({
   bears: 0,
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
@@ -219,7 +229,7 @@ const useBearStore = create<BearState>((set) => ({
 
 ```typescript
 // 文件：src/components/BearCounter.tsx
-import useBearStore from './example'
+import { useBearStore } from '../example'
 
 function BearCounter() {
   // 方式 1：选择特定状态（推荐）
@@ -283,7 +293,7 @@ devtools(persist(createState))
 | 设计点 | 实现方式 | 优势 |
 |--------|----------|------|
 | **无 Provider** | 闭包存储 + 订阅者模式 | 避免 Context 的性能问题 |
-| **精准更新** | 选择器 + 浅比较 | 减少不必要的重渲染 |
+| **精准更新** | 选择器 + Object.is；可显式 useShallow | 减少不必要的重渲染 |
 | **中间件系统** | 函数组合（高阶函数） | 灵活扩展，无侵入 |
 | **TypeScript 友好** | 泛型推导 | 完整的类型安全 |
 
@@ -298,3 +308,11 @@ devtools(persist(createState))
 ---
 
 **本章是系列解析的第 1 章**，建立了整体认知框架。从下一章开始，我们将深入源码细节，逐层剖析 Zustand 的实现原理。
+
+## 复习与验证
+
+1. 区分 setState 返回原对象、新对象和 replace=true 的后果。
+2. 分别记录 vanilla listener 次数和 React commit 次数，说明为什么不必相等。
+3. 检查订阅清理、异步请求过期响应、持久化恢复与 SSR 请求隔离。
+
+核查入口：[vanilla.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/vanilla.ts)、[react.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/react.ts)、[traditional.ts](https://github.com/pmndrs/zustand/blob/d7a5583cffd80af515f7dfb69583c95cbdc9e2ce/src/traditional.ts)。

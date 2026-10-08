@@ -1,5 +1,19 @@
 # 第 8 章：总结与最佳实践
 
+## 版本范围与本轮校核
+
+保留原系列 Preact 10.28.4 版本范围。本轮核对 create-element.js、diff/children.js、hooks/src/index.js 的核心结构；其余函数和历史行数仅作为导航，未逐行对齐或执行浏览器测试。
+
+### 先掌握这些边界
+
+- Preact core、compat 和 React 不是完全相同的实现。体积必须给出版本、入口和压缩口径；兼容 React 生态要验证事件、第三方组件及 SSR 行为。
+- JSX 可以走经典 h/createElement，也可以走自动 JSX runtime；h 不是唯一编译产物。VNode 是框架数据结构，不等于真实 DOM。
+- key 只在兄弟集合中表达稳定身份，还要结合 type 匹配；不要用随机数或会变化的数组下标掩盖身份问题。
+- 10.28.4 的 children 匹配使用位置/skew 与搜索启发式，不能保证任意排列全局最少 DOM 操作或一律 O(n)。
+- 10.28.4 Hooks 的状态/依赖检查可见 !==，不能照搬 React 的 Object.is 边界结论。effect 要验证清理、重渲染和卸载顺序。
+
+核查日期：2026-10-08；[官方依据](https://github.com/preactjs/preact/tree/10.28.4)。以下原有长篇实现保留学习上下文；未验证部分不标记为“源码一致性通过”。
+
 > **本章是《Preact 源码解析》系列的最终章**。我们将回顾整个 Preact 架构，对比 Preact 与 React 的核心差异，并提供生产环境的最佳实践和性能优化技巧。
 
 ---
@@ -70,10 +84,10 @@ flowchart TB
 
 | 方面 | Preact | React |
 |------|--------|-------|
-| **包体积** | 3kB | ~40kB |
+| **包体积** | 需指定 core/compat 入口并实测 | 需指定 React/react-dom 入口并实测 |
 | **架构** | 单层 diff | Fiber 架构 |
 | **并发渲染** | ❌ 不支持 | ✅ 支持 |
-| **批处理** | 异步（Promise/setTimeout） | 同步（18+ 自动批处理） |
+| **批处理** | 队列调度，具体受版本/options 影响 | React 18+ 支持自动批处理，不等于所有更新同步 |
 | **Hooks 实现** | 数组索引 | 链表 |
 | **事件系统** | 原生事件 | 合成事件 |
 
