@@ -4,26 +4,26 @@
 
 ## 一、创建函数
 
-#### 函数声明
+### 函数声明
 
 ```js
 function fnName() {}
 ```
 
-#### 函数表达式
+### 函数表达式
 
 ```js
 var fnName = function () {};
 ```
 
-#### 使用 Function 构造函数
+### 使用 Function 构造函数
 
 ```js
 // 参数：Function 接收任意多的参数，但最后一个参数总被认为是函数体，前面的参数是传入新函数的参数
 var fnName = new Function('a', 'b', 'c', 'return a + b + c');
 ```
 
-#### 【ES6】箭头函数
+### 【ES6】箭头函数
 
 ```js
 var fnName = () => {};
@@ -31,14 +31,14 @@ var fnName = () => {};
 
 ## 二、函数的内部属性
 
-#### arguments
+### arguments
 
 -   类型：类数组对象，包含着传入函数的所有参数，和 length 属性
 -   属性：
     -   arguments.length // 实际传入函数参数的个数
     -   arguments.callee【严格模式报错】 // 指向拥有这个 arguments 对象的函数，即函数本身
 
-#### this：由调用语义与函数种类决定
+### this：由调用语义与函数种类决定
 
 | 场景 | this 来源 |
 | --- | --- |
@@ -54,24 +54,24 @@ this 不是词法作用域本身，也不总是“最后调用它的对象”。
 
 ## 三、函数的属性和方法
 
-#### 属性
+### 属性
 
-###### fnName.caller
+#### fnName.caller
 
 -   历史接口：caller 受严格模式等限制，不作为现代业务逻辑或调试依赖。
 
-###### fnName.length
+#### fnName.length
 
 -   描述：表示函数希望接收的命名参数的个数
 <p class="tip">
 注意：arguments.length 是实际传入函数参数的个数，而 fnName.length 是函数希望接收命名参数的个数，【ES6函数默认值对length的影响】：指定默认值以及在指定默认值的参数之后的所有参数，都不会计算到length中
 </p>
 
-###### fnName.prototype
+#### fnName.prototype
 
 -   描述：可构造函数通常具有用于实例原型链的 prototype；箭头函数等并不具备相同能力。
 
-###### 【ES6】fnName.name
+#### 【ES6】fnName.name
 
 -   描述：获取函数的函数名
 -   返回值：
@@ -81,11 +81,11 @@ this 不是词法作用域本身，也不总是“最后调用它的对象”。
     -   对于使用 new Function 创建的函数：返回 'anonymous'
     -   对于使用 bind 方法返回的函数：返回 'bound 函数名'
 
-#### 方法
+### 方法
 
-###### fnName.apply()
+#### fnName.apply()
 
-###### fnName.call()
+#### fnName.call()
 
 -   描述：上面两个方法都用来在特殊的作用域调用函数，实际上等于设置函数体内的 `this` 对象的值
 -   参数：
@@ -125,7 +125,7 @@ Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )
 4、返回调用func的[[Call]]内部方法的结果，提供 thisArg 作为该值，argList 作为参数列表。
 ```
 
-###### fnName.bind()
+#### fnName.bind()
 
 -   描述：根据已有函数，创建一个被绑定新 `this` 值的函数
 -   参数：指定 `this` 值
@@ -134,7 +134,7 @@ Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )
 
 ## 四、ES6 对函数的扩展
 
-#### 参数默认值
+### 参数默认值
 
 ```js
 function withDefaults(a = 2, b = 3){
@@ -144,14 +144,14 @@ function withDefaults(a = 2, b = 3){
 
 <p class="tip">【注意：函数的length属性，不会计算指定默认值的参数以及其后的所有参数】</p>
 
-#### rest 参数 [...变量名]
+### rest 参数 [...变量名]
 
 -   描述：用于获取函数多余的参数，将其放入一个数组
 -   注意：
     -   1、rest 参数后面，不能有其他参数，否则会报错
     -   2、rest 参数不会被计算到函数的 length 属性中
 
-#### 箭头函数
+### 箭头函数
 
 箭头函数有几点需要注意：
 
@@ -161,11 +161,11 @@ function withDefaults(a = 2, b = 3){
 -   不可以使用 `yield` 命令，因此箭头函数不能用作 `Generator` 函数。
 -   由于箭头函数没有自己的 `this`，所以当然也就不能用 `call()`、`apply()`、`bind()` 这些方法去改变 `this` 的指向。
 
-#### 尾调用与尾递归
+### 尾调用与尾递归
 
 尾调用优化有规范条件与实现差异；不能承诺“写了尾递归就不会栈溢出”。跨引擎库对深递归应使用显式循环、工作栈或经过测试的 trampoline。柯里化、尾调用和尾递归是不同概念，不应混为一个性能技巧。
 
-#### new.target【ES6】
+### new.target【ES6】
 
 `new` 操作符用来调用函数或 ES6 的类，从而创建一个实例，ES6 为 new 操作符添加一个属性即：`new.target`，它保存着 `new` 操作符所作用的那个函数或类，一般用在构造函数里，如果使用函数或类时没有使用 `new` 操作符，那么 `new.target` 的值为 `undefined`。
 

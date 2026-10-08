@@ -17,7 +17,7 @@ mounted 不代表所有异步子组件、图片和请求都完成；nextTick 等
 
 ## Vue 实例
 
-#### 构造函数
+### 构造函数
 
 每个 Vue 应用程序都是通过 `Vue` 构造函数创建出一个 Vue `根实例`来引导辅助的：
 
@@ -40,14 +40,14 @@ var myComponentInstance = new MyComponent()
 ```
 尽管可以命令式地创建扩展实例，不过，在多数情况下，推荐声明式地注册组件，并在模板中作为自定义元素组合在一起。我们将在后面详细说明组件系统。现在，你只需知道`所有的 Vue 组件，本质上都是 Vue 对象扩展后的实例。`
 
-#### 实例API简介
+### 实例API简介
 
 构造器(实例化)
 
 var vm = new Vue({　
     //选项
 
-###### DOM（3）
+#### DOM（3）
 
 * [el](https://v2.vuejs.org/v2/api/?#el) 
 
@@ -69,7 +69,7 @@ var vm = new Vue({　
 
     * 详细：字符串模板的代替方案，render 函数接收一个 createElement 方法作为第一个参数用来创建 VNode。
 
-###### 数据（6）
+#### 数据（6）
 
 * [data](https://v2.vuejs.org/v2/api/?#data)    
 
@@ -133,7 +133,7 @@ var vm = new Vue({　
     一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。
 
 
-###### 生命周期钩子（10）
+#### 生命周期钩子（10）
 
 * beforeCreate(在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用。)
 
@@ -155,7 +155,7 @@ var vm = new Vue({　
 
 * destroyed(Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，框架管理的相关监听会被清理；手工建立的全局监听、定时器和第三方资源仍需自行释放，所有的子实例也会被销毁。)
 
-###### 资源（3）
+#### 资源（3）
 
 * directives(包含 Vue 实例可用指令的哈希表。)
 
@@ -163,7 +163,7 @@ var vm = new Vue({　
 
 * components(包含 Vue 实例可用组件的哈希表。)
 
-###### 杂项（6）
+#### 杂项（6）
 
 * parent(指定已创建的实例之父实例，在两者之间建立父子关系。子实例可以用 this.$parent 访问父实例，子实例被推入父实例的 $children 数组中。)
 
@@ -180,7 +180,7 @@ var vm = new Vue({　
 )}
 
 
-#### 属性与方法
+### 属性与方法
 
 每个 Vue 实例都会`代理`其 `data` 对象的所有属性：
 
@@ -220,7 +220,7 @@ vm.$watch('a', function (newVal, oldVal) {
 不要在实例属性或者回调函数中（例如，vm.$watch('a', newVal => this.myMethod())）使用箭头函数。因为`箭头函数会绑定父级上下文`，所以 this 不会按照预期指向 Vue 实例，然后 this.myMethod 将是未定义。
 </p>
 
-###### 实例属性(10)
+#### 实例属性(10)
 
 　　* vm.$data（Vue 实例观察的数据对象。Vue 实例代理了对其 data 对象属性的访问。）
 
@@ -242,7 +242,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* vm.$isServer（当前 Vue 实例是否运行于服务器。）
 
-###### 实例方法/数据（3）
+#### 实例方法/数据（3）
 
 　　* vm.$watch（观察 Vue 实例变化的一个表达式或计算属性函数。回调函数得到的参数为新值和旧值。）
 
@@ -250,7 +250,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* vm.$delete（这是全局 Vue.delete 的别名。）
 
-###### 实例方法/事件（4）
+#### 实例方法/事件（4）
 
 　　* vm.$on（监听当前实例上的自定义事件。事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。）
 
@@ -260,7 +260,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* vm.$emit（触发当前实例上的事件。附加参数都会传给监听器回调。）
 
-###### 实例方法/生命周期（4）
+#### 实例方法/生命周期（4）
 
 　　* vm.$mount（如果 Vue 实例在实例化时没有收到 el 选项，则它处于“未挂载”状态，没有关联的 DOM 元素。可以使用 vm.$mount()手动地挂载一个未挂载的实例。）
 
@@ -270,7 +270,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* vm.$destroy（完全销毁一个实例。清理它与其它实例的连接，解绑它的全部指令及事件监听器。）
 
-#### 全局API（10）
+### 全局API（10）
 
 　　* Vue.extend　------使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
 
@@ -292,7 +292,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* Vue.compile  ------在render函数中编译模板字符串。只在独立构建时有效
 
-#### 全局配置 Vue.config　（6）
+### 全局配置 Vue.config　（6）
 
 　　* Vue.config.silent = true   　　　　　　　------取消 Vue 所有的日志与警告。
 
@@ -327,7 +327,7 @@ var vm = new Vue({
 
 也有一些其它的钩子，在实例生命周期的不同阶段调用，如 `mounted`、`updated` 和 `destroyed`。钩子的 `this` 指向调用它的 Vue 实例。一些用户可能会问 Vue.js 是否有“控制器(controller)”的概念？答案是，没有。组件的自定义逻辑可以分布在这些钩子中。
 
-#### 生命周期示意图
+### 生命周期示意图
 
 Vue实例有一个完整的生命周期，从开始创建、初始化数据、编译模板、挂载Dom、渲染→更新→渲染、卸载等一系列过程，我们称这是Vue的生命周期。通俗说就是Vue实例从创建到销毁的过程，就是生命周期。
 

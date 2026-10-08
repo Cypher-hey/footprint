@@ -5,7 +5,7 @@
 
 ## git 简明指南
 
-#### 创建新仓库 init
+### 创建新仓库 init
 
 1. 创建新文件夹，打开，然后执行 
 
@@ -13,13 +13,13 @@
 
 3. 以创建新的 git 仓库。
 
-#### 检出仓库 clone
+### 检出仓库 clone
 
 * 克隆本地仓库：`git clone /path/to/repository`
 
 * 克隆远端服务器仓库： `git clone username@host:/path/to/repository`
 
-#### 工作流描述
+### 工作流描述
 
 每一个的本地仓库由 git 维护的三棵“树”组成。
 
@@ -29,7 +29,7 @@
 
 * 最后是 `HEAD`，它指向你最后一次提交的结果<commit>。
 
-#### 添加和提交 add & commit
+### 添加和提交 add & commit
 
 * 添加:
 
@@ -49,7 +49,7 @@
 
     现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。
 
-#### 推送改动 push
+### 推送改动 push
 
 你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库：
 
@@ -61,7 +61,7 @@
 
 无参数 push 的目标取决于 upstream、remote 和 push.default 等配置，并不是默认推送全部分支。
 
-#### 将本地仓库连接到远端服务器 remote add origin
+### 将本地仓库连接到远端服务器 remote add origin
 
 如果你还没有克隆现有仓库，并欲将你的仓库连接到某个远程服务器，你可以使用如下命令添加：
 
@@ -69,7 +69,7 @@
 
 如此你就能够将你的改动推送到所添加的服务器上去了。
 
-#### 分支 checkout
+### 分支 checkout
 
 分支是用来将特性开发绝缘开来的。初始分支名取决于配置和托管平台，可能是 main、master 或其他名称。在其他分支上进行开发，完成后再将它们合并到主分支上。
 
@@ -89,7 +89,7 @@
 
 `git push origin <branch>`
 
-#### 更新与合并 pull、merge
+### 更新与合并 pull、merge
 
 * 更新：
 
@@ -115,7 +115,7 @@
 
 `git add <filename>`
 
-#### 替换本地改动 checkout、fetch & reset
+### 替换本地改动 checkout、fetch & reset
 
 假如你操作失误（当然，这最好永远不要发生），你可以使用如下命令替换掉本地改动：
 

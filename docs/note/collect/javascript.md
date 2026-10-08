@@ -8,7 +8,7 @@
 
 Math.max.apply/spread 对极大数组可能超出参数限制；空数组需定义返回行为。Math.random 不适合密码、令牌和安全随机数。随机颜色片段不保证始终产生固定六位，应使用明确补零逻辑。
 
-#### 5种方式实现值交换
+### 5种方式实现值交换
 ```js
 
 1. var temp = a; a = b; b = temp; (传统，但需要借助临时变量)
@@ -22,7 +22,7 @@ Math.max.apply/spread 对极大数组可能超出参数限制；空数组需定�
 5. a = a + b; b = a - b; a = a - b; (小学奥赛题)
 ```
 
-#### 去掉小数部分
+### 去掉小数部分
 ```js
 
 1. parseInt(num)
@@ -34,7 +34,7 @@ Math.max.apply/spread 对极大数组可能超出参数限制；空数组需定�
 4. num | 0
 ```
 
-#### 判断 x 是否是整数
+### 判断 x 是否是整数
 ```js
 
 function isInt(x) {
@@ -45,7 +45,7 @@ function isInt(x) {
 // 4. ES6 -> Number.isInteger()
 ```
 
-#### 递归求阶乘
+### 递归求阶乘
 ```js
 
 function factorial(n) {
@@ -54,7 +54,7 @@ function factorial(n) {
 }
 ```
 
-#### 判断符号是否相同
+### 判断符号是否相同
 ```js
 
 function sameSign(a, b) {
@@ -62,13 +62,13 @@ function sameSign(a, b) {
 }
 ```
 
-#### 克隆数组
+### 克隆数组
 ```js
 
 arr.slice(0)
 ```
 
-#### 数组去重
+### 数组去重
 ```js
 
 // ES6
@@ -80,7 +80,7 @@ arr.filter(function(ele, index, array){
 })
 ```
 
-#### 数组最值
+### 数组最值
 ```js
 
 function maxArr(arr) {
@@ -92,7 +92,7 @@ function minArr(arr) {
 }
 ```
 
-#### 随机获取数组的一个成员
+### 随机获取数组的一个成员
 ```js
 
 function randomOne(arr) {
@@ -100,7 +100,7 @@ function randomOne(arr) {
 }
 ```
 
-#### 产生随机颜色
+### 产生随机颜色
 ```js
 
 function getRandomColor() {
@@ -108,7 +108,7 @@ function getRandomColor() {
 }
 ```
 
-#### 随机生成指定长度的字符串
+### 随机生成指定长度的字符串
 ```js
 
 function randomStr(n) {
@@ -124,7 +124,7 @@ function randomStr(n) {
 }
 ```
 
-#### 简单拷贝
+### 简单拷贝
 ```js
 
 JSON.parse(JSON.stringify(obj))

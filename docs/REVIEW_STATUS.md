@@ -31,6 +31,12 @@
 
 这些是概念核查与关键源码抽查，不是 41 篇所有代码逐行复现。未固定提交的 MobX/OpenClaw 内部函数、RN 原生代码、构建性能数字仍须复现。
 
+## 批次 7：教学深度与静态收尾
+
+AI 基础补充梯度下降、概率/损失和注意力形状；模型系统补充 LoRA 参数量、KV 容量与延迟指标；评测补充具体用例、配对 A/B 与成本口径。新增 6 条算例断言通过，不涉及模型调用。
+
+统一 32 篇文档中 544 处跳级标题（保留标题文字与文件路径），修复源码目录省略扩展名的链接、历史图片占位和相对导航。完整索引改用中文知识标题，并把源码系列分组。
+
 ## 发现的展示问题（尚未修改运行时代码）
 
 - docs/index.html 使用 Docute；提交说明中的 Docusaurus 与实际入口不一致。
@@ -83,7 +89,7 @@
 | [docs/note/css3/matrix.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/matrix.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/css3/selector.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/selector.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/css3/transform.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/transform.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
-| [docs/note/cultureLanguage/english/pronunciation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/cultureLanguage/english/pronunciation.md) | 已分类为外语/作品摘记，保留原文 | 不纳入本轮前端与 AI 技术审校；发音/译文未验证 |
+| [docs/note/cultureLanguage/english/pronunciation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/cultureLanguage/english/pronunciation.md) | 外语/作品归档；内容保留，英语页补标题 | 不纳入本轮前端与 AI 技术审校；发音/译文未验证 |
 | [docs/note/cultureLanguage/japanese/pronunciation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/cultureLanguage/japanese/pronunciation.md) | 已分类为外语/作品摘记，保留原文 | 不纳入本轮前端与 AI 技术审校；发音/译文未验证 |
 | [docs/note/deploy/norm.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/deploy/norm.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/dom/dom-event.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/dom/dom-event.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
@@ -199,7 +205,7 @@
 
 ## 新增 AI 内容
 
-- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)：正文完成，示例未执行。
+- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)：正文完成；梯度算例 3 条数值断言通过，未做模型实验。
 - [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)：正文完成，示例未执行。
 - [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)：正文完成，示例未执行。
 - [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)：正文完成，示例未执行。
@@ -211,9 +217,27 @@
 - [Evals 与可观测性：让改进成为可验证的判断](note/ai/10-evaluation.md)：正文完成，示例未执行。
 - [多 Agent：分工收益、上下文成本与单一责任人](note/ai/11-multi-agent.md)：正文完成，示例未执行。
 - [AI Coding 与 Harness：把交付变成受控闭环](note/ai/12-ai-coding.md)：正文完成，示例未执行。
-- [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)：正文完成，示例未执行。
+- [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)：正文完成；参数/KV 算例 3 条算术断言通过，未做训练/硬件实验。
 - [贯穿实践：可验证的 AI 知识卡片助手](note/ai/14-learning-project.md)：正文完成，示例未执行。
 
 ## 完成口径
 
-当前为分批交付，不是全仓事实校验完成。后续修订必须更新此表，不可将未审阅条目标为通过。没有启动 Work / Codex 工程任务，没有合并或部署。
+本轮为覆盖全目录的文档迭代交付，不是全仓所有事实、每段源码和每个例子的验证认证。已确认错误已修正；来源与未验证范围写在正文及本表。没有启动 Work / Codex 工程任务，没有合并或部署。
+
+### 已完成的检查
+
+- 全部 170 个 Markdown 文件的围栏闭合与单一一级标题结构检查。
+- 正文中可识别的相对文件链接/图片路径存在性检查；忽略代码围栏与行内代码。未验证所有页内锚点或外部 HTTP 链接。
+- 严格 json 代码块使用 JSON.parse 检查；带注释的示意改为 jsonc。jsonc/JS/TS 片段没有因此被编译或执行。
+- 位运算 9 条 + 教学数学 6 条，共 15 条独立 JavaScript 断言通过。它们不是仓库 npm test 或浏览器测试。
+- GitHub 比较确认变更仅含 Markdown，无文件删除；保留原 next 基线，不改站点运行时代码。
+
+### 明确未完成、不能宣称通过的内容
+
+1. 41 篇源码学习文档的逐行源码一致性与全套运行复现。未固定版本的内部函数/行号仍可能过时。
+2. 2018 年约 195 KB 的第三方代码速查逐函数测试。本轮按历史归档保留，现代正文优先。
+3. 166 个 Mermaid 块的实际解析与站点切页渲染、移动端/可访问性视觉验收。
+4. 所有外链、页内锚点、外语发音与作品译文的完整验证。
+5. 站点现有 Docute 菜单、Mermaid 加载与安全级别调整。这些属于运行时/配置工作，本轮未执行。
+
+这些项目是后续验收清单，不是已经启动的额外任务。

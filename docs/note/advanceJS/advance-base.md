@@ -12,11 +12,11 @@
 
 ## 一、惰性载入
 
-#### 惰性函数定义
+### 惰性函数定义
 
 假如**同一个函数被大量范围重复使用，并且这个函数内部又有许多判断来来检测函数**，这样对于一个调用会浪费时间和浏览器资源，所有当第一次判断完成后，直接把这个函数改写，不在需要判断。
 
-#### 两种实现惰性载入的方式
+### 两种实现惰性载入的方式
 
 1. 第一种是函数在第一次调用时，对函数本身进行二次处理（`重写函数`），该函数会被覆盖为符合分支条件的函数，这样对原函数的调用就不用再经过执行的分支了
 
@@ -89,7 +89,7 @@ var foo = function () {
 
 ## 二、数组去重
 
-#### 双层循环
+### 双层循环
 
 1.原生
 
@@ -180,7 +180,7 @@ function unique(array) {
 console.log(unique(array));
 ```
 
-#### Object 键值对 判重
+### Object 键值对 判重
 
 原理：利用一个空的 Object 对象，我们把数组的值存成 Object 的 key 值，比如 Object[value1] = true，在判断另一个值的时候，如果 Object[value2]存在的话，就说明该值是重复的。
 
@@ -201,7 +201,7 @@ function unique(array) {
 console.log(unique(array)); // [{value: 1}, {value: 2}]
 ```
 
-#### ES6 去重
+### ES6 去重
 
 可以使用 Set 和 Map 数据结构
 
@@ -234,7 +234,7 @@ function unique(arr) {
 }
 ```
 
-#### 特殊类型比较
+### 特殊类型比较
 
 ```js
 var str1 = '1';
@@ -261,7 +261,7 @@ console.log({} === {}); // false
 
 ## 三、类型判断
 
-#### typeof
+### typeof
 
 引用《JavaScript 权威指南》中对 typeof 的介绍：
 
@@ -298,7 +298,7 @@ console.log(typeof error); // object
 console.log(typeof arr); // object
 ```
 
-#### Object.prototype.toString
+### Object.prototype.toString
 
 [ES5 规范地址](https://es5.github.io/#x15.2.4.2)
 
@@ -380,7 +380,7 @@ function type(obj) {
 }
 ```
 
-#### plainObject
+### plainObject
 
 plainObject 来自于 jQuery，可以翻译成纯粹的对象，所谓"纯粹的对象"，就是该对象是通过 "{}" 或 "new Object" 创建的，该对象含有零个或者多个键值对。
 
@@ -406,7 +406,7 @@ console.log($.isPlainObject(new Person('yayu'))); // false
 console.log($.isPlainObject(Object.create({}))); // false
 ```
 
-#### EmptyObject
+### EmptyObject
 
 Query 提供了 isEmptyObject 方法来判断是否是空对象，代码简单:
 
@@ -434,7 +434,7 @@ console.log(isEmptyObject('')); // true
 console.log(isEmptyObject(true)); // true
 ```
 
-#### Window 对象
+### Window 对象
 
 Window 对象作为客户端 JavaScript 的全局对象，它有一个 window 属性指向自身,可以利用这个特性判断是否是 Window 对象。
 
@@ -444,7 +444,7 @@ function isWindow(obj) {
 }
 ```
 
-#### isArrayLike
+### isArrayLike
 
 jQuery 实现的 isArrayLike，数组和类数组都会返回 true。
 
@@ -469,7 +469,7 @@ function isArrayLike(obj) {
 2. 长度为 0
 3. lengths 属性是大于 0 的数字类型，并且 obj[length - 1]必须存在
 
-#### isElement
+### isElement
 
 isElement 判断是不是 DOM 元素:
 
@@ -485,7 +485,7 @@ isElement = function (obj) {
 
 深拷贝: 就是指完全的拷贝一个对象（拷贝所有的属性，并拷贝属性指向的动态分配的内存），即使嵌套了对象，两者也相互分离，拷贝前后两个对象互不影响。
 
-#### 数组的浅拷贝
+### 数组的浅拷贝
 
 如果是数组，我们可以利用数组的一些方法比如：slice （浅拷贝）、concat （浅拷贝）返回一个新数组的特性来实现拷贝，比如：
 
@@ -515,7 +515,7 @@ console.log(arr); // [{old: 'new'}, ['new']]
 console.log(new_arr); // [{old: 'new'}, ['new']]
 ```
 
-#### 对象的浅拷贝
+### 对象的浅拷贝
 
 1. Object.assign
 
@@ -533,7 +533,7 @@ console.log(new_arr); // [{old: 'new'}, ['new']]
 
 二者都可做浅层属性复制，但 Object.assign 对目标赋值可触发 setter，对象展开创建属性的语义不同；都不是通用深克隆。
 
-#### 数组的深拷贝
+### 数组的深拷贝
 
 简单粗暴 ：JSON.parse(JSON.stringify(arr))
 
@@ -561,7 +561,7 @@ console.log(new_arr);
 
 6、不能处理正则
 
-#### 浅拷贝的实现
+### 浅拷贝的实现
 
 concat、slice、JSON.stringify 都算是技巧类,可以根据实际项目情况选择使用
 
@@ -585,7 +585,7 @@ var shallowCopy = function (obj) {
 };
 ```
 
-#### 深拷贝的实现
+### 深拷贝的实现
 
 下面是历史递归教学草稿，不处理循环引用、特殊对象、属性描述符和原型；访问 getter 可能有副作用。不能声称任意深拷贝无副作用。
 
@@ -604,7 +604,7 @@ var deepCopy = function (obj) {
 };
 ```
 
-#### jQuery.extend
+### jQuery.extend
 
 引用 jQuery 官网：
 
@@ -685,7 +685,7 @@ jQuery.extend( [deep], target, object1 [, objectN ] )
 
 防抖（Debounce）和节流 （Throttle） 都是**用来控制某个函数在一定时间内执行次数的多少以优化高频率执行 js 代码**的一种技巧，两者相似而又不同。
 
-#### 防抖（debounce）
+### 防抖（debounce）
 
 **防抖，就是指触发事件后在 n 秒内函数只能执行一次，`如果在 n 秒内又触发了事件，则会重新计算函数执行时间。`**
 
@@ -729,7 +729,7 @@ function debounce(func, wait, immediate) {
 }
 ```
 
-#### 节流（throttle）
+### 节流（throttle）
 
 **所谓节流，就是指连续触发事件但是在所定义的时间窗口内限制调用频率；leading/trailing 决定边界行为。**节流用来`稀释函数的执行频率`
 

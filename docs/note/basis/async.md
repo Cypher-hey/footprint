@@ -19,7 +19,7 @@ await 暂停当前 async 函数，不是阻塞整个事件循环；CPU 密集同
 
 主流的异步处理方案主要有：回调函数(CallBack)、Promise、Generator、async/await。这一小节，我们通过一个小例子，对比这几种异步处理方案的不同。
 
-#### 回调函数(CallBack)
+### 回调函数(CallBack)
 
 假设我们有一个 `getData` 方法，用于异步获取数据，第一个参数为请求的 `url` 地址，第二个参数是回调函数，如下：
 
@@ -60,7 +60,7 @@ getData('/page/1?param=123', (res1) => {
 
 由于后续请求依赖前一个请求的结果，所以我们只能把下一次请求写到上一次请求的回调函数内部，这样就形成了常说的：考百科·海尔 🐵
 
-#### 使用 Promise
+### 使用 Promise
 
 `Promise` 就是为了解决回调地狱的问题，为异步编程提供统一接口而提出的，最早有社区实现，由于 ES6 的原因，现在 `Promise` 已经是语言基础的一部分了。
 
@@ -101,7 +101,7 @@ getDataAsync('/page/1?param=123')
 每一个 `then` 还是要写一个回调。如果场景再复杂一点，比如后边的每一个请求依赖前面所有请求的结果，而不仅仅依赖上一次请求的结果，那会更复杂。
 为了做的更好，`async/await` 就应运而生了，来看看使用 `async/await` 要如何实现。
 
-#### async/await
+### async/await
 
 `getDataAsync` 方法不变，如下：
 
@@ -135,7 +135,7 @@ async function getData() {
 对比 `Promise` 感觉怎么样？是不是非常清晰，但是 `async/await` 是基于 `Promise` 的，因为使用 `async` 修饰的方法最终返回一个 `Promise`，
 Generator + 执行器可帮助理解暂停与恢复，但 async/await 有独立规范语义，不能据此断言引擎内部一定用 Generator 实现。下面保留历史教学对照。
 
-#### Generator
+### Generator
 
 首先异步函数依然是：
 
@@ -233,7 +233,7 @@ executor 在构造时同步调用，then/catch 处理函数按异步任务机制
 
 Promise 本身没有通用取消方法；底层操作可以提供 AbortSignal 等取消协议。未处理 rejection 可以被宿主报告，不能说“内部错误永远不反映到外部”。
 
-#### 初始化
+### 初始化
 
 一般情况下我们都会使用 new Promise() 来创建 Promise 对象:
 
@@ -279,7 +279,7 @@ runAsync();
 // 执行这个函数我们得到了一个Promise对象
 ```
 
-#### 链式操作
+### 链式操作
 
 从表面上看，Promise 只是能够简化层层回调的写法，而实质上，Promise 的精髓是`状态`，用维护状态、传递状态的方式来使得回调函数能够及时调用，它比传递 callback 函数要简单、灵活的多。
 
@@ -351,7 +351,7 @@ runAsync1()
     });
 ```
 
-#### 异步
+### 异步
 
 > -   绝对不能对异步回调函数（即使在数据已经就绪）进行同步调用。
 
@@ -365,7 +365,7 @@ runAsync1()
 
 注意区分：Promise executor 同步调用，then/catch 的 reaction 异步执行；不能笼统说 Promise 内所有代码都异步。
 
-#### resolve
+### resolve
 
 resolve 接受普通值时可以 fulfillment，接受 Promise/thenable 时则采用其结果；不能把 resolve 与 fulfilled 无条件等同。
 
@@ -387,7 +387,7 @@ Promise.resolve(42).then(function (value) {
 
 Promise.resolve 作为将值转换为 Promise 的便捷方式，在进行 Promise 对象的初始化或者编写测试代码的时候都非常方便。
 
-#### reject
+### reject
 
 reject 的作用就是把 Promise 的状态置为 rejected，这样我们在 then 中就能捕捉到，然后执行“失败”情况的回调。
 
@@ -408,7 +408,7 @@ Promise.reject(new Error('BOOM!')).catch(function (error) {
 
 它和 Promise.resolve(value) 的不同之处在于 Promise 内调用的函数是 reject 而不是 resolve，这在编写测试代码或者进行 debug 时，说不定会用得上。
 
-#### then
+### then
 
 每次调用 then 都会返回一个新创建的 promise 对象。
 
@@ -439,7 +439,7 @@ runAsync().then(function (data) {
 
 ** 而 Promise 的优势在于，可以在 then 方法中继续写 Promise 对象并返回，然后继续调用 then 来进行回调操作。 **
 
-#### catch
+### catch
 
 Promise 对象除了 then 方法，还有一个 catch 方法，实际上它只是 `promise.then(undefined, onRejected)` 方法的一个别名，用来指定 reject 的回调；
 
@@ -499,7 +499,7 @@ getNumber()
     });
 ```
 
-#### all
+### all
 
 Promise.all 聚合已有的输入；真正启动操作的是调用函数等动作，不是 all 创造线程或自动启动所有异步任务。
 
@@ -519,7 +519,7 @@ Promise.all([runAsync1(), runAsync2(), runAsync3()]).then(function (results) {
 
 通过 all 方法，就可以并行执行多个异步操作，并且在一个回调中处理所有的返回数据。
 
-#### race
+### race
 
 相对的就有另一个方法「谁跑的快，以谁为准执行回调」，这就是 race 方法，这个词本来就是赛跑的意思。
 

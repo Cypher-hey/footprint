@@ -26,7 +26,7 @@
 
 如果想降低配置成本，可以直接接入上面的开源配置方案，好多开发者是继承它们的规范，然后在原有基础进行部分修改。我们目前选择的方式不是继承，挑选出了一些适合我们的 ESLint 规则(因为是在原有代码重新建立规范，防止改动过大)。
 
-#### My .eslintrc.js
+### My .eslintrc.js
 
 ```js
 module.exports = {
@@ -63,11 +63,11 @@ module.exports = {
 };
 ```
 
-#### ESLint 集成
+### ESLint 集成
 
 ESLint 使用并不复杂，简单说下 ESLint 的集成。
 
-##### 项目本地安装（历史示例）
+#### 项目本地安装（历史示例）
 
 ```js
 
@@ -77,7 +77,7 @@ yarn add eslint -D
 npm install eslint -D
 ```
 
-##### 初始化
+#### 初始化
 
 ```js
 eslint --init
@@ -85,7 +85,7 @@ eslint --init
 
 初始化产物取决于 ESLint 版本；下文是旧 eslintrc 模型，现代 flat config 不能直接套用相同字段。
 
-##### 自定义配置文件
+#### 自定义配置文件
 
 ```js
 module.exports = {
@@ -97,11 +97,11 @@ module.exports = {
 };
 ```
 
-###### parser
+##### parser
 
 定义 parser 的解析器，我们常用的解析器应该是 `@typescript-eslint/parser`
 
-###### env
+##### env
 
 通过 env 配置需要启动的环境
 
@@ -113,7 +113,7 @@ env: {
 },
 ```
 
-###### extend
+##### extend
 
 extend 提供的是 eslint 现有规则的一系列预设。
 
@@ -139,7 +139,7 @@ extend 提供的是 eslint 现有规则的一系列预设。
 
 忽略检查可以通过在项目目录下建立 `.eslintignore` 文件，并在其中配置忽略掉对哪些文件的检查。需要注意的是，不管你有没有在 .eslintignore 中进行配置，eslint 都会默认忽略掉对 /node_modules/\*\* 的检查。也可以在 package.json 文件的 eslintIgnore 字段进行配置。
 
-###### plugins
+##### plugins
 
 plugin 则提供了除预设之外的自定义规则，当你在 ESlint 的规则里找不到合适的的时候就可以借用插件来实现了
 
@@ -156,9 +156,9 @@ module.exports = {
 };
 ```
 
-#### ESLint 重要特性
+### ESLint 重要特性
 
-##### rules
+#### rules
 
 rules 对应的规则，可以去官网查看。找到符合自己项目的规则。
 
@@ -172,7 +172,7 @@ ESLint 规则官网地址: http://eslint.cn/docs/rules/
     - "warn"或者 1，出现问题会有警告
     - "error"或者 2，出现问题会报错
 
-###### 工作原理
+##### 工作原理
 
 首先来看看 eslint 源码中关于 rules 的编写。eslint 中的 rules 源码存在于 lib/rules 下。每一个 rules 都是一个 node 模块，用 module.exports 导出一个 meta 对象及一个 create 函数。
 
@@ -238,7 +238,7 @@ Perriter 官网列出几个特点：
 -   Integrates with most editors
 -   Has few options
 
-#### My .prettierrc.js
+### My .prettierrc.js
 
 ```js
 module.exports = {
@@ -267,15 +267,15 @@ module.exports = {
 };
 ```
 
-#### 集成
+### 集成
 
-##### 安装包
+#### 安装包
 
 -   `prettier`：Prettier 插件的核心代码。
 -   `eslint-config-prettier`：解决 ESLint 中的样式规范和 Prettier 中样式规范的冲突，以 Prettier 的样式规范为准，使 ESLint 中的样式规范自动失效。
 -   `eslint-plugin-prettier`：将 prettier 作为 ESLint 规范来使用。
 
-##### 创建 .prettierrc
+#### 创建 .prettierrc
 
 在项目的根目录下创建 `.prettierrc.js` 文件
 
@@ -294,7 +294,7 @@ module.exports = {
 };
 ```
 
-##### 更新 .eslintrc.js
+#### 更新 .eslintrc.js
 
 在 extends 中添加
 
@@ -308,7 +308,7 @@ extends:[
 ],
 ```
 
-##### 配置特殊说明
+#### 配置特殊说明
 
 格式冲突和顺序有什么关系没？
 
@@ -322,9 +322,9 @@ extends:[
 
 ## vscode
 
-#### setting.json
+### setting.json
 
-```json
+```jsonc
 {
     "window.zoomLevel": 2,
     "workbench.colorTheme": "One Monokai",

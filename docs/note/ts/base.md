@@ -13,7 +13,7 @@ TypeScript 在编译阶段帮助检查类型，不会自动验证网络 JSON、�
 
 ## 名词
 
-#### interface
+### interface
 
 Interfaces are designed to declare any arbitrarily crazy structure that might be present in JavaScript.
 
@@ -23,7 +23,7 @@ Interfaces are designed to declare any arbitrarily crazy structure that might be
 
 > Not every interface is implementable easily
 
-#### lib.d.ts
+### lib.d.ts
 
 A special declaration file lib.d.ts ships with every installation of TypeScript. This file contains the ambient declarations for various common JavaScript constructs present in JavaScript runtimes and the DOM.
 
@@ -32,7 +32,7 @@ A special declaration file lib.d.ts ships with every installation of TypeScript.
 
 You can exclude this file from the compilation context by specifying the --noLib compiler command line flag (or "noLib" : true in tsconfig.json).
 
-#### Freshness
+### Freshness
 
 [ref](https://basarat.gitbook.io/typescript/type-system/freshness)
 

@@ -8,13 +8,13 @@ Node 与 Element、内容属性与运行时属性、live 集合与静态列表�
 
 ## 一、节点概览
 
-#### DOM文档对象模型
+### DOM文档对象模型
 
 概念：DOM的目的是为使用JavaScript操作DOM提供编程接口
 
-#### 节点类型
+### 节点类型
 
-##### 全部的节点类型
+#### 全部的节点类型
 
 Node构造函数的属性，也是节点属性 nodeType 的值
 
@@ -39,7 +39,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC----32
 ```
 
-##### 常用节点类型
+#### 常用节点类型
 	
 ```
     DOCUMENT_NODE ---- 9 (window.document)
@@ -50,7 +50,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     DOCUMENT_TYPE_NODE ---- 10 (<!DOCTYPE html>)
 ```
 
-##### 节点继承链
+#### 节点继承链
 
 所有节点类型都继承自Node，并且这个继承链可能更长
 
@@ -64,13 +64,13 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
 继承链中的每一个环节都为最终的节点类型提供了大量的属性和方法
 
-#### 节点属性
+### 节点属性
 
-###### nodeType
+#### nodeType
 * 读写特性：只读
 * 描述：节点的类型，返回以上常量值
 
-###### nodeName
+#### nodeName
 * 读写特性：只读
 * 描述：节点名字，该属性的返回值根据节点类型不同而异：
 ```
@@ -80,14 +80,14 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     Document 返回 #document
     DocumentFragment 返回 #document-fragment
 ```
-###### nodeValue
+#### nodeValue
 * 读写特性：读写
 * 描述：
     
     除了 Text 和 Comment 节点以及 Attr 节点，所有节点的 nodeValue 都返回 null
     nodeValue 的作用就是获取 Text 和 Comment 节点的实际文本字符串，也可以通过设置 nodeValue 的值修改 这两个节点内的文本内容
 
-###### innerHTML
+#### innerHTML
 * 读写特性：读写
 * 描述：
 
@@ -98,7 +98,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     注意：因为 innerHTML 会调用一个沉重且高消耗的HTML解析器。所以慎用
 </p>
 
-###### outerHTML
+#### outerHTML
 * 读写特性：读写
 * 描述：
 
@@ -106,7 +106,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
     写：设置的内容将替换自身标签将被解析为真正的HTML元素()
 
-###### textContent
+#### textContent
 * 读写特性：读写
 * 描述：
 
@@ -119,7 +119,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
         textContent 属性也能返回 `<script>` `<style>` 标签的内容
 </p>
 
-###### childNodes
+#### childNodes
 * 读写特性：只读
 * 描述：
 
@@ -127,57 +127,57 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
     返回的集合是 NodeList
 
-###### parentNode
+#### parentNode
 * 读写特性：只读
 * 描述：返回调用该方法的节点的父节点
 
-###### firstChild
+#### firstChild
 * 读写特性：只读
 * 描述：返回调用该方法的节点的第一个子节点
 
-###### lastChild
+#### lastChild
 * 读写特性：只读
 * 描述：返回调用该方法的节点的最后一个子节点
 
-###### nextSibling
+#### nextSibling
 * 读写特性：只读
 * 描述：返回下一个兄弟节点，可能是文本或注释
 
-###### previousSibling
+#### previousSibling
 * 读写特性：只读
 * 描述：返回前一个兄弟节点，可能是文本或注释
 
-###### children
+#### children
 * 读写特性：只读
 * 描述：返回调用该方法的所有元素子节点
 
-###### parentElement
+#### parentElement
 * 读写特性：只读
 * 描述：返回调用该方法的节点的父元素节点
 
-###### firstElementChild
+#### firstElementChild
 * 读写特性：只读
 * 描述：返回调用该方法的节点的第一个“元素”子节点
 
-###### lastElementChild
+#### lastElementChild
 * 读写特性：只读
 * 描述：返回调用该方法的节点的最后一个“元素”子节点
 
-###### nextElementSibling
+#### nextElementSibling
 * 读写特性：只读
 * 描述：返回调用该方法的节点的下一个兄弟“元素”节点
 
-###### previousElementSibling
+#### previousElementSibling
 * 读写特性：只读
 * 描述：返回调用该方法的节点的前一个兄弟“元素”节点
 
-###### ownerDocument
+#### ownerDocument
 * 读写特性：只读
 * 描述：返回该节点所在的 document 对象，document.ownerDocument === null
 
-#### 节点方法
+### 节点方法
 
-###### insertAdjacentHTML(position, text)
+#### insertAdjacentHTML(position, text)
 
 * 描述：
 	
@@ -199,7 +199,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     * insertAdjacentText(): 
         
 
-###### appendChild(element)
+#### appendChild(element)
 
 * 描述：将指定节点插入到调用该方法的子节点末尾
 
@@ -209,7 +209,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 返回值：
     * `{Element}` 被插入的节点
     
-###### insertBefore(element, target)
+#### insertBefore(element, target)
 
 * 描述：在调用该方法的元素的指定子节点之前插入所给节点，第二个参数显式传 null 时插入末尾，不依赖省略参数的历史行为
 
@@ -220,7 +220,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 返回值：
     * `{Element}` 被插入的节点
 
-###### removeChild(element):
+#### removeChild(element):
 
 * 描述：移除调用该方法的元素的子节点
 
@@ -230,7 +230,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 返回值：
     * `{Element}` 被移除节点的引用
 
-###### replaceChild(element, target)
+#### replaceChild(element, target)
 
 * 描述：使用新节点替换调用该方法的元素的指定子节点
 
@@ -241,7 +241,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 返回值：
     * `{Element}` 被替换节点的引用
     
-###### cloneNode(deep)
+#### cloneNode(deep)
 
 * 描述：深/浅 复制调用该方法的节点
 
@@ -255,7 +255,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 注意：无论深复制还是浅复制，都只会复制节点的内联事件，任何通过 addEventListener 或 onxxx 添加的事件都不会被复制
 </p>
 				
-###### contains(element)
+#### contains(element)
 
 * 描述：判断调用该方法的节点是否包含给定的节点
 
@@ -265,7 +265,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 返回值：
     * `{Boolean}` ture 包含，fals 不包含
 
-###### compareDocumentPosition(element)
+#### compareDocumentPosition(element)
 
 * 描述：对比传入节点和调用该方法的节点的位置。
 
@@ -276,7 +276,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     * `{Number}` 数字，口诀如下：该口诀中的位置是 传入节点 相对于 调用该方法节点 的
     `前2后4里20，同0外10不在1`
 
-#### 节点集合
+### 节点集合
 
 `NodeList` 或 `HTMLCollection`
 
@@ -297,129 +297,129 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 		
 ## 二、文档节点
 
-#### 概述
+### 概述
 
 * 节点类型：DOCUMENT_NODE ---- 9
 * 继承链： Object -> EventTarget -> Node -> Document -> HTMLDocument
 * 示例：window.document
 
-#### 文档节点属性
+### 文档节点属性
 		
-###### title
+#### title
 
 ```js
 // 获取文档标题
 document.title
 ```
 
-###### referrer
+#### referrer
 
 ```js
 // 获取提及者
 document.referrer
 ```
 
-###### URL
+#### URL
 
 ```js
 // 获取文档url连接地址
 document.URL
 ```
 
-###### lastModified
+#### lastModified
 
 ```js
 // 获取文档最后修改时间
 document.lastModified
 ```
 
-###### compatMode
+#### compatMode
 
 ```js
 // 获取兼容模式 BackCompat: 怪异模式，CSS1Compat: 严格模式
 document.compatMode
 ```
 
-###### doctype
+#### doctype
 
 ```js
 // 取得 <!DOCTYPE html> 元素
 document.doctype
 ```
 
-###### documentElement
+#### documentElement
 
 ```js
 // 取得 <html> 元素
 document.documentElement
 ```
 
-###### head
+#### head
 
 ```js
 // 取得 <head> 元素
 document.head
 ```
 
-###### links
+#### links
 
 ```js
 // 取得所有 <a> 元素
 document.links
 ```
 
-###### styleSheets
+#### styleSheets
 
 ```js
 // 取得文档的所有样式表
 document.styleSheets
 ```
 
-###### activeElement
+#### activeElement
 
 ```js
 // 取得文档中聚焦(获得焦点)的元素
 document.activeElement
 ```
 
-###### defaultView
+#### defaultView
 
 ```js
 // 获取顶部对象/全局对象，在浏览器中为 window，在其他JavaScript环境为该环境的顶部对象
 document.defaultView
 ```
 
-###### all
+#### all
 
 ```js
 // HTML 文档中所有元素组成的集合
 document.all
 ```
 
-###### forms
+#### forms
 
 ```js
 // 文档中所有 <form> 元素组成的集合
 document.forms
 ```
 
-###### images
+#### images
 
 ```js
 // 文档中所有的 <img> 元素组成的集合
 document.images
 ```
 
-###### scripts
+#### scripts
 
 ```js
 // 文档中所有 <script> 元素组成的集合
 document.scripts
 ```
 
-#### 文档节点方法
+### 文档节点方法
 
-###### document.createElement(tagName)
+#### document.createElement(tagName)
 
 * 描述：创建元素节点
 
@@ -429,7 +429,7 @@ document.scripts
 * 返回值：
     * `{Element}` 创建的新元素
 
-###### document.createTextNode(text)
+#### document.createTextNode(text)
 
 * 描述：创建文本节点
 
@@ -439,7 +439,7 @@ document.scripts
 * 返回值：
     * `{TEXT_NODE}` 创建的新文本节点
 
-###### document.createComment(text)
+#### document.createComment(text)
 
 * 描述：创建注释节点
 
@@ -449,14 +449,14 @@ document.scripts
 * 返回值：
     * `{COMMENT_NODE}` 创建的新注释节点
 
-###### document.createDocumentFragment()
+#### document.createDocumentFragment()
 
 * 描述：创建文档碎片
 
 * 返回值：
     * `{DOCUMENT_FRAGMENT_NODE}` 文档碎片
 
-###### document.hasFocus()
+#### document.hasFocus()
 
 * 描述：
 
@@ -465,7 +465,7 @@ document.scripts
 * 返回值：
     * `{Boolean}` true 代表文档获得焦点，false 代表没有获得焦点
 
-###### document.getElementById(id)
+#### document.getElementById(id)
 
 * 描述：根据传入的id值匹配元素节点
 
@@ -475,7 +475,7 @@ document.scripts
 * 返回值：
     * `{Element | null}` 匹配则返回元素节点，否则返回 null
 
-###### document.elementFromPoint(x, y)
+#### document.elementFromPoint(x, y)
 
 * 描述：获取文档上某一点最顶层的元素
 
@@ -486,14 +486,14 @@ document.scripts
 * 返回值：
     * `{Element}` 该点所在的最顶层元素
 
-###### document.implementation.createHTMLDocument()
+#### document.implementation.createHTMLDocument()
 
 * 描述：创建一个当前文档之外的HTML文档
 
 * 返回值：
     * `{Document}` 文档引用
 
-###### document.implementation.hasFeature(feature, version)
+#### document.implementation.hasFeature(feature, version)
 
 * 历史 API：hasFeature 已弃用且不可靠，不用于现代能力检测；下方表格仅保留历史参数记录。
 
@@ -528,19 +528,19 @@ document.scripts
 
 ## 三、元素节点
 
-#### 概述
+### 概述
 
 * 节点类型：ELEMENT_NODE ---- 1
 * 继承链： Object -> EventTarget -> Node -> Element -> HTMLElement -> HTML*Element -> `<p>`
 * 示例：document.querySelector('p')
 
-#### 元素节点属性
+### 元素节点属性
 
-###### tagName
+#### tagName
 * 读写特性：只读
 * 描述：获取元素的标签名，与 `nodeName` 值相同
 
-###### attributes
+#### attributes
 * 读写特性：只读
 * 描述：获取元素上 属性 和 值 的集合（NamedNodeMap）
 
@@ -553,7 +553,7 @@ removeNamedItem()
 该属性的优势是所获取的集合是动态的，这样我们可以动态的知晓某元素上属性的数量
 ```
 
-###### classList
+#### classList
 * 读写特性：只读
 * 描述：获取元素节点类属性和值的集合（类数组对象）
 
@@ -567,7 +567,7 @@ el.classList.length		// el元素拥有类的数量
 注意：IE9不支持 classList
 ```
 
-###### dataset
+#### dataset
 * 读写特性：只读
 * 描述：返回一个对象，包含元素所有以 data-* 起始的属性
 
@@ -575,9 +575,9 @@ el.classList.length		// el元素拥有类的数量
 data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 delete 语句删除一个data属性，另外IE9不支持该属性，可以使用 getAttribute/setAttribute/removeAttribute/hasAttribute 代替
 </p>
 
-#### 元素节点方法
+### 元素节点方法
 
-###### getAttribute(attrName)
+#### getAttribute(attrName)
 
 * 描述：获取元素节点上某一个属性的值
 
@@ -587,7 +587,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 * 返回值：
     * `{String}` 属性值
 
-###### setAttribute(attrName, attrValue)
+#### setAttribute(attrName, attrValue)
 
 * 描述：设置元素上的内容属性值
 
@@ -595,14 +595,14 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
     * `{String} attrName` 属性名字
     * `{String} attrValue` 属性值
 
-###### removeAttribute(attrName)
+#### removeAttribute(attrName)
 
 * 描述：移除调用该方法的元素节点的某一属性
 
 * 参数：
     * `{String} attrName` 属性名字
 
-###### hasAttribute(attrName)
+#### hasAttribute(attrName)
 
 * 描述：判断元素是否有某一特定属性
 
@@ -614,7 +614,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 
 <p class="tip">hasAttribute 只检查内容属性是否存在；复选框当前状态使用 checked 属性，不能用 hasAttribute('checked') 代替</p>
 
-###### querySelector(selector)
+#### querySelector(selector)
 
 * 描述：根据css选择器返回第一个匹配的节点
 
@@ -626,7 +626,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 
 <p class="tip">除了 document.querySelector() 外，还可以在指定元素下使用该方法 el.querySelector()</p>
 
-###### querySelectorAll(selector)
+#### querySelectorAll(selector)
 
 * 描述：根据css选择器匹配并返回符合的节点集合
 
@@ -642,7 +642,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 加特技：除了 document.querySelectorAll() 外，还可以在指定元素下使用该方法 el.querySelectorAll()
 </p>
 
-###### getElementsByClassName(className)
+#### getElementsByClassName(className)
 
 * 描述：根据class值匹配并返回节点集合
 
@@ -654,7 +654,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 
 <p class="tip">除了 document.getElementsByClassName() 外，还可以在指定元素下使用该方法 el.getElementsByClassName()</p>
 
-###### getElementsByTagName(tagName)
+#### getElementsByTagName(tagName)
 
 * 描述：根据class值匹配并返回节点集合
 
@@ -666,7 +666,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 
 <p class="tip">除了 document.getElementsByTagName() 外，还可以在指定元素下使用该方法 el.getElementsByTagName()</p>
 
-###### getElementsByName(name)
+#### getElementsByName(name)
 
 * 描述：根据元素 name 属性值匹配并返回节点集合
 
@@ -676,17 +676,17 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 * 返回值：
     * `{节点集合}` 节点集合
 
-###### normalize()
+#### normalize()
 
 * 描述：
 
 合并调用该方法元素的多个子文本节点为一个子文本节点，其后代元素节点下的子节点也会被合并，注意，只有两个文本子节点相邻是才会被合并
 
-#### 几何量 与 滚动几何量
+### 几何量 与 滚动几何量
 
-##### 属性
+#### 属性
 
-###### offsetParent
+##### offsetParent
 * 读写特性：只读
 * 描述：获取定位父级
 
@@ -698,7 +698,7 @@ offsetParent 的取值规则：
 3、如果在查询过程中，碰到 <td> <th> <table> 标签，那么 offsetParent 就为这些值
 ```
 
-###### offsetTop
+##### offsetTop
 * 读写特性：只读
 * 描述：
 
@@ -706,7 +706,7 @@ offsetParent 的取值规则：
 
     设置位置应使用相应布局/CSS 属性，而不是写 offsetTop
 
-###### offsetLeft
+##### offsetLeft
 * 读写特性：只读
 * 描述：
 
@@ -714,35 +714,35 @@ offsetParent 的取值规则：
 
     设置位置应使用相应布局/CSS 属性，而不是写 offsetLeft
 
-###### offsetHeight
+##### offsetHeight
 * 读写特性：只读
 * 描述：获取元素高 （边框 + 填充 + 内容）
 
-###### offsetWidth
+##### offsetWidth
 * 读写特性：只读
 * 描述：获取元素宽 （边框 + 填充 + 内容）
 
-###### clientHeight
+##### clientHeight
 * 读写特性：只读
 * 描述：获取元素的高 （填充 + 内容）
 
-###### clientWidth
+##### clientWidth
 * 读写特性：只读
 * 描述：获取元素的宽 （填充 + 内容）
 
-###### scrollHeight
+##### scrollHeight
 * 读写特性：只读
 * 描述：获取滚动元素的高度
 
 <p class="tip">注意：如果滚动区域内的子节点比滚动区域小，那么该属性返回滚动区域的高度</p>
 
-###### scrollWidth
+##### scrollWidth
 * 读写特性：只读
 * 描述：获取滚动元素的宽度
 
 <p class="tip">注意：如果滚动区域内的子节点比滚动区域小，那么该属性返回滚动区域的宽度</p>
 
-###### scrollTop
+##### scrollTop
 * 读写特性：读写
 * 描述：
 
@@ -750,7 +750,7 @@ offsetParent 的取值规则：
 
     写：使用JavaScript以编程的方式滚动元素到指定的距离
 
-###### scrollLeft
+##### scrollLeft
 * 读写特性：读写
 * 描述：
 
@@ -758,9 +758,9 @@ offsetParent 的取值规则：
 
     写：使用JavaScript以编程的方式滚动元素到指定的距离
 
-##### 方法
+#### 方法
 
-###### getBoundingClientRect()
+##### getBoundingClientRect()
 
 * 描述：获取元素边界相对于视口的位置（top/right/bottom/left），以及元素的宽高
 
@@ -780,7 +780,7 @@ offsetParent 的取值规则：
     加特技：返回值中，width 和 height 为元素 （边框 + 填充 + 内容）的高度和宽度，会考虑 transform，且可含小数；不保证与 offsetHeight/offsetWidth 相同
 </p>
 
-###### scrollIntoView(position)
+##### scrollIntoView(position)
 
 * 描述：滚动调用该方法的元素到滚动元素的视区
 
@@ -789,32 +789,32 @@ offsetParent 的取值规则：
 
 ## 四、文本节点
 
-#### 概述
+### 概述
 
 * 节点类型：TEXT_NODE ---- 3
 * 继承链： Object -> EventTarget -> Node -> CharacterData -> Text -> 'asdfasdg'
 
-#### 文本节点属性
+### 文本节点属性
 
-###### length
+#### length
 * 描述：文本节点拥有length属性，返回该节点文本内容的长度
 
-###### data
+#### data
 * 描述：返回文本节点的字符串内容 与 nodeValue 的值相同
 
-###### nodeValue
+#### nodeValue
 * 描述：与 data 属性的值相同
 
-#### 文本节点方法
+### 文本节点方法
 
-###### appendData(text)
+#### appendData(text)
 
 * 描述：将text追加到节点末尾
 
 * 参数：
     * `{String} text` 要追加的字符串
 
-###### insertData(offset, text)
+#### insertData(offset, text)
 
 * 描述：在 offset 指定的位置前插入字符串 text
 
@@ -822,7 +822,7 @@ offsetParent 的取值规则：
     * `{Number} offset` 位置
     * `{String} text` 要追加的字符串
 
-###### deleteData(offset, count)
+#### deleteData(offset, count)
 
 * 描述：在 offset 指定的位置开始，删除 count 个字符，包括 offset 位置
 
@@ -830,7 +830,7 @@ offsetParent 的取值规则：
     * `{Number} offset` 位置
     * `{Number} count` 删除字符的数量
 
-###### replaceData(offset, count, text)
+#### replaceData(offset, count, text)
 
 * 描述：使用字符串 text 替换从 offset 指定的位置开始 count 个字符，包括 offset 位置
 
@@ -839,7 +839,7 @@ offsetParent 的取值规则：
     * `{Number} count` 删除字符的数量
     * `{String} text` 字符串
 
-###### substringData(offset, count)
+#### substringData(offset, count)
 
 * 描述：获取从 offset 指定的位置开始 count 个字符，包括 offset 位置
 
@@ -850,7 +850,7 @@ offsetParent 的取值规则：
 * 返回值：
     * `{String}` 获取到的字符串
 
-###### splitText(offset)
+#### splitText(offset)
 
 * 描述：从 offset 指定的位置将调用该方法的文本节点分割成两个文本节点
 
@@ -862,9 +862,9 @@ offsetParent 的取值规则：
 
 ## 五、CSS 样式 与 样式表
 
-#### CSS 样式
+### CSS 样式
 
-###### 元素的内联样式(style 属性)
+#### 元素的内联样式(style 属性)
 
 ```js
 // 访问元素的 style 属性[el.style]，将返回 CSSStyleDeclaration 对象，仅包含该元素的内联样式，而不是计算后样式
@@ -879,7 +879,7 @@ el.style.removeProperty('css属性')
 el.style.cssText
 ```
 
-###### 获取元素的计算后样式
+#### 获取元素的计算后样式
 
 * window.getComputedStyle(element)
 
@@ -904,31 +904,31 @@ window.getComputedStyle()
 另外，getComputedStyle 的颜色序列化取决于颜色空间和浏览器，不保证始终是 rgb()，而通过style获得的颜色值就是你再内敛样式中所写的样子，并且在通过 getComputedStyle 获取的 transform 属性值为矩阵 matrix
 ```
 
-#### CSS样式表 与 CSS规则
+### CSS样式表 与 CSS规则
 
-###### CSS样式表
+#### CSS样式表
 
 使用 `<link>` 和 `<style>` 标签可以分别创建 外部 和 内部 样式表，一旦样式表被添加到HTML文档中，每个样式表将表示为一个 `CSSStyleSheet` 对象。该对象可以通过 `<link>` 或 `<style>` 标签元素的 sheet 属性访问： el.sheet
 
-###### CSS规则
+#### CSS规则
 
 每个样式表都是由一条条规则组成的(如：`body{background-color: red;` 为一条规则)，CSS规则表示为一个 `CSSStyleRule` 对象，可以通过 `el.sheet.cssRules[n]` 或者 `el.sheet.rules[n]` 访问该样式表的第 `n` 条规则
 
-###### 访问所有样式表
+#### 访问所有样式表
 
 可以使用 `document.styleSheets` 访问该文档的所有样式表，该属性返回由 `CSSStyleSheet` 对象组成的 `StyleSheetList` 对象
 
 ## 六、DOM中的JavaScript
 
-#### JavaScript默认是同步解析的
+### JavaScript默认是同步解析的
 
 当DOM在解析时遇到 `<script>` 标签，将停止解析文档，并执行JavaScript脚本，如果是外部脚本，必须要下载后再解析，这将导致性能问题。
 
-#### defer
+### defer
 
 经典外部脚本的 defer 允许并行下载，推迟到文档解析后执行，并保持相应文档顺序；不是推迟下载。
 
-#### async
+### async
 
 使用 async 属性异步下载并执行外部JavaScript文件
 

@@ -4,35 +4,35 @@
 
 ## 一、创建数组
 
-#### 使用 new 操作符调用构造函数
+### 使用 new 操作符调用构造函数
 
 ```js
 var arr = new Array(20)				// 创建 length 为 20 的稀疏数组，并非 20 个实际已赋值元素
 var arr = new Array('a', 'b', 'c')	// 创建了包含字符串 a b c 的三项数组
 ```
 
-#### 省略 new 操作符
+### 省略 new 操作符
 
 ```js
 var arr = Array(20)                 // Array 构造器可省略 new；并非唯一支持此行为的内置函数
 var arr = Array('a', 'b', 'c')
 ```
 		
-#### 数组字面量
+### 数组字面量
 
 ```js
 var arr = []                        // `字面量方式创建最好`
 var arr = ['a', 'b', 'c']
 ```
 
-#### 【ES6】、Array.of()
+### 【ES6】、Array.of()
 
 * 语法：Array.of(element0[, element1[, ...[, elementN]]])		
 * 描述：用于创建数组，用法和 new Array() 一样。弥补 Array() 构造函数的不足（即参数不同，行为不同），Array.of() 的`行为始终一致，将传入的值作为数组的项，产生数组`
 * 参数：任意数量任意值
 * 返回值：创建的数组
 
-#### 【ES6】、Array.from(obj, func, context)
+### 【ES6】、Array.from(obj, func, context)
 
 * 描述：用于将 `类数组对象(拥有length属性的对象) 和 可遍历对象(部署iterable接口的对象，包括 Set/Map) 转为真正的数组`
 * 参数：
@@ -43,7 +43,7 @@ var arr = ['a', 'b', 'c']
 
 ## 二、数组检测
 
-#### 使用 instanceof 操作符
+### 使用 instanceof 操作符
 
 ```js
 if(value instanceof Array){
@@ -51,7 +51,7 @@ if(value instanceof Array){
 }
 ```
 		
-#### 使用 Array.isArray() 方法
+### 使用 Array.isArray() 方法
 
 ```js
 if(Array.isArray(value)){
@@ -59,7 +59,7 @@ if(Array.isArray(value)){
 }
 ```
 		
-#### 使用 Object.prototype.toString.call()
+### 使用 Object.prototype.toString.call()
 
 ```js
 if(Object.prototype.toString.call(obj) === '[object Array]'){
@@ -69,9 +69,9 @@ if(Object.prototype.toString.call(obj) === '[object Array]'){
 
 ## 三、数组方法
 
-#### 转换方法
+### 转换方法
 
-###### toString()
+#### toString()
 * 描述：数组对象重载了对象的toString方法，返回数组元素以,连接的字符串
 * 参数：
 * 返回值：
@@ -82,7 +82,7 @@ var months = ['Jan', 'Feb', 'Mar', 'Apr'];
 months.toString(); // "Jan,Feb,Mar,Apr"
 ```
 
-###### toLocaleString()
+#### toLocaleString()
 * 描述：把数组使用地区特定的分隔符把生成的字符串连接起来，形成一个本地字符串。
 * 参数：
 * 返回值：
@@ -98,7 +98,7 @@ console.log(str);
 //if run in a German (de-DE) locale with timezone Europe/Berlin
 ```
 
-###### valueOf()
+#### valueOf()
 * 描述：继承于Object的该方法,返回 Array 对象的原始值。
 * 参数：
 * 返回值：
@@ -109,7 +109,7 @@ var fruits = ["Banana", "Orange", "Apple", "Mango"];
 var v=fruits.valueOf();
 ```
 
-###### join()
+#### join()
 * 描述：以一种连接方式连接数组（类数组对象）中所有元素到一个字符串上，默认以 `,` 连接
 * 参数：连接符Separator, 默认 `,` 连接
 * 返回值：
@@ -121,11 +121,11 @@ a.join();    // 'Wind,Rain,Fire'
 a.join('-'); // 'Wind-Rain-Fire'
 ```
 
-#### 栈/队列 方法
+### 栈/队列 方法
 
 <p class="tip">【注意：栈/队列的这四个方法都会对原数组产生影响】</p>
 
-###### push()
+#### push()
 * 描述：向数组的`尾部追加`项，并`返回数组长度`
 * 参数：n多个值，会依次推入数组尾部
 * 返回值：
@@ -139,7 +139,7 @@ numbers.push(5, 6, 7);
 console.log(numbers); // [1, 2, 3, 4, 5, 6, 7]
 ```
 
-###### pop()
+#### pop()
 * 描述：移除数组`最后一项`，并返回该项
 * 参数：无
 * 返回值：返回移除项
@@ -150,7 +150,7 @@ a.pop();
 console.log(a); // [1, 2]
 ```
 
-###### shift()
+#### shift()
 * 描述：移除数组`第一项`，并返回该项
 * 参数：无
 * 返回值：返回移除项
@@ -162,7 +162,7 @@ console.log(a); // [2, 3]
 console.log(b); // 1
 ```
 
-###### unshift()
+#### unshift()
 * 描述：在数组`最前端`添加项，并`返回数组长度`
 * 参数：n多个值，会依次添加到数组前端
 * 返回值：
@@ -174,9 +174,9 @@ a.unshift(4, 5);
 console.log(a); // [4, 5, 1, 2, 3]
 ```
 
-#### 排序方法
+### 排序方法
 
-###### reverse()
+#### reverse()
 * 描述：反转数组项的顺序
 * 参数：无
 * 返回值：修改后的数组
@@ -187,7 +187,7 @@ a.reverse();
 console.log(a); // ['three', 'two', 'one']
 ```
 
-###### sort()
+#### sort()
 * 描述：对数组进行排序，默认情况下，按照升序排序，sort方法调用每个数组项的 toString() 方法，进行字符串比较
 * 参数：【可选】函数
     * 
@@ -215,9 +215,9 @@ things.sort(); // ['1 Word', '2 Words', 'Word', 'word']
 // which come before lower case letters.
 ```
 
-#### 操作方法
+### 操作方法
 
-###### concat()
+#### concat()
 * 描述：基于当前数组的所有项创建一个`新数组`
 * 参数：【可选】任意数量的任意值
 * 返回值：返回新数组
@@ -229,7 +229,7 @@ var arr3 = arr1.concat(arr2);
 // arr3 is a new array [ "a", "b", "c", "d", "e", "f" ]
 ```
 
-###### slice()
+#### slice()
 * 语法：arr.slice(begin, end)
 * 描述：基于当前数组一或多个项创建`新数组`（截取数组片段）
 * 参数：接收一或两个参数，分别是返回项的起始 start 和结束位置 end
@@ -250,7 +250,7 @@ console.log(a);      // ['zero', 'one', 'two', 'three']
 console.log(sliced); // ['one', 'two']
 ```
 
-###### splice()
+#### splice()
 * 描述：对数组的项进行 `删除、插入、替换` 等操作，功能十分强大
 * 参数：
     * 第一个参数：要删除的第一项的位置 `array.splice(start)`
@@ -269,7 +269,7 @@ myFish.splice(2, 1); // remove 1 item at 2-index position (that is, "drum")
 // myFish is ["angel", "clown", "mandarin", "sturgeon"]
 ```
 
-###### 【ES6】copyWithin()
+#### 【ES6】copyWithin()
 * 描述：在数组内部，将指定位置的成员拷贝到其他位置（会覆盖原有成员）
 * 参数：
     * 第一个参数：要拷贝的目标位置(target)  `arr.copyWithin(target)`
@@ -282,7 +282,7 @@ myFish.splice(2, 1); // remove 1 item at 2-index position (that is, "drum")
 // results in ["alpha", "bravo", "alpha", "bravo"]
 ```
 
-###### 【ES6】fill()
+#### 【ES6】fill()
 * 描述：使用给定值，填充数组
 * 参数：
     * 第一个参数：填充的值
@@ -296,9 +296,9 @@ numbers.fill(1);
 // results in [1, 1, 1]
 ```
 
-#### 查找/位置方法
+### 查找/位置方法
 
-###### indexOf()
+#### indexOf()
 ```js
 var a = [2, 9, 9]; 
 a.indexOf(2); // 0 
@@ -307,7 +307,7 @@ if (a.indexOf(7) === -1) {
   // element doesn't exist in array
 }
 ```
-###### lastIndexOf()
+#### lastIndexOf()
 * 描述：在数组中查找某一项的位置 `indexOf() 从前往后查找`， lastIndexOf() 从后往前查找
 * 参数：
     * 第一个参数：要查找的项  `arr.indexOf(searchElement[, fromIndex])`
@@ -315,7 +315,7 @@ if (a.indexOf(7) === -1) {
 * 返回值：返回查找项在数组中的位置，未找到返回-1
 <p class="tip">注意：在查找过程中使用全等操作符(===)</p>
 
-###### 【ES6】find()
+#### 【ES6】find()
 * 描述：用于`找到第一个符合条件的数组成员`
 * 参数：一个`函数`，函数的参数：1、项。2、项的索引。3、数组对象本身  `arr.find(callback[, thisArg])`
 * 返回值：如果有符合添加的项，`返回该项的值`，如果没有找到符合条件的项，返回 `undefined`
@@ -326,10 +326,10 @@ function isBigEnough(element) {
 [12, 5, 8, 130, 44].find(isBigEnough); // 130
 ```
 
-###### 【ES6】findIndex()
+#### 【ES6】findIndex()
 * 描述：与find()方法功能一样，唯一不同的是，返回的是`项的位置`，未找到返回 -1
 
-###### 【ES7】includes()
+#### 【ES7】includes()
 * 描述：查找数组中是否包含给定值 `true` or `false`
 * 参数：  
     * 第一个参数：要查找的值
@@ -343,13 +343,13 @@ a.includes(4); // false
 
 <p class="tip">includes 相比于 indexOf 的优势有两点：1、更加语义化，不需要判断返回值是否为 -1。2、由于 indexOf 底层在判断是否相等时使用的是全等操作符 ===，这会导致`使用 indexOf 查找 NaN 时查不到，而 includes 则不存在这样的问题`</p>
 
-#### 迭代方法
+### 迭代方法
 
-###### forEach()
-###### every()
-###### some()
-###### filter()
-###### map()
+#### forEach()
+#### every()
+#### some()
+#### filter()
+#### map()
 ```
     描述：迭代数组，对数组的每一项执行给定函数
     参数：第一个参数：函数
@@ -365,12 +365,12 @@ a.includes(4); // false
         filter() 对数组执行给定函数，返回该函数返回true的项组成的数组
         map() 对数组执行给定函数，返回每次函数调用结果组成的数组
 ```
-###### 【ES6】entries()，keys()和values()
+#### 【ES6】entries()，keys()和values()
 * 描述：`entries()`，`keys()` 和 `values()` 都用于遍历数组。它们都返回一个遍历器对象（详见《Iterator》一章），可以用 `for...of` 循环进行遍历，唯一的区别是 `keys()` 是对键名的遍历、`values()` 是对键值的遍历，`entries()` 是对键值对的遍历。
 
-#### 归并方法
-###### reduce()
-###### reduceRight()
+### 归并方法
+#### reduce()
+#### reduceRight()
 * 描述：迭代数组的所有项，构建一个最终的返回值
 * 参数：
     ```

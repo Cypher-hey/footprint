@@ -8,19 +8,19 @@
 
 ## 一、绑定事件的方法
 
-#### HTML内联属性绑定
+### HTML内联属性绑定
 
 ```html
 <div onclick="alert('示例')"></div>
 ```
 
-#### js获取DOM元素添加事件属性
+### js获取DOM元素添加事件属性
 
 ```js
 document.getElementById('box').onclick = function (){...}
 ```
 
-#### 使用 addEventListener()
+### 使用 addEventListener()
 
 <p>
 第一种方法，HTML内联属性绑定事件的方式不推荐，这违反了最佳实践。第二种方法的缺点是，只能同时给事件绑定一个callback，所以推荐一直使用 addEventListener() 方法给元素绑定事件
@@ -32,24 +32,24 @@ document.getElementById('box').onclick = function (){...}
 
 ## 二、事件流
 
-#### 事件流
+### 事件流
 
 页面中接收事件的顺序。分为三个阶段：事件捕获阶段、处于目标阶段、事件冒泡阶段
 
 
-#### 事件冒泡
+### 事件冒泡
 
 事件首先由嵌套层次最深的节点接收，然后沿DOM树依次逐级向父代节点传播。
 
-#### 事件捕获
+### 事件捕获
 
 不太具体的节点(或嵌套层次最浅的节点，通常是document)应该最先接收事件，然后沿DOM树依次向子代节点传递直到一个具体的子节点
 
 ## 三、绑定事件的方法
 
-#### 标准方法
+### 标准方法
 
-###### el.addEventListener(eventName, handle, useCapture)
+#### el.addEventListener(eventName, handle, useCapture)
 
 * 描述：给DOM元素添加指定的事件处理函数
 
@@ -58,7 +58,7 @@ document.getElementById('box').onclick = function (){...}
     * `{Function} handle` 事件函数
     * `{Boolean} useCapture` 是否在事件捕获阶段触发事件，true 代表捕获阶段触发，false 代表在冒泡阶段触发
 
-###### el.removeEventListener(eventName, handle, useCapture)
+#### el.removeEventListener(eventName, handle, useCapture)
 
 * 描述：移除通过 addEventListener 添加的事件处理函数
 
@@ -70,11 +70,11 @@ document.getElementById('box').onclick = function (){...}
 如果要移除一个通过 addEventListener 添加的事件处理函数，那么removeEventListener 需要匹配事件类型、同一回调引用和 capture 值。匿名函数只要保存引用也能移除；也可使用 AbortSignal 管理监听
 </p>
 
-#### IE8及以下
+### IE8及以下
 
 addEventListener 和 removeEventListener 在IE8及以下不被支持
 
-###### el.attachEvent(eventName, handle)
+#### el.attachEvent(eventName, handle)
 
 * 描述：给DOM元素添加指定的事件处理函数
 
@@ -82,7 +82,7 @@ addEventListener 和 removeEventListener 在IE8及以下不被支持
     * `{String} eventName` 事件名称
     * `{Function} handle` 事件函数
 
-###### el.detachEvent(eventName, handle)
+#### el.detachEvent(eventName, handle)
 
 * 描述：移除通过 addEventListener 添加的事件处理函数
 
@@ -90,7 +90,7 @@ addEventListener 和 removeEventListener 在IE8及以下不被支持
     * `{String} eventName` 事件名称
     * `{Function} handle` 事件函数
     
-#### 对比
+### 对比
 
 attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 
@@ -102,65 +102,65 @@ attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 
 ## 四、事件对象
 
-#### 标准
+### 标准
 
-##### 属性
+#### 属性
 
-###### event.bubbles
+##### event.bubbles
 * 读写特性：只读
 * 描述：表示事件是否冒泡
 
-###### event.cancelable
+##### event.cancelable
 * 读写特性：只读
 * 描述：表示事件是否可以取消事件默认行为
 
-###### event.currentTarget
+##### event.currentTarget
 * 读写特性：只读
 * 描述：currentTarget 指当前执行监听器所绑定的对象；普通函数监听器的 this 通常与之相同，箭头函数的 this 由外层决定
 
-###### event.target
+##### event.target
 * 读写特性：只读
 * 描述：真正触发事件的元素
 
-###### event.defaultPrevented
+##### event.defaultPrevented
 * 读写特性：只读
 * 描述：为 true 表示默认行为被成功取消；不可取消事件或 passive 监听中的调用不保证生效
 
-###### event.detail
+##### event.detail
 * 读写特性：只读
 * 描述：与事件相关的细节信息
 
-###### event.eventPhase
+##### event.eventPhase
 * 读写特性：只读
 * 描述：调用该事件处理函数的阶段 `1` 表示捕获阶段 `2` 表示处于目标阶段 `3` 表示冒泡阶段
 
-###### event.isTrusted
+##### event.isTrusted
 * 读写特性：只读
 * 描述：为true表示事件是由浏览器生成的，false表示事件是由人工使用JavaScript创建的
 
-###### event.type
+##### event.type
 * 读写特性：只读
 * 描述：事件类型
 
-###### event.type
+##### event.type
 * 读写特性：只读
 * 描述：事件类型
 
-##### 方法
+#### 方法
 
-###### event.preventDefault()
+##### event.preventDefault()
 
 * 描述：阻止事件的默认行为
 
 <p>只有 event.cancelable 属性为 true 的事件，才能够通过 preventDefault() 方法取消默认行为</p>
 
-###### event.stopImmediatePropagation()
+##### event.stopImmediatePropagation()
 
 * 描述：阻止事件继续传播，并阻止当前目标上后续监听器执行；与取消默认行为是不同操作
 
-#### IE特有
+### IE特有
 
-###### IE中获取事件对象的方法
+#### IE中获取事件对象的方法
 
 <p class="tip">IE中获取事件对象的方法与绑定事件的方式有关</p>
 
@@ -182,27 +182,27 @@ el.attachEvent('click', function (event) {
 })
 ```
 
-##### 属性
+#### 属性
 
-###### event.srcElement
+##### event.srcElement
 * 读写特性：只读
 * 描述：与规范中的 event.target 属性相同。
 
-###### event.returnValue
+##### event.returnValue
 * 读写
 * 描述：默认为 `true`，如果将其设为 `false` 即可取消事件默认行为，相当于规范中的：`event.preventDefault()`
 
-###### event.cancelBubble
+##### event.cancelBubble
 * 读写
 * 描述：默认为 `false` ，如果设为 `true` 即可取消事件冒泡，相当于规范中的：`event.stopPropagation()`
 
-#### 事件总结
+### 事件总结
 
 <p class="tip">
 普通函数监听器、箭头函数与对象监听器的 this 语义不同，不能统一等同 currentTarget。下述 IE API 为历史资料。
 </p>
 
-###### 对照表
+#### 对照表
 
 ```
 | standard          | IE                    |
@@ -214,9 +214,9 @@ el.attachEvent('click', function (event) {
 
 ## 五、事件类型及讲解
 
-#### UI事件
+### UI事件
 
-###### load
+#### load
 
 ```
 window上触发：
@@ -228,14 +228,14 @@ window上触发：
     script 元素也可使用 addEventListener 监听 load/error
 ```
 
-###### resize
+#### resize
 
 ```
 window上触发：
     当窗口大小改变时
 ```
 
-###### scroll
+#### scroll
 
 ```
 window上触发：
@@ -244,35 +244,35 @@ window上触发：
     当滚动可滚动的元素时
 ```
 
-#### 焦点事件
+### 焦点事件
 
-###### focus
+#### focus
 
 当元素获得焦点时触发，不冒泡，但是可以在捕获阶段触发
 
-###### blur
+#### blur
 
 当元素失去焦点时触发，不冒泡，但是可以在捕获阶段触发
 
-#### 鼠标与滚轮事件
+### 鼠标与滚轮事件
 
-###### click
+#### click
 
 点击鼠标左键时触发
 
-###### dblclick
+#### dblclick
 
 双击鼠标左键
 
-###### mousedown
+#### mousedown
 
 按下鼠标任意按钮时触发
 
-###### mouseup
+#### mouseup
 
 释放鼠标按钮时触发
 
-###### mouseenter/mouseleave 与 mouseover/mouseout 的区别
+#### mouseenter/mouseleave 与 mouseover/mouseout 的区别
 
 ```
     mouseenter 只会在鼠标在元素外部进入元素内部时触发，如果该元素有子节点，当移入其子节点内部时，会在捕获阶段在该节点触发，当鼠标再从子节点移出到该节点时，不会再触发。
@@ -324,7 +324,7 @@ window上触发：
             event.toElement
 ```
 
-###### 鼠标事件对象中的位置信息：
+#### 鼠标事件对象中的位置信息：
 
 * 客户区坐标位置
 
@@ -340,7 +340,7 @@ window上触发：
 
     event.screenX/Y
 
-###### 修改键
+#### 修改键
 
 ```
 event.shiftKey		// 按住 shift 键为true
@@ -351,35 +351,35 @@ event.metaKey		// Mac下按住 command 键为true，windows 按住 Windows 键�
 
 <p class="tip">注意：IE8及以下不支持 metaKey</p>
 
-#### 键盘事件
+### 键盘事件
 
-###### keydown
+#### keydown
 
 按下键盘任意键时触发
 
-###### keypress
+#### keypress
 
 按下键盘任意字符键时触发
 
-###### keyup
+#### keyup
 
 松开键盘任意键时触发
 
 <p class="tip">优先使用 event.key / event.code；keyCode 和 keypress 属于过时接口，输入还应考虑 beforeinput/input 与 composition</p>
 
-#### 文本事件
+### 文本事件
 
-###### textInput
+#### textInput
 
 输入框，文本在插入输入框之前触发，`event.data` 按下的字符
 
-#### HTML5事件
+### HTML5事件
 
-###### contextmenu
+#### contextmenu
 
 鼠标右键事件，常用于制定自定义菜单
 
-###### beforeunload
+#### beforeunload
 
 在页面卸载之前触发，用来询问用户是否真的要离开该页面
 
@@ -394,23 +394,23 @@ window.addEventListener('beforeunload', function (event) {
 }, false)
 ```
 
-###### DOMContentLoaded
+#### DOMContentLoaded
 
 形成完整DOM树之后触发
 
 <p class="tip">注意：IE8及以下不支持</p>
 
-###### pageshow
+#### pageshow
 
 页面显示时触发，`load` 事件只会在第一次加载页面是触发，之后页面会被 `bfcache`（往返缓存）管理，通过前进后退按钮来显示页面时，`load` 事件并不会触发，但是 `pageshow` 事件会触发
 
-###### pagehide
+#### pagehide
 
 页面卸载时触发。
 
 <p class="tip">注意：pageshow/pagehide 必须添加到 window对象上</p>
 
-###### hashchange
+#### hashchange
 
 `#` 号后面的字符串发生变化时，在window对象上触发。
 

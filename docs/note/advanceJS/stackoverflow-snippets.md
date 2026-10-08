@@ -3,7 +3,7 @@
 > 审阅日期：2026-10-08。状态：六个主题定向审阅，旧第三方依赖示例未运行；原出处保留。
 > replace 与 href 的主要差别是导航历史语义，不是任何情形 replace 都更好。JSON 克隆与位运算均有输入范围；Object.hasOwn 或可靠原型调用更适合判断自有属性。旧 Node 版本与 ES5 数组算法说明不代表当前推荐环境。
 
-#### 1.check a string contains a substring in JavaScript
+## 1.check a string contains a substring in JavaScript
 
 1. (ES6) includes
 
@@ -56,7 +56,7 @@ string.match(expr);
 
 [引用](https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript)
 
-#### 2.redirect to another webpage
+## 2.redirect to another webpage
 
 `window.location.replace(...)` will best simulate an HTTP redirect.
 
@@ -80,7 +80,7 @@ window.location.href = 'http://stackoverflow.com';
 
 [引用](https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage)
 
-#### 3.deep clone an object in JavaScript
+## 3.deep clone an object in JavaScript
 
 ```js
 JSON.parse(JSON.stringify(obj));
@@ -100,7 +100,7 @@ var newObject = jQuery.extend(true, {}, oldObject);
 
 [引用](https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript)
 
-#### 4.return the response from an asynchronous call
+## 4.return the response from an asynchronous call
 
 **Synchronous**
 
@@ -320,7 +320,7 @@ More information about promises: [HTML5 rocks - JavaScript Promises](http://www.
 
 [引用](https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call)
 
-#### 5. hasOwnProperty vs dot syntax vs in
+## 5. hasOwnProperty vs dot syntax vs in
 
 hasOwnProperty not check that property in the prototype chain, but dot will
 
@@ -385,7 +385,7 @@ function has(obj, prop) {
 
 [引用](https://stackoverflow.com/questions/7174748/javascript-object-detection-dot-syntax-versus-in-keyword)
 
-#### 6. >>> used in JavaScript
+## 6. >>> used in JavaScript
 
 ```js
 var len = this.length >>> 0;

@@ -33,32 +33,32 @@ xhr.send();
 
 open 配置请求，send 发出请求。readystate 为 4 只代表操作结束，成功判断还需看状态和业务内容。原文的 Node 服务直接拼接请求路径读文件，缺少边界与错误处理，不继续作为教学模板。
 
-#### XHR 属性、方法、事件 汇总
+### XHR 属性、方法、事件 汇总
 
 一下列出的属性、方法以及事件，包含XHR1级以及2级的全部规范内容，由于浏览器对2级规范的实现并不完善，所以对于XHR2级规范会标注出来。
 
-##### 属性
+#### 属性
 
-###### responseText
+##### responseText
 
 * 描述：保存中响应主体返回的文本
 * 类型：`String`
 
-###### responseXML
+##### responseXML
 
 * 描述：如果响应的内容类型(Content-Type)为 `text/xml` 或者 `application/xml` 那么这个属性保存着包含响应内容的XML DOM文档。
 
-###### status
+##### status
 
 * 描述：响应的HTTP状态码，如：`200`、`304` 等
 * 类型：`Number`
 
-###### statusText
+##### statusText
 
 * 描述：对 `status` 状态码的文本描述
 * 类型：`String`
 
-###### readyState
+##### readyState
 
 * 描述：一个数字，标示着当前请求/响应的某一个阶段
     * 0：未初始化，即还没有调用 `open` 方法
@@ -68,7 +68,7 @@ open 配置请求，send 发出请求。readystate 为 4 只代表操作结束�
     * 4：DONE，操作结束；仍需检查成功、失败与状态
 * 类型：`Number`
 
-###### 【XHR2】timeout
+##### 【XHR2】timeout
 
 * 描述：可以给 `xhr.timeout` 属性设置一个数字值，代表请求多少毫秒之后超时，超时后将触发同样是XHR2级规范定义的 `timeout` 事件。
 * 示例：
@@ -76,7 +76,7 @@ open 配置请求，send 发出请求。readystate 为 4 只代表操作结束�
 xhr.timeout = 1000  // 1秒后超时
 ```
 
-###### upload
+##### upload
 
 * 描述：`xhr.upload` 属性返回一个 `XMLHttpRequestUpload` 对象，用来表示上传的进度，该对象是不透明的，可以通过为其绑定事件来跟踪进度。
 * 示例：
@@ -112,9 +112,9 @@ xhr.upload.addEventListener('error', () => {})
 | timeout | 超时      |
 | loadend | 完成（不论成功与否）      |
 
-##### 方法
+#### 方法
 
-###### open(method, url[, async])
+##### open(method, url[, async])
 
 * 描述：启动一个请求，但不会发送。
 
@@ -123,7 +123,7 @@ xhr.upload.addEventListener('error', () => {})
     * `{String} url` 请求的URL
     * `{Boolean} async` 一个布尔值，代表着是否异步发送请求，默认 `true` 异步
 
-###### send(data)
+##### send(data)
 
 * 描述：发送通过 `open` 方法启动的请求
 
@@ -145,7 +145,7 @@ var data = new FormData(form)
 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 ```
 
-###### setRequestHeader(key, val)
+##### setRequestHeader(key, val)
 
 * 描述：设置要发送的请求头部信息
 
@@ -155,14 +155,14 @@ xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 
 * 注意：该方法必须要在调用 `open` 方法之后且调用 `send` 方法之前发送才能生效
 
-###### getResponseHeader(key)
+##### getResponseHeader(key)
 
 * 描述：根据指定的响应头部字段名称，获取响应头部字段的值
 
 * 参数：
     * `{String} key` 响应头部字段的名称
 
-###### getAllResponseHeaders()
+##### getAllResponseHeaders()
 
 * 描述：获取所有头部信息作为一个长字符串
 
@@ -174,7 +174,7 @@ Transfer-Encoding: chunked
 Content-Type: text/txt
 ```
 
-###### 【XHR2】overrideMimeType()
+##### 【XHR2】overrideMimeType()
 
 * 描述：重写响应数据的mime类型
 * 意义：我们知道 `xhr` 对象拥有 `responseXML` 属性，当服务端返回的数据的内容类型是 `text/xml` 或 `application/xml` 时，数据将最为XML DOM保存在 `responseXML` 属性中，但是，如果服务端响应的内容类型是：`text/plain`，而事实上数据确实是可以作为 XML 解析的，此时 `responseXML` 属性为空，为了重新让该属性保存着能够用于 XML 解析的数据，我们就可以使用 `overrideMimeType` 方法重写mime类型：
@@ -186,24 +186,24 @@ xhr.overrideMimeType('text/xml')
 xhr.send()
 ```
 
-##### 事件
+#### 事件
 
-###### readystatechange
+##### readystatechange
 
 * 描述：当 `xhr.readyState` 属性值变化时触发。
 * 注意：监听器需要在相关事件发生前注册；若要观察 open 触发的状态变化，应在 open 前注册，不能概括为所有情况都必须
 
-###### 【XHR2】timeout
+##### 【XHR2】timeout
 
 * 描述：当请求在 `xhr.timeout` 属性所设置的规定事件内没有完成，将触发该事件，代表请求超时
 
-##### 进度事件
+#### 进度事件
 
-###### loadstart
+##### loadstart
 
 * 描述：接收到响应数据的第一个字节时触发
 
-###### progress
+##### progress
 
 * 描述：接收响应数据期间持续触发
 * 事件对象的重要属性：
@@ -211,32 +211,32 @@ xhr.send()
     * `event.loaded` ---- 表示已经接收的字节数
     * `event.total` ---- 表示根据 `Content-Length` 响应头部确定的预期字节数
 
-###### error
+##### error
 
 * 描述：请求发生错误时触发
 
-###### abort
+##### abort
 
 * 描述：调用 `xhr.abort()` 方法终止连接时触发
 
-###### load
+##### load
 
 * 描述：响应数据接受完毕时触发
 * 注意：实际上 `load` 事件是为了取代 `readystatechange` 事件而定义的，`load` 事件的好处是，我们不需要手动判断 `readyState` 属性的值。
 
-###### loadend
+##### loadend
 
 * 描述：触发 `error`、`abort`、`load` 事件后触发
 
-#### ajax的优缺点
+### ajax的优缺点
 
-###### ajax的优点
+#### ajax的优点
 
 * 无刷新更新数据，不影响用户交互
 * 传统方式每次与服务器交互都返回整个HTML页面内容，ajax仅获取必要的数据，减少带宽
 * ajax是前后端分离能够实现的重要桥梁
 
-###### ajax的缺点
+#### ajax的缺点
 
 * 异步更新不自动建立业务历史；可通过路由和 History API 设计返回行为
 * 搜索可见性取决于渲染和抓取策略，不是 AJAX 一律不可索引

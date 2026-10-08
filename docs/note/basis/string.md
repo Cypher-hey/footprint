@@ -10,55 +10,55 @@ substr 属于历史接口，优先学习 slice / substring 的明确差异。现
 
 ## 一、创建字符串
 
-#### 字面量创建
+### 字面量创建
 
 ```js
 var str = 'abc'
 ```
 		
-#### 包装类型
+### 包装类型
 
 ```js
 var str = new String('abc')
 ```
 		
-#### ES6模板字符串
+### ES6模板字符串
 
 ```js
 var str = `abc`
 ```
 		
-#### 使用 String.fromCharCode() / 【ES6】String.fromCodePoint() 将字符编码转成字符串
+### 使用 String.fromCharCode() / 【ES6】String.fromCodePoint() 将字符编码转成字符串
 
 ## 二、字符串基本包装类型的方法
 
-#### 字符方法：
+### 字符方法：
 
-###### str.charAt()
+#### str.charAt()
 * 描述：访问字符串中特定位置的字符
 * 参数：一个数字，表示字符串的位置
 * 返回值：返回该位置的 UTF-16 码元字符串；不保证完整字素
 
-###### str.charCodeAt()
+#### str.charCodeAt()
 * 描述：功能用法与 charAt 相同，唯一不同的是，charCodeAt 返回的是字符编码而不是字符
 * 返回值：字符编码
 
-###### 【ES6】str.codePointAt()
+#### 【ES6】str.codePointAt()
 * 描述：codePointAt 在给定 UTF-16 码元索引读取码点；不要把 JavaScript 字符串概念等同于某种固定字节编码，也不能用它独自统计用户可见字素
 * 参数：一个数字，字符在字符串中的位置
 * 返回值：字符编码
 
-#### 字符串操作方法
+### 字符串操作方法
 
-###### str.concat()
+#### str.concat()
 * 描述：连接多个字符串为一个字符串
 * 参数：任意多个参数，要依次连接的字符串
 * 返回值：新字符串
 * 是否改变原字符串：否
 
-###### str.slice()
-###### str.substr()
-###### str.substring()
+#### str.slice()
+#### str.substr()
+#### str.substring()
 ```
 描述：上面三个方法都能基于已有字符串创建新字符串，但不会影响原字符串。
 参数：第一个参数：指定起始位置
@@ -72,22 +72,22 @@ var str = `abc`
 是否改变原字符串：否
 ```
 
-###### str.trim()
+#### str.trim()
 * 描述：去掉字符串的前后空格
 * 参数：无
 * 返回值：新字符串
 * 是否改变原字符串：否
 
-###### str.toLowerCase()
-###### str.toUpperCase()
-###### str.toLocaleLowerCase()
-###### str.toLocaleUpperCase()
+#### str.toLowerCase()
+#### str.toUpperCase()
+#### str.toLocaleLowerCase()
+#### str.toLocaleUpperCase()
 * 描述：字符串转大小写
 * 参数：无
 * 返回值：转变后的字符串
 * 是否改变原字符串：否
 
-###### 【ES6】str.repeat()
+#### 【ES6】str.repeat()
 * 描述：方法返回一个新字符串，表示将原字符串重复n次
 * 参数：
 
@@ -96,18 +96,18 @@ var str = `abc`
 * 返回值：新字符串
 * 是否改变原字符串：否
 
-###### 【ES2017】padStart()
-###### 【ES2017】padEnd()
+#### 【ES2017】padStart()
+#### 【ES2017】padEnd()
 ```
 描述：对字符串进行补全，padStart 前补全，padEnd 后补全
 参数：第一个参数：字符串的最小长度
         第二个参数：可选，用来填充的字符串，默认用空格填充
 ```
 
-#### 字符串位置方法
+### 字符串位置方法
 
-###### str.indexOf()
-###### str.lastIndexOf()
+#### str.indexOf()
+#### str.lastIndexOf()
 ```
 描述：从一个字符串中搜索子字符串，并返回子字符串第一次出现的位置（不同的是：indexOf 从前往后找， lastIndexOf 从后往前找）
 参数：第一个参数：要查找的子字符串
@@ -116,9 +116,9 @@ var str = `abc`
 是否改变原字符串：否
 ```
 
-###### 【ES6】str.includes()
-###### 【ES6】str.startsWith()
-###### 【ES6】str.endsWith()
+#### 【ES6】str.includes()
+#### 【ES6】str.startsWith()
+#### 【ES6】str.endsWith()
 ```
 描述：上面三个函数都是查找字符串中是否包含子字符串
     str.includes() ：字符串是否包含子字符串
@@ -130,19 +130,19 @@ var str = `abc`
 ```
 
 
-#### 模式匹配方法
+### 模式匹配方法
 
-###### str.match()
+#### str.match()
 * 描述：通过模式匹配字符串
 * 参数：字符串 / 正则表达式 / RegExp 对象
 * 返回值：未匹配返回 null；非全局模式可含完整匹配与捕获组，全局 g 模式通常返回完整匹配列表而不保留同样的捕获组结构
 
-###### str.search()
+#### str.search()
 * 描述：和 indexOf 功能相似，唯一不同的是：该方法支持正则
 * 参数：字符串 / 正则表达式 / RegExp 对象
 * 返回值：返回第一个匹配项的索引，没有找到返回 -1
 
-###### str.replace()
+#### str.replace()
 * 描述：通过模式替换匹配的字符串
 * 参数：
 ```
@@ -168,15 +168,15 @@ var str = `abc`
 * 返回值：新字符串
 * 是否改变原字符串：否
 
-###### str.split()
+#### str.split()
 * 描述：基于指定的字符或模式，将字符串分割成数组
 * 参数：
     * 第一个参数：字符串 / 正则表达式
     * 第二个参数：指定数组的长度
 
-#### 字符串比较方法
+### 字符串比较方法
 
-###### str1.localeCompare(str2)
+#### str1.localeCompare(str2)
 * 描述：对两个字符串进行比较
 * 参数：字符串
 * 返回值：
@@ -186,7 +186,7 @@ var str = `abc`
     按 locale 比较排在之前，返回负数（不保证恰好 -1）
     ```
 
-###### 【ES6】str1.normalize()
+#### 【ES6】str1.normalize()
 * 描述：ES6提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为Unicode正规化。
 * 参数：
 ```
@@ -200,17 +200,17 @@ var str = `abc`
     'NFKD' :
     表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。
 ```
-#### String构造函数的静态方法
+### String构造函数的静态方法
 
-###### String.fromCharCode()
+#### String.fromCharCode()
 * 描述：接受一至多个字符编码，然后将他们转换成一个字符串
 * 参数：1 ~ n 个字符编码
 * 返回值：字符串
 
-###### 【ES6】String.fromCodePoint()
+#### 【ES6】String.fromCodePoint()
 * 描述：接受一至多个字符编码，然后将他们转换成字符串，该方法弥补 `String.fromCharCode()` 方法不能识别字符编码大于0xFFFF的缺陷
 
-#### 字符串的其他扩展
+### 字符串的其他扩展
 
 ES6为字符串添加了遍历器接口(Iterator)，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的 `for` 循环无法识别这样的码点。
 

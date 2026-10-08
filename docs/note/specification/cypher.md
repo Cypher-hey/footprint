@@ -15,11 +15,11 @@ UV 是测量口径，不等于精确识别自然人；同人多设备、共享�
 
 git 规范包括两点：分支管理规范、git commit 规范
 
-#### 分支管理规范
+### 分支管理规范
 
 一般项目分主分支（master）和其他分支。当有团队成员要开发新功能或改 BUG 时，就从 master 分支开一个新的分支来做，feature-XXX or bugfix-XXX。
 
-#### git commit 规范
+### git commit 规范
 
 -   scope: commit 影响的范围, 比如: route, component, utils, build...
 -   subject: commit 的概述
@@ -39,7 +39,7 @@ git 规范包括两点：分支管理规范、git commit 规范
 <footer>
 ```
 
-#### type: commit 的类型
+### type: commit 的类型
 
 -   feat: 新功能、新特性
 -   fix: 修复 bug
@@ -55,7 +55,7 @@ git 规范包括两点：分支管理规范、git commit 规范
 -   release: 发布新版本
 -   workflow: 工作流相关文件修改
 
-#### 验证 git commit 规范
+### 验证 git commit 规范
 
 提交消息格式通常由 commit-msg 检查；pre-commit 适合暂存内容检查。当然，你还需要下载一个辅助工具来帮助你进行验证。
 
@@ -67,12 +67,14 @@ npm i -D husky
 在 package.json 加上下面的代码
 
 ```json
+{
 "husky": {
   "hooks": {
     "pre-commit": "npm run lint",
     "commit-msg": "node script/verify-commit.js",
     "pre-push": "npm test"
   }
+}
 }
 ```
 
@@ -135,15 +137,15 @@ if (!commitRE.test(msg)) {
 2. 对一个类做测试
 3. 对一个组件做测试
 
-#### TDD 测试驱动开发
+### TDD 测试驱动开发
 
 TDD（Test-Driven Development）就是根据需求提前把测试代码写好，然后根据测试代码实现功能。
 
 ## 部署 Deploy
 
-#### 手动部署
+### 手动部署
 
-#### 自动部署
+### 自动部署
 
 持续部署（Continuous Deployment）：
 
@@ -154,7 +156,7 @@ TDD（Test-Driven Development）就是根据需求提前把测试代码写好，
 
 监控，又分性能监控和错误监控，它的作用是预警和追踪定位问题
 
-#### 性能监控
+### 性能监控
 
 性能监控一般利用 window.performance 来进行数据采集
 
@@ -251,7 +253,7 @@ request: timing.responseEnd - timing.requestStart,
 time: new Date().getTime()
 ```
 
-#### 错误监控
+### 错误监控
 
 现在能捕捉的错误有三种。
 
