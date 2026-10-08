@@ -1,4 +1,19 @@
-# 异步处理
+# 异步处理：Promise、await 与任务生命周期
+
+> 核查日期：2026-10-08。状态：全文静态审阅与关键语义修正；教学代码未运行。
+
+## 核心对比
+
+| 组合方式 | 完成条件 | 风险 |
+| --- | --- | --- |
+| 顺序 await | 按依赖逐步等待 | 无依赖任务也串行会增加延迟 |
+| Promise.all | 全部成功，首次失败即拒绝 | 不会自动取消其他任务 |
+| Promise.allSettled | 全部完成并收集状态 | 长期 pending 会一直等待 |
+| Promise.race | 首个 settled | 不取消其他任务 |
+| Promise.any | 首个成功，全部拒绝才失败 | 不限制并发与资源 |
+
+await 暂停当前 async 函数，不是阻塞整个事件循环；CPU 密集同步工作放进 async 函数仍会占用执行线程。
+
 
 ## 简介
 
@@ -118,7 +133,7 @@ async function getData() {
 ```
 
 对比 `Promise` 感觉怎么样？是不是非常清晰，但是 `async/await` 是基于 `Promise` 的，因为使用 `async` 修饰的方法最终返回一个 `Promise`，
-实际上，`async/await` 可以看做是使用 `Generator` 函数处理异步的语法糖，我们来看看如何使用 `Generator` 函数处理异步。
+Generator + 执行器可帮助理解暂停与恢复，但 async/await 有独立规范语义，不能据此断言引擎内部一定用 Generator 实现。下面保留历史教学对照。
 
 #### Generator
 
@@ -147,7 +162,7 @@ function * getData () {
     var res2 = yield getDataAsync(`/page/2?param=${res1.data}`)
     console.log(res2)
     var res3 = yield getDataAsync(`/page/2?param=${res2.data}`)
-    console.log(res3))
+    console.log(res3)
 }
 ```
 
@@ -192,7 +207,7 @@ run(getData);
 
 这样，我们就可以把异步操作封装到 `Generator` 函数内部，使用 `run` 方法作为 `Generator` 函数的自执行器，来处理异步。其实我们不难发现，
 `async/await` 方法相比于 `Generator` 处理异步的方式，有很多相似的地方，只不过 `async/await` 在语义化方面更加明显，同时 `async/await`
-不需要我们手写执行器，其内部已经帮我们封装好了，这就是为什么说 `async/await` 是 `Generator` 函数处理异步的语法糖了。
+不需要我们手写执行器，其内部已经帮我们封装好了，这只是教学类比，不是引擎实现证明。此简易执行器遗漏 rejection 注入与返回 Promise，不能当作生产级协程执行器。
 
 ## Promise
 
@@ -212,23 +227,11 @@ Promise 对象有以下几种状态：
 
 -   rejected：失败状态，意味着操作失败。
 
-Promise 对象特点：
+Promise 状态为 pending、fulfilled 或 rejected；后两者合称 settled。resolved 不总等于 fulfilled：resolve 另一个未完成 Promise 时，会跟随它的最终结果。
 
-1. 对象的状态不受外界影响。Promise 对象代表一个异步操作，有三种状态,`只有异步操作的结果，可以决定当前是哪一种状态(fulfilled, rejected)，任何其他操作都无法改变这个状态。`这也是 Promise 这个名字的由来，意味是「承诺」或者现在翻译为期约倒也合适，表示其他手段无法改变 fulfilled 和 rejected 这两个中的任一状态--（一旦）**settled** -> （只能是） resolve (成功) 或 reject (失败)。
+executor 在构造时同步调用，then/catch 处理函数按异步任务机制执行。对已完成 Promise 新注册处理函数也不会在注册调用栈内立即执行。
 
-2. `一旦状态改变，就不会再变，任何时候都可以得到这个结果`。Promise 对象的状态改变，只有两种可能：从 pending 变为 resolved 和从 pending 变为 rejected。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。就算改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。
-
-优势：
-
-有了 Promise 对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。
-
-缺点：
-
-1. 无法取消 Promise，一旦新建它就会立即执行，无法中途取消。
-
-2. 如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部。
-
-3. 当处于 Pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
+Promise 本身没有通用取消方法；底层操作可以提供 AbortSignal 等取消协议。未处理 rejection 可以被宿主报告，不能说“内部错误永远不反映到外部”。
 
 #### 初始化
 
@@ -360,11 +363,11 @@ runAsync1()
 
 > > Effective JavaScript — David Herman
 
-为了避免上述中同时使用同步、异步调用可能引起的混乱问题，Promise 在规范上规定** Promise 只能使用异步调用方式 **。
+注意区分：Promise executor 同步调用，then/catch 的 reaction 异步执行；不能笼统说 Promise 内所有代码都异步。
 
 #### resolve
 
-resolve 的作用就是把 Promise 的状态置为 fullfiled，这样我们在 then 中就能捕捉到，然后执行“成功”情况的回调。
+resolve 接受普通值时可以 fulfillment，接受 Promise/thenable 时则采用其结果；不能把 resolve 与 fulfilled 无条件等同。
 
 ```js
 // 在这段代码中的 resolve(42); 会让这个promise对象立即进入确定（即resolved）状态，
@@ -382,7 +385,7 @@ Promise.resolve(42).then(function (value) {
 });
 ```
 
-Promise.resolve 作为 new Promise() 的快捷方式，在进行 Promise 对象的初始化或者编写测试代码的时候都非常方便。
+Promise.resolve 作为将值转换为 Promise 的便捷方式，在进行 Promise 对象的初始化或者编写测试代码的时候都非常方便。
 
 #### reject
 
@@ -498,11 +501,11 @@ getNumber()
 
 #### all
 
-Promise 的 all 方法提供了并行执行异步操作的能力，并且在所有异步操作执行完后才执行回调
+Promise.all 聚合已有的输入；真正启动操作的是调用函数等动作，不是 all 创造线程或自动启动所有异步任务。
 
 all 方法的效果实际上是「谁跑的慢，以谁为准执行回调」
 
-Promise.all 接收一个 Promise 对象的数组作为参数，当这个数组里的所有 Promise 对象全部变为 resolve (或存在 reject 状态的时候)，它才会去调用 .then 方法。(如果参数中的任何一个 Promise 为 reject 的话，则整个 Promise.all 调用会立即终止，并返回一个 reject 的新的 Promise 对象。)
+Promise.all 接收 iterable，全部 fulfillment 时按输入顺序返回结果；任一 rejection 使聚合 Promise 拒绝，但不会取消其他操作。
 
 ```js
 // 仍旧使用上面定义好的 runAsync1、runAsync2、runAsync3 这三个函数，看下面的例子：
@@ -520,7 +523,7 @@ Promise.all([runAsync1(), runAsync2(), runAsync3()]).then(function (results) {
 
 相对的就有另一个方法「谁跑的快，以谁为准执行回调」，这就是 race 方法，这个词本来就是赛跑的意思。
 
-Promise.all 在接收到的所有的对象 Promise 都变为 fulFilled 或者 rejected 状态之后才会继续进行后面的处理， 与之相对的是 Promise.race 只要有一个 Promise 对象进入 fulFilled 或者 rejected 状态的话，就会继续进行后面的处理。
+Promise.all 等待全部 fulfillment，或在首次 rejection 后拒绝， 与之相对的是 Promise.race 只要有一个 Promise 对象进入 fulFilled 或者 rejected 状态的话，就会继续进行后面的处理。
 
 ```js
 // 把上面 runAsync1 的延时改为 1 秒来看一下：
@@ -532,7 +535,7 @@ Promise.race([runAsync1(), runAsync2(), runAsync3()]).then(function (results) {
 // 在 then 里面的回调开始执行时，runAsync2() 和 runAsync3() 并没有停止，仍旧再执行。于是再过 1 秒后，输出了他们结束的标志。
 ```
 
-> 在 ES6 Promises 规范中，也没有取消（中断）promise 对象执行的概念，我们必须要确保 promise 最终进入 resolve or reject 状态之一。也就是说 Promise 并不适用于 状态 可能会固定不变的处理。也有一些类库提供了对 promise 进行取消的操作。
+> Promise 可以一直 pending，规范不会强制超时。工程上需要为外部依赖设置超时、取消和恢复策略；race 超时只改变竞争结果，不会自动中止输掉的操作。
 
 ## practices
 
@@ -560,3 +563,11 @@ references:
 -   [JavaScript Promise 迷你书（中文版）](http://liubin.org/promises-book/#chapter1-what-is-promise)
 
 -   [ES6 Promise 用法](http://blog.csdn.net/cut001/article/details/73369141)
+
+## 工程补充与验证
+
+对外请求至少考虑：HTTP 错误是否显式检查、超时、取消、重试上限、并发上限和过期结果。重复写操作需要幂等设计，不能只重试。
+
+练习：让请求 A 比 B 更晚返回，但 B 是用户最后选择的内容。用 requestId 判断哪个结果能写回；再说明 AbortController 与忽略旧结果分别解决什么。
+
+- [MDN Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)

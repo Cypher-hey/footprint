@@ -24,6 +24,12 @@
 | 框架 | React、Redux、Vue | [React](note/react/react-base.md)、[Redux](note/react/redux-base.md)、[Vue 历史生命周期](note/vue/cycle-life.md) |
 | 算法基础 | 结构、不变量、复杂度 | [数据结构](note/algorithm/data-structure.md)、[复杂度](note/algorithm/time-space.md)、[链表](note/algorithm/linked-list.md) |
 
+## AI 与 Agent Systems
+
+[AI 学习总览](note/ai/README.md)：14 章从模型与推理出发，贯通 Agent Loop、Context Builder、MCP/Skills、RAG、UI IR、状态机、安全、评测、多 Agent、AI Coding 和后训练。
+
+建议先读 [Agent Loop](note/ai/03-agent-loop.md)，再用 [Context Builder](note/ai/04-context-memory.md) 和 [卡片实践](note/ai/14-learning-project.md) 检查自己是否能解释系统运行过程。
+
 ## 源码阅读
 
 源码专题包含 Preact、React Native、MobX、Zustand、Webpack 和 OpenClaw。通过[完整索引](ALL_DOCUMENTS.md)进入，不把某篇源码笔记当作跨版本 API 合同。

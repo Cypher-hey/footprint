@@ -1,16 +1,20 @@
+# 数组：创建、变更、遍历与集合边界
+
+> 核查日期：2026-10-08。状态：正文审阅与 API 语义纠错，示例未运行。保留原有方法速查，补充稀疏数组和非原地更新。
+
 ## 一、创建数组
 
 #### 使用 new 操作符调用构造函数
 
 ```js
-var arr = new Array(20)				// 创建了一个包含20项的数组
+var arr = new Array(20)				// 创建 length 为 20 的稀疏数组，并非 20 个实际已赋值元素
 var arr = new Array('a', 'b', 'c')	// 创建了包含字符串 a b c 的三项数组
 ```
 
 #### 省略 new 操作符
 
 ```js
-var arr = Array(20)                 // 仅Array比较特别，可以省略
+var arr = Array(20)                 // Array 构造器可省略 new；并非唯一支持此行为的内置函数
 var arr = Array('a', 'b', 'c')
 ```
 		
@@ -78,7 +82,7 @@ var months = ['Jan', 'Feb', 'Mar', 'Apr'];
 months.toString(); // "Jan,Feb,Mar,Apr"
 ```
 
-###### toLocalString()
+###### toLocaleString()
 * 描述：把数组使用地区特定的分隔符把生成的字符串连接起来，形成一个本地字符串。
 * 参数：
 * 返回值：
@@ -192,7 +196,7 @@ console.log(a); // ['three', 'two', 'one']
       return a - b;
     }
     ```
-    * `增序返回正数`，逆序返回负数，并列返回0
+    * a 应排在 b 前时返回负数，之后返回正数，相等返回 0；数字升序常用 a - b
 * 返回值：排序后的数组
 * 是否改变原数组：是	
 
@@ -329,7 +333,7 @@ function isBigEnough(element) {
 * 描述：查找数组中是否包含给定值 `true` or `false`
 * 参数：  
     * 第一个参数：要查找的值
-    * 第二个参数：查找的起始位置，默认是0，负数表示倒数，超出范围会重置为0
+    * 第二个参数：查找的起始位置，默认是0，负数从末尾偏移并截到有效起点；正数大于等于 length 时直接返回 false
 * 返回值：`true` 包含， `false` 不包含
 ```js
 var a = [1, 2, 3];
@@ -380,57 +384,25 @@ a.includes(4); // false
 * 返回值：迭代的最终值
 
 <p class="tip">
-注意：第一次迭代的时候，pre是数组的第一项，cur是数组的第二项，reduce() 和 reduceRight() 除了迭代方向不一致外，其他完全相同
+若未提供 initialValue，累加器从第一个存在的元素起步；提供初值则从该初值开始。空数组且没有初值会抛错；稀疏数组还需考虑空槽。reduceRight 反向处理。
 </p>
 
-#### 去重方法
-###### Set() 与 WeakSet()
+## 四、Set / Map 与现代数组用法
 
-* 它是一个不可重复的无序列表
+Set 按插入顺序迭代，值比较采用 SameValueZero，因此 NaN 可以去重，+0 与 -0 视为相同；不同对象仍按身份区分。Map 也保持键的插入顺序，不是“无序键值集合”。
 
-* 值与值之间的比较是通过 `Object.is` 方法来进行的，这也意味着5和“5”会占据两个空间
+WeakMap/WeakSet 用于弱引用场景，不能枚举，不能用于统计全部成员；可接受的弱持有值以目标运行时支持为准，现代规范包含对象和非注册 Symbol。弱引用不承诺回收发生时机。
 
-* Set 和 WeakSet 区别在于，WeakSet 只提供了基础的方法，并且是一个弱引用。
+- 数字排序给比较器，原地 sort 会修改原数组。
+- toSorted、toReversed、toSpliced、with 提供非原地更新形式；目标浏览器支持需检查。
+- 展开、slice 等是浅复制；fill({}) 会让各项引用同一对象。
+- forEach 不会等待异步回调；串行使用 for...of + await，需要并发时显式组织 Promise，并控制并发量。
 
-数组去重：
-```js
-[...new Set([1,1,1,2,2,3,3,2,5])]
-```
+### 练习
 
-###### Map() 与 WeakMap()
+解释 new Array(3).map(() => 1) 与 Array.from({ length: 3 }, () => 1) 的差异；再解释 new Set([{id:1}, {id:1}]).size 为什么是 2。
 
-* 它是一个由多个无序键值对组成的集合
+### 参考
 
-* 键名可以是任意的数据类型
-
-* WeakMap 的键名只能是对象，与 WeakSet 类似，它也是一个弱引用
-
-* Map 比 WeakMap 多了几个方法，但是基础的 set get 都是相同的
-
-目前，已知的Map的用途，可能就是来存储私有数据，存储对象引用（可以自动释放），大部分情况下，基本不会用到Map。
-
-```js
-let privateData = new WeakMap()
-
-class Pre{
-  constructor(name){
-    privateData.set(this,{ name })
-  }
-  preName(){
-    return privateData.get(this).name
-  }
-}
-
-export default Pre
-```
-
-
-
-
-
-
-
-
-
-
-
+- [MDN Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [MDN Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)

@@ -1,3 +1,7 @@
+# 函数：参数、this、调用与构造
+
+> 核查日期：2026-10-08。状态：正文审阅、关键语义纠错；示例未执行。旧规范算法不是当前引擎源码或性能证据。
+
 ## 一、创建函数
 
 #### 函数声明
@@ -16,7 +20,7 @@ var fnName = function () {};
 
 ```js
 // 参数：Function 接收任意多的参数，但最后一个参数总被认为是函数体，前面的参数是传入新函数的参数
-var fnName = new Function(a, b, c, 'return a + b + c');
+var fnName = new Function('a', 'b', 'c', 'return a + b + c');
 ```
 
 #### 【ES6】箭头函数
@@ -27,51 +31,26 @@ var fnName = () => {};
 
 ## 二、函数的内部属性
 
-#### anguments
+#### arguments
 
 -   类型：类数组对象，包含着传入函数的所有参数，和 length 属性
 -   属性：
-    -   anguments.length // 实际传入函数参数的个数
-    -   anguments.callee【严格模式报错】 // 指向拥有这个 anguments 对象的函数，即函数本身
+    -   arguments.length // 实际传入函数参数的个数
+    -   arguments.callee【严格模式报错】 // 指向拥有这个 arguments 对象的函数，即函数本身
 
-#### this
+#### this：由调用语义与函数种类决定
 
-** this 永远`指向最后调用它`的那个`对象` **
+| 场景 | this 来源 |
+| --- | --- |
+| 严格模式普通函数直接调用 | undefined |
+| 非严格普通函数直接调用 | 通常替换为全局对象 |
+| obj.method() | 调用表达式中的接收者 obj |
+| call / apply | 显式提供的 thisArg，仍受函数种类影响 |
+| bind 返回的绑定函数 | 已绑定接收者；作为构造调用时另有规则 |
+| 箭头函数 | 捕获外层 this，没有自己的 this 绑定 |
+| new 构造调用 | 新对象，具体返回值规则另行处理 |
 
-在 JavaScript 中，`this是当前执行函数的上下文（runtime scope）`。JavaScript 有 4 种不同的函数调用方式:
-
--   函数调用:
-    -   alert('Hello World!')
--   方法调用:
-    -   console.log('Hello World!')
--   构造函数调用:
-    -   new RegExp('\\d')
--   隐式调用
-    -   apply/ call: alert.call(undefined, 'Hello World!')
-
-this 在 JavaScript 中主要由以下五种使用场景。
-
--   作为函数调用，this 绑定全局对象，浏览器环境全局对象为 window 。
--   内部函数的 this 也绑定全局对象，应该绑定到其外层函数对应的对象上，这是 JavaScript 的缺陷，用 that 替换。
--   作为构造函数使用，this 绑定到新创建的对象。
--   作为对象方法使用，this 绑定到该对象。
--   使用 apply 或 call 调用 this 将会被显式设置为函数调用的第一个参数。
-
-<p class="tip">箭头函数的 this 始终指向函数定义时的 this，而非执行时。</p>
-
-###### 改变 this 的指向
-
--   使用 ES6 的箭头函数
-
-    -   箭头函数中没有 this 绑定，必须通过`查找作用域链`来决定其值，如果箭头函数被非箭头函数包含，则 this 绑定的是最近一层非箭头函数的 this，否则，this 为 undefined。
-
--   在函数内部使用 \_this = this
-
-    -   将调用这个函数的对象保存在变量 \_this(self) 中，然后在函数中都使用这个 \_this(self) 通过(var self = this)
-
--   使用 apply、call、bind
-
--   new 实例化一个对象
+this 不是词法作用域本身，也不总是“最后调用它的对象”。把 obj.method 赋给独立变量后调用，会失去原来的接收者。箭头函数顶层 this 取决于外层环境，例如脚本和 ES 模块并不相同。
 
 ## 三、函数的属性和方法
 
@@ -79,18 +58,18 @@ this 在 JavaScript 中主要由以下五种使用场景。
 
 ###### fnName.caller
 
--   描述：保存着调用当前函数的函数的引用，如果在全局作用域调用当前函数，则返回 `null`
+-   历史接口：caller 受严格模式等限制，不作为现代业务逻辑或调试依赖。
 
 ###### fnName.length
 
 -   描述：表示函数希望接收的命名参数的个数
 <p class="tip">
-注意：anguments.length 是实际传入函数参数的个数，而 fnName.length 是函数希望接收命名参数的个数，【ES6函数默认值对length的影响】：指定默认值以及在指定默认值的参数之后的所有参数，都不会计算到length中
+注意：arguments.length 是实际传入函数参数的个数，而 fnName.length 是函数希望接收命名参数的个数，【ES6函数默认值对length的影响】：指定默认值以及在指定默认值的参数之后的所有参数，都不会计算到length中
 </p>
 
 ###### fnName.prototype
 
--   描述：保存函数的原型对象
+-   描述：可构造函数通常具有用于实例原型链的 prototype；箭头函数等并不具备相同能力。
 
 ###### 【ES6】fnName.name
 
@@ -110,9 +89,9 @@ this 在 JavaScript 中主要由以下五种使用场景。
 
 -   描述：上面两个方法都用来在特殊的作用域调用函数，实际上等于设置函数体内的 `this` 对象的值
 -   参数：
-    -   第一个参数都是 this 的值 \* 第二个参数：`apply` 接收 `anguments` 对象或数组，`call` 必须逐个列举出来
+    -   第一个参数都是 this 的值 \* 第二个参数：`apply` 接收 `arguments` 对象或数组，`call` 必须逐个列举出来
 
-[call 比 apply 快的原因是 call 方法的参数格式正是内部方法所需要的格式。](https://github.com/coderwin/__/issues/6)
+历史资料曾根据抽象步骤推断 call 一定比 apply 快，这不是可靠的跨引擎结论。下面保留历史算法说明作概念背景，不能把步骤数量当成现代引擎性能实测。
 
 他们被调用之后发生了什么:
 
@@ -158,7 +137,7 @@ Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )
 #### 参数默认值
 
 ```js
-function (a = 2, b = 3){
+function withDefaults(a = 2, b = 3){
 
 }
 ```
@@ -176,25 +155,15 @@ function (a = 2, b = 3){
 
 箭头函数有几点需要注意：
 
--   函数体内的 `this` 对象是函数定义是所在的对象，而不是使用时的对象
+-   箭头函数没有自己的 this，使用外层词法环境的 this，而不是任意“定义时所在对象”
 -   不能用箭头函数当做构造函数，也就是说不能使用 new 命令，否则会报错
--   不可以使用 `arguments` 对象，该对象在函数体内不存在。如果要用，可以用 `Rest参数` 代替。
+-   没有自己的 arguments；可能引用外层普通函数的 arguments。接收自身参数优先使用 rest。
 -   不可以使用 `yield` 命令，因此箭头函数不能用作 `Generator` 函数。
 -   由于箭头函数没有自己的 `this`，所以当然也就不能用 `call()`、`apply()`、`bind()` 这些方法去改变 `this` 的指向。
 
-#### 尾递归
+#### 尾调用与尾递归
 
-<p class="tip">【注意：ES6的尾调用优化只在严格模式下开启，正常模式是无效的。】</p>
-
-```
-    ES6明确规定，所有ECMAScript的实现，都必须部署“尾调用优化”。这就是说，在ES6中，只要使用尾递归，就不会发生栈溢出，相对节省内存。
-        相关概念：
-            1、尾调用：函数的最后一步调用另一个函数，叫做尾调用
-                尾调用的好处是：只保留内层函数的调用帧，节省内存
-            2、尾递归：函数尾调用自身，叫做尾递归
-            3、柯里化：将多参数函数转成单参数函数
-    因为尾调用优化的本质是，只保留内层函数的调用帧，ES6的尾调用只在严格模式下生效，那么在非严格模式下是否可以进行尾调用优化呢？但是可以的，有两种方案，一种是使用蹦床函数，一种是真正的尾调用，阮一峰的教程里有讲
-```
+尾调用优化有规范条件与实现差异；不能承诺“写了尾递归就不会栈溢出”。跨引擎库对深递归应使用显式循环、工作栈或经过测试的 trampoline。柯里化、尾调用和尾递归是不同概念，不应混为一个性能技巧。
 
 #### new.target【ES6】
 
@@ -204,8 +173,10 @@ function (a = 2, b = 3){
 
 ```js
 class Super {
-    if (new.target === Super) {
-        throw new Error('不能单独实例化')
+    constructor() {
+        if (new.target === Super) {
+            throw new Error('不能单独实例化');
+        }
     }
 }
 class Sub extends Super {
@@ -215,3 +186,10 @@ class Sub extends Super {
 new Super() // 报错
 new Sub()   // 正常使用
 ```
+
+## 自测与参考
+
+将 obj.method 解构后调用，再分别使用 bind 与箭头函数，说明 this 的变化。尝试对箭头函数使用 new，解释为什么不成立。
+
+- [MDN Arrow Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+- [MDN Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)

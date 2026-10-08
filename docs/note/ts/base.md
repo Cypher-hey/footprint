@@ -1,4 +1,15 @@
-# base
+# TypeScript 基础：静态契约与运行时边界
+
+
+> 核查日期：2026-10-08。状态：正文审阅与关键类型语义核查；历史示例保留，未编译实测。
+
+## 阅读重点
+
+TypeScript 在编译阶段帮助检查类型，不会自动验证网络 JSON、用户输入或 LLM 输出。接口、类型断言和非空断言通常不会生成运行时校验。
+
+外部输入优先从 unknown 开始，通过校验和控制流收窄获得可用类型。any 会放宽检查；as T 表达开发者的断言，不是转换或证明。
+
+推荐结合 strictNullChecks 理解空值，使用判别联合表达 loading/success/error 等互斥状态，避免多个布尔字段形成非法组合。标准库 lib 声明表示“类型可见”，不代表目标环境已经提供对应 API。
 
 ## 名词
 
@@ -29,7 +40,7 @@ TypeScript provides a concept of Freshness (also called `strict object literal c
 
 ## Null vs. Undefined
 
-JavaScript (and by extension TypeScript) has two bottom types : null and undefined. They are intended to mean different things:
+开启 strictNullChecks 时，null 与 undefined 是不同类型；它们不是 TypeScript 的 bottom type，never 才承担该角色。null / undefined 常用来表达缺失值，但具体含义由应用契约决定：
 
 -   Something hasn't been initialized : undefined.
 -   Something is currently unavailable: null.
@@ -50,7 +61,7 @@ console.log(false == undefined); // false
 
 ## number
 
-JavaScript has only one number type. It is a double-precision 64-bit `Number`.
+JavaScript 的 number 使用双精度浮点表示；另有 bigint 表达任意精度整数。二者不能不经转换直接混合算术。
 
 ### Decimal
 
@@ -116,7 +127,7 @@ handy table for reference.
 
 ## Iterators
 
-Iterator itself is not a TypeScript or ES6 feature, Iterator is a `Behavioral Design Pattern` common for Object oriented programming languages. It is, generally, an object which implements the following interface:
+迭代器作为设计模式早于 ES2015；JavaScript 同时定义了具体的 iterator / iterable 协议。以下为简化教学接口，不是 TypeScript 标准库声明的逐字副本：
 
 ```ts
 // This interface allows to retrieve a value from some collection or sequence which belongs to the object.
@@ -132,3 +143,10 @@ interface IteratorResult<T> {
     value: T;
 }
 ```
+
+## 练习与来源
+
+将一个“可能含 title 的外部 JSON”设计成 unknown 输入，验证 title 是字符串后再生成卡片。说明为什么给 fetch 返回值加 interface 不能拦截运行时缺字段。
+
+- [TypeScript Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+- [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)

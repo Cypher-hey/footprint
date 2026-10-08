@@ -7,6 +7,10 @@
 
 修订写作/图表规范，重写参数传递、Cookie、GET/POST、缓存、跨源、布局绘制与 ARIA。更新阅读入口，生成全部文档索引。示例均未执行，站点未启动。
 
+## 批次 2：语言/框架与 AI 体系
+
+修订 React、Redux、模块、TypeScript 基础与运算符、数组、函数、异步共 8 篇。新增 AI 总览与 14 篇章节；覆盖基础、循环、上下文、工具、检索、UI、工作流、安全、评测、多 Agent、编码与后训练。AI 为独立编写文档，未复现模型实验。
+
 ## 发现的展示问题（尚未修改运行时代码）
 
 - docs/index.html 使用 Docute；提交说明中的 Docusaurus 与实际入口不一致。
@@ -42,13 +46,13 @@
 | [docs/note/algorithm/queue.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/queue.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/algorithm/stack.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/stack.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/algorithm/time-space.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/time-space.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/basis/array.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/array.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/basis/async.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/async.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/basis/array.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/array.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
+| [docs/note/basis/async.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/async.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/basis/concepts.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/concepts.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [docs/note/basis/cookie-storage.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/cookie-storage.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
-| [docs/note/basis/func.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/func.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/basis/func.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/func.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/basis/javascript-info.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/javascript-info.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/basis/module.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/module.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/basis/module.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/module.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/basis/regexp.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/regexp.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/basis/string.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/string.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/collect/javascript.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/collect/javascript.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
@@ -112,8 +116,8 @@
 | [docs/note/point/collect-js.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/point/collect-js.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/point/collect-ti.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/point/collect-ti.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/point/collect-web.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/point/collect-web.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/react/react-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/react/react-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/react/redux-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/react/redux-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/react/react-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/react/react-base.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
+| [docs/note/react/redux-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/react/redux-base.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/readings/hjswks/memory-leaks.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/readings/hjswks/memory-leaks.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/readings/lagou/flutter.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/readings/lagou/flutter.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/readings/lagou/js.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/readings/lagou/js.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
@@ -164,14 +168,31 @@
 | [docs/note/specification/cypher.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/cypher.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/specification/dtd.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/dtd.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/specification/eslintrc.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/eslintrc.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/ts/base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/ts/symbols.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/symbols.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/ts/base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/base.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
+| [docs/note/ts/symbols.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/symbols.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/vue/cycle-life.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/cycle-life.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/vue/data-bind.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/data-bind.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/vue/vue-records.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue-records.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/vue/vue3.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue3.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/ydkJS/note.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/note.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/ydkJS/this&OBJECT PROTOTYPES.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/this&OBJECT%20PROTOTYPES.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+
+## 新增 AI 内容
+
+- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)：正文完成，示例未执行。
+- [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)：正文完成，示例未执行。
+- [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)：正文完成，示例未执行。
+- [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)：正文完成，示例未执行。
+- [工具、MCP 与 Skills：三种不同的能力边界](note/ai/05-tools-mcp-skills.md)：正文完成，示例未执行。
+- [RAG 与长期记忆：从找得到到用得对](note/ai/06-retrieval.md)：正文完成，示例未执行。
+- [AI 原生界面：Catalog、UI IR、Event IR 与可信执行](note/ai/07-ui-ir.md)：正文完成，示例未执行。
+- [Workflow、状态机与 XState：把行为边界写清楚](note/ai/08-workflow-state.md)：正文完成，示例未执行。
+- [Agent 可靠性与安全：把权限和恢复放在模型之外](note/ai/09-reliability-security.md)：正文完成，示例未执行。
+- [Evals 与可观测性：让改进成为可验证的判断](note/ai/10-evaluation.md)：正文完成，示例未执行。
+- [多 Agent：分工收益、上下文成本与单一责任人](note/ai/11-multi-agent.md)：正文完成，示例未执行。
+- [AI Coding 与 Harness：把交付变成受控闭环](note/ai/12-ai-coding.md)：正文完成，示例未执行。
+- [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)：正文完成，示例未执行。
+- [贯穿实践：可验证的 AI 知识卡片助手](note/ai/14-learning-project.md)：正文完成，示例未执行。
 
 ## 完成口径
 

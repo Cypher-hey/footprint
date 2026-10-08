@@ -237,3 +237,21 @@
 - [note](note/ydkJS/note.md)
 - [this&OBJECT PROTOTYPES](note/ydkJS/this&OBJECT PROTOTYPES.md)
 
+
+## ai
+
+- [AI 知识体系：从前端工程到 Agent Systems](note/ai/README.md)
+- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)
+- [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)
+- [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)
+- [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)
+- [工具、MCP 与 Skills：三种不同的能力边界](note/ai/05-tools-mcp-skills.md)
+- [RAG 与长期记忆：从找得到到用得对](note/ai/06-retrieval.md)
+- [AI 原生界面：Catalog、UI IR、Event IR 与可信执行](note/ai/07-ui-ir.md)
+- [Workflow、状态机与 XState：把行为边界写清楚](note/ai/08-workflow-state.md)
+- [Agent 可靠性与安全：把权限和恢复放在模型之外](note/ai/09-reliability-security.md)
+- [Evals 与可观测性：让改进成为可验证的判断](note/ai/10-evaluation.md)
+- [多 Agent：分工收益、上下文成本与单一责任人](note/ai/11-multi-agent.md)
+- [AI Coding 与 Harness：把交付变成受控闭环](note/ai/12-ai-coding.md)
+- [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)
+- [贯穿实践：可验证的 AI 知识卡片助手](note/ai/14-learning-project.md)

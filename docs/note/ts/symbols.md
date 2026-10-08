@@ -1,4 +1,8 @@
-# Symbol
+# TypeScript 运算符：非空断言、可选链与空值合并
+
+
+> 核查日期：2026-10-08。状态：正文静态审阅；编译结果示意并非实测产物，实际输出取决于 TypeScript 版本和 target。
+> 本页讨论标点运算符，不是 JavaScript 的 Symbol 原始类型。非空断言不会验证运行时值。
 
 ## ! 非空断言操作符
 
@@ -38,7 +42,7 @@ const b: number = a!;
 console.log(b);
 ```
 
-以上 TS 代码会编译生成以下 ES5 代码：
+以上 TS 代码会编译生成以下 JavaScript 示意：
 
 ```js
 'use strict';
@@ -47,7 +51,7 @@ const b = a;
 console.log(b);
 ```
 
-虽然在 TS 代码中，我们使用了非空断言，使得 const b: number = a!; 语句可以通过 TypeScript 类型检查器的检查。但在生成的 ES5 代码中，! 非空断言操作符被移除了，所以在浏览器中执行以上代码，在控制台会输出 undefined。
+虽然在 TS 代码中，我们使用了非空断言，使得 const b: number = a!; 语句可以通过 TypeScript 类型检查器的检查。但在移除类型标注后的 JavaScript 示意中，! 非空断言操作符被移除了，所以在浏览器中执行以上代码，在控制台会输出 undefined。
 
 ## ?. 运算符
 
@@ -65,7 +69,7 @@ func?.(args)
 ```js
 const val = a?.b;
 
-// 编译生成的 ES5 代码：
+// 编译移除类型标注后的 JavaScript 示意：
 var val = a === null || a === void 0 ? void 0 : a.b;
 ```
 
@@ -99,7 +103,7 @@ function tryGetArrayElement<T>(arr?: T[], index: number = 0) {
     return arr?.[index];
 }
 
-// 以上代码经过编译后会生成以下 ES5 代码：
+// 以上代码经过编译后会生成以下 JavaScript 示意：
 ('use strict');
 function tryGetArrayElement(arr, index) {
     if (index === void 0) {
@@ -117,7 +121,7 @@ function tryGetArrayElement(arr, index) {
 // ts
 let result = obj.customMethod?.();
 
-// 该 TypeScript 代码编译生成的 ES5 代码如下：
+// 该 TypeScript 代码编译移除类型标注后的 JavaScript 示意如下：
 var result = (_a = obj.customMethod) === null || _a === void 0 ? void 0 : _a.call(obj);
 ```
 
@@ -139,7 +143,7 @@ console.log(foo); // 输出："default string"
 const baz = 0 ?? 42;
 console.log(baz); // 输出：0
 
-// 以上 TS 代码经过编译后，会生成以下 ES5 代码：
+// 以上 TS 代码经过编译后，会生成以下 JavaScript 示意：
 ('use strict');
 var _a, _b;
 var foo = (_a = null) !== null && _a !== void 0 ? _a : 'default string';
