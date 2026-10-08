@@ -1,182 +1,79 @@
-# Mermaid 图表支持规范
+# Mermaid 图表规范与兼容边界
 
-## 📊 图表类型与语法支持
+> 核查日期：2026-10-08。适用：仓库 Markdown 图表。
+> 状态：官方语法资料核查；本轮未启动站点、未进行浏览器渲染实测。
 
-### 各图表类型对 style 的支持
+## 1. 核心修正
 
-| 图表类型 | style 支持 | 说明 | 示例 |
-|---------|-----------|------|------|
-| `graph` / `flowchart` | ✅ **完全支持** | 可使用 `style` 语句 | `style A fill:#f9f` |
-| `classDiagram` | ✅ **完全支持** | 原生支持 style 语法 | `style ClassName fill:#f9f,stroke:#333` |
-| `stateDiagram` | ✅ **v11+ 支持** | Mermaid v11 改进了支持 | `state "状态" as S` |
-| `sequenceDiagram` | ❌ **不支持** | 需用 themeCSS 替代 | 见下方替代方案 |
-| `erDiagram` | ❌ **不支持** | - | - |
-| `journey` | ❌ **不支持** | - | - |
-| `gantt` | ❌ **不支持** | - | - |
-| `pie` | ❌ **不支持** | - | - |
+原规范把“不允许缩进、不允许空行”写成 Mermaid 通用限制，这不成立。官方示例广泛使用缩进和空行。可以为了仓库一致性采用简单排版，但不能把排版习惯当作解析器规范。
 
----
+不同图形有不同样式语法，不能从 flowchart 推断所有图形的能力。classDiagram 支持自己的样式声明；状态图也有自己的样式和作用范围限制。序列图不使用 flowchart 的节点 style 语句。
 
-## ✅ 正确用法示例
-
-### 1. graph / flowchart（支持 style）
+## 2. 最小流程图
 
 ```mermaid
-graph TB
-A[开始] --> B{判断}
-B -->|是 | C[成功]
-B -->|否 | D[失败]
-style C fill:#c8e6c9
-style D fill:#ffcdd2
+flowchart LR
+    A["收到请求"] --> B{"校验通过？"}
+    B -->|是| C["执行"]
+    B -->|否| D["返回错误"]
 ```
 
-**代码**：
-```markdown
-```mermaid
-graph TB
-A[开始] --> B{判断}
-B -->|是 | C[成功]
-B -->|否 | D[失败]
-style C fill:#c8e6c9
-style D fill:#ffcdd2
-```
-```
+含义：校验是执行前的门槛，失败分支不进入执行节点。
 
----
+使用简单 ASCII 标识符，中文放在引号标签里；复杂标点和换行优先简化。不要为了美观启用 HTML 标签或放宽安全策略。
 
-### 2. classDiagram（支持 style）
+## 3. 时间顺序
 
-```mermaid
-classDiagram
-class Animal {
-+String name
-+eat()
-+sleep()
-}
-class Dog {
-+bark()
-}
-Animal <|-- Dog
-style Animal fill:#f9f,stroke:#333
-```
-
-**代码**：
-```markdown
-```mermaid
-classDiagram
-class Animal {
-+String name
-+eat()
-+sleep()
-}
-class Dog {
-+bark()
-}
-Animal <|-- Dog
-style Animal fill:#f9f,stroke:#333
-```
-```
-
----
-
-### 3. sequenceDiagram（不支持 style）
-
-**❌ 错误写法**：
 ```mermaid
 sequenceDiagram
-participant A as 用户
-participant B as 系统
-A->>B: 请求
-style A fill:#f9f  ← 这会报错！
+    participant U as 用户
+    participant R as 运行时
+    participant T as 工具
+    U->>R: 提交任务
+    R->>T: 已授权的工具调用
+    T-->>R: 成功或结构化错误
+    R-->>U: 结果与证据
 ```
 
-**✅ 正确写法**（无 style）：
+含义：工具返回值先回到运行时，再成为后续判断的输入；工具返回本身不是新的用户授权。
+
+## 4. 状态转换
+
 ```mermaid
-sequenceDiagram
-participant A as 用户
-participant B as 系统
-A->>B: 请求
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Running: start
+    Running --> Success: resolve
+    Running --> Failure: reject
+    Running --> Cancelled: cancel
+    Failure --> Running: retry
 ```
 
-**🎨 如需自定义样式**，使用 themeCSS：
-```mermaid
-%%{init: {'themeCSS': '.actor { fill: #f9f !important; }'}}%%
-sequenceDiagram
-participant A as 用户
-participant B as 系统
-A->>B: 请求
-```
+图展示业务状态，不承诺网络请求已被物理中止。取消后的过期结果仍需要运行时代际校验。
 
----
+## 5. 错误示例的表达
 
-## 📝 通用规范
+故意错误的代码应使用 text 围栏；展示 Mermaid 源码中的围栏时，外层长度必须更长。否则 Markdown 本身就可能提早闭合，问题发生在 Mermaid 之前。
 
-### 所有图表类型都要遵守
+## 6. 当前站点限制
 
-1. **不要缩进** - 所有代码顶格写
-2. **不要空行** - 代码块内不留空行
-3. **中文支持** - 节点文本和标签可以使用中文
+docs/index.html 引用 Mermaid 11 的浮动主版本 CDN，并使用一次性的 done 标志。静态阅读可发现：第一轮渲染后，后续路由新出现的图可能不再触发转换；该现象尚未浏览器复现。
 
-### 对比示例
+页面还显式使用 loose 安全级别。这里只记录风险与修复建议，不在纯文档批次中变更安全配置。应单独审查安全级别、HTML 标签、渲染失败回退和切页行为，再决定实现。
 
-**❌ 错误**：
-```mermaid
-graph TB
-    A --> B  ← 缩进了
-    
-    C --> D  ← 有空行
-```
+因此，新文档必须同时保留文字解释；“GitHub 上能渲染”不等于“Docute 上所有路由已验证”。
 
-**✅ 正确**：
-```mermaid
-graph TB
-A --> B
-C --> D
-```
+## 7. 核查清单
 
----
+- 每个围栏闭合，类型和语法匹配。
+- 错误示例不会被当成真实图表执行。
+- 节点名称清楚，箭头说明一致。
+- 首次打开、切换页面、后退、重复进入均需验证。
+- 解析失败时仍能读取原始说明。
+- 验证时记录确切 Mermaid 版本，不仅写 v11。
 
-## 🔧 Markdown 表格规范
+## 8. 官方参考
 
-### 表格前后必须有空行
-
-**❌ 错误**：
-```markdown
-**标题**：
-| 列 1 | 列 2 |
-|-----|-----|
-| A   | B   |
-### 下一节
-```
-
-**✅ 正确**：
-```markdown
-**标题**：
-
-| 列 1 | 列 2 |
-|-----|-----|
-| A   | B   |
-
-### 下一节
-```
-
----
-
-## 🚀 版本信息
-
-- **当前版本**: Mermaid v11.x
-- **CDN**: https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
-- **更新时间**: 2026-03-11
-
----
-
-## 📖 参考资料
-
-- [Mermaid 官方文档](https://mermaid.js.org/)
-- [Mermaid GitHub](https://github.com/mermaid-js/mermaid)
-- [classDiagram 样式](https://mermaid.js.org/syntax/classDiagram.html#styling)
-- [sequenceDiagram 主题](https://mermaid.js.org/syntax/sequenceDiagram.html#configuration)
-
----
-
-最后更新：2026-03-11
+- [序列图](https://mermaid.js.org/syntax/sequenceDiagram.html)
+- [类图及样式](https://mermaid.js.org/syntax/classDiagram.html)
+- [状态图](https://mermaid.js.org/syntax/stateDiagram.html)

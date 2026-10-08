@@ -1,305 +1,80 @@
-# OpenClaw 文档规范
-
-## 📋 Markdown 渲染问题总结
-
-在部署 Footprint 文档站过程中遇到的所有问题及解决方案。
-
----
-
-## 1. Mermaid 图表规范
-
-### ❌ 常见问题
+# Footprint 知识文档写作规范
 
-#### 1.1 sequenceDiagram 中使用 style 语法
+> 适用范围：知识正文、源码阅读、实践记录；维护日期：2026-10-08。
+> 本规范约束文档表达，不要求更换站点框架、安装工具或部署服务。
 
-**错误示例**：
-```mermaid
-sequenceDiagram
-    participant A as 用户
-    participant B as 系统
-    A->>B: 请求
-    style A fill:#fff4e1  ← ❌ sequenceDiagram 不支持 style
-```
-
-**正确示例**：
-```mermaid
-sequenceDiagram
-participant A as 用户
-participant B as 系统
-A->>B: 请求
-```
-
-**说明**：
-- `style` 语法仅适用于 `graph` 和 `flowchart`
-- `sequenceDiagram`、`classDiagram`、`stateDiagram` 等不支持 `style`
-
----
+## 1. 一篇文档解决一个核心问题
 
-#### 1.2 sequenceDiagram 使用缩进
+标题使用“对象 + 关键问题”，例如“HTTP 缓存：新鲜度、验证与更新策略”。先给结论，再解释机制，最后提供验证方法。区分语言标准、浏览器行为、某个库的实现、工程建议四种证据层级。
 
-**错误示例**：
-```mermaid
-sequenceDiagram
-    participant A as 用户  ← ❌ 不需要缩进
-    A->>B: 请求
-```
+- 知识正文：概念、机制、示例、边界、验证。
+- 源码阅读：先记录仓库、版本或提交 SHA、文件路径，再解释调用链。简化代码必须标注“教学伪代码”，不能冒充源码摘录。
+- 速查：以表格和短例子为主，链接到机制正文。
+- 历史笔记：标明年代和适用版本，保留来源；旧结论不得继续作为当前推荐。
+- 实践记录：包含环境、输入、预期、实际结果及复现步骤。没运行的示例明确写“未执行”。
 
-**正确示例**：
-```mermaid
-sequenceDiagram
-participant A as 用户  ← ✅ 顶格写
-A->>B: 请求
-```
+## 2. 推荐章节模板
 
-**说明**：
-- Mermaid 10 不需要缩进
-- 缩进可能导致解析错误
+章节可以合并，避免为每个小知识点凑满十节；深入专题建议使用完整结构。
 
----
+1. 导读：解决什么问题、谁适合读、前置知识。
+2. 核心结论：三到五条可检查的判断。
+3. 概念与边界：定义，以及容易混淆的相邻概念。
+4. 工作机制：输入、状态变化、输出、副作用。
+5. 最小示例：代码、输入、预期输出、运行环境。
+6. 方案对比：在同一业务约束下比较收益与代价。
+7. 工程实践：何时采用、如何接入、如何回退。
+8. 常见误区：错误说法、修正、反例。
+9. 验证与练习：正常路径、失败路径、边界条件。
+10. 参考资料与更新记录：官方规范优先，记录版本和核查日期。
 
-#### 1.3 mermaid 代码块内包含空行
+正文顶端至少记录：适用范围、核查日期、验证状态。日期代表本次审阅时间，不等于 API 在该日首次出现。
 
-**错误示例**：
-```mermaid
-graph TB
-    A --> B
-    
-    C --> D  ← ❌ 空行会导致解析错误
-```
+## 3. Markdown 基础约定
 
-**正确示例**：
-```mermaid
-graph TB
-A --> B
-C --> D  ← ✅ 没有空行
-```
+- 每页一个一级标题；主体从二级标题开始，不用六级标题排版普通链接。
+- 正文以短段落表达因果；有顺序的步骤用编号，无顺序的集合用项目符号。
+- 代码块写语言标签；命令与输出分开。危险命令明确前置条件、影响和回退方法。
+- 展示包含三反引号的 Markdown 时，外层使用四反引号或更长围栏。
+- 表格前后留空行；单元格中的竖线转义。长代码不要塞进表格。
+- 不把“所有”“一定”“永久”“零成本”当作默认措辞；必须说明成立条件。
+- 文件名保留现有路径以避免断链；新文件使用小写英文和连字符。
+- 不把个人机器的绝对路径、IP、访问凭据写成通用操作规范。
+- 不以自动同步或部署作为“文档修改完成”的前提。
 
-**说明**：
-- Mermaid 10 对空行敏感
-- 代码块内不能有空行
+## 4. 图表怎样选
 
----
+| 表达目的 | 推荐形式 | 不适合 |
+| --- | --- | --- |
+| 定义、因果、限制 | 短段落 + 小例子 | 全部改为表格 |
+| 同维度方案对比 | Markdown 表格 | 横向十几列 |
+| 控制流和分支 | Mermaid flowchart | 几十个节点挤一张图 |
+| 请求、回调、跨组件时间顺序 | sequenceDiagram | 用箭头方向暗示时间却不标说明 |
+| 合法状态与事件 | stateDiagram-v2 | 只画页面而忽略失败和取消 |
+| 对象关系 | classDiagram / ER 图 | 把实际源码与教学模型混为一谈 |
 
-#### 1.4 表格前后没有空行
+每张图后提供一段文字结论，保证图表未渲染时仍能理解。颜色只能辅助分类，不能成为唯一语义。优先控制在 5–12 个节点；大图拆成总览与局部。
 
-**错误示例**：
-```markdown
-**标题**：
-| 列 1 | 列 2 |
-|-----|-----|
-| A   | B   |
-### 下一节
-```
+Mermaid 细则见 [图表规范](docs/MERMAID_SPEC.md)。语法错误示例用 text 围栏，避免整个页面因“错误示例”而解析失败。
 
-**正确示例**：
-```markdown
-**标题**：
+## 5. 示例和证据
 
-| 列 1 | 列 2 |
-|-----|-----|
-| A   | B   |
+示例应使用虚构数据、example.com 域名和无副作用的最小输入。运行时依赖、浏览器支持范围和 API 版本需要单独写明。
 
-### 下一节
-```
+验证状态必须从以下类别中选择，不能混用：
 
-**说明**：
-- Markdown 表格前后必须有空行
-- 否则 docute 无法正确解析
+| 状态 | 含义 |
+| --- | --- |
+| 结构检查 | 检查标题、围栏、链接与目录，不证明知识正确 |
+| 内容审阅 | 已阅读正文并检查已识别的结论 |
+| 来源核查 | 指定结论已对照官方文档或固定源码 |
+| 示例实测 | 记录环境及真实运行结果 |
+| 渲染实测 | 在目标站点验证排版、路由和图表 |
 
----
-
-## 2. 目录结构规范
+## 6. 持续维护
 
-### ✅ 推荐结构
+变更说明写清“旧结论 → 修正 → 依据”。保留有价值的历史背景，不把旧框架示例直接改成新版本 API 而省略迁移说明。
 
-```
-/home/admin/footprint/          # 唯一项目目录
-├── docs/                       # 文档目录
-│   ├── index.html             # 主页面（含 Mermaid 支持）
-│   ├── note/                   # 文档内容
-│   │   ├── sourceLearn/        # 源码解构文档
-│   │   └── mermaid-test.md     # 测试文档
-│   └── ...
-├── sync-deploy.sh             # 同步到容器
-├── sync-source-learn.sh       # 同步源码解构
-├── docker-compose.yml         # Docker 配置
-├── Dockerfile                 # Docker 镜像
-└── DEPLOY.md                  # 部署说明
-```
+每次更新优先处理：安全误导、会导致错误实现的知识点、已经弃用的推荐、失效链接，最后处理视觉细节。外部文章是线索；不可把宣传、推测或下载量当作能力和生产采用的证据。
 
-### ❌ 避免的做法
-
-- 不要创建多个项目目录（如 `footprint-new`、`footprint-deploy`）
-- 所有修改都在 `footprint/` 目录进行
-
----
-
-## 3. 工作流程规范
-
-### 3.1 修改文档后
-
-```bash
-cd /home/admin/footprint
-./sync-deploy.sh
-```
-
-### 3.2 同步源码解构文档
-
-```bash
-cd /home/admin/footprint
-./sync-source-learn.sh "提交信息"
-```
-
-### 3.3 浏览器刷新
-
-- **必须强制刷新**：`Ctrl + Shift + R` (Windows) 或 `Cmd + Shift + R` (Mac)
-- 或使用无痕模式测试
-
----
-
-## 4. Mermaid 使用规范
-
-### 4.1 支持的图表类型
-
-| 类型 | 支持 style | 需要缩进 | 支持空行 |
-|------|-----------|---------|---------|
-| `graph` / `flowchart` | ✅ | ❌ | ❌ |
-| `sequenceDiagram` | ❌ | ❌ | ❌ |
-| `classDiagram` | ❌ | ❌ | ❌ |
-| `stateDiagram` | ❌ | ❌ | ❌ |
-| `erDiagram` | ❌ | ❌ | ❌ |
-| `journey` | ❌ | ❌ | ❌ |
-| `gantt` | ❌ | ❌ | ❌ |
-| `pie` | ❌ | ❌ | ❌ |
-
-### 4.2 通用规则
-
-1. **所有 mermaid 代码块**：
-   - ❌ 不要使用缩进
-   - ❌ 不要包含空行
-   - ✅ 顶格书写
-
-2. **style 语法**：
-   - ✅ 仅用于 `graph` 和 `flowchart`
-   - ❌ 不要用于 `sequenceDiagram` 等其他类型
-
-3. **中文支持**：
-   - ✅ 节点文本可以使用中文
-   - ✅ 标签可以使用中文（如 `A[开始]`）
-
-### 4.3 完整示例
-
-#### graph（支持 style）
-```mermaid
-graph TB
-A[开始] --> B{判断}
-B -->|是 | C[成功]
-B -->|否 | D[失败]
-style C fill:#c8e6c9
-style D fill:#ffcdd2
-```
-
-#### sequenceDiagram（不支持 style）
-```mermaid
-sequenceDiagram
-participant User as 用户
-participant System as 系统
-User->>System: 请求
-System-->>User: 响应
-```
-
----
-
-## 5. 容器管理
-
-### 常用命令
-
-```bash
-# 查看状态
-docker ps | grep footprint
-
-# 重启容器
-docker restart footprint
-
-# 查看日志
-docker logs footprint --tail 50
-
-# 停止容器
-docker stop footprint
-
-# 启动容器
-docker compose up -d
-
-# 删除容器
-docker stop footprint && docker rm footprint
-```
-
----
-
-## 6. 检查清单
-
-在提交文档前，请检查：
-
-- [ ] Mermaid 代码块内没有空行
-- [ ] sequenceDiagram 没有使用 style
-- [ ] 所有 mermaid 代码没有缩进
-- [ ] Markdown 表格前后有空行
-- [ ] 运行了 `./sync-deploy.sh`
-- [ ] 在浏览器中强制刷新验证
-
----
-
-## 7. 快速修复脚本
-
-### 修复所有 mermaid 代码块
-
-```bash
-cd /home/admin/footprint/docs/note/sourceLearn
-
-python3 << 'PYEOF'
-import os
-import re
-
-for root, dirs, files in os.walk('.'):
-    for file in files:
-        if file.endswith('.md'):
-            filepath = os.path.join(root, file)
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            def fix_mermaid(match):
-                code = match.group(1)
-                lines = [line for line in code.split('\n') if line.strip()]
-                
-                # 如果是 sequenceDiagram，删除 style 行
-                if 'sequenceDiagram' in code:
-                    lines = [line for line in lines if not line.strip().startswith('style ')]
-                
-                return '```mermaid\n' + '\n'.join(lines) + '\n```'
-            
-            content = re.sub(r'```mermaid\n(.*?)\n```', fix_mermaid, content, flags=re.DOTALL)
-            
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(content)
-            
-            print(f'✓ {filepath}')
-
-print('✅ 所有文件已修复')
-PYEOF
-
-# 同步到容器
-./sync-deploy.sh
-```
-
----
-
-## 8. 访问地址
-
-- **文档站**: http://123.56.28.217:3457
-- **Mermaid 测试**: http://123.56.28.217:3457/#/note/mermaid-test
-- **源码解构**: http://123.56.28.217:3457/#/note/sourceLearn
-
----
-
-创建时间：2026-03-11
-最后更新：2026-03-11
+提交前检查：结论有边界、来源可追溯、示例状态真实、原路径保持、图表有文字说明、没有意外覆盖其他人的变更。

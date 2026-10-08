@@ -1,56 +1,50 @@
-## 重排和重绘
+# 布局、绘制与合成：避免性能判断绝对化
 
-#### 重排(reflow)
+> 核查日期：2026-10-08。状态：机制审阅；示例未执行，未采集性能轨迹。
 
-<p class="tip">重新构造渲染树(Render Tree)的过程，叫做重排</p>
+## 1. 核心模型
 
-当DOM元素的变化影响了几何属性（如：宽高、位置）时，浏览器需要重新计算元素的几何属性，同时其他元素的几何属性也可能受到影响，这个时候浏览器会使渲染树(Render Tree)中受影响的部分失效，并重新构造渲染树，这个过程叫重排。
+常见渲染工作可以分成样式计算、布局、绘制、合成。布局计算几何位置和尺寸，绘制产生绘制内容，合成组合图层。实际引擎会跳过不必要的阶段，不是每次 DOM 变化都完整走一遍。
 
-> 浏览器在构造渲染树的时候，通常只需要遍历一次
+旧文“重排就是重新构造渲染树”“元素变化一定触发重绘”都过度简化。无可见影响的修改可能不需要绘制；部分已具备合成条件的动画可以只做合成。
 
-###### 重排的触发时机
+## 2. 变化与可能成本
 
-资料一：
+| 变化 | 可能工作 | 注意 |
+| --- | --- | --- |
+| 宽高、文字、布局关系 | 布局及后续阶段 | 是否影响布局取决于具体结构 |
+| 背景色等视觉属性 | 绘制 | 不一定需要布局 |
+| transform / opacity 动画 | 可能走合成 | 不是零成本或永不绘制的保证 |
+| 修改不可见且不参与布局的节点 | 可能无可见更新 | 仍可能有脚本和样式成本 |
 
-* 添加、删除、替换DOM节点
-* 改变DOM元素的位置、尺寸、内容
-* 浏览器窗口大小发生改变
-* 页面初次渲染
+不要仅靠属性名称预测整页性能，必须看真实轨迹和设备。
 
-资料二：
+## 3. 强制同步布局
 
-* 调整窗口大小（Resizing the window）
-* 改变字体（Changing the font）
-* 增加或者移除样式表（Adding or removing a stylesheet）
-* 内容变化，比如用户在input框中输入文字（Content changes, such as a user typing text in
-an input box）
-* 激活 CSS 伪类，比如 :hover (IE 中为兄弟结点伪类的激活)（Activation of CSS pseudo classes such as :hover (in IE the activation of the pseudo class of a sibling)）
-* 操作 class 属性（Manipulating the class attribute）
-* 脚本操作 DOM（A script manipulating the DOM）
-* 计算 offsetWidth 和 offsetHeight 属性（Calculating offsetWidth and offsetHeight）
-* 设置 style 属性的值 （Setting a property of the style attribute）
+写入使布局失效后，立即读取依赖最新几何的属性，可能迫使浏览器同步完成布局。读取 offsetWidth 并非每次都必然重排：如果布局已经有效，就不必重复计算。
 
-#### 重绘(repaint)
+```js
+// 教学示例：先统一读取，再统一写入
+const widths = elements.map((element) => element.offsetWidth);
+elements.forEach((element, index) => {
+  element.style.width = widths[index] + 10 + "px";
+});
+```
 
-浏览器绘制变化的部分到屏幕叫重绘
+elements 是调用者提供的元素数组。对照实验可把读取和写入放进同一循环，观察布局次数。不要把“减少一次 API 调用”当成优化目标，关注每帧实际工作。
 
-元素的变化不一定触发重排，但一定触发重绘
+## 4. 工程实践
 
-#### 渲染树变化队列和刷新
+批量读写、减少无意义 DOM 规模、合理使用虚拟列表、避免频繁切换复杂选择器条件。requestAnimationFrame 只提供调度时机，不保证回调内没有强制布局。
 
-浏览器有自己的优化机制，即并不是每次变化都会触发重排，而是将变化缓冲在队列里，当变化达到一定数量后刷新变化队列，触发重排。但是我们在获取一下属性时，浏览器会强制更新变化队列触发重排，因为这些属性需要返回实时的值：
+will-change 可能增加内存和图层成本，不宜全局常驻。优化前记录基线，优化后用相同内容、设备和交互路径比较。
 
-* offsetTop、offsetLeft、offsetWidth、offsetHeight
+## 5. 验证
 
-* scrollTop、scrollLeft、scrollWidth、scrollHeight
+录制浏览器 Performance：关注长任务、样式计算、Layout、Paint、帧丢失和交互延迟。检查输入、滚动、展开、重复切页，而不只看空白页面初始加载。
 
-* clientTop、clientLeft、clientWidth、clientHeight
+练习：把 left 动画改成 transform 后，为什么仍可能不流畅？可能还有脚本长任务、图片解码、复杂绘制或合成资源压力。
 
-* getComputeStyle()、currentStyle(IE)
+## 6. 参考
 
-#### 性能优化（最小化重排和重绘）
-
-在修改元素多种样式属性时，使用替换class名的方式 代替 使用js脚本逐个修改样式
-
-
-
+- [浏览器布局与 layout thrashing](https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing)
