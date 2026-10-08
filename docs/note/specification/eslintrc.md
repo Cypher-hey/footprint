@@ -1,4 +1,9 @@
-根据 JavaScript 编码规范编写的 eslist 配置
+# ESLint 旧配置示例：eslintrc 年代的规则记录
+
+> 核查日期：2026-10-08。状态：配置结构与年代审阅，未执行。
+> 以下是旧版配置记录，部分格式化规则和插件配置在新版本中已变化。不能直接视为现代 flat config，也不承诺所有规则在目标版本仍存在。注释中的“四空格缩进”不是 tab。
+
+根据 JavaScript 编码规范编写的 ESLint 配置
 
 ```js
 module.exports = {
@@ -12,7 +17,7 @@ module.exports = {
     /* 需要安装 eslint-plugin-vue */
     "plugins": ["vue"],
     "rules": {
-        /* 缩进 tab */
+        /* 缩进 4 个空格 */
         "indent": [
             "error",
             4,
@@ -162,3 +167,4 @@ module.exports = {
     }
 }
 ```
+迁移前阅读 [配置迁移指南](https://eslint.org/docs/latest/use/configure/migration-guide)，按项目版本逐项核对；本轮不改变实际配置文件。

@@ -1,3 +1,7 @@
+# this 与对象原型：阅读记录与适用范围
+
+> 审阅日期：2026-10-08。状态：概念定向核查。下面摘记主要描述普通函数动态 this；箭头函数使用外层词法 this，bind/new 也有专门规则，不能不加限定地推广“完全由调用点决定”。
+
 note for learning you don't know JS
 
 ## 1、this or That
@@ -15,3 +19,5 @@ When a function is invoked, an activation record, otherwise known as an executio
 
 
 
+
+继续阅读 [函数与 this](../basis/func.md)，用直接调用、方法调用、call/bind、new 和箭头函数分别验证。

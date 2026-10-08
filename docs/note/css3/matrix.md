@@ -1,4 +1,9 @@
-## 从矩阵与空间操作的关系理解CSS3的transform
+# CSS 矩阵：线性与仿射变换的几何解释
+
+> 审阅日期：2026-10-08。状态：正文公式/术语定向核查；保留原图但未逐像素核对，浏览器效果未实测。
+> 采用列向量约定。二维平移是仿射变换，用齐次坐标表达；不是所有二维变换都是线性。下文 cosθ/tanθ 形式是公式示意，不能当作字面 CSS 值直接粘贴。
+
+## 从几何关系出发
 
 #### 概述
 
@@ -14,7 +19,7 @@
 /* 2D */
 transform: matrix(1, 0, 0, 1, 0, 0);
 /* 3D */
-transform: matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 ```
 
 上面两行 css 代码其实什么变换都不会做，因为那是变换的默认状态，即没有变换。但是其中使用到了 `matrix`，翻译成中文叫做：矩阵。如果有深入研究过 css 的同学对这两行代码也许不陌生，但是大多数人在使用 `transform` 变换时很少直接使用 `matrix` 矩阵，除非你不想让人看懂你在做些什么鸟变换...，所以更多的时候，我们会使用类似如下语法：
@@ -63,7 +68,7 @@ transform: translateX(100px) rotateZ(30deg);
 
 #### 基向量
 
-基向量，也叫单位向量，是单位长度为1的向量，如下图中：`i帽` 和 `j帽` 就是这个二维坐标系的基向量：
+基是一组线性无关且张成空间的向量，未必都是单位长度；本文使用标准正交基，长度恰为 1，如下图中：`i帽` 和 `j帽` 就是这个二维坐标系的基向量：
 
 <img src="../../asset/img/ji-xl.png" style="max-width: 500px;"/>
 
@@ -93,7 +98,7 @@ transform: translateX(100px) rotateZ(30deg);
 
 <img src="../../asset/img/after.png" style="max-width: 500px;"/>
 
-不过，并非所有变换都叫做线性变换，线性变换必须要满足下面两个条件：
+不过，并非所有变换都叫做线性变换，线性变换的严格定义是保持加法和数乘，即 T(u+v)=T(u)+T(v)、T(cu)=cT(u)。下面两个几何现象只是直觉，不作为完整定义；退化变换还可能把直线压成点：
 * 1、直线在变换后仍然为直线，不能有所弯曲
 * 2、原点不能移动
 
@@ -155,7 +160,7 @@ transform: translateX(100px) rotateZ(30deg);
 
 <img src="../../asset/img/yiban.png" style="max-width: 500px;"/>
 
-我们有一个 `2 x 2` 的矩阵 `[a, c] [b, d]`，其中 `[a, c]` 是基向量 <b>i</b> 变换后的坐标，`[b, d]` 是基向量 <b>j</b> 变换后的坐标，那么根据这个变换，以及线性变换的性质，我们可以推断出任意向量 `[x, y]` 变换后的坐标：
+我们有一个 `2 x 2` 的矩阵 `[a, c] [b, d]`，按行写矩阵为 [[a,c],[b,d]] 时，列向量 (a,b) 是 i 的像，(c,d) 是 j 的像，那么根据这个变换，以及线性变换的性质，我们可以推断出任意向量 `[x, y]` 变换后的坐标：
 
 <img src="../../asset/img/yuanyin.png" style="max-width: 400px;"/>
 
@@ -284,8 +289,8 @@ transform: translateX(100px) translateY(200px);
 我们来看一下3D变换的 `matrix` 默认值：
 
 ```css
-transform: matrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p);
-transform: matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+transform: matrix3d(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p);
+transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 ```
 
 这十六个数字就是 `4 x 4` 矩阵的 16 个数值：
@@ -296,6 +301,6 @@ transform: matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
 <img src="../../asset/img/3d.png" style="max-width: 200px;"/>
 
-类似于我们讲解 2D 变换一样，其中由 <img src="../../asset/img/3d33.png" style="max-width: 70px;"/> 组成的 `3 x 3` 矩阵用来描述空间的 3D 线性变换，如：`rotateX` `rotateY` `scaleZ` 等等，注意：`rotateZ` 是 2D 变换哦。
+类似于我们讲解 2D 变换一样，其中由 <img src="../../asset/img/3d33.png" style="max-width: 70px;"/> 组成的 `3 x 3` 矩阵用来描述空间的 3D 线性变换，如：`rotateX` `rotateY` `scaleZ` 等等，rotateZ 是三维绕 z 轴的旋转；限制在 xy 平面时与二维 rotate 对应。
 
 而 `m` `n` `o` 则分别用来描述位移：`translateX` `translateY` `translateZ`。

@@ -1,3 +1,16 @@
+# Vue 2 实例与生命周期：历史 API 与迁移边界
+
+> 审阅日期：2026-10-08。本文保留 Vue 2 API 阅读记录；Vue 2 已于 2023-12-31 结束官方维护，不能按 Vue 3 直接使用。示例未运行。
+
+## 版本地图
+
+Vue 3 使用 createApp；Composition API 生命周期使用 onMounted/onUnmounted 等。Vue 2 的 new Vue、$on/$off、filters、beforeDestroy/destroyed 等不能原样套用 Vue 3。
+
+mounted 不代表所有异步子组件、图片和请求都完成；nextTick 等待 Vue 的 DOM 更新，不是等待所有网络任务。业务资源的创建与释放应成对设计。
+
+- [Vue 2 EOL](https://v2.vuejs.org/eol/)
+- [Vue 3 响应式原理](https://vuejs.org/guide/extras/reactivity-in-depth.html)
+
 <p class="tip">Vue 框架的入口就是 Vue 实例，其实就是框架中的 view model ，它包含页面中的业务处理逻辑、数据模型等，它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的
 过程时更容易形成好的逻辑。
 </p>
@@ -15,7 +28,7 @@ var vm = new Vue({
 ```
 
 尽管没有完全遵循 `MVVM 模式`，但是 Vue 的设计仍然受到了它的启发。作为约定，通常我们使用变量 vm (ViewModel 的简称) 来表示 Vue 实例。
-在实例化 Vue 实例时，你需要传入一个`选项对象`，它可以包含数据(data)、模板(template)、挂载元素(element to mount on)、方法(methods)、生命周期函数(lifecycle callbacks)和其他选项。全部选项列表可以在[ API 参考文档](https://vuefe.cn/v2/api/#Options-Misc)中查看。
+在实例化 Vue 实例时，你需要传入一个`选项对象`，它可以包含数据(data)、模板(template)、挂载元素(element to mount on)、方法(methods)、生命周期函数(lifecycle callbacks)和其他选项。全部选项列表可以在[ API 参考文档](https://v2.vuejs.org/v2/api/#Options-Misc)中查看。
 可以通过预先定义选项`扩展 Vue 构造函数`，从而创建可复用的`组件构造函数`：
 
 ```js
@@ -36,7 +49,7 @@ var vm = new Vue({　
 
 ###### DOM（3）
 
-* [el](https://vuefe.cn/v2/api/?#el) 
+* [el](https://v2.vuejs.org/v2/api/?#el) 
 
     * 类型： string | HTMLElement
 
@@ -44,13 +57,13 @@ var vm = new Vue({　
 
     * 详细：提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标。在实例挂载之后， 元素可以用 `vm.$el` 访问。
 
-* [template](https://vuefe.cn/v2/api/?#template) 
+* [template](https://v2.vuejs.org/v2/api/?#template) 
 
     * 类型： string
 
     * 详细：一个字符串模板作为 Vue 实例的标识使用。模板将会 替换 挂载的元素。挂载元素的内容都将被忽略，除非模板的内容有分发 slot。
 
-* [render](https://vuefe.cn/v2/api/?#render) 
+* [render](https://v2.vuejs.org/v2/api/?#render) 
 
     * 类型： `(createElement: () => VNode) => VNode`
 
@@ -58,7 +71,7 @@ var vm = new Vue({　
 
 ###### 数据（6）
 
-* [data](https://vuefe.cn/v2/api/?#data)    
+* [data](https://v2.vuejs.org/v2/api/?#data)    
 
     * 类型： Object | Function
 
@@ -72,10 +85,10 @@ var vm = new Vue({　
     <p class = 'tip'>
     当一个组件被定义， data 必须声明为`返回一个初始数据对象的函数`，因为组件可能被用来创建多个实例。如果 data 仍然是一个纯粹的对象，则所有的实例将共享引用同一个数据对象！通过提供 data 函数，每次创建一个新实例后，我们能够调用 data 函数，从而返回初始数据的一个全新副本数据对象。
     <br><br>
-    如果需要，可以通过将 vm.$data 传入 JSON.parse(JSON.stringify(...)) 得到深拷贝的原始数据对象。
+    JSON 序列化再解析仅适用于可表示为 JSON 的数据；不能作为日期、函数、循环引用等任意对象的通用深拷贝。
     </p>
 
-* [props](https://vuefe.cn/v2/api/?#props)　
+* [props](https://v2.vuejs.org/v2/api/?#props)　
 
     * 类型: Array<string> | Object
 
@@ -83,7 +96,7 @@ var vm = new Vue({　
     props 可以是数组或对象，用于`接收来自父组件的数据`。props 可以是简单的数组，或者使用对象作为替代，对象允许配置高级选项，如类型检测、自定义校验和设置默认值。
 
 
-* [propsData](https://vuefe.cn/v2/api/?#propsData)
+* [propsData](https://v2.vuejs.org/v2/api/?#propsData)
 
     * 类型: { [key: string]: any }
 
@@ -92,7 +105,7 @@ var vm = new Vue({　
     * 详细:
     创建实例时传递 props。主要作用是方便测试。
 
-* [computed](https://vuefe.cn/v2/api/?#computed)
+* [computed](https://v2.vuejs.org/v2/api/?#computed)
 
     * 类型： `{ [key: string]: Function | { get: Function, set: Function } }`
 
@@ -105,14 +118,14 @@ var vm = new Vue({　
 
 
 
-* [methods](https://vuefe.cn/v2/api/?#methods) 
+* [methods](https://v2.vuejs.org/v2/api/?#methods) 
 
     * 类型: { [key: string]: Function }
 
     * 详细:
     methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。
 
-* [watch](https://vuefe.cn/v2/api/?#methods) 
+* [watch](https://v2.vuejs.org/v2/api/?#methods) 
 
     * 类型: { [key: string]: string | Function | Object }
 
@@ -124,7 +137,7 @@ var vm = new Vue({　
 
 * beforeCreate(在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用。)
 
-* create(实例已经创建完成之后被调用。在这一步，实例已完成以下的配置：数据观测(data observer)，属性和方法的运算， watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见)
+* created(实例已经创建完成之后被调用。在这一步，实例已完成以下的配置：数据观测(data observer)，属性和方法的运算， watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见)
 
 * beforeMount(在挂载开始之前被调用：相关的 render 函数首次被调用。)
 
@@ -140,7 +153,7 @@ var vm = new Vue({　
 
 * beforeDestroy(实例销毁之前调用。在这一步，实例仍然完全可用。)
 
-* destroyed(Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。)
+* destroyed(Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，框架管理的相关监听会被清理；手工建立的全局监听、定时器和第三方资源仍需自行释放，所有的子实例也会被销毁。)
 
 ###### 资源（3）
 
@@ -287,7 +300,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 　　* Vue.config.devtools= true   　　　　------配置是否允许vue-devtools检查代码。
 
-　　* Vue.config.errorHandler= functiono(err, vm){}  ------指定组件的渲染和观察期间未捕获错误的处理函数。
+　　* Vue.config.errorHandler= function(err, vm){}  ------指定组件的渲染和观察期间未捕获错误的处理函数。
 
 　　* Vue.config.ignoredElements = ['my-custom-web-component', 'another-web-component']　　　------忽略在Vue 之外的自定义元素。
 
@@ -322,7 +335,7 @@ Vue实例有一个完整的生命周期，从开始创建、初始化数据、�
 
 * beforeCreate 此时$el、data 的值都为undefined
 
-* create之后，此时可以拿到data的值，但是$el依旧为undefined
+* created之后，此时可以拿到data的值，但是$el依旧为undefined
 
 * mount之前，$el的值为“虚拟”的元素节点
 

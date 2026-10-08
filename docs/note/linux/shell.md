@@ -1,22 +1,23 @@
+# Shell：交互环境与脚本解释器
 
-**shell是什么**，shell是 Linux/Unix 的一个外壳，Linux/Unix 通过 shell 与内核交互，shell 接收用户或程序的命令进而转化成内核明白的命令，内核完成任务后再返回有用的信息给用户或者程序。
+> 审阅日期：2026-10-08。状态：概念修订，命令未执行。
 
->Shell是系统的用户界面，提供了用户与内核进行交互操作的一种接口(命令解释器)
+## 1. Shell 的职责
 
-`cat /etc/shells` : 查看电脑上安装了哪些 shell
+Shell 解析命令、展开变量、安排重定向与管道，并调用内置命令或外部程序。外部程序再通过系统接口完成工作，不是所有命令文本都直接“翻译给内核”。
 
-```js
-// 举例
-# List of acceptable shells for chpass(1).
-# Ftpd will not allow users to connect who are not using
-# one of these shells.
+## 2. 区分三件事
 
-/bin/bash
-/bin/csh
-/bin/ksh
-/bin/sh
-/bin/tcsh
-/bin/zsh
-```
+- 登录 Shell：账号配置的默认交互环境。
+- 当前 Shell：眼下解释命令的进程。
+- 脚本解释器：由执行方式、shebang 等确定。
 
-`echo $SHELL` : 查看电脑默认启动的 shell 类型
+$SHELL 通常反映登录 Shell 环境变量，不保证当前进程就是它。/etc/shells 是系统列出的可接受 Shell，不是扫描所有已安装解释器的完整清单。
+
+## 3. 可移植性
+
+POSIX sh、Bash、Zsh 语法不完全相同。脚本声明和实际调用必须一致；显式用 sh 运行 Bash 脚本会忽略原本想使用的特性。
+
+## 4. 安全练习
+
+给路径变量加引号，区分通配符由 Shell 展开还是由命令处理。对删除、权限和网络命令先核对目标，不把“复制一段脚本”当作无副作用阅读。

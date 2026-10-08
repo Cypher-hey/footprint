@@ -1,3 +1,13 @@
+# CSS 选择器：匹配关系与优先级
+
+> 审阅日期：2026-10-08。状态：正文语义审阅，未进行浏览器匹配实测。
+
+## 现代补充
+
+:is()、:where()、:has() 和现代 :not() 扩展表达能力；specificity 的处理不同，尤其 :where() 的特异性为零。样式最终胜出还受来源、重要性和 cascade layers 等影响，不能只背 ID > class > tag。
+
+:visited 受隐私限制，不可读取任意浏览历史；:focus-visible 有助于适配焦点指示。:lang() 可根据继承语言匹配，不只检查元素自身是否显式写了 lang。
+
 ## CSS选择器整理
 
 #### 基本选择器
@@ -16,8 +26,8 @@
 | ------------- |:-------------:| :-----|
 | selector1 selector2  | 后代选择器(包含选择器) | 选择selector2所匹配的一组元素，且selector2是selector1的后代元素 |
 | selector1 > selector2  | 子选择器 | 选择selector2所匹配的一组元素，且selector2是selector1的直接子元素 |
-| selector1 + selector2  | 相邻兄弟选择器 | 选择selector2所匹配的元素，且selector2位于selector1的后面 |
-| selector1 ~ selector2  | 通用选择器 | 选择selector2所匹配的一组元素，且该组元素位于selector1后面 |
+| selector1 + selector2  | 相邻兄弟选择器 | 选择selector2所匹配的元素，且 selector2 是 selector1 紧邻的后一个兄弟元素 |
+| selector1 ~ selector2  | 后续兄弟选择器 | 选择selector2所匹配的一组元素，且这些元素与 selector1 同父并位于其后 |
 
 #### 伪类选择器
 
@@ -57,7 +67,7 @@
 | -----------------------|:-------------------:|
 | selector:first-child   | 选择selector所匹配的元素，且该元素是其父元素的第一个子元素(不算文本节点，也不区分元素类型)，等价于 selector:nth-child(1)   |
 | selector:last-child    | 选择selector所匹配的元素，且该元素是其父元素的最后一个子元素(不算文本节点，也不区分元素类型)，等价于 selector:nth-last-child(1)   |
-| selector:nth-child(n)  | 选择selector所匹配的元素，且该元素是其父元素的第n个子元素(不算文本节点，也不区分元素类型)，其中 n 的值可以使正数(1、2、3...)，也可以是关键字(even、odd)，也可以是公式(2n+1、2n-1...)，且 n 的起始值是1而不是0 |
+| selector:nth-child(n)  | 选择selector所匹配的元素，且该元素是其父元素的第n个子元素(不算文本节点，也不区分元素类型)，其中 n 的值可以使正数(1、2、3...)，也可以是关键字(even、odd)，也可以是公式(2n+1、2n-1...)，元素位置从 1 计数；An+B 公式中的 n 按非负整数取值 |
 | selector:nth-last-child(n)  | 选择selector所匹配的元素，且该元素是其父元素的倒数第n个子元素(不算文本节点，也不区分元素类型) |
 | selector:first-of-type  | 选择selector所匹配的元素，且该元素是其父元素的第一个特定类型的子元素(不算文本节点，区分元素类型) |
 | selector:last-of-type  | 选择selector所匹配的元素，且该元素是其父元素的最后一个特定类型的子元素(不算文本节点，区分元素类型) |
@@ -73,7 +83,7 @@
 
 | 选择器                  | 描述                |
 | -----------------------|:-------------------:|
-| selector1:not(selector2)   | 选择所有不包含selector2的selector1元素  |
+| selector1:not(selector2)   | 选择匹配 selector1 且自身不匹配 selector2 的元素，不是检查是否包含后代  |
 
 #### 伪元素
 
@@ -107,4 +117,7 @@ selector[attr|=val] {
 }
 ```
 
-你可能会问我为什么没有这个选择器写在上面的表格中，是这样的，这个选择器中有字符 `|`，这个字符在markdown表格中是表格的分界线。日了狗了.....
+Markdown 表格中的竖线可用反斜杠转义，也可将复杂语法放在独立代码块。
+## 练习
+
+解释 .card:not(.active) 与“没有 active 后代”的差异；比较 :where(#app) .title 与 #app .title。使用目标浏览器验证新语法，并为关键样式提供必要回退。

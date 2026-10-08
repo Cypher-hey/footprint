@@ -17,6 +17,10 @@
 
 位运算新增 3 个纯函数的 9 条断言在 JavaScript 执行环境通过；不代表仓库测试、浏览器或其他示例通过。
 
+## 批次 4：工具链、版本与语言边界
+
+修订 Git、npm、ESLint、Linux、部署说明、Nginx、Vue、字符串、正则与变换等。保留具有学习价值的旧版记录并明确年代，不执行安装、系统设置、密钥或部署操作。移除容易被误用的明文凭据和开放代理教学模板。
+
 ## 发现的展示问题（尚未修改运行时代码）
 
 - docs/index.html 使用 Docute；提交说明中的 Docusaurus 与实际入口不一致。
@@ -29,7 +33,7 @@
 
 | 文件 | 本轮状态 | 后续检查 |
 | --- | --- | --- |
-| [DEPLOY.md](https://github.com/Cypher-hey/footprint/blob/ai/next/DEPLOY.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [DEPLOY.md](https://github.com/Cypher-hey/footprint/blob/ai/next/DEPLOY.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [MARKDOWN_SPEC.md](https://github.com/Cypher-hey/footprint/blob/ai/next/MARKDOWN_SPEC.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [README.md](https://github.com/Cypher-hey/footprint/blob/ai/next/README.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [docs/MERMAID_SPEC.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/MERMAID_SPEC.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
@@ -41,7 +45,7 @@
 | [docs/note/advanceJS/node.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/advanceJS/node.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/advanceJS/stackoverflow-snippets.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/advanceJS/stackoverflow-snippets.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/advanceJS/useful-snippets.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/advanceJS/useful-snippets.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/advanceJS/useful-tips.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/advanceJS/useful-tips.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/advanceJS/useful-tips.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/advanceJS/useful-tips.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/algorithm/advance-sort.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/advance-sort.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/algorithm/basic-sort.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/basic-sort.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/algorithm/bst.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/algorithm/bst.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
@@ -59,25 +63,25 @@
 | [docs/note/basis/func.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/func.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/basis/javascript-info.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/javascript-info.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/basis/module.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/module.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
-| [docs/note/basis/regexp.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/regexp.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/basis/string.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/string.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/collect/javascript.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/collect/javascript.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/basis/regexp.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/regexp.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/basis/string.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/basis/string.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/collect/javascript.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/collect/javascript.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/collect/related-work.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/collect/related-work.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/compatibility/compatibility.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/compatibility/compatibility.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/css3/bfc.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/bfc.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/css3/layout.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/layout.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
-| [docs/note/css3/matrix.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/matrix.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/css3/selector.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/selector.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/css3/transform.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/transform.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/css3/matrix.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/matrix.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/css3/selector.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/selector.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/css3/transform.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/css3/transform.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/cultureLanguage/english/pronunciation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/cultureLanguage/english/pronunciation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/cultureLanguage/japanese/pronunciation.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/cultureLanguage/japanese/pronunciation.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/deploy/norm.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/deploy/norm.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/deploy/norm.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/deploy/norm.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/dom/dom-event.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/dom/dom-event.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/dom/dom.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/dom/dom.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/functionalProgram/fp-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/functionalProgram/fp-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/git/commonly-used.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/commonly-used.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/git/config.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/config.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/git/git-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/git-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/git/commonly-used.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/commonly-used.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/git/config.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/config.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/git/git-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/git/git-base.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/h5/rem.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/h5/rem.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/http/ajax.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/http/ajax.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/http/cache.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/http/cache.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
@@ -86,15 +90,15 @@
 | [docs/note/http/get-post.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/http/get-post.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [docs/note/http/http-concepts.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/http/http-concepts.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
 | [docs/note/http/url-render.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/http/url-render.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
-| [docs/note/linux/linux-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/linux-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/linux/linux-command.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/linux-command.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/linux/shell.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/shell.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/linux/ubuntu-utils.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/ubuntu-utils.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/linux/vim.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/vim.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/linux/linux-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/linux-base.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/linux/linux-command.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/linux-command.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/linux/shell.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/shell.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/linux/ubuntu-utils.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/ubuntu-utils.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/linux/vim.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/linux/vim.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/mermaid-diag.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/mermaid-diag.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/mermaid-test.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/mermaid-test.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/nginx/nginx-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/nginx/nginx-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/npm/npm-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/npm/npm-base.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/nginx/nginx-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/nginx/nginx-base.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/npm/npm-base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/npm/npm-base.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/openclaw-agent/01-soul.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/openclaw-agent/01-soul.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/openclaw-agent/02-agents.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/openclaw-agent/02-agents.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/openclaw-agent/03-user.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/openclaw-agent/03-user.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
@@ -173,15 +177,15 @@
 | [docs/note/specification/aria.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/aria.md) | 已修订；见正文验证范围 | 代码示例/网页效果未实测 |
 | [docs/note/specification/cypher.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/cypher.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
 | [docs/note/specification/dtd.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/dtd.md) | 已修订；正文/示例静态审阅 | 示例与浏览器行为未实测 |
-| [docs/note/specification/eslintrc.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/eslintrc.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/specification/eslintrc.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/specification/eslintrc.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/ts/base.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/base.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
 | [docs/note/ts/symbols.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ts/symbols.md) | 已修订；正文审阅与关键语义核查 | 示例未运行，详见正文 |
-| [docs/note/vue/cycle-life.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/cycle-life.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/vue/data-bind.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/data-bind.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/vue/vue-records.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue-records.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/vue/vue3.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue3.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/ydkJS/note.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/note.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
-| [docs/note/ydkJS/this&OBJECT PROTOTYPES.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/this&OBJECT%20PROTOTYPES.md) | 结构已盘点，内容待逐篇核查 | 结论、年代、示例、来源 |
+| [docs/note/vue/cycle-life.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/cycle-life.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/vue/data-bind.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/data-bind.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/vue/vue-records.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue-records.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/vue/vue3.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/vue/vue3.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/ydkJS/note.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/note.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
+| [docs/note/ydkJS/this&OBJECT PROTOTYPES.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/this&OBJECT%20PROTOTYPES.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 
 ## 新增 AI 内容
 

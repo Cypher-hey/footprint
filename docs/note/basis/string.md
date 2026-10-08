@@ -1,3 +1,13 @@
+# 字符串：UTF-16、方法与国际化边界
+
+> 审阅日期：2026-10-08。状态：正文审阅与关键 API 纠错，示例未运行。
+
+## 核心模型
+
+字符串原始值不可变，方法通常返回新值。new String 返回包装对象，不是普通字符串的等价推荐。length 按 UTF-16 码元计数，for...of 按码点迭代；组合符与 emoji 可能需要按字素簇处理，可评估 Intl.Segmenter。截断、反转和光标位置不能混用三种单位。
+
+substr 属于历史接口，优先学习 slice / substring 的明确差异。现代扩展还包括 replaceAll、at、trimStart/trimEnd 等，使用前核查目标环境。
+
 ## 一、创建字符串
 
 #### 字面量创建
@@ -27,14 +37,14 @@ var str = `abc`
 ###### str.charAt()
 * 描述：访问字符串中特定位置的字符
 * 参数：一个数字，表示字符串的位置
-* 返回值：返回该位置的字符
+* 返回值：返回该位置的 UTF-16 码元字符串；不保证完整字素
 
 ###### str.charCodeAt()
 * 描述：功能用法与 charAt 相同，唯一不同的是，charCodeAt 返回的是字符编码而不是字符
 * 返回值：字符编码
 
 ###### 【ES6】str.codePointAt()
-* 描述：弥补 `charCodeAt` 不能正确处理需要4个字节表示的字符的缺陷，`codePointAt` 能够正确处理4个字节储存的字符，返回一个字符的码点。可以使用`codePointAt` 来检测一个字符是由两个字节组成，还是由4个字节组成
+* 描述：codePointAt 在给定 UTF-16 码元索引读取码点；不要把 JavaScript 字符串概念等同于某种固定字节编码，也不能用它独自统计用户可见字素
 * 参数：一个数字，字符在字符串中的位置
 * 返回值：字符编码
 
@@ -86,8 +96,8 @@ var str = `abc`
 * 返回值：新字符串
 * 是否改变原字符串：否
 
-###### 【ES7】padStart()
-###### 【ES7】padEnd()
+###### 【ES2017】padStart()
+###### 【ES2017】padEnd()
 ```
 描述：对字符串进行补全，padStart 前补全，padEnd 后补全
 参数：第一个参数：字符串的最小长度
@@ -125,7 +135,7 @@ var str = `abc`
 ###### str.match()
 * 描述：通过模式匹配字符串
 * 参数：字符串 / 正则表达式 / RegExp 对象
-* 返回值：数组，数组的第一项是与整个模式匹配的项，后面的每一项保存着与正则表达式中的捕获组匹配的字符串
+* 返回值：未匹配返回 null；非全局模式可含完整匹配与捕获组，全局 g 模式通常返回完整匹配列表而不保留同样的捕获组结构
 
 ###### str.search()
 * 描述：和 indexOf 功能相似，唯一不同的是：该方法支持正则
@@ -143,8 +153,8 @@ var str = `abc`
             $& =====> 匹配整个模式的字符串，与RegExp.lastMatch的值相同
             $' =====> 匹配的子字符串之后的子字符串，与RegExp.rightContext的值相同
             $` =====> 匹配的子字符串之前的子字符串，与RegExp.leftContext的值相同
-            $n =====> 匹配第n(0 ~ 9)个捕获组的子字符串，如果正则表达式中没有捕获组，则使用空字符串
-            $nn =====> 匹配第nn(01 ~ 99)个捕获组的子字符串，如果正则表达式中没有捕获组，则使用空字符串
+            $n =====> 匹配第n(1 ~ 9)个捕获组的子字符串，引用不存在的组与存在但未参与匹配的组行为不同，不应统一当作空字符串
+            $nn =====> 匹配第nn(01 ~ 99)个捕获组的子字符串，引用不存在的组与存在但未参与匹配的组行为不同，不应统一当作空字符串
         如果第二个参数是函数：(该函数接收的参数与正则表达式有关)
             1、正则表达式只有一个匹配项，即无捕获组
                 该函数接收三个参数：第一个：模式的匹配项
@@ -171,9 +181,9 @@ var str = `abc`
 * 参数：字符串
 * 返回值：
     ```
-    如果 str > str2 ，返回 1
+    按 locale 比较排在之后，返回正数（不保证恰好 1）
     如果 str = str2 ，返回 0
-    如果 str < str2 ，返回 -1
+    按 locale 比较排在之前，返回负数（不保证恰好 -1）
     ```
 
 ###### 【ES6】str1.normalize()
@@ -186,7 +196,7 @@ var str = `abc`
     'NFD' :
     表示“标准等价分解”（Normalization Form Canonical Decomposition），即在标准等价的前提下，返回合成字符分解的多个简单字符。
     'NFKC' :
-    表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，比如“囍”和“喜喜”。（这只是用来举例，normalize方法不能识别中文。）
+    表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，具体映射由 Unicode 规范定义，不使用“囍等于喜喜”这类未经验证例子；正规化不是通用同义词或语义归一化。
     'NFKD' :
     表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。
 ```
@@ -223,3 +233,9 @@ ES6为字符串添加了遍历器接口(Iterator)，这个遍历器最大的优�
 
 
 
+
+## 练习与来源
+
+比较 ASCII、代理对 emoji 和组合音标的 length、码点数与可见字符数；使用 Intl.Collator/NumberFormat 处理本地化排序与格式，不将 ASCII 规则套到所有语言。
+
+- [MDN String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)

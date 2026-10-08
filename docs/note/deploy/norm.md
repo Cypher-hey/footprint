@@ -1,8 +1,17 @@
-# 代码规范与检查
+# 代码规范与检查：区分 ESLint 配置年代
+
+> 核查日期：2026-10-08。本文历史示例以 ESLint 7 / 旧 eslintrc 生态为背景，符合本仓库现有依赖年代；未升级配置、未安装或运行工具。
+
+## 当前使用边界
+
+现代 ESLint 使用 flat config；插件、parser、忽略路径和共享配置迁移需按版本指南完成。旧 prettier/@typescript-eslint 继承项等不应无条件复制到新版本。格式化规则与语义检查应明确分工，避免 ESLint/Prettier 互相改写。
+
+先固定 Node、ESLint、TypeScript 插件与 Prettier 兼容组合，再跑代表性文件和 CI。规则“能自动修复”不代表修复后业务行为一定正确。
+
 
 ## ESLint
 
-`ESLint` 的原理就是一款插件化的 javascript 代码静态检查工具，其核心是对代码解析得到的 `AST （Abstract Syntax Tree 抽象语法树）` 进行模式匹配，定位不符合约定规范的代码。ESLint 是`完全插件化`的。每一个规则都是一个插件并且可以在运行时添加更多的规则。
+`ESLint` 的原理就是一款插件化的 javascript 代码静态检查工具，其核心是对代码解析得到的 `AST （Abstract Syntax Tree 抽象语法树）` 进行模式匹配，定位不符合约定规范的代码。ESLint 是`完全插件化`的。规则通过解析和遍历 AST 检查代码，插件可打包规则、处理器等能力；规则与插件不是同一个层级。
 
 社区比较知名的代码规范
 
@@ -58,7 +67,7 @@ module.exports = {
 
 ESLint 使用并不复杂，简单说下 ESLint 的集成。
 
-##### 全局安装
+##### 项目本地安装（历史示例）
 
 ```js
 
@@ -74,7 +83,7 @@ npm install eslint -D
 eslint --init
 ```
 
-这个时候在项目中会出现一个 `.eslintrc.js` 的文件。
+初始化产物取决于 ESLint 版本；下文是旧 eslintrc 模型，现代 flat config 不能直接套用相同字段。
 
 ##### 自定义配置文件
 
@@ -357,3 +366,7 @@ extends:[
     }
 }
 ```
+
+## 版本核查资料
+
+- [ESLint 配置迁移指南](https://eslint.org/docs/latest/use/configure/migration-guide)

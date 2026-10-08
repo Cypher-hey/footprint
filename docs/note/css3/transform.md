@@ -1,146 +1,56 @@
-## transform 2D
+# CSS Transform：函数顺序、矩阵与三维透视
 
-#### 旋转   
-* 单位：度数单位，常用角度(deg)
-* 示例：
+> 审阅日期：2026-10-08。状态：公式和语法修订，未进行视觉实测。
+
+## 1. 常见二维变换
+
 ```css
+transform: translate(100px, 20px);
 transform: rotate(20deg);
-```
-
-#### 斜切  
-* 单位：度数单位，常用角度(deg)
-* 示例：
-```css
-transform: skew(20deg, 40deg);
-transform: skewX(20deg);
-transform: skewY(20deg);
-```
-
-#### 缩放  
-* 单位：倍数，无需指定单位
-* 示例：
-```css
 transform: scale(2, 1);
-transform: scaleX(2);
-transform: scaleY(2);
+transform: skewX(15deg);
+transform-origin: 0 0;
 ```
 
-#### 位移  
-* 单位：长度单位，常用(px)
-* 示例：
+transform 改变视觉几何，不等于重新分配正常流中的占位。不同函数组合不能任意交换。
+
+## 2. 矩阵含义
+
+matrix(a, b, c, d, e, f) 对应：
+
+```text
+x' = a*x + c*y + e
+y' = b*x + d*y + f
+```
+
+a/b 和 c/d 分别描述基向量的像，e/f 是平移。只有特定简单矩阵中才可以独立把某个参数叫“x 缩放”或“旋转”，一般组合需要矩阵乘法。
+
+## 3. 顺序
+
+采用列向量约定时，列表形成按顺序相乘的矩阵，对点体现为右侧变换先作用。也可理解为局部坐标系依次变化；两种解释不要混用。验证 translate(... ) rotate(... ) 与反过来的效果，不能只背“先写后执行”。
+
+## 4. 三维语法
+
 ```css
-transform: translate(100px, 100px);
-transform: translateX(100px);
-transform: translateY(100px);
+.scene { perspective: 600px; }
+.object {
+  transform-style: preserve-3d;
+  transform: translateZ(40px) rotate3d(0, 1, 0, 25deg);
+  backface-visibility: hidden;
+}
 ```
 
-#### transform-origin 
-* 描述：设置变换基点
-* 示例：
-```css
-transform-origin: 关键字/百分比/距离单位;
-```
+perspective 长度需要单位，旧文 perspective: 200 无效。matrix3d 使用 16 个参数，不能把 16 个参数传给二维 matrix。变换可建立新的包含块或层叠上下文，需要结合布局理解。
 
-<p class="tip">坑点：通过js的方式来设置变换基点（dom.style.WebkitTransformOrigin = '0 0';），不能快速同步给变换，在css中没问题</p>
+## 5. 性能与可访问性
 
-#### 执行顺序
+transform 动画可能利于合成，但不保证“开 GPU 就无成本”。尊重减少动态效果偏好，避免大面积动画导致眩晕或耗电。
 
-先写后执行，应该说 先写的变换 会影响 后边的变换
+## 6. 练习
 
-#### 矩阵 matrix(a, b, c, d, e, f)
-* 默认值：matrix(1, 0, 0, 1, 0, 0)
-    
-    rotate / skew / scale / translate 等变换都是通过矩阵实现的，只不过是浏览器给我们封装好的函数
+用点 (1, 0) 比较先旋转再平移与先平移再旋转。再改变 transform-origin，说明为什么实际盒子变化还包含基点平移。
 
-* 计算方法
-```
-x 轴位移：
-    e = e + x
-y 轴位移：
-    f = f + y
+## 7. 深入
 
-x 轴斜切：
-    c = Math.tan(Math.PI / 180 * x)
-y 轴斜切：
-    b = Math.tan(Math.PI / 180 * y)
-
-x 轴缩放：
-    a = a * x
-    c = c * x
-    e = e * x
-y 轴缩放：
-    b = b * y
-    c = c * y
-    f = f * y
-旋转
-    a = Math.cos(Math.PI / 180 * deg)
-    b = Math.sin(Math.PI / 180 * deg)
-    c = -Math.sin(Math.PI / 180 * deg)
-    d = Math.cos(Math.PI / 180 * deg)
-```
-
-## transform 3D
-
-#### perspective
-* 描述：设置景深
-* 单位：无
-* 示例：
-```css
-perspective: 200;
-```
-* 注意：该属性要加给需要做3D变换的父级元素
-
-#### perspective-origin
-* 描述：景深基点，可以理解为视线方向
-* 示例：
-```css
-perspective-origin: 关键字/距离单位;
-```
-
-#### transform-style
-* 描述：当元素做3D变换时是否保留子元素的3D变换
-* 示例：
-```css
-transform-style: flat; /* 不保留 */
-transform-style: preserve-3d; /* 保留 */
-```
-
-#### backface-visibility
-* 描述：隐藏背面
-* 示例：
-```css
-backface-visibility: visible; /* 可见 */
-backface-visibility: hidden; /* 不可见 */
-```
-
-#### 3D 旋转
-* 单位：度数单位，常用角度(deg)
-* 示例：
-```css
-/* 围绕Z轴旋转 */
-transform: rotateZ();
-/* XYZ结合写法 */
-transform: rotate3D();
-```
-
-#### 3D 位移
-* 单位：长度单位，常用单位(px)
-* 示例：
-```css
-/* Z轴位移 */
-transform: translateZ();
-/* XYZ结合写法 */
-transform: translate3D();
-```
-
-
-
-
-
-
-
-
-
-
-
-
+- [矩阵与空间变换](matrix.md)
+- [CSS transform](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform)

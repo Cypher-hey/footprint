@@ -1,64 +1,27 @@
-## git config 配置项
+# Git 配置：换行、文件模式与凭据
 
-#### core.autocrlf
+> 核查日期：2026-10-08。状态：文档修订；未更改本机或仓库配置。
 
-是否自动将 LF 转换为 CRLF，当 git 提示 `warning: LF will be replaced by CRLF` 时，可以将该选项设为 `false` 关闭提示。
+## 1. 先看作用域
 
-```sh
-git config core.autocrlf false
-```
+配置可能来自系统、用户与仓库。修改前可用 git config --show-origin 查看来源。一个机器的习惯不应直接覆盖团队仓库约定。
 
-#### core.filemode
+## 2. 换行
 
-是否忽略文件权限
+core.autocrlf 会影响检出/提交时换行转换，不应仅为了“消除 warning”盲目关闭。团队可通过 .gitattributes 明确文本文件策略，并检查已有文件是否会出现大面积换行 diff。
 
-```sh
-# 忽略文件全向
-git config core.filemode false
-```
+## 3. 文件模式
 
-#### credential.helper
+core.filemode 主要涉及 Git 是否关注可执行位变化，不是忽略全部操作系统权限，更不是安全授权配置。只有明确文件系统差异后才考虑调整。
 
-认证助手，当我们使用 HTTPS 方式 clone 项目时，每次 pull、push 都会提示输入密码，为了不每次都输入密码，就需要配置 `credential.helper` 选项。
+## 4. 凭据
 
-```sh
-# cache 将凭据存储在内存中
-git config credential.helper cache
-# store 将凭据保存在磁盘上
-git config credential.helper store
-```
+credential.helper 可以使用平台安全存储或其他助手。credential-store 会把凭据以明文形式保存在磁盘；旧文让读者手工把密码写进 URL 文件，不再推荐。
 
-操作步骤如下：
+不要把凭据放进仓库、示例、日志或聊天。身份认证与提交作者 user.name / user.email 是不同概念；作者配置不能代替登录认证。
 
-###### 在家目录创建并编辑 .git-credentials 文件
+## 5. 验证与参考
 
-```sh
-cd ~
-touch .git-credentials
-vim .git-credentials
-```
+修改配置前记录原值与作用域，修改后验证目标行为。凭据处理需要遵循所在服务的当前认证方式。
 
-###### 把如下内容写入.git-credentials 文件中，保存并退出
-
-```
-# {username} 你的git账户名
-# {password} 你的git密码
-# example.com 你的git仓库域名
-# 例子：https://hcysunyang:12345678@github.com
-
-https://{username}:{password}@example.com
-```
-
-###### 设置凭据存储方式
-
-```sh
-git config credential.helper store
-```
-
-#### user.name
-
-配置 git 用户名
-
-#### user.email
-
-配置用户邮箱
+- [git-credential-store](https://git-scm.com/docs/git-credential-store)
