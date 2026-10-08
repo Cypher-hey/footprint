@@ -1,150 +1,37 @@
+# 异步请求：XHR、Fetch、状态与错误
+
+> 核查日期：2026-10-08。状态：正文与关键示例静态审阅，未启动服务。
+
+## 现代使用要点
+
+Fetch 的 HTTP 4xx/5xx 通常不会自动 reject，应检查 response.ok。取消使用请求支持的 AbortSignal；超时、业务失败、解析失败和 CORS 读取失败要分开。XHR 的 load 表示请求完成而不保证业务成功。上传进度仍是 XHR 的常见使用场景。
+
 ## ajax
 
 <p class="tip">本文将不会讨论IE7之前版本浏览器的兼容实现，以标准的 XMLHttpRequest 实现</p>
 
-#### 小例子演示 XHR 的使用
+## 最小 XHR 示例
 
-为了更好的演示，我们将会结合 Nodejs 实现一个简单的服务器端程序，假设我们有如下文件：
-
-* index.html ---- 首页
-* app.js ---- Nodejs 编写的处理请求的程序
-* ajax.js ---- 被 index.html 引用的 js 文件，用来测试 XHR 代码
-* test.txt ---- 存储数据，供XHR请求
-
-来看一下 app.js 的代码：
+假设已有安全的同源测试服务提供 /test.txt。这里只展示客户端读取，不提供可对外开放的静态文件服务器。
 
 ```js
-const http = require('http')
-const fs = require('fs')
-const path = require('path')
-
-// 创建一个 sever 对象，监听 9090 端口
-http.createServer((request, response) => {
-    // 分析请求的资源路径
-    let reqUrl = request.url === '/' ? '/index.html' : request.url
-    let extName = path.extname(reqUrl)
-    let fileName = path.basename(reqUrl, extName)
-    extName = extName ? extName.substring(1) : 'html'
-
-    // 根据分析请求的资源，返回相应的mime类型
-    response.writeHead(200, {
-        'Content-Type': `text/${extName}`
-    })
-    
-    // 如果请求的不是 favicon.ico 就将资源返回
-    if (reqUrl !== '/favicon.ico') {
-        response.end(fs.readFileSync('.' + reqUrl))
-    }
-    
-}).listen(9090)
-
-console.log('Server running at http://127.0.0.1:9090/')
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "/test.txt");
+xhr.timeout = 5000;
+xhr.addEventListener("load", () => {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    console.log(xhr.responseText);
+  } else {
+    console.error("HTTP 状态", xhr.status);
+  }
+});
+xhr.addEventListener("error", () => console.error("网络或访问失败"));
+xhr.addEventListener("timeout", () => console.error("超时"));
+xhr.addEventListener("abort", () => console.log("已取消"));
+xhr.send();
 ```
 
-上面的代码是一段很简单的node程序，根据请求的资源返回相应的内容。此时在终端执行：
-
-```sh
-node app.js
-```
-
-访问：http://127.0.0.1:9090/ ，我们将看到 `index.html` 的内容，因为 app.js 中我们做了如下处理：
-
-```js
-let reqUrl = request.url === '/' ? '/index.html' : request.url
-```
-
-如果请求的根路径 `/`，那么返回 `/index.html` 的内容。
-
-再来看看 `index.html` 的内容：
-
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test ajax</title>
-    </head>
-    <body>
-        test ajax
-
-        <script src="ajax.js"></script>
-    </body>
-</html>
-```
-
-简单的不得了，仅仅引用了 `ajax.js` 文件。
-
-这个时候，我们的服务端程序会接收到对 `ajax.js` 文件的请求，我们做了正确的处理并返回。
-
-最后，我们还需要一个 `test.txt` 文件，我们随意写一些内容然后保存，比如我们写一句话：
-
-```
-// test.txt
-This is a test file
-```
-
-下面，我们就可以使用 XHR 来请求 `test.txt` 的内容了。
-
-编辑 `ajax.js` 文件，最简单的 XHR 使用仅仅需要三行代码，如下：
-
-```js
-var xhr = new XMLHttpRequest()
-xhr.open('get', 'test.txt')
-xhr.send()
-```
-
-首先实例化 `XMLHttpRequest` 对象，然后调用实例的 `open` 方法打开一个连接，最后调用 `send` 方法发送请求。注意：调用 `open` 方法并不会发送请求。
-
-`open` 方法接受三个参数：1、要发送请求的方法类型。2、请求的URL。3、一个boolean值，代表是否异步。如果不传第三个参数，默认是异步的。
-
-重启服务，发现控制台会有如下输出：
-
-<img src="./asset/img/ajax1.png" width="700" />
-
-证明我们的请求成功了，但是我们还没有能够获取到数据，那么如何获取到数据呢？实际上，如果请求成功且数据成功返回，那么数据会自动填充到 xhr 对象的相应属性下，我们需要注意的 xhr 属性如下：
-
-* `xhr.responseText` ---- 作为响应主体被返回的文本
-* `xhr.responseXML` ---- 如果响应的内容类型(Content-Type)为 `text/xml` 或者 `application/xml`，那么这个属性将保存着响应数据的 XML DOM 文档。
-* `status` ---- 响应的 HTTP 状态码
-* `statusText` ---- 相应状态码的文字说明
-
-如果请求是异步的，那么还需要注意如下属性：
-
-* `readyState` ---- 该属性是一个 Number 类型值，分别为：0，1，2，3，4。代表请求/响应的不同阶段：
-    * 0：未初始化，即还没有调用 `open` 方法
-    * 1：启动，已经调用 `open`，但还没有调用 `send`
-    * 2：发送，已经调用 `send`，但还没有接收到响应
-    * 3：接收，已经接收到数据，但还没有接收完成
-    * 4：完成，已经接收完成，数据可用了
-
-异步的情况下，除了要注意 `readyState` 属性外，还需要一个事件，因为我们需要在这个事件处理程序中操作数据，这个事件的名字叫做：`readystatechange`，顾名思义，这个事件代表着当 `readyState` 变化时触发。一般请求下，我们只考虑 `readyState` 值变为 4 的阶段，因为这个阶段的数据已经接收完成，且可以使用了。
-
-那么针对之前的例子，我们只需要添加如下代码，就可以获取到请求的数据：
-
-```js
-var xhr = new XMLHttpRequest()
-xhr.addEventListener('readystatechange', function (event) {
-    if (xhr.readyState === 4) {
-        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-            console.log(xhr.responseText)
-        } else {
-            console.log(xhr.status)
-        }
-    }
-})
-
-xhr.open('get', 'test.txt')
-xhr.send()
-```
-
-我们通过 `addEventListener` 给 `xhr` 对象添加了 `readystatechange` 事件，并在里面作如下判断：
-
-当 `xhr.readyState` 状态等于 4 时才要处理数据，接着判断状态码，只有状态码 在区间 `[200, 300)` 时或者等于 `304` 时才代表获取数据成功，正常显示数据，否则将状态码打印出来。
-
-另外要注意，该事件必须要在调用 `open` 方法之前设置。
-
-刷新页面，我们能看到数据已经得到了：
-
-<img src="./asset/img/ajax2.png" width="700" />
+open 配置请求，send 发出请求。readystate 为 4 只代表操作结束，成功判断还需看状态和业务内容。原文的 Node 服务直接拼接请求路径读文件，缺少边界与错误处理，不继续作为教学模板。
 
 #### XHR 属性、方法、事件 汇总
 
@@ -176,9 +63,9 @@ xhr.send()
 * 描述：一个数字，标示着当前请求/响应的某一个阶段
     * 0：未初始化，即还没有调用 `open` 方法
     * 1：启动，已经调用 `open`，但还没有调用 `send`
-    * 2：发送，已经调用 `send`，但还没有接收到响应
+    * 2：HEADERS_RECEIVED，已收到状态及响应头
     * 3：接收，已经接收到数据，但还没有接收完成
-    * 4：完成，已经接收完成，数据可用了
+    * 4：DONE，操作结束；仍需检查成功、失败与状态
 * 类型：`Number`
 
 ###### 【XHR2】timeout
@@ -197,7 +84,7 @@ xhr.timeout = 1000  // 1秒后超时
 ```js
 const xhr = new XMLHttpRequest()
 xhr.open('POST', url)
-xhr.onreadystatechange = () ={
+xhr.onreadystatechange = () => {
     // ...
 }
 xhr.upload.addEventListener('progress', event => {
@@ -304,7 +191,7 @@ xhr.send()
 ###### readystatechange
 
 * 描述：当 `xhr.readyState` 属性值变化时触发。
-* 注意：该事件必须要在调用 `open` 方法之前设置
+* 注意：监听器需要在相关事件发生前注册；若要观察 open 触发的状态变化，应在 open 前注册，不能概括为所有情况都必须
 
 ###### 【XHR2】timeout
 
@@ -321,8 +208,8 @@ xhr.send()
 * 描述：接收响应数据期间持续触发
 * 事件对象的重要属性：
     * `event.lengthComputable` ---- 一个boolean值，表示进度信息是否可用
-    * `event.position` ---- 表示已经接收的字节数
-    * `event.totalSize` ---- 表示根据 `Content-Length` 响应头部确定的预期字节数
+    * `event.loaded` ---- 表示已经接收的字节数
+    * `event.total` ---- 表示根据 `Content-Length` 响应头部确定的预期字节数
 
 ###### error
 
@@ -351,5 +238,11 @@ xhr.send()
 
 ###### ajax的缺点
 
-* 越过浏览器的历史记录，页面无法返回前一个状态
-* 不利于搜索引擎优化(SEO)
+* 异步更新不自动建立业务历史；可通过路由和 History API 设计返回行为
+* 搜索可见性取决于渲染和抓取策略，不是 AJAX 一律不可索引
+## 练习与来源
+
+分别模拟 HTTP 404、网络中断、非法 JSON 和用户取消，说明每种错误在哪层捕获。请求成功但页面已切换时，如何避免迟到结果覆盖？
+
+- [XHR readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState)
+- [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch)

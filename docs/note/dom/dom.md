@@ -1,3 +1,11 @@
+# DOM API：节点、集合、属性与几何量
+
+> 核查日期：2026-10-08。状态：正文与 API 语义静态审阅，示例未执行。旧 IE 和历史接口保留作背景，不作为当前默认建议。
+
+## 阅读原则
+
+Node 与 Element、内容属性与运行时属性、live 集合与静态列表、布局尺寸与视觉边界分别理解。DOCUMENT_POSITION_* 是位置比较位掩码，不是 nodeType；历史 ENTITY 等常量不要当作现代 HTML 常见节点。innerHTML/insertAdjacentHTML 会解析内容，外部文本应先处理安全边界。
+
 ## 一、节点概览
 
 #### DOM文档对象模型
@@ -37,9 +45,9 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     DOCUMENT_NODE ---- 9 (window.document)
     ELEMENT_NODE ---- 1 (<body> <p> 等标签元素)
     ATTRIBUTE_NODE ---- 2 (class="test")
-    TEXT_BODE ---- 3 (文本节点)
+    TEXT_NODE ---- 3 (文本节点)
     DOCUMENT_FRAGMENT_NODE ---- 11 (document.createDocumentFragment())
-    DOCUMENT_TYPE_NODE ---- 10 (<!DOCUMENT html>)
+    DOCUMENT_TYPE_NODE ---- 10 (<!DOCTYPE html>)
 ```
 
 ##### 节点继承链
@@ -48,7 +56,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
 ```
     Object -> EventTarget -> Node -> Element -> HTMLElement -> HTML*Element
-    Object -> EventTarget -> Node -> Attr (DOM4 弃用)
+    Object -> EventTarget -> Node -> Attr（属性节点；不是元素的子节点）
     Object -> EventTarget -> Node -> CharacterData -> Text
     Object -> EventTarget -> Node -> Document -> HTMLDocument
     Object -> EventTarget -> Node -> DocumentFragment
@@ -133,11 +141,11 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
 ###### nextSibling
 * 读写特性：只读
-* 描述：返回调用该方法的节点的前一个兄弟节点
+* 描述：返回下一个兄弟节点，可能是文本或注释
 
 ###### previousSibling
 * 读写特性：只读
-* 描述：返回调用该方法的节点的后一个兄弟节点
+* 描述：返回前一个兄弟节点，可能是文本或注释
 
 ###### children
 * 读写特性：只读
@@ -151,7 +159,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 读写特性：只读
 * 描述：返回调用该方法的节点的第一个“元素”子节点
 
-###### lastElementChuild
+###### lastElementChild
 * 读写特性：只读
 * 描述：返回调用该方法的节点的最后一个“元素”子节点
 
@@ -186,7 +194,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 
 * 延伸：
 
-    除火狐浏览器外，所有现代浏览器都可以使用下面两个方法：
+    以下现代 API 的支持范围应查目标浏览器，不能沿用旧版 Firefox 例外：
     * insertAdjacentElement():
     * insertAdjacentText(): 
         
@@ -203,7 +211,7 @@ Node构造函数的属性，也是节点属性 nodeType 的值
     
 ###### insertBefore(element, target)
 
-* 描述：在调用该方法的元素的指定子节点之前插入所给节点，如果省略第二个参数，那么行为与appendChild相同
+* 描述：在调用该方法的元素的指定子节点之前插入所给节点，第二个参数显式传 null 时插入末尾，不依赖省略参数的历史行为
 
 * 参数：
     * `{Element} element` 要插入的节点
@@ -275,15 +283,15 @@ Node构造函数的属性，也是节点属性 nodeType 的值
 * 特点：
     * 类数组对象
     * 拥有 length 属性
-    * 实时节点树，每当文档结构发生变化时，他们都会得到更新
+    * 是否实时取决于 API：childNodes 是 live NodeList，querySelectorAll 返回静态 NodeList
     * 集合的节点顺序与节点所在树中的顺序相同(深度优先)
 
 ```
     可以将节点集合(NodeList 或 HTMLCollection)转为数组，这样做的好处有两点：
-        1、因为这两个集合是动态的，转为数组可以创建当前集合的快照。
+        1、对 live 集合，转为数组可以固定当前成员；静态集合也可转换以使用数组方法。
         2、转为数组可以使用Array原型下的许多数组方法
         将NodeList或HTMLCollection转为数组的方法有：
-            Array.prototype.clice.call(list) // 或者 Array.prototype.concat.call(list)
+            Array.prototype.slice.call(list) // 或 Array.from(list)
             Array.from(list)
 ```
 		
@@ -487,7 +495,7 @@ document.scripts
 
 ###### document.implementation.hasFeature(feature, version)
 
-* 描述：探测浏览器是否支持指定版本的特性/模块
+* 历史 API：hasFeature 已弃用且不可靠，不用于现代能力检测；下方表格仅保留历史参数记录。
 
 * 参数：
     * `{String} feature` 特性名字
@@ -581,7 +589,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 
 ###### setAttribute(attrName, attrValue)
 
-* 描述：获取元素节点上某一个属性的值
+* 描述：设置元素上的内容属性值
 
 * 参数：
     * `{String} attrName` 属性名字
@@ -604,7 +612,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
 * 返回值：
     * `{Boolean}` true 有，false 没有
 
-<p class="tip">因为 hasAttribute() 方法可以为布尔值型属性取得布尔值反馈，所以可以用来判断单选框复选框是否被选中</p>
+<p class="tip">hasAttribute 只检查内容属性是否存在；复选框当前状态使用 checked 属性，不能用 hasAttribute('checked') 代替</p>
 
 ###### querySelector(selector)
 
@@ -626,7 +634,7 @@ data-a-a 将要这样访问： el.dataset.aA (即转为驼峰)，可以使用 de
     * `{String} selector` css选择器，支持css3
 
 * 返回值：
-    * `{Array}` 匹配的元素节点 或 null
+    * `{NodeList}` 静态节点列表；没有匹配时是空列表，不是 null
 
 <p class="tip">
 注意：querySelectorAll() 方法返回的节点集合是创建时文档的快照，并不是实时动态的。而 getElementsByTagName 和 getElementsByClassName 返回的节点集合则是动态的
@@ -691,20 +699,20 @@ offsetParent 的取值规则：
 ```
 
 ###### offsetTop
-* 读写特性：读写
+* 读写特性：只读
 * 描述：
 
     读：获取元素边框外沿 到 其定位父级边框内沿 的上距离
 
-    写：设置元素边框外沿 到 其定位父级边框内沿 的上距离
+    设置位置应使用相应布局/CSS 属性，而不是写 offsetTop
 
 ###### offsetLeft
-* 读写特性：读写
+* 读写特性：只读
 * 描述：
 
     读：获取元素边框外沿 到 其定位父级边框内沿 的左距离
 
-    写：设置元素边框外沿 到 其定位父级边框内沿 的左距离
+    设置位置应使用相应布局/CSS 属性，而不是写 offsetLeft
 
 ###### offsetHeight
 * 读写特性：只读
@@ -754,7 +762,7 @@ offsetParent 的取值规则：
 
 ###### getBoundingClientRect()
 
-* 描述：获取元素相对于整个页面的位置（top/right/bottom/left），以及元素的宽高
+* 描述：获取元素边界相对于视口的位置（top/right/bottom/left），以及元素的宽高
 
 * 返回值：
     * `{Object}` 元素位置信息
@@ -769,7 +777,7 @@ offsetParent 的取值规则：
         }
         ```
 <p class="tip">
-    加特技：返回值中，width 和 height 为元素 （边框 + 填充 + 内容）的高度和宽度，与调用元素的 offsetHeight 与 offsetWidth 属性的返回值相同
+    加特技：返回值中，width 和 height 为元素 （边框 + 填充 + 内容）的高度和宽度，会考虑 transform，且可含小数；不保证与 offsetHeight/offsetWidth 相同
 </p>
 
 ###### scrollIntoView(position)
@@ -885,7 +893,7 @@ el.style.cssText
 
 <p class="tip">
 与 el.style 一样，返回 CSSStyleDeclaration 对象，但不同的是，使用 getComputedStyle 获得的 CSSStyleDeclaration 对象下的属性时只读的，而通过 style 属性获得的 CSSStyleDeclaration 是可设置的。
-另外，getComputedStyle 获得的颜色值始终都是 rgb() 格式，而通过style获得的颜色值就是你再内敛样式中所写的样子，并且在通过 getComputedStyle 获取的 transform 属性值为矩阵 matrix
+另外，getComputedStyle 的颜色序列化取决于颜色空间和浏览器，不保证始终是 rgb()，而通过style获得的颜色值就是你再内敛样式中所写的样子，并且在通过 getComputedStyle 获取的 transform 属性值为矩阵 matrix
 </p>
 
 ```
@@ -893,7 +901,7 @@ window.getComputedStyle()
 作用：使用 window.getComputedStyle(el) 可以获取元素计算后的样式
 一个参数：元素
 返回值：与 el.style 一样，返回 CSSStyleDeclaration 对象，但不同的是，使用 getComputedStyle 获得的 CSSStyleDeclaration 对象下的属性时只读的，而通过 style 属性获得的 CSSStyleDeclaration 是可设置的。
-另外，getComputedStyle 获得的颜色值始终都是 rgb() 格式，而通过style获得的颜色值就是你再内敛样式中所写的样子，并且在通过 getComputedStyle 获取的 transform 属性值为矩阵 matrix
+另外，getComputedStyle 的颜色序列化取决于颜色空间和浏览器，不保证始终是 rgb()，而通过style获得的颜色值就是你再内敛样式中所写的样子，并且在通过 getComputedStyle 获取的 transform 属性值为矩阵 matrix
 ```
 
 #### CSS样式表 与 CSS规则
@@ -918,14 +926,21 @@ window.getComputedStyle()
 
 #### defer
 
-可以使用 defer 属性推迟外部脚本的下载与执行，直到html文档解析完成。
+经典外部脚本的 defer 允许并行下载，推迟到文档解析后执行，并保持相应文档顺序；不是推迟下载。
 
 #### async
 
 使用 async 属性异步下载并执行外部JavaScript文件
 
-* 不会阻塞DOM的解析与其他资源(如：图片、样式表)的下载
+* 下载阶段可以并行；执行 JavaScript 时仍可能中断主线程上的解析
 * 如果有多个外部JavaScript脚本拥有 `async` 属性，那么他们的执行顺序很可能不按照DOM中的顺序执行。先下载完的先执行
 * 如果一个 `<script>` 元素同时存在 `defer` 和 `async` ，`async` 的优先级高
-* 注意：使用JavaScript动态创建的 `<script>` 元素，并添加到DOM，那么该脚本将强制按照 `async` 的规则下载与执行
+* 注意：使用JavaScript动态创建的 `<script>` 元素，并添加到DOM，那么动态经典脚本通常默认异步，但可以显式设置 async=false 等控制行为，需按具体模式验证
 * 通过 `<script>` 元素的 `onload`、`onerror`、`load`、`error` 等事件，可以监听异步下载的JavaScript的下载情况
+
+## 验证与参考
+
+练习：对 querySelectorAll 与 childNodes 各保存一次结果，插入节点后比较；把一个元素缩放后比较 offsetWidth 与 getBoundingClientRect().width；点击复选框后比较 checked 与 hasAttribute('checked')。
+
+- [getBoundingClientRect](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
+- [script 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script)

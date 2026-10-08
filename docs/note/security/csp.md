@@ -1,87 +1,49 @@
-## CSP (内容安全策略)
+# CSP：内容安全策略与 XSS 防御边界
 
-<p class="tip">CSP [Content Security Policy] 译为：内容安全策略</p>
+> 核查日期：2026-10-08。状态：知识说明，未修改任何站点安全配置。
 
-#### CSP的目的
+## 1. CSP 解决什么
 
-XSS(Cross Site Scripting) 跨站脚本攻击是最常见也是危害最大的攻击手段，我们前端能够做一些能力范围内的处理，比如最简单的将表单内容脚本序列化为HTML实体，以防止恶意脚本的执行，但除此之外，还有很多跨站脚本攻击的方式，如下：
+CSP 约束页面可加载和执行的内容，是纵深防御的一层。它不能替代按上下文编码、HTML 清洗、避免危险注入点和服务端授权。
 
-```html
-<a href="javascript:alert(1)"></a>
-<iframe src="javascript:alert(1)"></iframe>
-<img src="x" onerror="alert(1)" style="">
-<video src="x" onerror="alert(1)"></video>
-<div onclick="alert(1)" onmouseover="alert(2)"><div></div></div>
-```
+不可信字符串进入 HTML、URL、JavaScript 或 CSS 时，所需处理不同；把所有输入统一转成 HTML 实体并不充分。
 
-利用 `javascript:..` 以及 内联事件进行攻击。
+## 2. 常见指令
 
-为了阻止这些攻击，我们前端也要做不少相应的工作，于是很多人提出能不能从根本上解决问题，让浏览器帮我们做这些事情，这就是 CSP 提出的原因和要解决的问题。
+| 指令 | 作用 |
+| --- | --- |
+| default-src | 部分资源获取指令的回退 |
+| script-src | 脚本来源及相关执行约束 |
+| style-src / img-src | 样式与图片 |
+| connect-src | fetch、XHR、WebSocket 等连接 |
+| frame-src | 页面可嵌入哪些 frame |
+| frame-ancestors | 谁可以把当前页面嵌入 frame |
+| object-src | object/embed 等内容 |
+| base-uri | base 元素可使用的 URL |
+| form-action | 表单提交目标 |
 
-#### CSP 的原理以及开启方式
+default-src 不是所有指令的万能默认值。frame-ancestors 与 frame-src 方向相反，旧文对此不准确。
 
-###### 原理
+## 3. 交付方式
 
-原理其实就是白名单机制，开发者明确告诉客户端(浏览器)哪些资源可以加载并执行，我们只需要提供配置，其他的工作由客户端(浏览器)来完成。
+优先使用 HTTP 响应头。meta 方式有能力限制，例如不能等价表达所有响应头策略；不能把配置方式视为完全互换。
 
-###### 开启CSP的方式
+先通过 Report-Only 观察违规，再分阶段收紧；报告本身可能含敏感 URL，应控制收集与访问。文档示例不应让读者未经评估直接复制到生产。
 
-一、通过 `<meta>` 标签开启
+## 4. 脚本与内联代码
 
-```html
-<meta http-equiv="Content-Security-Policy" content="配置项" >
-```
+可考虑基于随机 nonce 或内容 hash 的严格策略，注意每次响应 nonce 的生成与分发。简单放宽 unsafe-inline/unsafe-eval 可能削弱防护，不能只为消除控制台告警而放行。
 
-二、通过添加 `Content-Security-Policy` 响应头字段
+允许可信 CDN 也不保证其中每个资源安全；依赖供应链、版本固定和资源完整性需要独立考虑。
 
-<img src="../../asset/img/csp.png" width="500" />
+## 5. Mermaid 与富文本
 
-#### 可配置的选项
+渲染外部 Markdown/HTML 的工具可能有自己的安全设置。站点 CSP、Markdown 清洗、Mermaid 安全级别各有职责，不能把某一层开启就当作全链路安全。
 
-```
-default-src：用来设置每个选项的默认值
+## 6. 验证清单
 
-script-src：外部脚本
-style-src：样式表
-img-src：图像
-media-src：媒体文件（音频和视频）
-font-src：字体文件
-object-src：插件（比如 Flash）
-child-src：框架
-frame-ancestors：嵌入的外部资源（比如<frame>、<iframe>、<embed>和<applet>）
-connect-src：HTTP 连接（通过 XHR、WebSockets、EventSource等）
-worker-src：worker脚本
-manifest-src：manifest 文件
+正常资源是否可加载？内联脚本、事件属性、危险 URL、未授权 frame 是否被处理？第三方脚本和动态加载路径是否完整？实际违规日志是否被监控？
 
-block-all-mixed-content：HTTPS 网页不得加载 HTTP 资源（浏览器已经默认开启）
-upgrade-insecure-requests：自动将网页上所有加载外部资源的 HTTP 链接换成 HTTPS 协议
-plugin-types：限制可以使用的插件格式
-sandbox：浏览器行为的限制，比如不能有弹出窗口等。
+## 7. 来源
 
-report-uri：有时，我们不仅希望浏览器帮我们防止XSS的攻击，还希望将该行为上报到给定的网址，该选项用来配置上报的地址
-```
-
-#### 选项的值
-
-每个限制选项可以设置以下几种值
-
-* 主机名：`example.org`，`https://example.com:443`
-* 路径名：`example.org/resources/js/`
-* 通配符：`*.example.org`，`*://*.example.com:*`（表示任意协议、任意子域名、任意端口）
-* 协议名：`https:`、`data:`
-* 关键字'self'：当前域名，需要加引号
-* 关键字'none'：禁止加载任何外部资源，需要加引号
-
-###### 例子
-
-```html
-<meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; style-src cdn.example.org third-party.org; child-src https:">
-```
-
-上面代码中，CSP 做了如下配置：
-
-* 脚本：只信任当前域名
-* `<object>` 标签：不信任任何URL，即不加载任何资源
-* 样式表：只信任 `cdn.example.org` 和 `third-party.org`
-* 框架（frame）：必须使用HTTPS协议加载
-* 其他资源：没有限制
+- [MDN CSP 指南](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP)

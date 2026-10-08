@@ -1,9 +1,17 @@
+# DOM 事件：传播、默认行为与监听生命周期
+
+> 核查日期：2026-10-08。状态：正文审阅与关键 API 纠错，历史鼠标/IE 行为记录未在原环境复现。
+
+## 现代使用要点
+
+事件类型、回调引用与 capture 决定监听移除；once、passive、signal 各有用途。isTrusted 不是用户授权或服务端安全认证。beforeunload 的触发和提示文案受浏览器限制，不能保证显示自定义文字，也不适合作为可靠保存数据的唯一时机。
+
 ## 一、绑定事件的方法
 
 #### HTML内联属性绑定
 
 ```html
-<div onclick="alert('fuck')"></div>
+<div onclick="alert('示例')"></div>
 ```
 
 #### js获取DOM元素添加事件属性
@@ -19,7 +27,7 @@ document.getElementById('box').onclick = function (){...}
 </p>
 
 <p>
-如果要移除一个通过 addEventListener 添加的事件处理函数，那么给 removeEventListener 传递的两个参数必须与 addEventListener 的前两个参数完全相同。这意味着，给一个元素绑定匿名事件处理函数将无法被移除
+如果要移除一个通过 addEventListener 添加的事件处理函数，那么removeEventListener 需要匹配事件类型、同一回调引用和 capture 值。匿名函数只要保存引用也能移除；也可使用 AbortSignal 管理监听
 </p>
 
 ## 二、事件流
@@ -50,7 +58,7 @@ document.getElementById('box').onclick = function (){...}
     * `{Function} handle` 事件函数
     * `{Boolean} useCapture` 是否在事件捕获阶段触发事件，true 代表捕获阶段触发，false 代表在冒泡阶段触发
 
-###### el.removeEventListener(eventName, handle)
+###### el.removeEventListener(eventName, handle, useCapture)
 
 * 描述：移除通过 addEventListener 添加的事件处理函数
 
@@ -59,7 +67,7 @@ document.getElementById('box').onclick = function (){...}
     * `{Function} handle` 事件函数
     
 <p class="tip">
-如果要移除一个通过 addEventListener 添加的事件处理函数，那么给 removeEventListener 传递的两个参数必须与 addEventListener 的前两个参数完全相同。这意味着，给一个元素绑定匿名事件处理函数将无法被移除
+如果要移除一个通过 addEventListener 添加的事件处理函数，那么removeEventListener 需要匹配事件类型、同一回调引用和 capture 值。匿名函数只要保存引用也能移除；也可使用 AbortSignal 管理监听
 </p>
 
 #### IE8及以下
@@ -108,7 +116,7 @@ attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 
 ###### event.currentTarget
 * 读写特性：只读
-* 描述：currentTarget的值始终等于 this，即指向事件所绑定到的元素
+* 描述：currentTarget 指当前执行监听器所绑定的对象；普通函数监听器的 this 通常与之相同，箭头函数的 this 由外层决定
 
 ###### event.target
 * 读写特性：只读
@@ -116,7 +124,7 @@ attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 
 ###### event.defaultPrevented
 * 读写特性：只读
-* 描述：为 true 表示已经调用了 preventDefault()
+* 描述：为 true 表示默认行为被成功取消；不可取消事件或 passive 监听中的调用不保证生效
 
 ###### event.detail
 * 读写特性：只读
@@ -126,7 +134,7 @@ attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 * 读写特性：只读
 * 描述：调用该事件处理函数的阶段 `1` 表示捕获阶段 `2` 表示处于目标阶段 `3` 表示冒泡阶段
 
-###### event.trusted
+###### event.isTrusted
 * 读写特性：只读
 * 描述：为true表示事件是由浏览器生成的，false表示事件是由人工使用JavaScript创建的
 
@@ -148,7 +156,7 @@ attachEvent/detachEvent 与 addEventListener/removeEventListener 的区别：
 
 ###### event.stopImmediatePropagation()
 
-* 描述：与 event.stopPropagation() 一样，可以阻止事件冒泡，除此之外，还能阻止执行该语句之后的所有事件监听
+* 描述：阻止事件继续传播，并阻止当前目标上后续监听器执行；与取消默认行为是不同操作
 
 #### IE特有
 
@@ -191,7 +199,7 @@ el.attachEvent('click', function (event) {
 #### 事件总结
 
 <p class="tip">
-在规范中，事件处理函数的this对象始终等于 event.currentTarget 属性，但在IE中就不一定。比如：使用 attachEvent 绑定的事件处理函数是在全局作用域中运行的，所以this对象指向window，而不是 event.srcElement
+普通函数监听器、箭头函数与对象监听器的 this 语义不同，不能统一等同 currentTarget。下述 IE API 为历史资料。
 </p>
 
 ###### 对照表
@@ -217,7 +225,7 @@ window上触发：
     当图片加载完成后触发
 <script>/<link>：
     当js文件或css文件加载成功后
-    注意：<script>标签只能使用HTML内联属性添加事件的方式才能生效
+    script 元素也可使用 addEventListener 监听 load/error
 ```
 
 ###### resize
@@ -357,7 +365,7 @@ event.metaKey		// Mac下按住 command 键为true，windows 按住 Windows 键�
 
 松开键盘任意键时触发
 
-<p class="tip">可以通过 event.keyCode 获取键码</p>
+<p class="tip">优先使用 event.key / event.code；keyCode 和 keypress 属于过时接口，输入还应考虑 beforeinput/input 与 composition</p>
 
 #### 文本事件
 
@@ -386,7 +394,7 @@ window.addEventListener('beforeunload', function (event) {
 }, false)
 ```
 
-###### DOMcontentLoaded
+###### DOMContentLoaded
 
 形成完整DOM树之后触发
 
@@ -427,3 +435,10 @@ window.addEventListener('beforeunload', function (event) {
 
 
 
+
+## 验证与参考
+
+测试重复挂载/卸载、捕获与冒泡、默认行为、键盘和输入法、Shadow DOM 的 composedPath。不要把 target 一律假设成可直接调用 closest 的 Element。
+
+- [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+- [removeEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)

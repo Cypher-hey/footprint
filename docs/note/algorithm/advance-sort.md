@@ -1,14 +1,22 @@
+# 分治与增量排序：希尔、归并和快速排序
+
+> 审阅日期：2026-10-08。状态：静态审阅，未执行。修正希尔复杂度、归并尾递归说法，并将 merge 的 shift 改为游标扫描。
+
+## 核心边界
+
+归并排序常规实现时间 O(n log n)、辅助空间 O(n)。快速排序平均 O(n log n)、最坏 O(n²)，枢轴和数据分布重要；下方快速排序会 splice 修改输入，并创建多个数组，不是原地常量空间版。不要依据“高级/基础”名称判断实际性能。
+
 ## 高级排序算法
 
-高级排序算法常用来处理大型的数据集合，这个数据集可达上百万个元素，而不是几百几千个。通过你需要排序的数据集合规模较小，建议使用基本排序算法处理，因为在小规模数据下使用高级排序算法，并不能起到优化的作用，有的时候甚至会由于算法本身的实现方式而拖慢速度，比如小规模数据使用快速排序算法性能反而不好。
+高级排序算法常用来处理大型的数据集合，这个数据集可达上百万个元素，而不是几百几千个。小规模数据可能适合低常数实现，但没有只由规模决定的统一结论；实际库常使用混合策略。
 
 #### 希尔排序
 
 ##### 算法简介
 
-希尔排序名字的来自于它的发明者：Donald Shell。希尔排序是对插入排序的改编版本，它和插入排序的不同在于，希尔排序会先比较离得较近的元素，而非相邻的元素，这在处理大规模数据的时候，能够使得元素更快的回到它应该出现的位置。
+希尔排序名字的来自于它的发明者：Donald Shell。希尔排序是对插入排序的改编版本，它和插入排序的不同在于，希尔排序先处理按间隔分组的元素，逐步缩小间隔，这在处理大规模数据的时候，能够使得元素更快的回到它应该出现的位置。
 
-<p class="tip">算法的平均时间复杂度为 O(nlog n)</p>
+<p class="tip">希尔排序复杂度依赖增量序列，不能统一宣称平均 O(n log n)。</p>
 
 ##### 算法描述
 
@@ -105,32 +113,21 @@ function mergeSort (arr) {
     let middle = Math.floor(len / 2),
         left = arr.slice(0, middle),
         right = arr.slice(middle)
-    // 递归调用，采用尾递归优化
+    // 递归排序后合并；不是尾递归，不保证尾调用优化
     return merge(mergeSort(left), mergeSort(right))
 }
 
 // merge方法用来对两个数组进行排序，并返回排好序的数组
 function merge (left, right) {
-    var result = []
-    // 对两个子数组进行排序
-    while (left.length && right.length) {
-        if (left[0] <= right[0]) {
-            result.push(left.shift())
-        } else {
-            result.push(right.shift())
-        }
+    const result = [];
+    let i = 0, j = 0;
+    while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) result.push(left[i++]);
+        else result.push(right[j++]);
     }
-
-    // 由于两个子数组的元素个数不一定相等，所以在上一个while循环排序完成后，
-    // 要检查left和right中是否还有元素，如果有则推入结果数组中
-    while (left.length) {
-        result.push(left.shift())
-    }
-    while (right.length) {
-        result.push(right.shift())
-    }
-
-    return result
+    while (i < left.length) result.push(left[i++]);
+    while (j < right.length) result.push(right[j++]);
+    return result;
 }
 ```
 

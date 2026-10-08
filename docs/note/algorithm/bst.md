@@ -1,3 +1,8 @@
+# 二叉树与 BST：不变量、树高与查找
+
+> 审阅日期：2026-10-08。状态：正文与示例静态审阅，未执行。修正构造函数大小写不一致、空树取极值、查找时二次访问空节点的问题。
+> 本例假定可比较的有限数字；生产实现应提供比较器和输入校验。
+
 ## 二叉树和二叉查找树
 
 #### 树
@@ -6,7 +11,7 @@
 
 树是计算机科学中经常用到的一种数据结构，以分层的方式存储数据，所以经常用来存储具有层级关系的数据，比如文件系统。
 
-此外，树也被用来存储有序的列表，例如二叉查找树，在二叉查找树上进行查找非常快。
+此外，树也被用来存储有序的列表，例如二叉查找树，二叉查找树的查找成本取决于树高，退化时可能线性。
 
 ##### 树的相关概念
 
@@ -18,7 +23,7 @@
 
 从一个节点到与它不直接相连的节点的这一组边称为 `路径`，如图中(23-17-19)。
 
-树可以分为几个层次，根节点是第0层，根节点的子节点是第1层，子节点的子节点是第2层，以此类推。层的数量代表了树的 `深度`。
+树可以分为几个层次，根节点是第0层，根节点的子节点是第1层，子节点的子节点是第2层，以此类推。本文按边数计算深度：根深度为 0，节点深度是根到节点的边数；树高是最大节点深度。其他教材可能按节点数计，需统一口径。
 
 任何一层的节点，都可以看做是子树的根。
 
@@ -36,7 +41,7 @@
 
 ##### 二叉查找树
 
-二叉查找树是一种特殊的二叉树。相对较小的值存储在左节点中，较大的值存储在右节点中，这一特性使得查找效率非常高。
+二叉查找树是一种特殊的二叉树。左子树所有值满足约定的较小关系，右子树满足较大关系；重复值策略必须明确。本文实现把重复值放右侧。复杂度为 O(h)，平衡时 O(log n)，退化时 O(n)。
 
 #### 实现二叉查找树
 
@@ -61,7 +66,7 @@ function Bst () {
     this.root = null
 }
 // 插入节点
-BST.prototype.insert = function (data) {
+Bst.prototype.insert = function (data) {
 
 }
 ```
@@ -80,7 +85,7 @@ BST.prototype.insert = function (data) {
 根据上面的算法，我们可以写出如下代码：
 
 ```js
-BST.prototype.insert = function (data) {
+Bst.prototype.insert = function (data) {
     var n = new Node(data)
     if (!this.root) {
         this.root = n
@@ -113,7 +118,7 @@ BST.prototype.insert = function (data) {
 
 ```js
 // 中序
-BST.prototype.inOrder = function (node) {
+Bst.prototype.inOrder = function (node) {
     if (node) {
         this.inOrder(node.left)
         console.log(node.data)
@@ -121,7 +126,7 @@ BST.prototype.inOrder = function (node) {
     }
 }
 // 先序
-BST.prototype.preOrder = function (node) {
+Bst.prototype.preOrder = function (node) {
     if (node) {
         console.log(node.data)
         this.preOrder(node.left)
@@ -129,7 +134,7 @@ BST.prototype.preOrder = function (node) {
     }
 }
 // 后序
-BST.prototype.postOrder = function (node) {
+Bst.prototype.postOrder = function (node) {
     if (node) {
         this.postOrder(node.left)
         this.postOrder(node.right)
@@ -174,8 +179,9 @@ tree.postOrder(tree.root)
 我们知道，二叉查找树的特性就是较小的值存储在左边，所以要找到最小的值，只需要遍历左子树到最后一个节点即可，该节点即保存着最小值：
 
 ```js
-BST.prototype.getMin = function () {
+Bst.prototype.getMin = function () {
     var current = this.root
+    if (!current) return undefined
     while (current.left) {
         current = current.left
     }
@@ -188,8 +194,9 @@ BST.prototype.getMin = function () {
 类似于查找最小值，只不过遍历的是右子树：
 
 ```js
-BST.prototype.getMax = function () {
+Bst.prototype.getMax = function () {
     var current = this.root
+    if (!current) return undefined
     while (current.right) {
         current = current.right
     }
@@ -210,7 +217,7 @@ BST.prototype.getMax = function () {
 代码如下：
 
 ```js
-BST.prototype.find = function (data) {
+Bst.prototype.find = function (data) {
     var current = this.root
     while (current) {
         if (current.data === data) {
@@ -219,10 +226,14 @@ BST.prototype.find = function (data) {
         if (data < current.data) {
             current = current.left
         }
-        if (data > current.data) {
+        else {
             current = current.right
         }
     }
     return null
 }
 ```
+
+## 边界验证
+
+空树、单节点、全部递增、重复值、查找小于最小值与大于最大值。递归遍历有调用栈深度风险，退化树应考虑显式栈。
