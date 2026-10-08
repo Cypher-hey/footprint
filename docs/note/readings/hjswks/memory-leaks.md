@@ -1,217 +1,41 @@
-# 内存管理与泄露
+# JavaScript 内存：可达性、资源生命周期与泄漏证据
 
-[links](https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec)
+> 审阅日期：2026-10-08。状态：旧阅读笔记重整；未采集堆快照。
 
-## memory management
+## 1. 核心模型
 
-other languages, like C: have low-level memory management primitives such as malloc() and free(), used by the developer to explicitly allocate and free memory from and to the operating system.
+JavaScript 管理语言层内存，但应用仍需管理对象可达性和外部资源。业务已经不用的对象仍被长期引用，会造成实际泄漏；一次内存上涨或没有立即归还给操作系统，不足以证明泄漏。
 
-`JS`: allocates memory when things (objects, strings, etc.) are created and “automatically” frees it up when they are not used anymore, a process called `garbage collection` (note: but “automatically” is not saying needn't to care about.. Sometimes there are issues with the automatic memory management (such as bugs or implementation limitations in the garbage collectors, etc.) )
+## 2. 不把堆栈直觉当规范
 
-### Memory life cycle
+局部变量不一定在函数结束时立刻释放，闭包可能继续访问绑定；引擎可以优化表示与分配。不能笼统地把“编译时已知大小都在栈、运行时大小都在堆”当作 JavaScript 语言保证。
 
-memory life cycle is pretty much always the same:
+## 3. 常见保留路径
 
-Allocate memory(explicit or auto) => Use memory(actually makes use of it) => Release memory(explicit or auto)
+| 来源 | 问题 | 处理 |
+| --- | --- | --- |
+| 全局 Map/数组 | 无限增长 | 有界缓存、失效和删除 |
+| 定时器/订阅 | 生命周期结束仍运行 | 清理与取消 |
+| 闭包 | 保留大对象或旧上下文 | 缩小捕获范围 |
+| 跨窗口/DOM 引用 | 页面已移除仍可达 | 释放长期引用 |
+| Native/平台资源 | JS 对象回收不等于资源关闭 | 显式 dispose/close |
 
-procedures：
+闭包本身不是错误；循环引用也不必然泄漏，现代可达性回收可以处理不可达环。
 
-When you compile your code, the compiler can examine primitive data types and calculate ahead of time how much memory they will need. The required amount is then allocated to the program in the **call stack** space. The space in which these variables are allocated is called the stack space because as functions get called, their memory gets added on top of the existing memory. As they terminate, they are removed in a LIFO (last-in, first-out) order. 
+## 4. 全局变量边界
 
-When functions call other functions, each gets its own chunk of the stack when it is called. It keeps all its local variables there, but also a program counter that remembers where in its execution it was. When the function finishes, its memory block is once again made available for other purposes.（函数执行的内存分配过程）
+对未声明变量赋值在非严格脚本中可能创建全局属性；严格模式和模块中通常报错。读取未声明变量不会自动创建它。普通函数 this 也不能脱离调用方式笼统认定为 window。
 
-#### Dynamic allocation
+## 5. 证据链
 
-when we don’t know at compile time how much memory a variable will need: 
+固定操作：进入页面 → 操作 → 离开，重复多次。比较快照中的 retained size、存活对象数量和保留路径；区分缓存正常增长、内存抖动与持续无法释放。
 
-```js
-// it is determined by the value provided by the user.
-int n = readInput(); // reads input from the user
-...
-// create an array with "n" elements
-```
+测量工具本身、控制台保留对象和开发模式也可能影响结果。修复后用相同操作复测。
 
-therefore, cannot allocate room for a variable on the `stack`. Instead, our program needs to explicitly ask the operating system for the right amount of space at run-time. This memory is assigned from the `heap` space.(静态栈，动态堆分配) 
+## 6. 练习
 
-Differences between statically and dynamically allocated memory：
+为一张带事件监听、定时器和请求的卡片设计 mount/dispose 对称合同。随后逐项确认：解绑、清定时器、取消或忽略请求、释放大数据引用。
 
-| static allocation | dynamic allocation    |
-| -------------     | -------------         |
-| size must be known at compile time | size may be unknown at compile time             |
-| performed at compile time 编译时  | performed at run time 运行时  |
-| assigned to the stack | assigned to the heap   |
-| FILO(first in, last out) | no particular order of assignment   |
+## 7. 来源与延伸
 
-#### Allocation in JavaScript
-
-JavaScript does allocation by itself:
-
-```js
-// 1. declaring values:
-var n = 374; // allocates memory for a number
-var s = 'sessionstack'; // allocates memory for a string
-
-var o = {
-  a: 1,
-  b: null
-}; // allocates memory for an object and its contained values
-
-var a = [1, null, 'str'];  // (like object) allocates memory for the
-                           // array and its contained values
-function f(a) {
-  return a + 3;
-} // allocates a function (which is a callable object)
-
-// function expressions also allocate an object
-someElement.addEventListener('click', function() {
-  someElement.style.backgroundColor = 'blue';
-}, false);
-
-// 2. function calls result
-// Some function calls result in object allocation as well:
-var d = new Date(); // allocates a Date object
-var e = document.createElement('div'); // allocates a DOM element
-
-// 3. Methods invoking
-// Methods can allocate new values or objects:
-var s1 = 'sessionstack';
-var s2 = s1.substr(0, 3); // s2 is a new string
-// Since strings are immutable,
-// JavaScript may decide to not allocate memory,
-// but just store the [0, 3] range.
-var a1 = ['str1', 'str2'];
-var a2 = ['str3', 'str4'];
-var a3 = a1.concat(a2);
-// new array with 4 elements being
-// the concatenation of a1 and a2 elements
-```
-
-#### Using memory in JavaScript
-
-This can be done by reading or writing the value of a variable or an object property or even passing an argument to a function.
-
-Release when the memory is not needed anymore, for most of the memory management issues come at this stage.
-
-难点在于如何判断一段内存是否需要在这个时间被释放呢？（is undecidable (can’t be solved by an algorithm)）
-
-Most garbage collectors work by collecting memory which can no longer be accessed, e.g.例如 all variables pointing to it went out of scope.（这也只是一种under-approximation大概，因为仍然存在情况是，存在引用，但是再也不会被访问的情况）。
-
-### Garbage collection
-
-a restriction of a solution
-
-#### Memory references
-
-an object is said to reference another object if the former has an access to the latter (can be implicit or explicit)
-
->For instance, a JavaScript object has a reference to its prototype (implicit reference) and to its properties’ values (explicit reference).
-
-In this context, the idea of an “object” is extended to =>
-
-regular JavaScript objects + function scopes (or the global lexical scope)
-
->Lexical Scoping(静态、词法作用域) defines how variable names are resolved in nested functions: inner functions contain the scope of parent functions even if the parent function has returned.
-
-* Reference-counting algorithm: An object is considered “garbage collectible” if there are zero references pointing to it. (注意 caused cycle references)
-
-* Mark-and-sweep algorithm(better):  determines whether the object is reachable.
-  1. Roots: garbage collector built a complete list of all global variable as roots;
-  2. inspects all roots and their children and marks them as active, `a root cannot reach will be marked as garbage.`
-  3. frees all memory pieces that are not marked as active and returns that memory to the OS.
-
-之后说了下，most GCs 是惰性的，尽管依据算法有需要可以释放的内存空间，但当无需分配更多的内存空间给变量时，不会主动的去执行之前空间的释放，这样，就有可能导致，实际上使用的内存占用比理论上的多。。
-
-### Memory leaks
-
-definitions:  memory leaks are pieces of memory that the application have used in the past but is not needed any longer but has `not yet been return back` to the OS or the pool of free memory.
-
-基于一块内存空间释放的不可预见性，寄希望于开发者明确explicit when a piece of memory is unused, and can be returned to the operating system or not.
-
-The four types of common JavaScript leaks: 
-
-#### 1. Global variables
-
-JavaScript handles undeclared variables in an interesting way: when a undeclared variable is referenced, a new variable gets created in the global object. In a browser, the global object would be window:
-
-```js
-function foo(arg) {
-    // A redundant global variable will be created
-    bar = "some text";
-}
-
-// is the equivalent of :
-function foo(arg) {
-    window.bar = "some text";
-}
-
-// or accidentally create a global variable using this:
-function foo() {
-    this.var1 = "potential accidental global";
-}
-// Foo called on its own, this points to the global object (window)
-// rather than being undefined.
-foo();
-```
-
->avoid all this by adding ‘use strict’; 严格模式预防此类问题
-
-Use global variables to store data if you must but when you do, make sure to `assign it as null or reassign it` once you are done with it.
-
-#### 2. Timers or callbacks that are forgotten
-
-```js
-// problems caused: 
-// 1. setInterval 一直在运行
-// 2. 引用的 serverData 不能被释放，即使在renderer 不存在后
-var serverData = loadData();
-setInterval(function() {
-    var renderer = document.getElementById('renderer');
-    if(renderer) {
-        renderer.innerHTML = JSON.stringify(serverData);
-    }
-}, 5000); //This will be executed every ~5 seconds.
-```
-
-it’s in line with best practices to remove the observers once the object becomes obsolete(废弃则释放).
-
-```js
-var element = document.getElementById('launch-button');
-var counter = 0;
-function onClick(event) {
-   counter++;
-   element.innerHtml = 'text ' + counter;
-}
-element.addEventListener('click', onClick);
-// Do stuff
-element.removeEventListener('click', onClick);
-element.parentNode.removeChild(element);
-// Now when element goes out of scope,
-// both element and onClick will be collected even in old browsers // that don't handle cycles well.
-```
-
-#### 3. Closures
-
-`closures`: an inner function that has access to the outer (enclosing) function’s variables.
-
-Due to the implementation details of the JavaScript runtime, it is possible to leak memory in the following way:
-
-```js
-var theThing = null;
-var replaceThing = function () {
-  var originalThing = theThing;
-  var unused = function () {
-    if (originalThing) // a reference to 'originalThing'
-      console.log("hi");
-  };
-  theThing = {
-    longStr: new Array(1000000).join('*'),
-    someMethod: function () {
-      console.log("message");
-    }
-  };
-};
-setInterval(replaceThing, 1000);
-```
-
-#### 4. Out of DOM references
-
+历史笔记来自 [SessionStack 内存管理文章](https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec)。本文改用可达性与生命周期框架，不复用没有复现条件的旧引擎泄漏结论。

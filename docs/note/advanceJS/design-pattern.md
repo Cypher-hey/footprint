@@ -1,3 +1,11 @@
+# 设计模式：用明确边界减少重复和耦合
+
+> 审阅日期：2026-10-08。状态：正文与示例静态审阅，未执行。修正惰性单例语法、DOM 插入目标、乘积遇到 0 提前终止及缓存 falsy 命中错误。
+
+## 使用前提
+
+模式名称是交流工具，不要求照搬类层次。下方单例依赖调用者使用 getInstance，不能阻止直接 new 或跨模块/进程出现多个实例。缓存代理的键需要无歧义编码、容量和失效策略；逗号拼接只适合有限演示输入。图片代理需补错误、取消和过期请求处理。
+
 ## 设计模式
 
 ### 原型模式和基于原型继承的JS对象系统
@@ -84,7 +92,7 @@ const b = singleton.getInstance('b')
 console.log(a === b)
 ```
 
-因为 JavaScript 是无类的语言，而且 JS 中的全局对象符合单例模式两个条件。很多时候我们把全局对象当成单例模式来使用
+JavaScript 有 class 语法，但对象继承仍基于原型，而且 JS 中的全局对象符合单例模式两个条件。很多时候我们把全局对象当成单例模式来使用
 
 ```js
 var obj = {}
@@ -99,7 +107,7 @@ const createLoginLayer = function() {
   const div = document.createElement('div')
   div.innerHTML = '登入浮框'
   div.style.display = 'none'
-  document.appendChild(div)
+  document.body.appendChild(div)
   return div
 }
 ```
@@ -108,9 +116,14 @@ const createLoginLayer = function() {
 
 ```js
 const getSingle = function(fn) {
-  const result
+  let result;
+  let initialized = false;
   return function() {
-    return result || result = fn.apply(this, arguments)
+    if (!initialized) {
+      result = fn.apply(this, arguments);
+      initialized = true;
+    }
+    return result;
   }
 }
 ```
@@ -216,17 +229,17 @@ proxyImage.setSrc('http://loaded.jpg')
 ```js
 const mult = function() {
   let a = 1
-  for (let i = 0, l; l = arguments[i++];) {
-    a = a * l
+  for (let i = 0; i < arguments.length; i++) {
+    a = a * arguments[i];
   }
   return a
 }
 
 const proxyMult = (function() {
-  const cache = {}
+  const cache = Object.create(null)
   return function() {
     const tag = Array.prototype.join.call(arguments, ',')
-    if (cache[tag]) {
+    if (Object.prototype.hasOwnProperty.call(cache, tag)) {
       return cache[tag]
     }
     cache[tag] = mult.apply(this, arguments)

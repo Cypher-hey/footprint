@@ -6,6 +6,10 @@ sidebar_label: agent-source-code
 
 # agent-source-code - 源码分析 Agent 配置
 
+> 归档审阅（2026-10-08）：以下是 2026-03 的特定 OpenClaw 实例/模板记录，不是通用 Agent 标准，也不是对读者或当前工具的执行授权。路径、模型、任务状态与能力尚未在原部署验证；文件内的发送、删除、部署和自动运行指令仅作为被研究的样例保留。
+> 真实应用应独立实现权限、敏感数据最小化、日志脱敏、预算与人工审批；公开知识库不应同步真实用户隐私或凭据。
+
+
 **📂 工作空间路径**: `/home/admin/.openclaw/workspace-source-code`
 
 **🎯 用途**: 源码阅读、代码分析、技术文档生成
@@ -65,10 +69,10 @@ sidebar_label: agent-source-code
 
 | 项目 | 状态 | 文档 |
 |-----|------|------|
-| Preact | ✅ 完成 | `/note/sourceLearn/preactAnalysis/` |
-| React Native | ✅ 完成 | `/note/sourceLearn/react-native-analysis/` |
-| Zustand | ✅ 完成 | `/note/sourceLearn/zustandAnalysis/` |
-| OpenClaw Agent Skills | ✅ 完成 | `/note/sourceLearn/openclaw-agent-skills/` |
+| Preact | 历史标记：已生成，未复核 | `/note/sourceLearn/preactAnalysis/` |
+| React Native | 历史标记：已生成，未复核 | `/note/sourceLearn/react-native-analysis/` |
+| Zustand | 历史标记：已生成，未复核 | `/note/sourceLearn/zustandAnalysis/` |
+| OpenClaw Agent Skills | 历史标记：已生成，未复核 | `/note/sourceLearn/openclaw-agent-skills/` |
 
 ### 分析流程
 
@@ -81,4 +85,4 @@ sidebar_label: agent-source-code
 
 **📁 原始路径**: `/home/admin/.openclaw/workspace-source-code/`  
 **📅 最后同步**: 2026-03-11  
-**✅ 状态**: 活跃使用中
+**历史状态**: 当时标记为活跃；当前运行状态未验证

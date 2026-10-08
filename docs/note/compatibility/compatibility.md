@@ -1,3 +1,11 @@
+# 浏览器兼容性：历史 IE 记录与现代验证
+
+> 审阅日期：2026-10-08。下方明确保留 IE6–9 时代的排查笔记，未复现这些旧环境，不作为现代默认支持清单。
+
+## 当前方法
+
+先定义真实用户与支持版本，再查 API/CSS 兼容资料和目标设备。区分语法转译、运行时 polyfill、CSS 回退和业务降级；不能认为配置 Babel 就覆盖所有能力。输入法场景使用 input/beforeinput/composition 等合适事件，不仅依赖 keyCode。load 与 DOMContentLoaded 语义不同，替代时需接受时机差异。
+
 ###### 一、IE6/7/8 不支持HTML5标签
 ```
 	解决方案一：
@@ -106,7 +114,7 @@ event.altKey        // 按住 alt 键为true
 event.metaKey        // Mac下按住 command 键为true，windows 按住 Windows 键为true
 ```
 
-###### 十八、IE8及以下不支持 DOMcontentLoaded
+###### 十八、IE8及以下不支持 DOMContentLoaded
 
 ```
 解决办法：使用 window.onload 代替

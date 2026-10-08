@@ -1,8 +1,12 @@
-![Logo](/logo.png)
-
 # 30 seconds of code
 
-(coped from [Chalarangelo/30-seconds-of-code](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/README.md) at 2018-02-11)
+> 归档说明（2026-10-08）：这是 2018-02-11 的第三方片段快照，保留来源和原许可信息。本轮完成目录与高风险模式筛查，未逐函数验证约 195 KB 内容，不能把该文件当作已现代化的工具库。
+>
+> 使用前重点检查：deepClone 的循环/特殊类型；HTML 插入的 XSS；随机数是否用于安全场景；浮点/32位边界；递归深度；Promise 取消与错误。代码片段不因短小就适合生产。现代机制正文优先于历史速查。
+
+
+
+(copied from [Chalarangelo/30-seconds-of-code](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/README.md) at 2018-02-11)
 
 [![License](https://img.shields.io/badge/license-CC0--1.0-blue.svg)](https://github.com/Chalarangelo/30-seconds-of-code/blob/master/LICENSE) [![npm Downloads](https://img.shields.io/npm/dt/30-seconds-of-code.svg)](https://www.npmjs.com/package/30-seconds-of-code) [![npm Version](https://img.shields.io/npm/v/30-seconds-of-code.svg)](https://www.npmjs.com/package/30-seconds-of-code) [![Gitter chat](https://img.shields.io/badge/chat-on%20gitter-4FB999.svg)](https://gitter.im/30-seconds-of-code/Lobby) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com) [![Travis Build](https://travis-ci.org/Chalarangelo/30-seconds-of-code.svg?branch=master)](https://travis-ci.org/Chalarangelo/30-seconds-of-code) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/207ea6fa2c204ccda61dc3047986e144)](https://www.codacy.com/app/Chalarangelo/30-seconds-of-code?utm_source=github.com&utm_medium=referral&utm_content=Chalarangelo/30-seconds-of-code&utm_campaign=badger) [![Maintainability](https://api.codeclimate.com/v1/badges/e9020d1c963a91c0c8a2/maintainability)](https://codeclimate.com/github/Chalarangelo/30-seconds-of-code/maintainability)  [![Insight.io](https://img.shields.io/badge/insight.io-Ready-brightgreen.svg)](https://insight.io/github.com/Chalarangelo/30-seconds-of-code/tree/master/?source=0) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/Flet/semistandard) [![ProductHunt](https://img.shields.io/badge/producthunt-vote-orange.svg)](https://www.producthunt.com/posts/30-seconds-of-code)
 

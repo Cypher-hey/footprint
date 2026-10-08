@@ -1,3 +1,8 @@
+# 编码练习：先写合同，再检查边界
+
+> 审阅日期：2026-10-08。状态：静态审阅，未执行。修正升降序不一致、children 字段、隐式全局变量和事件类语法。
+> JSON/正则扁平化仅作反例，不支持任意字符串、undefined 和循环；优先 flat 或显式遍历。路径查找需规定重复 ID；前缀数字求和例子假定格式合法且末位为 a–z；笛卡尔积结果规模是各维长度之积，需要限制。
+
 #### flat 一个 Array，多维数组转化为一维数组，并去重且按升序排列，如:
 
 [1,[2,[3,1],2],[6,[5,2]],1] to [1,2,3,5,6]
@@ -45,8 +50,8 @@ while (arr.some(Array.isArray)) {
 }
 dist = arr;
 
-// final: 去重降序
-console.log([...new Set(dist)].sort((a, b) => b - a));
+// final: 去重升序
+console.log([...new Set(dist)].sort((a, b) => a - b));
 ```
 
 #### 多级嵌套对象数组-根据某个 id 找出它所属的每层父级的 name 列表
@@ -58,15 +63,15 @@ console.log([...new Set(dist)].sort((a, b) => b - a));
     {
 		name: '北京省',
 		id: 'a123',
-		childs: [
+		children: [
 			{
                 name: '北京市',
                 id: 'd412',
-                childs: [
+                children: [
                     {
                         name:  '海淀区',
                         id: 'e312',
-                        childs: [
+                        children: [
                             {...}
                         ]
                     }
@@ -77,15 +82,15 @@ console.log([...new Set(dist)].sort((a, b) => b - a));
 	{
 		name: '四川',
 		id: 'b123',
-		childs: [
+		children: [
 			{
                 name: '成都市',
                 id: 'c312',
-                childs: [
+                children: [
                     {
                         name:  '武侯区',
                         id: 'a123',
-                        childs: [
+                        children: [
                             {...}
                         ]
                     }
@@ -150,7 +155,7 @@ function connectArrayItems(arrs, path = '') {
         output.push(path);
         return;
     }
-    arr = arrs[0];
+    const arr = arrs[0];
     arr.forEach((item) => {
         connectArrayItems(arrs.slice(1), path + item);
     });
@@ -163,69 +168,34 @@ connectArrayItems([
 console.error(output);
 ```
 
-#### 使用原生代码实现一个 Events 模块，可以实现自定义事件的订阅、触发、移除功能
+## 事件订阅的最小教学实现
 
 ```js
-/*
-const fn1 = (... args)=>console.log('I want sleep1', ... args)
-const fn2 = (... args)=>console.log('I want sleep2', ... args)
-const event = new Events();
-event.on('sleep', fn1, 1, 2, 3);
-event.on('sleep', fn2, 1, 2, 3);
-event.fire('sleep', 4, 5, 6);
-// I want sleep1 1 2 3 4 5 6
-// I want sleep2 1 2 3 4 5 6
-event.off('sleep', fn1);
-event.once('sleep', ()=>console.log('I want sleep));
-event.fire('sleep');
-*/
-class Event {
-    constructor() {
-        // 放置所有添加的监听事件
-        this._events = {};
-    }
-    on(name, fn, ...argOrg) {
-        // 必传参数验证
-        if (!name || !fn) {
-            throw new Error(`[Events TypeError] Failed to execute 'Events' on '${name}' : 2 arguments required`);
-            return;
-        }
-        // 阻止重复添加相同的监听
-        let fns = this._events[name] || [];
-        if(fns.find(item => item.fnOrg === fn)){
-            return;
-        }
-        this._events[name] = fns.concat({
-            fn: arg => fn.apply(null, [...argOrg, ...arg]),
-            fnOrg:fn
-        })
-    },
-    once(name, fn, ...argOrg) {
-        const onFn = (...arg) =>{
-            fn.apply(null, arg);
-            this.off(name, onFn);
-        }
-        this.on(name, onFn, ...argOrg);
-    },
-    emit(name, ...arg) {
-        (this._events[name] || []).forEach(item =>{
-            item.fn(arg);
-        });
-    },
-    off(name,fn) {
-        // 无参数: 清掉所有监听
-        if(!arguments.length){
-            this._events = Object.create(null);
-        }
-        // 一个参数: 清掉该事件名下所有监听
-        if(arguments.length == 1){
-            delete this._events[name];
-        }
-        let fns = this._events[name];
-        if(!fns || !fns.length) return;
-        this._events[name] = (fns || []).filter(item => {
-            return item.fnOrg !== fn
-        });
-    }
+class Events {
+  constructor() { this.listeners = new Map(); }
+  on(name, fn) {
+    if (typeof fn !== "function") throw new TypeError("listener");
+    if (!this.listeners.has(name)) this.listeners.set(name, new Set());
+    this.listeners.get(name).add(fn);
+    return () => this.off(name, fn);
+  }
+  once(name, fn) {
+    const wrapped = (...args) => {
+      this.off(name, wrapped); // 先解除，避免重入重复调用
+      fn(...args);
+    };
+    return this.on(name, wrapped);
+  }
+  emit(name, ...args) {
+    for (const fn of [...(this.listeners.get(name) ?? [])]) fn(...args);
+  }
+  off(name, fn) {
+    const group = this.listeners.get(name);
+    if (!group) return;
+    group.delete(fn);
+    if (group.size === 0) this.listeners.delete(name);
+  }
 }
 ```
+
+本实现允许回调异常向调用者传播，不提供异步队列、优先级或错误隔离。emit 使用快照，期间取消监听的具体语义由此确定。使用 Map 避免特殊对象键冲突。

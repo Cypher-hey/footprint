@@ -1,119 +1,29 @@
-#### display:none 和 visibility:hidden 的区别
+# CSS 问答：匹配、布局与隐藏
 
-```
-display:none 隐藏对应的元素，在文档布局中不再给它分配空间，它各边的元素会合拢，就当他从来不存在。
+> 审阅日期：2026-10-08。状态：旧问答纠错；浏览器效果未实测。
 
-visibility:hidden 隐藏对应的元素，但是在文档布局中仍保留原来的空间。
-```
+## 1. 隐藏是否还占位？
 
-#### CSS 中 link 和@import 的区别
+display:none 通常不生成对应布局盒；visibility:hidden 通常保留布局空间。可见性、焦点、读屏和事件行为分别验证，不把“隐藏”当一个布尔概念。
 
-```
-(1) link属于HTML标签，而@import是CSS提供的;
-(2) 页面被加载的时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载;
-(3) import只在IE5以上才能识别，而link是HTML标签，无兼容问题;
-(4) link方式的样式的权重 高于@import的权重.
-```
+## 2. link 比 @import 权重高吗？
 
-#### position:absolute 和 float 属性的异同
+没有这种通用优先级。层叠取决于来源、重要性、层、特异性和顺序；加载方式不能直接替代层叠规则。@import 可能增加发现依赖的链路，但不是总要等整页完成才下载。
 
-```
-共同点：
-对内联元素设置`float`和`absolute`属性，可以让元素脱离文档流，并且可以设置其宽高。
+## 3. 盒模型与定位
 
-不同点：
-float 仍会占据位置，position 会覆盖文档流中的其他元素。
-```
+border-box 是标准化 box-sizing 选项，不只是 IE 怪异模式。absolute/fixed 的包含块受祖先样式影响，不总是最近定位父元素/窗口。见 [布局](../css3/layout.md)。
 
-#### box-sizing 属性
+## 4. BFC 是否隔离一切？
 
-`box-sizing` 属性主要用来控制元素的盒模型的解析模式。默认值是 content-box。
+不是。它约束浮动与外边距等布局关系，内部内容仍可改变容器尺寸，进而影响外部。Flex/Grid 有自己的格式化上下文。见 [BFC](../css3/bfc.md)。
 
--   `content-box`：让元素维持 W3C 的标准盒模型。元素的宽度/高度由 border + padding + content 的宽度/高度决定，设置 width/height 属性指的是 `content` 部分的宽/高
+## 5. 还需要雪碧图吗？
 
--   `border-box`：让元素维持 IE 传统盒模型（IE6 以下版本和 IE6~7 的怪异模式）。设置 width/height 属性指的是 `border + padding + content`
+HTTP/2/3 改变了请求成本，但不意味着所有合图都无意义。比较图片体积、缓存失效、维护、像素密度和请求开销，也可评估 SVG 等形式；不套用旧“每域六连接”经验。
 
-标准浏览器下，按照 W3C 规范对盒模型解析，一旦修改了元素的边框或内距，就会影响元素的盒子尺寸，就不得不重新计算元素的盒子尺寸，从而影响整个页面的布局。
+## 6. 验证题与正文
 
-#### CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？CSS3 新增伪类有那些？
+解释 :not() 是排除当前元素匹配还是排除后代；说明视觉 order 是否改变键盘顺序；测试 transform 后的几何量。
 
-```
-1.id选择器（ # myid）
-2.类选择器（.myclassname）
-3.标签选择器（div, h1, p）
-4.相邻选择器（h1 + p）
-5.子选择器（ul > li）
-6.后代选择器（li a）
-7.通配符选择器（ * ）
-8.属性选择器（a[rel = "external"]）
-9.伪类选择器（a: hover, li:nth-child）
-```
-
--   可继承的样式：font-size font-family color, text-indent;
-
--   不可继承的样式：border padding margin width height ;
-
--   优先级就近原则，同权重情况下样式定义最近者为准;
-
--   载入样式以最后载入的定位为准;
-
-优先级为:
-
-```
-!important >  id > class > tag
-
-important 比 内联优先级高,但内联比 id 要高
-```
-
-CSS3 新增伪类举例：
-
-```
-p:first-of-type 选择属于其父元素的首个 <p> 元素的每个 <p> 元素。
-p:last-of-type  选择属于其父元素的最后 <p> 元素的每个 <p> 元素。
-p:only-of-type  选择属于其父元素唯一的 <p> 元素的每个 <p> 元素。
-p:only-child    选择属于其父元素的唯一子元素的每个 <p> 元素。
-p:nth-child(2)  选择属于其父元素的第二个子元素的每个 <p> 元素。
-:enabled  :disabled 控制表单控件的禁用状态。
-:checked        单选框或复选框被选中。
-```
-
-#### position 的值， relative 和 absolute 分别是相对于谁进行定位的？
-
-```
-absolute
-    生成绝对定位的元素， 相对于最近一级的 定位不是 static 的父元素来进行定位。
-
-fixed （老IE不支持）
-    生成绝对定位的元素，相对于浏 览器窗口进行定位。
-
-relative
-    生成相对定位的元素，相对于其在普通流中的位置进行定位。
-
-static
-    默认值。没有定位，元素出现在正常的流中
-```
-
-#### CSS3 有哪些新特性？
-
-```
-CSS3实现圆角（border-radius），阴影（box-shadow），
-对文字加特效（text-shadow、），线性渐变（gradient），旋转（transform）
-transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜
-增加了更多的CSS选择器  多背景 rgba
-在CSS3中唯一引入的伪元素是::selection.
-媒体查询，多栏布局
-border-image
-```
-
-#### 对 BFC 规范的理解？
-
-`BFC，块级格式化上下文`，一个创建了新的 BFC 的盒子是独立布局的，`盒子里面的子元素的样式不会影响到外面的元素`。在同一个 BFC 中的两个毗邻的块级盒在垂直方向（和布局方向有关系）的 margin 会发生折叠。
-（W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行布局，以及与其他元素的关系和相互作用。）
-
-#### 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
-
-CSS Sprites 其实就是把网页中一些背景图片整合到一张图片文件中，再利用 CSS 的“background-image”，“background- repeat”，“background-position”的组合进行背景定位，background-position 可以用数字能精确的定位出背景图片的位置。这样可以减少很多图片请求的开销，因为请求耗时比较长；请求虽然可以并发，但是也有限制，一般浏览器都是 6 个。对于未来而言，就不需要这样做了，因为有了`http2`。
-
-
-#### HexColor
-
+[选择器](../css3/selector.md) · [变换](../css3/transform.md) · [布局与绘制](../performance/reflow-repaint.md)

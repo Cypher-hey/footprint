@@ -1,3 +1,8 @@
+# Stack Overflow 历史摘记与修订说明
+
+> 审阅日期：2026-10-08。状态：六个主题定向审阅，旧第三方依赖示例未运行；原出处保留。
+> replace 与 href 的主要差别是导航历史语义，不是任何情形 replace 都更好。JSON 克隆与位运算均有输入范围；Object.hasOwn 或可靠原型调用更适合判断自有属性。旧 Node 版本与 ES5 数组算法说明不代表当前推荐环境。
+
 #### 1.check a string contains a substring in JavaScript
 
 1. (ES6) includes
@@ -81,7 +86,7 @@ window.location.href = 'http://stackoverflow.com';
 JSON.parse(JSON.stringify(obj));
 ```
 
-to be the `fastest` way to deep clone an object (it beats out jQuery.extend with deep flag set true by 10-20%).
+Historical benchmark claim removed: JSON round-tripping is not a general deep clone, and its speed is workload-dependent.
 
 In order to clone JavaScript objects:
 
@@ -153,7 +158,7 @@ The new ECMAScript version released in 2017 introduced syntax-level support for 
 
 `async/await` builds on top of promises: an `async` function always returns a promise. `await` "unwraps" a promise and either result in the value the promise was resolved with or throws an error if the promise was rejected.
 
-**Important**: You can only use await inside an async function. That means that at the very top level, you still have to work directly with the promise.
+**Updated**: await is available inside async functions and at the top level of supported ES modules; classic scripts have different constraints.
 
 Here is an example that builds on top of delay above:
 
@@ -256,7 +261,7 @@ Difficulties could arise when you have to work with third-party code, but most p
 
 The Promise API is a new feature of ECMAScript 6 (ES2015), but it has good browser support already. There are also many libraries which implement the standard Promises API and provide additional methods to ease the use and composition of asynchronous functions (e.g. bluebird).
 
-`Promises are containers for future values.` When the promise receives the value (it is resolved) or when it is cancelled (rejected), it notifies all of its "listeners" who want to access this value.
+`Promises are containers for future values.` When the promise receives the value (it is resolved) or when it is rejected (rejection is not automatically cancellation), it notifies all of its "listeners" who want to access this value.
 
 The advantage over plain callbacks is that they allow you to decouple your code and they are easier to compose.
 
@@ -291,7 +296,8 @@ function ajax(url) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
-            resolve(this.responseText);
+            if (this.status >= 200 && this.status < 300) resolve(this.responseText);
+            else reject(new Error('HTTP ' + this.status));
         };
         xhr.onerror = reject;
         xhr.open('GET', url);

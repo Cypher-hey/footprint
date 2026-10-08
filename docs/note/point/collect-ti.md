@@ -1,3 +1,8 @@
+# 面试编码题：二分、异步与调用语义
+
+> 审阅日期：2026-10-08。状态：正文/代码静态修正，未执行。
+> bind 片段只演示绑定接收者，不是支持 new 等全部语义的合格 polyfill；不要覆盖生产原型。Foo 题假定非严格普通脚本环境，ES 模块/严格模式下结果不同。连续赋值还涉及左侧引用先求值，不能简单把 A=B=C 替换为两条语句。
+
 ## 二分查找
 
 二分法查找（binarySearch），也称折半查找，是一种在有序数组中查找特定元素的搜索算法。查找过程可以分为以下步骤：
@@ -40,12 +45,13 @@ promisify(f)(arg1, arg2, ...).then((data) => {}).catch((err) => {})
 // 工具类函数
 function promisify(f) {
     return function () {
+        const receiver = this;
         let args = Array.prototype.slice.call(arguments);
         return new Promise((resolve, reject) => {
             args.push((err, data) => {
-                err ? reject() : resolve(data);
+                err ? reject(err) : resolve(data);
             });
-            f.apply(null, args);
+            f.apply(receiver, args);
             // f.call(null, ...args)
             // f(...args);  可以？
         });
@@ -53,28 +59,37 @@ function promisify(f) {
 }
 ```
 
-## function request(urls, maxNumber, callback) 要求编写函数实现，根据 urls 数组内的 url 地址进行并发网络请求，最大并发数 maxNum ber,当所有请求完毕后调用
+## 有界并发请求（教学用）
 
 ```js
-function async requestThread(pool)
-{
-    if (pool.length > 0) {
-        const url = pool.shift();
-        await fetch(url);
-        await requestThread(pool);
+async function request(urls, maxNumber, callback) {
+  if (!Number.isInteger(maxNumber) || maxNumber < 1) {
+    throw new RangeError("maxNumber 必须是正整数");
+  }
+  const results = new Array(urls.length);
+  let cursor = 0;
+  async function worker() {
+    while (cursor < urls.length) {
+      const index = cursor++;
+      try {
+        const response = await fetch(urls[index]);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const text = await response.text();
+        results[index] = { ok: true, text };
+      } catch (error) {
+        results[index] = { ok: false, error };
+      }
     }
-}
-
-function request(urls, maxNumber, callback)
-{
-    const pool = urls;
-    let promises = [];
-    for(let i = 0; i < maxNumber; i++) {
-        promises.push(requestThread(pool));
-    }
-    promise.all(promises).then(()=>callback());
+  }
+  await Promise.all(Array.from(
+    { length: Math.min(maxNumber, urls.length) }, () => worker()
+  ));
+  if (callback) callback(results);
+  return results;
 }
 ```
+
+本例收集全部结果并保持输入顺序，不修改 urls。生产还需要超时、取消、响应大小上限和目标授权；文档中未发起任何请求。
 
 ## bind 函数实现
 
@@ -82,7 +97,7 @@ bind 函数有哪些功能：
 
 1. 改变原函数的 this 指向，即绑定 this
 
-2. 返回原函数的拷贝
+2. 返回绑定函数对象，不是克隆原函数全部语义
 
 3. 注意，还有一点，当 new 调用绑定函数的时候，thisArg 参数无效。也就是 new 操作符修改 this 指向的优先级更高
 
@@ -124,13 +139,13 @@ console.log(b);
 
 **总结**
 
--   使用 CSS display:none 属性后，HTML 元素（对象）的宽度、高度等各种属性值都将“丢失”;
+-   使用 CSS display:none 属性后，相应布局盒不生成，部分几何 API 返回零；DOM 对象和样式声明不会因此消失;
 
 -   而使用 visibility:hidden 属性后，HTML 元素（对象）仅仅是在视觉上看不见（完全透明），而它所占据的空间位置仍然存在。也即是说它仍具有高度、宽度等属性值。
 
 CSS display:none 和 visibility:hidden 的区别
 
-visibility:hidden 隐藏，但在浏览时保留位置；CSS display:none 视为不存在，且不加载！
+visibility:hidden 隐藏，但在浏览时保留位置；display:none 通常不生成布局盒，但不能据此保证资源不下载。
 
 Overflow 属性值{visible|hidden|scroll|auto}前提是先要限制 DIV 的宽度（width）和高度（height）。二者都是隐藏 HTML 元素，在视觉效果上没有区别，但在一些 DOM 操作中二者还是有所不同的。
 

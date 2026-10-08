@@ -1,3 +1,8 @@
+# 数组专题阅读记录：方法与算法校验
+
+> 审阅日期：2026-10-08。状态：正文/输出注释审阅，未执行完整示例。
+> 方法数量是历史版本枚举，不是当前全集；toSource 非标准。回调可自行修改原数组，不能因 map/filter 的返回规则就断言整个调用没有副作用。字符串/JSON 正则扁平化不适用于任意数据。
+
 ## Array
 
 ### API 整理
@@ -51,7 +56,7 @@ console.log(array === array2, array2); // true [4, 5, 3, 4, 5]
 var array = [1, 2, 3, 4, 5];
 var array2 = array.fill(10, 0, 3);
 console.log(array === array2, array2);
-// true [10, 10, 10, 4, 5], 可见数组区间[0,3]的元素全部替换为10
+// true [10, 10, 10, 4, 5], 可见数组区间[0,3)的元素全部替换为10
 ```
 
 #### 不改变自身的方法
@@ -124,7 +129,7 @@ console.log(isExist); // true
 // map 方法
 var array = [18, 9, 10, 35, 80];
 array.map((item) => item + 1);
-console.log(array); // [19, 10, 11, 36, 81]
+console.log(array); // [18, 9, 10, 35, 80]，map 返回的新数组未保存
 // filter 方法
 var array = [18, 9, 10, 35, 80];
 var array2 = array.filter(function (value, index, array) {
@@ -179,7 +184,7 @@ console.log(iterator.next().value); //xyz
 
 -   用 getElementsByTagName/ClassName/Name 获得的 HTMLCollection；
 
--   用 querySelector 获得的 NodeList。
+-   用 querySelectorAll 获得的 NodeList。
 
 #### arguments
 
@@ -213,7 +218,7 @@ HTMLCollection 简单来说是 HTML DOM 对象的一个接口，这个接口包�
 
 #### NodeList
 
-NodeList 对象是节点的集合，通常是由 querySlector 返回的。NodeList 不是一个数组，也是一种类数组。虽然 NodeList 不是一个数组，但是可以使用 for...of 来迭代。在一些情况下，NodeList 是一个实时集合，也就是说，如果文档中的节点树发生变化，NodeList 也会随之变化。
+NodeList 对象是节点的集合，通常是由 querySelectorAll 等 API 返回的。NodeList 不是一个数组，也是一种类数组。虽然 NodeList 不是一个数组，但是可以使用 for...of 来迭代。在一些情况下，NodeList 是一个实时集合，也就是说，如果文档中的节点树发生变化，NodeList 也会随之变化。
 
 ### 扁平化处理 flatten
 
@@ -236,7 +241,7 @@ function flatten(arr) {
     }
     return result;
 }
-flatten(a); //  [1, 2, 3, 4，5]
+flatten(a); // 预期按该段输入展开；不要复用其他段的输出注释
 ```
 
 #### reduce 函数迭代
@@ -249,7 +254,7 @@ function flatten(arr) {
         return prev.concat(Array.isArray(next) ? flatten(next) : next);
     }, []);
 }
-console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+console.log(flatten(arr)); // 预期按该段输入展开；不要复用其他段的输出注释
 ```
 
 #### 扩展运算符 && some
@@ -263,7 +268,7 @@ function flatten(arr) {
     }
     return arr;
 }
-console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+console.log(flatten(arr)); // 预期按该段输入展开；不要复用其他段的输出注释
 ```
 
 #### split && toString
@@ -281,7 +286,7 @@ function flatten(arr) {
 console.log(flatten(arr)); //  [1, 2, 3, 4]
 ```
 
-#### ES6 中的 flat
+#### ES2019 的 flat
 
 ```js
 // 方法5
@@ -290,7 +295,7 @@ var arr = [1, [2, [3, 4]]];
 function flatten(arr) {
     return arr.flat(Infinity);
 }
-console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+console.log(flatten(arr)); // 预期按该段输入展开；不要复用其他段的输出注释
 ```
 
 #### 正则 && JSON 方法
@@ -305,7 +310,7 @@ function flatten(arr) {
     // return JSON.parse(str);
     return JSON.parse('[' + JSON.stringify(arr).replace(/(\[|\])/g, '') + ']');
 }
-console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+console.log(flatten(arr)); // 预期按该段输入展开；不要复用其他段的输出注释
 ```
 
 ### 数组排序
@@ -314,7 +319,7 @@ console.log(flatten(arr)); //  [1, 2, 3, 4，5]
 
 > 将代码的时间复杂度尽可能的维持在 O(nlogn) 以下
 
--   比较类排序：通过比较来决定元素间的相对次序，其时间复杂度不能突破 O(nlogn)，因此也称为非线性时间比较类排序。
+-   比较类排序：对一般无结构输入的比较模型，最坏情况有 Ω(n log n) 下界，不能将其写成所有具体输入都不能更快，因此也称为非线性时间比较类排序。
 
 -   非比较类排序：不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行，因此也称为线性时间非比较类排序。
 
@@ -394,3 +399,7 @@ function insertSort(array) {
 }
 insertSort(a); // [1, 1, 3, 3, 6, 6, 23, 34, 76, 221, 222, 456]
 ```
+
+## 验证重点
+
+排序要同时检查有序性和元素多重集；快排片段会 splice 改输入。记录真实输出而不是复制示例注释。现代非原地数组方法见 [数组正文](../../basis/array.md)。

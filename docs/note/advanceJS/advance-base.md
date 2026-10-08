@@ -1,3 +1,15 @@
+# JavaScript 进阶：去重、类型、复制与频率控制
+
+> 审阅日期：2026-10-08。状态：正文和示例静态审阅；保留历史教学实现，未运行完整测试。
+
+## 先明确输入合同
+
+- Set/Map 去重按身份/相等语义，不自动按对象内容去重；排序与 indexOf 方案对混合类型、NaN 等有不同结果。
+- typeof 还包括 symbol 和 bigint；Object.prototype.toString 可受 Symbol.toStringTag 影响，不是防伪认证。
+- “空对象”“类数组”“普通对象”都需要明确自己的业务定义；鸭子类型不能代替安全边界。
+- structuredClone 可处理一部分结构化数据，但函数、DOM 与其他特殊对象有限制；不能用它泛化成所有对象的精确保真复制。
+- debounce/throttle 不自动取消网络请求；组件卸载还应取消定时器、释放引用并忽略旧请求结果。
+
 ## 一、惰性载入
 
 #### 惰性函数定义
@@ -60,7 +72,7 @@ var addEvent = (function () {
 })();
 ```
 
-> 惰性载入函数的优点：只执行一次 if 分支，避免了函数每次执行时候都要执行 if 分支和不必要的代码，因此提升了代码性能
+> 惰性载入函数的优点：只执行一次 if 分支，避免了函数每次执行时候都要执行 if 分支和不必要的代码，可能减少重复判断，但是否有可测收益取决于使用频率、环境稳定性和引擎
 
 ```js
 //写一个 foo 函数返回首次调用时的 Date 对象
@@ -286,7 +298,7 @@ console.log(typeof error); // object
 console.log(typeof arr); // object
 ```
 
-#### Obejct.prototype.toString
+#### Object.prototype.toString
 
 [ES5 规范地址](https://es5.github.io/#x15.2.4.2)
 
@@ -519,7 +531,7 @@ console.log(new_arr); // [{old: 'new'}, ['new']]
 
 2. 展开语法 Spread
 
-实际效果和 Object.assign() 是一样的。
+二者都可做浅层属性复制，但 Object.assign 对目标赋值可触发 setter，对象展开创建属性的语义不同；都不是通用深克隆。
 
 #### 数组的深拷贝
 
@@ -560,12 +572,12 @@ concat、slice、JSON.stringify 都算是技巧类,可以根据实际项目情�
 
 var shallowCopy = function (obj) {
     // 只拷贝对象
-    if (typeof obj !== 'object') return;
+    if (obj === null || typeof obj !== 'object') return obj;
     // 根据obj的类型判断是新建一个数组还是对象
     var newObj = obj instanceof Array ? [] : {};
     // 遍历obj，并且判断是obj的属性才拷贝
     for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
             newObj[key] = obj[key];
         }
     }
@@ -575,16 +587,16 @@ var shallowCopy = function (obj) {
 
 #### 深拷贝的实现
 
-使用深拷贝会完全的克隆一个新对象，不会产生副作用，但是深拷贝因为使用递归，性能会不如浅拷贝，在开发中，还是要根据实际情况进行选择。
+下面是历史递归教学草稿，不处理循环引用、特殊对象、属性描述符和原型；访问 getter 可能有副作用。不能声称任意深拷贝无副作用。
 
 ```js
 // 在拷贝的时候判断一下属性值的类型，如果是对象，递归调用深拷贝函数
 
 var deepCopy = function (obj) {
-    if (typeof obj !== 'object') return;
+    if (obj === null || typeof obj !== 'object') return obj;
     var newObj = obj instanceof Array ? [] : {};
     for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
             newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
         }
     }
@@ -719,7 +731,7 @@ function debounce(func, wait, immediate) {
 
 #### 节流（throttle）
 
-**所谓节流，就是指连续触发事件但是`在 n 秒中只执行(且会执行)一次函数`。**节流用来`稀释函数的执行频率`
+**所谓节流，就是指连续触发事件但是在所定义的时间窗口内限制调用频率；leading/trailing 决定边界行为。**节流用来`稀释函数的执行频率`
 
 1. 时间戳版本：在**持续触发事件**的过程中，函数会立即执行，并且每隔 wait 秒执行一次。
 
