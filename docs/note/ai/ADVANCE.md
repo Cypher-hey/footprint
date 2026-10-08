@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | 摘要压缩怎样保留否定、批准与版本？ | [Context](04-context-memory.md) | [AI Agent Book 上下文](https://github.com/bojieli/ai-agent-book/blob/dbc046eb896ac4e39aa19c7774c8bf49583b89a6/book/chapter2.md)：主题扩展，具体保真判据需独立定义 |
 | 长上下文何时能简化检索，何时不能？ | [RAG](06-retrieval.md) | [RAG 原始论文](https://arxiv.org/abs/2005.11401)：先区分参数知识与外部知识；现代长上下文对比另需新证据 |
-| 记忆冲突如何按时间和情境消解？ | [记忆](04-context-memory.md) | [AI Agent Book 记忆](https://github.com/bojieli/ai-agent-book/blob/dbc046eb896ac4e39aa19c7774c8bf49583b89a6/book/chapter3.md)：扩展写入、检索与更新视角 |
+| 记忆冲突如何按时间和情境消解？ | [记忆生命周期](04-context-memory.md)、[维护](06-retrieval.md) | [AI Agent Book 记忆](https://github.com/bojieli/ai-agent-book/blob/dbc046eb896ac4e39aa19c7774c8bf49583b89a6/book/chapter3.md)：扩展写入、检索与更新视角 |
 | 示例选择怎样影响 ICL？ | [提示](17-prompt-behavior.md) | [Few-shot](https://arxiv.org/abs/2005.14165)：了解原始问题设定，再研究位置与选择偏差 |
 
 ## 3. Agent 控制与安全
@@ -42,9 +42,13 @@
 | 视频抽帧怎样影响可支持的结论？ | [多模态](18-multimodal.md) | [ViT](https://arxiv.org/abs/2010.11929)先理解图像表示；时间建模需要另行补来源 |
 | 生成机制如何影响可控性？ | [模型](16-language-models.md) | [DDPM](https://arxiv.org/abs/2006.11239)：理解扩散的代表性机制，不推广全部性能结论 |
 
-## 5. 新增 Advance 条目的条件
+## 5. 从 Base 扩展，而不复制 Base
 
-一个高级条目应有明确问题、Base 前置链接、至少一个具体机制/推导/案例、成立条件与依据。如果只有“某框架支持这个功能”，先作为资料线索，不直接写成机制结论。
+主定义归属见 [知识地图](KNOWLEDGE_MAP.md)。Advance 页面应链接前置并用几句承接，只展开新增问题；不能把完整基础定义、图和边界原样复制后换一个“高级”标题。分析仍以概念和机制为主线，项目案例只提供局部证据。
+
+## 6. 新增 Advance 条目的条件
+
+一个高级条目应有明确问题、Base 前置链接、至少一个具体机制、推导、实现分析或可核验印证、成立条件与依据。如果只有“某框架支持这个功能”，先作为资料线索，不直接写成机制结论。
 
 新资料可以先记录待核查问题；确认后更新主条目，保留修订依据。这里的链接是深入引子，不代表本库已经复现论文全部实验。
 
