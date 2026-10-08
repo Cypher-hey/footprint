@@ -17,7 +17,7 @@
 
 ## AI 与 Agent Systems
 
-- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)
+- [AI 基础全景：模型、数据、推理与应用系统](note/ai/01-foundations.md)
 - [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)
 - [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)
 - [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)
@@ -30,8 +30,17 @@
 - [多 Agent：分工收益、上下文成本与单一责任人](note/ai/11-multi-agent.md)
 - [AI Coding 与 Harness：把交付变成受控闭环](note/ai/12-ai-coding.md)
 - [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)
-- [贯穿实践：可验证的 AI 知识卡片助手](note/ai/14-learning-project.md)
-- [AI 知识体系：从前端工程到 Agent Systems](note/ai/README.md)
+- [AI 应用全景：知识关联、典型链路与实践印证](note/ai/14-learning-project.md)
+- [机器学习基础：数据、目标、优化与泛化](note/ai/15-machine-learning.md)
+- [语言模型机制：Token、表示、Attention 与自回归生成](note/ai/16-language-models.md)
+- [提示与模型行为：指令、示例、证据和不确定性](note/ai/17-prompt-behavior.md)
+- [多模态基础：图像、语音、视频与跨模态表示](note/ai/18-multimodal.md)
+- [Advance 入口：值得继续展开的问题](note/ai/ADVANCE.md)
+- [AI 术语与别名索引](note/ai/GLOSSARY.md)
+- [AI 知识关系图：按问题定位概念](note/ai/KNOWLEDGE_MAP.md)
+- [AI 知识条目规范：可回顾、可查证、可扩展](note/ai/KNOWLEDGE_SPEC.md)
+- [AI 知识库：基础认知、机制关联与持续积累](note/ai/README.md)
+- [AI 知识库审阅记录与证据范围](note/ai/REVIEW.md)
 
 ## 算法与数据结构
 

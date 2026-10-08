@@ -3,6 +3,10 @@
 > 更新：2026-10-08；基线：next @ f915d710af69cd0ee3860bad5b4351e6ee40ae68；工作分支：ai/next。
 > 原有 Markdown：153 篇，合计 1,507,187 字节。已经读取全部文件用于目录与结构盘点；读取和结构扫描不等于逐条事实核查。
 
+## AI 知识库专项迭代（2026-10-08）
+
+在前述全仓整理之后，AI 区按知识储备/回顾/印证重新定位：18 篇正文、术语与关系索引、未来 Advance 问题入口。原 14 个文件路径保留，第 14 篇不再是项目练习。最新范围与来源见 [AI 专项审阅记录](note/ai/REVIEW.md)。下方批次 1–7 为历史记录，其中 14 篇与练习的描述代表当时版本。
+
 ## 批次 1：规范与高影响纠错
 
 修订写作/图表规范，重写参数传递、Cookie、GET/POST、缓存、跨源、布局绘制与 ARIA。更新阅读入口，生成全部文档索引。示例均未执行，站点未启动。
@@ -203,22 +207,9 @@ AI 基础补充梯度下降、概率/损失和注意力形状；模型系统补�
 | [docs/note/ydkJS/note.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/note.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 | [docs/note/ydkJS/this&OBJECT PROTOTYPES.md](https://github.com/Cypher-hey/footprint/blob/ai/next/docs/note/ydkJS/this&OBJECT%20PROTOTYPES.md) | 已修订；内容/年代定向审阅 | 运行与完整兼容矩阵未验证 |
 
-## 新增 AI 内容
+## 当前 AI 内容
 
-- [AI 基础：从机器学习到大语言模型](note/ai/01-foundations.md)：正文完成；梯度算例 3 条数值断言通过，未做模型实验。
-- [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)：正文完成，示例未执行。
-- [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)：正文完成，示例未执行。
-- [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)：正文完成，示例未执行。
-- [工具、MCP 与 Skills：三种不同的能力边界](note/ai/05-tools-mcp-skills.md)：正文完成，示例未执行。
-- [RAG 与长期记忆：从找得到到用得对](note/ai/06-retrieval.md)：正文完成，示例未执行。
-- [AI 原生界面：Catalog、UI IR、Event IR 与可信执行](note/ai/07-ui-ir.md)：正文完成，示例未执行。
-- [Workflow、状态机与 XState：把行为边界写清楚](note/ai/08-workflow-state.md)：正文完成，示例未执行。
-- [Agent 可靠性与安全：把权限和恢复放在模型之外](note/ai/09-reliability-security.md)：正文完成，示例未执行。
-- [Evals 与可观测性：让改进成为可验证的判断](note/ai/10-evaluation.md)：正文完成，示例未执行。
-- [多 Agent：分工收益、上下文成本与单一责任人](note/ai/11-multi-agent.md)：正文完成，示例未执行。
-- [AI Coding 与 Harness：把交付变成受控闭环](note/ai/12-ai-coding.md)：正文完成，示例未执行。
-- [深入模型层：后训练、蒸馏与推理系统](note/ai/13-training-inference-systems.md)：正文完成；参数/KV 算例 3 条算术断言通过，未做训练/硬件实验。
-- [贯穿实践：可验证的 AI 知识卡片助手](note/ai/14-learning-project.md)：正文完成，示例未执行。
+以 [AI 知识库入口](note/ai/README.md)和[专项审阅](note/ai/REVIEW.md)为准。现有 18 篇主题正文，不再按课程里程碑组织；学习项目实践在其他项目进行，知识库只保留机制与印证记录。
 
 ## 完成口径
 

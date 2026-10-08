@@ -26,9 +26,9 @@
 
 ## AI 与 Agent Systems
 
-[AI 学习总览](note/ai/README.md)：14 章从模型与推理出发，贯通 Agent Loop、Context Builder、MCP/Skills、RAG、UI IR、状态机、安全、评测、多 Agent、AI Coding 和后训练。
+[AI 学习总览](note/ai/README.md)：18 篇知识正文，覆盖机器学习、语言模型、提示、多模态，以及 Agent Loop、Context、MCP/Skills、RAG、UI、状态机、安全、评测和模型系统。以知识储备与印证为定位，另有术语、关系图和深入问题入口。
 
-建议先读 [Agent Loop](note/ai/03-agent-loop.md)，再用 [Context Builder](note/ai/04-context-memory.md) 和 [卡片实践](note/ai/14-learning-project.md) 检查自己是否能解释系统运行过程。
+建议先读 [Agent Loop](note/ai/03-agent-loop.md)，再用 [Context Builder](note/ai/04-context-memory.md) 和 [应用全景](note/ai/14-learning-project.md) 关联各层机制与已有项目经验。
 
 ## 源码阅读
 
