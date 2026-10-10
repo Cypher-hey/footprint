@@ -32,7 +32,7 @@ const location = { hash: '#/note/ai/03-agent-loop', pathname: '/docs/', search: 
 const document = {body, createElement: t => new Element(t), addEventListener: (k, fn) => docListeners[k] = fn,
  querySelectorAll: s => body.querySelectorAll(s), getElementById: id => body.querySelectorAll('*').find(e => e.id === id) };
 const window = {addEventListener: (k, fn) => winListeners[k] = fn};
-const context = {document, window, location, URLSearchParams, history: {replaceState(_, __, url) { location.hash = '#' + url.split('#')[1]; }},
+const context = {document, window, location, URL, URLSearchParams, history: {replaceState(_, __, url) { location.hash = '#' + url.split('#')[1]; }},
  localStorage: {getItem(k) {if (blocked) throw Error('blocked'); return saved[k];}, setItem(k,v) {if (blocked) throw Error('blocked'); saved[k]=v;}},
  requestAnimationFrame: f => raf.push(f), MutationObserver: class {constructor(fn) {observer=fn;} observe() {}}, console};
 function flush() { let n=0; while(raf.length) { if (++n>30) throw Error('refresh loop'); raf.shift()(); } }
@@ -45,7 +45,14 @@ function fixture(parent, complete = true) {
  });
 }
 const root = new Element('div');root.className='markdown-body';body.appendChild(root);fixture(root);
+const relative = new Element('a'); relative.setAttribute('href', '03-tool-calling.md'); root.appendChild(relative);
+const anchored = new Element('a'); anchored.setAttribute('href', '03-react.md#example'); root.appendChild(anchored);
+const external = new Element('a'); external.setAttribute('href', 'https://example.com/source.md'); root.appendChild(external);
 vm.runInNewContext(readFileSync(require('node:path').join(__dirname,'../docs/asset/knowledge-reader.js'),'utf8'),context);flush();
+verify(relative.getAttribute('href') === '#/note/ai/03-tool-calling', 'relative Markdown link uses Docute route');
+verify(relative.getAttribute('target') === '_self', 'Markdown route stays in current tab');
+verify(anchored.getAttribute('href') === '#/note/ai/03-react?id=example', 'Markdown fragment uses Docute anchor');
+verify(external.getAttribute('href') === 'https://example.com/source.md', 'external source link unchanged');
 const tabs=()=>root.querySelectorAll('[role="tab"]');
 const panels=()=>root.querySelectorAll('.knowledge-panel');
 verify(tabs().length===3,'three tabs'); verify(panels().length===3,'three panels');

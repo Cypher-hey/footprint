@@ -143,7 +143,20 @@
   }
   function refresh() {
     queued = false;
-    document.querySelectorAll('.markdown-body').forEach(enhance);
+    document.querySelectorAll('.markdown-body').forEach(function (root) {
+      enhance(root);
+      if (!root.dataset.knowledgeReady) return;
+      // This Docute version treats relative Markdown links as external files.
+      // Keep author links portable, but route enhanced pages inside the site.
+      root.querySelectorAll('a').forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        if (!/^[^:/?#]+\.md(?:#.*)?$/.test(href)) return;
+        var target = new URL(href, 'https://footprint.invalid' + route().path);
+        var path = target.pathname.replace(/\.md$/, '');
+        link.setAttribute('href', '#' + path + (target.hash ? '?id=' + encodeURIComponent(decodeURIComponent(target.hash.slice(1))) : ''));
+        link.setAttribute('target', '_self');
+      });
+    });
     diagrams();
   }
   function schedule() {
