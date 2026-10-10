@@ -48,9 +48,9 @@
 | Agent | 围绕目标感知环境并采取行动的系统角色 | [正文](03-agent-loop.md) |
 | Model / 模型 | 本库通常指计算结构与参数定义的输入输出映射 | [正文](01-foundations.md) |
 | Runtime / 运行时 | 管理调用、状态、执行和停止的应用运行部分 | [正文](03-agent-loop.md) |
-| Function call / Tool call | 模型提出的结构化调用意图，不等于已经执行 | [正文](03-agent-loop.md) |
+| Function call / Tool call | 模型提出的结构化调用意图，不等于已经执行 | [正文](03-tool-calling.md) |
 | Policy | 可能指行动规则，也可能指 RL 中的决策策略，需看语境 | [正文](03-agent-loop.md) |
-| ReAct | 将推理与行动反馈结合的代表性方法 | [正文](03-agent-loop.md) |
+| ReAct | 将推理与行动反馈结合的代表性方法 | [正文](03-react.md) |
 | Agent Loop | 观察、决策、行动与反馈的循环组织 | [正文](03-agent-loop.md) |
 | Observation | 工具/环境结果及其状态、来源和错误信息 | [正文](03-agent-loop.md) |
 | Context Builder | 选择并组织本轮可见信息的应用职责 | [正文](04-context-memory.md) |
