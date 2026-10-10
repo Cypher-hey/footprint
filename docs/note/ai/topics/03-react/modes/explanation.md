@@ -4,7 +4,7 @@
 > 前置：[Agent Loop](../../03-agent-loop/README.md) · [Tool Calling](../../03-tool-calling/README.md)。ReAct 不是前端 React 库，也不是某个 SDK 的统一接口规范。
 > 主定义在本页维护；具体运行控制回到 Loop，调用格式回到 Tool Calling。
 
-> 内容结构整理：2026-10-10。正文保留原有定义、机制、例证与引用；本次审核范围见[内容审核记录](../../../CONTENT_REVIEW_2026-10-10.md)。新展示尚待接入。
+> 内容结构整理：2026-10-10。正文保留原有定义、机制、例证与引用；本次审核范围见[内容审核记录](../../../CONTENT_REVIEW_2026-10-10.md)。
 
 <a id="section-01"></a>
 

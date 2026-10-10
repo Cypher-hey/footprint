@@ -17,7 +17,10 @@
     "prettier": "^2.0.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node scripts/build-site.mjs",
+    "check:content": "node scripts/check-reading-samples.mjs",
+    "test": "node scripts/check-reading-samples.mjs && node --check docs/asset/topic-loader.js && node --check docs/asset/knowledge-reader.js",
+    "test:browser": "node scripts/test-knowledge-reader.cjs"
   },
   "repository": {
     "type": "git",

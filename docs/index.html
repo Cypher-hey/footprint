@@ -32,16 +32,19 @@
     <body>
         <div id="app"></div>
 
-        <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+        <script defer src="./asset/mermaid-11.17.2.min.js"></script>
         <script src="./asset/docute.js"></script>
+        <script src="./asset/ai-topic-manifest.js"></script>
+        <script src="./asset/topic-loader.js"></script>
         <script>
             docute.init({
+                plugins: [window.FootprintReader],
                 nav: [
                     { title: 'AI 知识', type: 'dropdown', items: [
                         { title: '知识地图与全部主题', path: '/note/ai/README' },
-                        { title: 'Agent Loop · 三视图样板', path: '/note/ai/03-agent-loop' },
-                        { title: 'Tool Calling · 三视图样板', path: '/note/ai/03-tool-calling' },
-                        { title: 'ReAct · 三视图样板', path: '/note/ai/03-react' }
+                        { title: 'Agent Loop', path: '/note/ai/03-agent-loop' },
+                        { title: 'Tool Calling', path: '/note/ai/03-tool-calling' },
+                        { title: 'ReAct', path: '/note/ai/03-react' }
                     ] },
                     //   { title: 'Home', path: '/' },
                     {

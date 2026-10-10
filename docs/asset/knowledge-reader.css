@@ -35,3 +35,14 @@
   .knowledge-view-heading { position: static; width: auto; height: auto; clip-path: none; }
   .knowledge-panel h3 { break-after: avoid; }
 }
+/* Manifest-driven topics share the same Docute shell. */
+.knowledge-topic { display: none; }
+.knowledge-tabs { overflow-x: auto; }
+.knowledge-tabs button { white-space: nowrap; }
+.knowledge-complete { font-size: .85em; margin-top: -12px; }
+.knowledge-panel { min-width: 0; }
+.knowledge-panel h2 { line-height: 1.5; }
+.knowledge-reader pre { max-width: 100%; overflow-x: auto; }
+.knowledge-notice, .knowledge-load-error { border-left: 3px solid #9c6900; background: #fff8e8; padding: 12px; }
+.knowledge-retry { padding: 10px 16px; cursor: pointer; }
+@media print { .knowledge-complete { display: none; } .knowledge-panel { overflow: visible; } }

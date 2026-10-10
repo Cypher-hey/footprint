@@ -1,36 +1,59 @@
-// Dependency-free source/contract checks. This does not prove browser rendering.
+// Production compilation and content contracts; browser QA is a separate command.
 import assert from 'node:assert/strict';
-import {readFileSync, existsSync} from 'node:fs';
-import {dirname, resolve} from 'node:path';
-const root = resolve(import.meta.dirname, '..');
-const labels = ['先用这条主线回答', '完整口语答案', '书面精讲', '概念图解'];
+import {compile, confined} from './build-ai-topics.mjs';
+import {readFileSync, cpSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {resolve} from 'node:path';
 let checks = 0;
-function check(value, message) { assert.ok(value, message); checks++; }
-for (const name of ['03-agent-loop', '03-tool-calling', '03-react']) {
-  const path = resolve(root, 'docs/note/ai', name + '.md');
-  const text = readFileSync(path, 'utf8');
-  const outside = text.replace(/```[\s\S]*?```/g, '');
-  check((outside.match(/^# /gm) || []).length === 1, name + ': one H1');
-  assert.deepEqual([...outside.matchAll(/^## (.+)$/gm)].map(m => m[1]), labels); checks++;
-  check((text.match(/^```/gm) || []).length % 2 === 0, name + ': balanced fences');
-  const parts = labels.map((label, i) => text.slice(text.indexOf('## ' + label), i < 3 ? text.indexOf('## ' + labels[i + 1]) : undefined));
-  check((parts[0].match(/^\d\. /gm) || []).length >= 3, name + ': summary');
-  check(parts[1].length >= 350 && !parts[1].includes('```'), name + ': real oral explanation');
-  check(parts[2].length > parts[1].length, name + ': substantive written view');
-  check(parts[2].includes('https://'), name + ': cited written view');
-  check(!parts[2].includes('```mermaid'), name + ': no duplicated figure source');
-  check((parts[3].match(/```mermaid/g) || []).length >= 2, name + ': progressive diagrams');
-  const ids = [...outside.matchAll(/<a id="([^"]+)"/g)].map(m => m[1]);
-  check(new Set(ids).size === ids.length, name + ': unique explicit anchors');
-  for (const [,href] of outside.matchAll(/\]\(([^)]+)\)/g)) {
-    if (/^https?:/.test(href)) continue;
-    if (href.startsWith('#')) { check(ids.includes(href.slice(1)), name + ': anchor ' + href); continue; }
-    check(existsSync(resolve(dirname(path), decodeURIComponent(href.split('#')[0]))), name + ': link ' + href);
+const check = (value, message) => {assert.ok(value, message); checks++;};
+const a = compile(), b = compile();
+assert.deepEqual(a, b); checks++;
+check(a.manifest.topics.length === 20, '20 topics');
+check(Object.keys(a.files).length === 60, '60 modes');
+check(a.manifest.topics.reduce((n,t)=>n+t.figureCount,0) === 57, '57 figures');
+for (const t of a.manifest.topics) {
+  check(t.defaultMode === 'explanation', t.id + ': default explanation');
+  check(t.summary && t.title, t.id + ': fixed header');
+  for (const m of t.modes) {
+    const text = a.files[m.resource];
+    const source = readFileSync(resolve('docs', m.source), 'utf8');
+    const blocks = value => [...value.matchAll(/^```([^\n]*)\n([\s\S]*?)^```\s*$/gm)].filter(x => x[1] !== 'mermaid').map(x => x[1] + '\n' + x[2]);
+    assert.deepEqual(blocks(text), blocks(source), t.id + ': code examples preserved'); checks++;
+    check((text.match(/^\|/gm) || []).length === (source.match(/^\|/gm) || []).length, t.id + ': table rows preserved');
+    check(m.resource.includes(a.manifest.version), t.id + ': version isolation');
+    check(!text.includes('footprint:figure'), t.id + ': figure expansion');
+    const captions = [...text.matchAll(/^#{2,6} (图 \d.+)$/gm)].map(x => x[1]);
+    check(new Set(captions).size === captions.length, t.id + ': no duplicate caption headings');
+    check(!/\]\((?!https?:)[^\s)]*\.md(?:#|\))/.test(text), t.id + ': source links mapped');
+    if (m.id !== 'overview') check((text.match(/```mermaid/g) || []).length === t.figureCount, t.id + ': registered figures in ' + m.id);
   }
+  check(Object.keys(t.legacyAnchors).length > 0, t.id + ': historical heading inventory');
 }
-const html = readFileSync(resolve(root, 'docs/index.html'), 'utf8');
-check(html.includes('knowledge-reader.css') && html.includes('knowledge-reader.js'), 'reader assets loaded');
-check(!html.includes('user-scalable=0'), 'browser zoom allowed');
-check(!html.includes("securityLevel: 'loose'"), 'old Mermaid handler removed');
-for (const name of ['03-agent-loop','03-tool-calling','03-react']) check(html.includes('/note/ai/' + name), 'nav ' + name);
-console.log(`PASS: ${checks} source/contract assertions. Browser layout and live Mermaid rendering require separate acceptance.`);
+for (const entry of ['../outside.json', '/tmp/x.json', 'https://x/a.json', '%2e%2e/a.json', 'a\\b.json', 'a.md']) {
+  assert.throws(()=>confined('/tmp/package', entry, '.json')); checks++;
+}
+const temp = mkdtempSync(resolve(tmpdir(), 'footprint-contract-'));
+try {
+  cpSync('docs', resolve(temp, 'docs'), {recursive: true});
+  const cases = [
+    ['note/ai/topics/index.json', x=>{x.formatVersion=9;}, 'formatVersion'],
+    ['note/ai/topics/index.json', x=>{x.topics[1].id=x.topics[0].id;}, 'duplicate'],
+    ['note/ai/topics/03-agent-loop/modes/index.json', x=>{x.defaultMode='missing';}, 'defaultMode'],
+    ['note/ai/topics/03-agent-loop/modes/index.json', x=>{x.modes[0].renderer='script';}, 'renderer'],
+    ['note/ai/topics/03-agent-loop/topic.json', x=>{x.modes='../modes.json';}, 'package'],
+    ['note/ai/topics/03-agent-loop/figures/index.json', x=>{x.figures[0].source='figures/missing.mmd';}, 'ENOENT']
+  ];
+  for (const [file, edit, message] of cases) {
+    const path = resolve(temp, 'docs', file), original = readFileSync(path, 'utf8'), value = JSON.parse(original); edit(value); writeFileSync(path, JSON.stringify(value));
+    assert.throws(()=>compile(resolve(temp, 'docs')), undefined, message); checks++; writeFileSync(path, original);
+  }
+  const path=resolve(temp,'docs/note/ai/topics/03-agent-loop/modes/overview.md'), original=readFileSync(path,'utf8');
+  for (const suffix of ['\n<a id="x"></a>\n<a id="x"></a>', '\n<script>alert(1)</script>', '\n[图](../../03-react/figures/figure-01.mmd "footprint:figure")']) {
+    writeFileSync(path, original + suffix); assert.throws(()=>compile(resolve(temp,'docs'))); checks++;
+  }
+} finally {rmSync(temp,{recursive:true,force:true});}
+const html=readFileSync('docs/index.html','utf8');
+check(html.includes('FootprintReader') && html.includes('topic-loader.js') && html.includes('knowledge-reader.js'), 'Docute adapter wired');
+check(!html.includes('user-scalable=0'), 'zoom allowed');
+check(readFileSync('docs/asset/knowledge-reader.js','utf8').includes("securityLevel: 'strict'"), 'Mermaid strict');
+console.log(`PASS: ${checks} compilation/content/negative assertions. Not browser evidence.`);
