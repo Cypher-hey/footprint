@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant R as Runtime
+    participant M as Model
+    participant T as Tool
+    R->>M: 任务、上下文与工具定义
+    M-->>R: 调用提议与调用标识
+    Note over R: 校验参数、权限、预算
+    R->>T: 获准的具体操作
+    T-->>R: 数据、错误或未知状态
+    Note over R: 关联原调用，记录并构造新输入
+    R->>M: 原调用与匹配的结果
+    M-->>R: 回答或新的行动提议

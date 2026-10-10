@@ -1,0 +1,29 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：只看最外层的自回归反馈",
+      "readerNote": "回边只追加 token，不调用外部工具；与 Agent Loop 先划清重复单元。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把图 1 的模型计算展开",
+      "readerNote": "把输入编码、网络表示和词表输出分开，不能将其当成逐条检索数据库。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：分数与内容走两条路径",
+      "readerNote": "Q/K 决定混合权重，V 提供被混合的内容；矩阵形式与读图说明描述同一运算。"
+    },
+    {
+      "id": "figure-04",
+      "source": "figures/figure-04.mmd",
+      "caption": "图 4：一个常见 pre-norm Block 的简化结构",
+      "readerNote": "沿主路看 Attention 与 FFN，沿旁路看残差；这是 pre-norm 示例，不代表全部架构。"
+    }
+  ]
+}

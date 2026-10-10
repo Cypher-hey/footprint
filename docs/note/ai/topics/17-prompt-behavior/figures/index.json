@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：在参数不变时改变条件",
+      "readerNote": "固定参数与本次上下文共同影响输出；输入中新增工具描述并不自动安装工具或授予权限。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：提示设计与外部核查形成反馈",
+      "readerNote": "回边应携带可定位检查结果，不能只把‘更认真’重复写回 Prompt。"
+    }
+  ]
+}

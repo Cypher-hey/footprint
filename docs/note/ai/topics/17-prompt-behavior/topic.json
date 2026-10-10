@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "prompt-behavior",
+  "title": "提示与模型行为：指令、示例、证据和不确定性",
+  "summary": "提示改变当前求解条件，而非自动改变参数或权限；指令、示例、证据和状态各司其职，行为改进需要外部判据。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/17-prompt-behavior"
+  ],
+  "definitionScope": "本主题维护提示语义、ICL、行为引导和不确定性表达；上下文全生命周期归 04，格式校验归 02，执行权限归 09。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

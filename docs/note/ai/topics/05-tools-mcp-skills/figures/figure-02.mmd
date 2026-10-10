@@ -1,0 +1,10 @@
+flowchart LR
+    subgraph H["Host：AI 应用"]
+        M["模型与上下文管理"]
+        C1["Client A"]
+        C2["Client B"]
+        M --> C1
+        M --> C2
+    end
+    C1 <--> S1["Server A"]
+    C2 <--> S2["Server B"]

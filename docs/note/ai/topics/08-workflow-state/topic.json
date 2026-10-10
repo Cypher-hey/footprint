@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "workflow-state",
+  "title": "Workflow、状态机与 XState：把行为边界写清楚",
+  "summary": "Workflow 组织工作依赖，状态机限定有效转换；异步任务、取消与外部结果必须分层记录，才能解释恢复行为。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/08-workflow-state"
+  ],
+  "definitionScope": "本主题维护状态、事件、转换、Actor 与异步生命周期；幂等及外部副作用恢复归 09，界面事件合同归 07。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

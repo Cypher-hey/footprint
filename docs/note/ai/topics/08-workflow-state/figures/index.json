@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：工作流中的一个模型决策节点",
+      "readerNote": "依赖图说明先后工作，不足以表达每个节点的异步生命周期。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：一个任务的生命周期",
+      "readerNote": "节点代表阶段，边代表事件；Succeeded 依赖被接受的结果，Cancelled 不证明远端无效果。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：外部操作的结果确认状态",
+      "readerNote": "Unknown 表达认知不足；要通过核对进入已确认成功或失败，不能直接改名为失败。"
+    }
+  ]
+}

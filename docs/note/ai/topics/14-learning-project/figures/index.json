@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：先看职责，不看框架",
+      "readerNote": "看职责之间的信息与反馈，不把图误读为固定五步流水线。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把职责之间的输入输出展开",
+      "readerNote": "区分内容和行动两条处理路径；回边可能触发继续，也可能等待或停止。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：一份产物与三类相关记录",
+      "readerNote": "来源、产物、批准、操作与证据具有不同身份；不能用一个状态字段承载所有含义。"
+    }
+  ]
+}

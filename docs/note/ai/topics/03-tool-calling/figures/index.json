@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "calling-roles",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：谁提出，谁批准，谁执行",
+      "readerNote": "关注 Model 与 Tool 之间的 Runtime 边界：可见能力不等于当前可执行权限。"
+    },
+    {
+      "id": "calling-roundtrip",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：一次调用怎样完成往返",
+      "readerNote": "时间向下，调用标识贯穿提议与结果。最后一次模型调用必须能取得匹配结果；本图只展开正常往返。"
+    }
+  ]
+}

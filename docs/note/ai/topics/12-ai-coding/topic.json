@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "ai-coding",
+  "title": "AI Coding 与 Harness：把交付变成受控闭环",
+  "summary": "AI Coding 的交付对象是受约束的代码变更及其证据；Harness 组织反馈，最终版本的实际检查比完成声明更重要。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/12-ai-coding"
+  ],
+  "definitionScope": "本主题维护工程变更、Harness 与版本化交付证据；通用评测归 10，知识印证格式由作者规范统一维护。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

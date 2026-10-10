@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：模型描述内容，程序解释描述",
+      "readerNote": "在生成与界面之间找校验和渲染两层；候选数据并不直接执行任意组件代码。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：一份关系，两种编码视角",
+      "readerNote": "实线表示父子关系，虚线表示 ID 寻址；改变编码方式不改变逻辑关系。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：界面反馈回路",
+      "readerNote": "跟随点击、领域事件、状态更新与视图回传；副作用不能由节点随意携带的函数名绕过控制。"
+    }
+  ]
+}

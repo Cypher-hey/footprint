@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：使用模型与训练模型分开看",
+      "readerNote": "训练路径生成参数，使用路径用参数预测；新输入本身不自动触发学习。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把图 1 的“学习过程”打开",
+      "readerNote": "从预测到损失再到梯度和更新，回边改变参数；这与应用工具反馈循环不同。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：数据流中哪里允许反馈",
+      "readerNote": "验证允许影响方案选择，保留测试不能悄悄反馈进开发；预处理同样只从允许的数据中拟合。"
+    }
+  ]
+}

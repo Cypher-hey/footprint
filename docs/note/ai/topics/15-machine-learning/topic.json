@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "machine-learning",
+  "title": "机器学习基础：数据、目标、优化与泛化",
+  "summary": "机器学习通过数据与目标调整模型；训练拟合、验证选择与测试评价各有边界，损失下降不自动证明泛化。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/15-machine-learning"
+  ],
+  "definitionScope": "本主题维护参数、目标、梯度、学习范式、数据划分与泛化；具体语言机制归 16，应用评测归 10。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

@@ -1,0 +1,6 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Running: start
+    Running --> Succeeded: result_validated
+    Running --> Failed: confirmed_failure
+    Running --> Cancelled: cancel

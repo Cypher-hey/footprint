@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "react",
+  "title": "ReAct：推理与行动如何交替参与求解",
+  "summary": "ReAct 让推理与行动交替提供条件：判断引导动作，动作产生观察，观察再改变判断；它是方法，不是完整运行设施。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/03-react"
+  ],
+  "definitionScope": "本主题维护 ReAct 的方法定义与和 CoT 的区别；不重复定义整个 Agent Runtime 或具体工具 API。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

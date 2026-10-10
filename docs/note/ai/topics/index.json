@@ -1,0 +1,85 @@
+{
+  "formatVersion": 1,
+  "topics": [
+    {
+      "id": "foundations",
+      "entry": "01-foundations/topic.json"
+    },
+    {
+      "id": "machine-learning",
+      "entry": "15-machine-learning/topic.json"
+    },
+    {
+      "id": "language-models",
+      "entry": "16-language-models/topic.json"
+    },
+    {
+      "id": "prompt-behavior",
+      "entry": "17-prompt-behavior/topic.json"
+    },
+    {
+      "id": "inference",
+      "entry": "02-inference/topic.json"
+    },
+    {
+      "id": "agent-loop",
+      "entry": "03-agent-loop/topic.json"
+    },
+    {
+      "id": "tool-calling",
+      "entry": "03-tool-calling/topic.json"
+    },
+    {
+      "id": "react",
+      "entry": "03-react/topic.json"
+    },
+    {
+      "id": "context-memory",
+      "entry": "04-context-memory/topic.json"
+    },
+    {
+      "id": "tools-mcp-skills",
+      "entry": "05-tools-mcp-skills/topic.json"
+    },
+    {
+      "id": "retrieval",
+      "entry": "06-retrieval/topic.json"
+    },
+    {
+      "id": "workflow-state",
+      "entry": "08-workflow-state/topic.json"
+    },
+    {
+      "id": "reliability-security",
+      "entry": "09-reliability-security/topic.json"
+    },
+    {
+      "id": "evaluation",
+      "entry": "10-evaluation/topic.json"
+    },
+    {
+      "id": "ui-ir",
+      "entry": "07-ui-ir/topic.json"
+    },
+    {
+      "id": "multi-agent",
+      "entry": "11-multi-agent/topic.json"
+    },
+    {
+      "id": "ai-coding",
+      "entry": "12-ai-coding/topic.json"
+    },
+    {
+      "id": "training-inference-systems",
+      "entry": "13-training-inference-systems/topic.json"
+    },
+    {
+      "id": "multimodal",
+      "entry": "18-multimodal/topic.json"
+    },
+    {
+      "id": "learning-project",
+      "entry": "14-learning-project/topic.json"
+    }
+  ]
+}

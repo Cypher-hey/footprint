@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：拥有信息与看见信息之间隔着一次选择",
+      "readerNote": "多种存储经过 Builder 才成为上下文；存在于系统里不代表模型此刻可见。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：打开 Builder 的内部职责",
+      "readerNote": "依次看来源、选择、变换、身份组织和预算；这是职责分解，实际处理可能迭代。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：观察入库和上下文入模是两个动作",
+      "readerNote": "观察分别影响历史与当前状态，再由下一轮 Builder 选择输入，不能省略这层选择。"
+    }
+  ]
+}

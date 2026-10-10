@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "tools-mcp-skills",
+  "title": "工具、MCP 与 Skills：三种不同的能力边界",
+  "summary": "Tool 定义可调用操作，MCP 组织能力连接，Skill 提供过程知识；可发现、可连接和获准执行是不同条件。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/05-tools-mcp-skills"
+  ],
+  "definitionScope": "本主题维护能力描述、MCP 角色与原语、Skill 渐进披露；模型调用交接归 Tool Calling，安全机制归 09。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

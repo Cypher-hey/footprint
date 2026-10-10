@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "ui-ir",
+  "title": "AI 原生界面：Catalog、UI IR、Event IR 与可信执行",
+  "summary": "Catalog 限定可表达能力，UI IR 描述结构，Renderer 映射界面；事件与副作用另有边界，扁平编码也仍需图校验。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/07-ui-ir"
+  ],
+  "definitionScope": "本主题维护 Catalog、UI IR、Flat IR、Renderer 与事件适配边界；状态机归 08，通用输出校验归 02。本页不是 footprint 的实现协议。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

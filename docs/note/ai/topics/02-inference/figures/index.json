@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：先分清请求与业务结果",
+      "readerNote": "沿请求构造到应用处理阅读；工具提议出现在输出端，实际执行仍在应用控制之后。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把图 1 的“应用处理”展开",
+      "readerNote": "结构检查之后仍有领域、事实与动作边界；不要把校验画成一次万能判断。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：逐层恢复边界",
+      "readerNote": "字节、字符、协议事件和业务对象是逐层恢复的边界，不存在每个网络块必然对应一张卡片的关系。"
+    }
+  ]
+}

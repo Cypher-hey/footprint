@@ -1,0 +1,5 @@
+flowchart LR
+    C["允许的表达合同"] --> M["模型生成候选 UI IR"]
+    M --> V["校验"]
+    V --> R["Renderer"]
+    R --> U["实际界面"]

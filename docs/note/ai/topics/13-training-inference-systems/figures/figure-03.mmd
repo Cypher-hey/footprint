@@ -1,0 +1,8 @@
+flowchart LR
+    I["输入 token 序列"] --> P["Prefill"]
+    P --> K["已有前缀 KV 状态"]
+    K --> D["一步 Decode"]
+    D --> T["新 token"]
+    T --> U["更新前缀与 KV 状态"]
+    U --> D
+    T --> E["达到终止条件"]

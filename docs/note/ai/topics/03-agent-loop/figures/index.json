@@ -1,0 +1,29 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "loop-environment",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：先看 Agent 与环境的反馈关系",
+      "readerNote": "只看 Agent 与环境：行动和观察共同闭合路径，不必先理解框架或 API。"
+    },
+    {
+      "id": "loop-roles",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：打开 Agent 的职责边界",
+      "readerNote": "打开 Agent 方框后，区分模型提议、运行时控制和工具执行；这些是职责，不是部署拓扑。"
+    },
+    {
+      "id": "loop-control",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：完整最小控制循环",
+      "readerNote": "从④沿回边回到①，同时辨认最终结果、等待和不能继续的出口。图是最小机制，不覆盖全部异常恢复。"
+    },
+    {
+      "id": "loop-information",
+      "source": "figures/figure-04.mmd",
+      "caption": "图 4：沿着回边，信息发生了什么变化",
+      "readerNote": "沿时间看 Sₜ 如何结合决策与观察成为 Sₜ₊₁；这张展开图解释回到同一步时信息为什么不同。"
+    }
+  ]
+}

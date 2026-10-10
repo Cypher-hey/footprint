@@ -1,0 +1,24 @@
+{
+  "formatVersion": 1,
+  "defaultMode": "explanation",
+  "modes": [
+    {
+      "id": "overview",
+      "label": "核心概要",
+      "entry": "overview.md",
+      "renderer": "markdown"
+    },
+    {
+      "id": "explanation",
+      "label": "系统阐述",
+      "entry": "explanation.md",
+      "renderer": "markdown"
+    },
+    {
+      "id": "diagrams",
+      "label": "概念图解",
+      "entry": "diagrams.md",
+      "renderer": "markdown"
+    }
+  ]
+}

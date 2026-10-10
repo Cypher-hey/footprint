@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：评测不是只给答案打分",
+      "readerNote": "任务条件与独立判据共同限定结论；只观察最终答案会丢失行动风险。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：检查结果组成向量，而非立刻压成总分",
+      "readerNote": "各支路组成质量向量；硬边界失败不能让文风或速度加分抵消。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：把任务级失败下钻到阶段",
+      "readerNote": "从聚合指标下钻到具体运行轨迹与阶段证据，同时避免无限复制私人原文。"
+    }
+  ]
+}

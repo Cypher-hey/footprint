@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：输入、关联与输出是三个问题",
+      "readerNote": "先区分编码、关联与输出三类职责，它们不要求由同一个模型完成。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把图 1 的图像编码部分打开",
+      "readerNote": "每次缩放、裁剪或编码都影响可保留信息，先确认实际输入再归因模型错误。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：音频经过文本中间层，或保留音频路径",
+      "readerNote": "对照经文本中间层与直接音频路径；看信息损失、可诊断性与延迟，而非预设哪条绝对优越。"
+    }
+  ]
+}

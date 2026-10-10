@@ -1,0 +1,7 @@
+flowchart LR
+    T["文本"] --> ID["Token IDs"]
+    ID --> E["Embedding 与位置机制"]
+    E --> B["多个 Transformer blocks"]
+    B --> H["输出表示"]
+    H --> L["词表 logits"]
+    L --> P["概率与解码选择"]

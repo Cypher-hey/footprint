@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "inference",
+  "title": "推理请求：输入、采样、结构化输出与流式传输",
+  "summary": "一次推理请求跨越输入、计算、传输和应用处理；只有逐层恢复边界，才能区分可解析、可信与可执行。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/02-inference"
+  ],
+  "definitionScope": "本主题维护请求、响应、采样、结构化输出与流式分层；模型计算归 16，工具交接归 03-tool-calling，服务性能归 13。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

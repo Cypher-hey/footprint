@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "tool-calling",
+  "title": "Tool Calling：模型提议怎样成为受控执行",
+  "summary": "Tool Calling 用结构化数据交接行动提议；定义、提议、执行和结果是四类事实，关联正确也不等于操作获准。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/03-tool-calling"
+  ],
+  "definitionScope": "本主题维护工具定义、调用提议、结果关联和完整往返；工具发现与 MCP 归 05，写入恢复归 09。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

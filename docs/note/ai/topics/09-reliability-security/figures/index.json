@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：从内容进入系统到动作离开系统",
+      "readerNote": "输入边界与执行边界分别回答数据能否影响判断、操作能否实际发生；两层互补。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：操作意图与结果记录",
+      "readerNote": "检查重复意图后还要协调记录与业务写入；这张图不是 exactly-once 的证明。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：响应丢失不等于写入失败",
+      "readerNote": "服务已写入而响应丢失时，查询状态比盲目再创建更能保留业务语义；前提是服务支持查询。"
+    }
+  ]
+}

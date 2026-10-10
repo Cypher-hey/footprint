@@ -1,0 +1,5 @@
+flowchart LR
+    M["ReAct：交替求解的方法"] -->|"由运行结构承载"| L["Agent Loop"]
+    L -->|"把行动交给程序"| C["Tool Calling"]
+    C -->|"执行并记录"| O["Observation"]
+    O -->|"进入后续输入"| L

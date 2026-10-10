@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Executing
+    Executing --> ConfirmedSuccess: success_evidence
+    Executing --> ConfirmedFailure: failure_evidence
+    Executing --> Unknown: response_lost
+    Unknown --> ConfirmedSuccess: reconciled_success
+    Unknown --> ConfirmedFailure: reconciled_failure
+    Unknown --> Unknown: evidence_insufficient

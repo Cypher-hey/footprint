@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "learning-project",
+  "title": "AI 应用全景：把模型、知识、控制与证据连接起来",
+  "summary": "把 AI 应用放回信息、控制和证据三条主线：局部机制如何相连，比堆叠更多框架名称更能解释系统行为。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/14-learning-project"
+  ],
+  "definitionScope": "本主题只综合跨章关系与故障定位，不重建每个概念的第二份主定义；保留 learning-project 历史标识但不组织教学项目。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

@@ -1,0 +1,6 @@
+flowchart LR
+    M["模型提议：callId"] --> R["运行时映射与检查"]
+    R --> P["协议请求：request id"]
+    P --> B["业务执行：operationId 如适用"]
+    B --> X["协议响应"]
+    X --> O["关联原调用的 Observation"]

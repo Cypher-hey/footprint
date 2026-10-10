@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "retrieval",
+  "title": "RAG 与长期记忆：从找得到到用得对",
+  "summary": "RAG 用可更新的外部资料支持生成；从检索相似到结论成立，还隔着权限、版本、上下文装配和引用支持度。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/06-retrieval"
+  ],
+  "definitionScope": "本主题维护检索、证据支持与长期信息维护；窗口选择归 04，通用评测设计归 10，多模态证据归 18。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

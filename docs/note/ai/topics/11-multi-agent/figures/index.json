@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：从一个循环到多个决策边界",
+      "readerNote": "协调者可以是人、程序或模型；多个方框表示局部决策边界，不表示安全隔离。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把汇总前的依赖打开",
+      "readerNote": "先找分支之间是否真的独立，再看汇合等待；真实依赖必须补边，不能靠并发按钮消除。"
+    }
+  ]
+}

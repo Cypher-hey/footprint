@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：先看检索增强的最小关系",
+      "readerNote": "最小关系是问题与候选证据共同进入生成；箭头只说明供给，不保证模型正确使用。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：把资料库和检索分别打开",
+      "readerNote": "上半部维护索引，下半部服务查询；权限是贯穿约束，不能因为图简化就推迟到外传之后。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：来源与结论之间需要可检查的映射",
+      "readerNote": "定位片段与支持断言是两条职责。读到真实 URL，不代表已经完成证据检查。"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "multi-agent",
+  "title": "多 Agent：分工收益、上下文成本与单一责任人",
+  "summary": "多 Agent 将任务分给不同决策与信息边界；收益取决于依赖是否可分离，代价来自重复上下文、协调与结果合并。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/11-multi-agent"
+  ],
+  "definitionScope": "本主题维护多决策单元的依赖、交接与协作成本；单循环归 03，状态和 Actor 归 08，比较方法归 10。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

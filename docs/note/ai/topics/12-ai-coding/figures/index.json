@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：模型与工程环境之间的反馈",
+      "readerNote": "跟随模型决策到编译器、测试与运行环境，再回到诊断证据；反馈不是自我赞同。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：证据不是一条全局“通过”标记",
+      "readerNote": "证据依赖代码 revision、输入和环境；‘通过’不是可以脱离版本永久复用的标签。"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+flowchart LR
+    R["代码 revision"] --> E["特定环境与输入"]
+    E --> T["执行检查"]
+    T --> L["结果与日志"]
+    L --> C["对该 revision 的有限结论"]
+    R --> C

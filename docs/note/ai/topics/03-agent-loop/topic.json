@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "agent-loop",
+  "title": "Agent Loop：目标、行动与反馈构成的运行机制",
+  "summary": "Agent Loop 重复控制步骤，并用行动产生的新观察更新下一次决策；闭环是否有效，要同时看回边、信息变化与停止条件。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/03-agent-loop"
+  ],
+  "definitionScope": "本主题维护 Agent、Model、Runtime、Observation、Loop、控制回边与出口；调用合同归 Tool Calling，求解方法归 ReAct，输入选择归 04。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

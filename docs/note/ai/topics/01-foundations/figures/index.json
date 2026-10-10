@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：先看外部边界",
+      "readerNote": "先把应用作为一个整体：输入、结果与环境构成外部边界。此图没有规定内部必须使用哪种模型。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：参数路径与当前输入路径",
+      "readerNote": "沿两条路径读：训练改变参数，当前资料改变输入。它们在推理处汇合，但维护方式不同。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：在推理之外加上行动与反馈",
+      "readerNote": "重点找环境结果返回上下文的箭头：它是行动反馈，不是参数更新。"
+    }
+  ]
+}

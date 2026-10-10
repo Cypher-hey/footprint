@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant R as Runtime
+    participant S as 服务端
+    R->>S: 发布 r3，key=k1
+    S->>S: 校验并写入，保存结果
+    S--xR: 响应丢失
+    R->>S: 查询 k1 的状态
+    S-->>R: 已成功，产物 revision
+    R->>R: 记录完成，不再次创建

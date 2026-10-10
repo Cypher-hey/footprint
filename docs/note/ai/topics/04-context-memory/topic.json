@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "context-memory",
+  "title": "Context Builder：选择、预算、压缩与记忆",
+  "summary": "Context Builder 把系统拥有的信息变成当前调用真正可见的输入；选择、预算、身份保留与压缩保真必须一起考虑。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/04-context-memory"
+  ],
+  "definitionScope": "本主题维护信息生命周期、输入装配与压缩；检索和长期记忆更新归 06，计算缓存归 13。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

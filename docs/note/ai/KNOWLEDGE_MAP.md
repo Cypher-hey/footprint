@@ -61,7 +61,9 @@ flowchart TD
 | [16 语言模型](16-language-models.md) | token、embedding、Attention、Block、自回归 | 应用页不重复模型内部推导 |
 | [17 提示](17-prompt-behavior.md) | 指令/示例/证据、ICL、幻觉与不确定性 | Context 页讲装配，不另讲提示写法 |
 | [02 请求](02-inference.md) | 采样、输出 Schema、流式分帧、请求结束 | UI 页只补图结构与交互约束 |
-| [03 Loop](03-agent-loop.md) | Agent、Model/Runtime 分工、调用提议、Observation、反馈、ReAct | 专题页只打开其中一个职责 |
+| [03 Loop](03-agent-loop.md) | Agent、Model/Runtime 分工、Observation、控制回边与出口 | 专题页只打开其中一个职责 |
+| [Tool Calling](03-tool-calling.md) | 工具定义、调用提议、结果关联与完整往返 | MCP 与工具发现转到 05，恢复转到 09 |
+| [ReAct](03-react.md) | 推理与行动交替、与 CoT 的区别、方法边界 | Loop 讲运行结构，不重写 ReAct 方法 |
 | [04 Context](04-context-memory.md) | 历史/状态/上下文/记忆生命周期、装配与压缩 | 检索页从候选获取继续 |
 | [05 工具](05-tools-mcp-skills.md) | Tool 合同、MCP 角色与消息、Skill 披露 | Loop 保留工具的最短定义 |
 | [06 RAG](06-retrieval.md) | 索引/召回/重排、证据支持、记忆维护、检索指标 | Evals 不复制检索指标定义 |
@@ -86,3 +88,7 @@ flowchart TD
 ## 6. 相关入口
 
 [全部主题](README.md) · [术语索引](GLOSSARY.md) · [深入问题](ADVANCE.md) · [维护规范](KNOWLEDGE_SPEC.md)
+
+## 新版作者入口
+
+本页保留旧路由链接供当前站点使用；新版作者源及三模式导航见 [topics/README](topics/README.md)。接入时统一将旧入口映射到新源，不另建冲突定义。

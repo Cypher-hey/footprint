@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：模型生命周期中的两个位置",
+      "readerNote": "按生命周期区分改变模型与运行模型；并非每个系统都必须经过所有阶段。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：冻结主权重，在旁路学习增量",
+      "readerNote": "冻结 W，同时学习低秩 A、B；相加的是输出贡献，可训练参数减少不等于计算或显存按同一比例下降。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：沿时间展开一次常见自回归请求",
+      "readerNote": "沿前缀与 KV 更新读生成循环；首 token 分布通常来自 prefill 末位置，图对后续生成作简化。"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "react-cycle",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：推理与行动通过观察连接",
+      "readerNote": "沿观察回到当前信息的回边阅读；留意信息足够与不能继续两类出口。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：方法、运行结构与调用交接",
+      "readerNote": "三层分别是求解方法、运行结构、行动交接；图中是可组合关系，不是所有系统的唯一实现。"
+    }
+  ]
+}

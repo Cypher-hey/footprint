@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "figures": [
+    {
+      "id": "figure-01",
+      "source": "figures/figure-01.mmd",
+      "caption": "图 1：三者在同一能力路径上的位置",
+      "readerNote": "Skill 与能力描述进入上下文；实际动作通过运行时到工具，协议只是连接路径之一。"
+    },
+    {
+      "id": "figure-02",
+      "source": "figures/figure-02.mmd",
+      "caption": "图 2：宿主内部与外部能力的边界",
+      "readerNote": "Host 包含多个 Client，而每条连接面向相应 Server；角色数量不是 Agent 数量。"
+    },
+    {
+      "id": "figure-03",
+      "source": "figures/figure-03.mmd",
+      "caption": "图 3：同一次动作在不同层有不同标识",
+      "readerNote": "分清模型 callId、协议 request id 和业务 operationId，各自服务不同关联与恢复问题。"
+    }
+  ]
+}

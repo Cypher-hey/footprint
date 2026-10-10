@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "multimodal",
+  "title": "多模态基础：图像、语音、视频与跨模态表示",
+  "summary": "多模态将不同信号编码、关联或生成；每次转换都会改变可见信息，结论必须对应具体区域、时间与处理条件。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/18-multimodal"
+  ],
+  "definitionScope": "本主题维护模态、编码、对齐融合、级联和媒体证据边界；不覆盖完整视觉或语音学科，检索和安全归 06、09。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

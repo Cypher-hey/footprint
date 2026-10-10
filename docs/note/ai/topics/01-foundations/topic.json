@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "foundations",
+  "title": "AI 基础全景：从学习能力到可行动的系统",
+  "summary": "先区分领域、方法、模型与应用系统，再区分参数学习、当前输入和外部行动，才能看清 AI 能力来自哪里、保证止于哪里。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/01-foundations"
+  ],
+  "definitionScope": "本主题维护 AI / ML / 模型 / 系统的分类坐标与训练、推理、应用的区别；参数更新细节归 15，模型运算归 16，系统综合关系归 14。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

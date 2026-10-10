@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant U as 用户
+    participant V as Renderer
+    participant D as 领域适配
+    participant R as Runtime
+    U->>V: 点击显示答案
+    V->>D: answer.reveal + cardId
+    D->>R: 已校验领域事件
+    R->>R: 检查状态并更新
+    R-->>V: 新状态映射成 UI IR

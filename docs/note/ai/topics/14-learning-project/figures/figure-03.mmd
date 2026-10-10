@@ -1,0 +1,7 @@
+flowchart LR
+    S["来源版本"] --> D["产物 revision"]
+    R["一次 run 的观察"] --> D
+    D --> A["绑定范围的批准"]
+    A --> O["外部 operation"]
+    O --> E["结果证据"]
+    E --> R

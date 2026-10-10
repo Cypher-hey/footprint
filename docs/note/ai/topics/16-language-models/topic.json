@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "language-models",
+  "title": "语言模型机制：Token、表示、Attention 与自回归生成",
+  "summary": "自回归语言模型先编码输入，再通过注意力与逐位置变换计算分布，解码选择的 token 成为后续前缀；这与 Agent 行动循环不同。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/16-language-models"
+  ],
+  "definitionScope": "本主题维护 token、表示、Attention、Block 与自回归机制；采样配置归 02，服务缓存容量归 13。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}

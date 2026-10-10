@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "id": "evaluation",
+  "title": "Evals 与可观测性：让改进成为可验证的判断",
+  "summary": "评测把目标、输入分布、判据与观察联系起来；观测帮助定位原因，多维结论不能被单个漂亮分数替代。",
+  "level": "base",
+  "modes": "modes/index.json",
+  "legacyRoutes": [
+    "/note/ai/10-evaluation"
+  ],
+  "definitionScope": "本主题维护应用评测、评分器、比较方法与可观测性；检索指标主定义归 06，学习数据划分归 15。",
+  "contentStatus": "reviewed-content-pending-renderer",
+  "editedAt": "2026-10-10"
+}
