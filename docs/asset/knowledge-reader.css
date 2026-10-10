@@ -54,8 +54,6 @@
 .knowledge-chapter { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 10px 8px; border-left: 3px solid transparent; border-radius: 4px; color: #536175; font-size: 13px; line-height: 1.65; }
 .knowledge-chapter-number { flex: none; min-width: 22px; color: #788697; font: 12px/1.8 ui-monospace, monospace; text-align: center; }
 .knowledge-chapter-name { overflow-wrap: anywhere; }
-.knowledge-chapter[data-level='3'] .knowledge-chapter-name { padding-left: 6px; }
-.knowledge-chapter[data-level='4'] .knowledge-chapter-name, .knowledge-chapter[data-level='5'] .knowledge-chapter-name, .knowledge-chapter[data-level='6'] .knowledge-chapter-name { padding-left: 12px; }
 .knowledge-chapter:hover { background: #f4f7fb; }
 .knowledge-chapter[aria-current='location'] { border-left-color: #1763ac; background: #f5f9ff; color: #1763ac; font-weight: 600; }
 .knowledge-chapter[aria-current='location'] .knowledge-chapter-number { color: #1763ac; }
@@ -105,3 +103,20 @@
   .knowledge-page, .knowledge-page .main { max-width: none; }
   .knowledge-page .header, .knowledge-page .mobile-header { display: none !important; }
 }
+
+/* Semantic chapter hierarchy: root numbers remain the compact navigation. */
+.knowledge-chapter-row { display: flex; align-items: flex-start; }
+.knowledge-chapter-row > .knowledge-chapter { flex: 1; min-width: 0; }
+.knowledge-children { list-style: none; margin: 0 0 0 12px; padding: 0 0 0 4px; border-left: 1px solid #dce4ee; }
+.knowledge-children[hidden] { display: none; }
+.knowledge-branch-toggle { flex: none; width: 44px; height: 44px; border: 0; border-radius: 4px; background: transparent; color: #536175; font-size: 22px; cursor: pointer; }
+.knowledge-branch-toggle[aria-expanded='true'] { transform: rotate(90deg); }
+.knowledge-branch-toggle:hover { background: #f4f7fb; }
+.knowledge-branch-toggle:focus-visible { outline: 3px solid #669ee0; outline-offset: -3px; }
+.knowledge-chapter-path { background: #eef3f9; border-left-color: #8daac9; color: #354863; }
+.knowledge-rail-collapsed .knowledge-children, .knowledge-rail-collapsed .knowledge-branch-toggle { display: none; }
+@media screen and (max-width: 768px) {
+  .knowledge-page:not(.knowledge-rail-expanded) .knowledge-children, .knowledge-page:not(.knowledge-rail-expanded) .knowledge-branch-toggle { display: none; }
+}
+
+.knowledge-page .markdown-body h2, .knowledge-page .markdown-body h3, .knowledge-page .markdown-body h4, .knowledge-page .markdown-body h5, .knowledge-page .markdown-body h6 { scroll-margin-top: 80px; }

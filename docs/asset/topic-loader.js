@@ -126,16 +126,36 @@
     head.appendChild(title); head.appendChild(toggle); rail.appendChild(head);
     var list = document.createElement('ol'); list.id = 'knowledge-chapters'; list.className = 'knowledge-chapters'; rail.appendChild(list);
     var headings = Array.from(root.querySelectorAll(t ? '.knowledge-panel h2[id], .knowledge-panel h3[id], .knowledge-panel h4[id], .knowledge-panel h5[id], .knowledge-panel h6[id]' : 'h2[id], h3[id], h4[id], h5[id], h6[id]'));
+    var nodes = [], stack = [], roots = [], articlePath = route().path;
     var links = headings.map(function (heading, i) {
+      var level = Number(heading.tagName.slice(1));
+      while (stack.length && stack[stack.length - 1].level >= level) stack.pop();
+      var parent = stack.length ? stack[stack.length - 1] : null;
       var label = heading.cloneNode(true); label.querySelectorAll('.anchor').forEach(function (a) {a.remove();});
-      var text = label.textContent.trim(), item = document.createElement('li'), link = document.createElement('a');
-      link.className = 'knowledge-chapter'; link.href = t ? href(t, marker.dataset.mode, heading.id) : '#' + route().path + '?id=' + encodeURIComponent(heading.id); link.title = text; link.setAttribute('aria-label', String(i + 1) + '. ' + text); link.dataset.level = heading.tagName.slice(1);
-      var number = document.createElement('span'); number.className = 'knowledge-chapter-number'; number.setAttribute('aria-hidden', 'true'); number.textContent = String(i + 1).padStart(2, '0');
+      var text = label.textContent.trim(), item = document.createElement('li'), row = document.createElement('div'), link = document.createElement('a');
+      var node = {level: level, parent: parent, item: item, link: link, children: [], manual: false};
+      nodes.push(node); stack.push(node);
+      if (parent) parent.children.push(node); else roots.push(node);
+      node.root = parent ? parent.root : node;
+      item.className = 'knowledge-chapter-item'; row.className = 'knowledge-chapter-row';
+      link.className = 'knowledge-chapter'; link.href = t ? href(t, marker.dataset.mode, heading.id) : '#' + route().path + '?id=' + encodeURIComponent(heading.id); link.title = text; link.setAttribute('aria-label', (parent ? '' : roots.length + '. ') + text); link.dataset.level = String(level);
+      if (!parent) {
+        var number = document.createElement('span'); number.className = 'knowledge-chapter-number'; number.setAttribute('aria-hidden', 'true'); number.textContent = String(roots.length).padStart(2, '0'); link.appendChild(number);
+      }
       var name = document.createElement('span'); name.className = 'knowledge-chapter-name'; name.textContent = text;
-      link.appendChild(number); link.appendChild(name); item.appendChild(link); list.appendChild(item);
+      link.appendChild(name); row.appendChild(link); item.appendChild(row);
+      if (parent) {
+        if (!parent.group) {
+          parent.group = document.createElement('ul'); parent.group.id = 'knowledge-children-' + nodes.indexOf(parent); parent.group.className = 'knowledge-children'; parent.group.hidden = true;
+          parent.button = document.createElement('button'); parent.button.type = 'button'; parent.button.className = 'knowledge-branch-toggle'; parent.button.setAttribute('aria-controls', parent.group.id); parent.button.setAttribute('aria-expanded', 'false'); parent.button.setAttribute('aria-label', '展开或收起 ' + parent.link.title); parent.button.textContent = '›';
+          parent.item.firstChild.appendChild(parent.button); parent.item.appendChild(parent.group);
+          (function (branch) {branch.button.addEventListener('click', function () {branch.manual = true; setOpen(branch, branch.group.hidden);});})(parent);
+        }
+        parent.group.appendChild(item);
+      } else list.appendChild(item);
       link.addEventListener('click', function (e) {
         if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        e.preventDefault(); restoring = false; focusMode = null; anchorFocus = heading.id; mobileExpanded = false; sync();
+        e.preventDefault(); reveal(node, true); restoring = false; focusMode = null; anchorFocus = heading.id; mobileExpanded = false; sync();
         if (!t) {
           api.router.push(link.hash.slice(1));
           heading.scrollIntoView({block: 'start'}); heading.tabIndex = -1; heading.focus({preventScroll: true});
@@ -145,6 +165,28 @@
         else api.router.push(link.hash.slice(1));
       }); return link;
     });
+    function setOpen(node, open) {node.group.hidden = !open; node.button.setAttribute('aria-expanded', String(open));}
+    function reveal(node, force) {
+      for (var parent = node.parent; parent; parent = parent.parent) {
+        if (force) parent.manual = false;
+        if (!parent.manual) setOpen(parent, true);
+      }
+    }
+    function keepVisible() {
+      if (active < 0) return;
+      var node = nodes[active];
+      if (page.classList.contains('knowledge-rail-collapsed')) node = node.root;
+      else for (var parent = node.parent; parent; parent = parent.parent) {if (parent.group.hidden) node = parent;}
+      // Scroll only the directory; leave article position and keyboard focus intact.
+      var item = node.link.getBoundingClientRect(), bounds = list.getBoundingClientRect();
+      if (item.top < bounds.top) list.scrollTop += item.top - bounds.top;
+      else if (item.bottom > bounds.bottom) list.scrollTop += item.bottom - bounds.bottom;
+    }
+    function revealAnchor() {
+      if (route().path !== articlePath) return;
+      var id = route().params.get('id'), index = headings.findIndex(function (h) {return h.id === id;});
+      if (index >= 0) {reveal(nodes[index], true); if (!t) headings[index].scrollIntoView({block: 'start'}); schedule();}
+    }
     if (!headings.length) {var empty = document.createElement('li'); empty.className = 'knowledge-chapters-empty'; empty.textContent = marker && marker.dataset.status === 'loading' ? '加载目录…' : '暂无章节'; list.appendChild(empty);}
     page.insertBefore(rail, page.querySelector('.main'));
     var narrow = window.matchMedia('(max-width: 768px)'), frame = 0, active = -1, header = page.querySelector('.main > .header');
@@ -152,16 +194,17 @@
       frame = 0; if (!headings.length || !root.isConnected) return;
       var tabs = root.querySelector('.knowledge-tabs');
       if (!headings[0].isConnected) return;
-      var threshold = scroller.getBoundingClientRect().top + (tabs ? Math.max(80, tabs.offsetHeight) : 4) + 4, index = 0;
+      var threshold = scroller.getBoundingClientRect().top + (tabs ? Math.max(80, tabs.offsetHeight) : 80) + 4, index = 0;
       headings.forEach(function (heading, i) {if (heading.getBoundingClientRect().top <= threshold) index = i;});
       if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2) index = headings.length - 1;
-      if (index === active) return;
-      if (links[active]) links[active].removeAttribute('aria-current');
-      active = index; links[index].setAttribute('aria-current', 'location');
-      // Keep the active number visible without scrolling the article or stealing focus.
-      var item = links[index].getBoundingClientRect(), bounds = list.getBoundingClientRect();
-      if (item.top < bounds.top) list.scrollTop += item.top - bounds.top;
-      else if (item.bottom > bounds.bottom) list.scrollTop += item.bottom - bounds.bottom;
+      if (index !== active) {
+        if (links[active]) links[active].removeAttribute('aria-current');
+        nodes.forEach(function (node) {node.link.classList.remove('knowledge-chapter-path');});
+        active = index; links[index].setAttribute('aria-current', 'location');
+        reveal(nodes[index], false);
+        for (var parent = nodes[index].parent; parent; parent = parent.parent) parent.link.classList.add('knowledge-chapter-path');
+      }
+      keepVisible();
     }
     function schedule() {if (!frame) frame = requestAnimationFrame(update);}
     function sync() {
@@ -178,10 +221,11 @@
     }
     toggle.addEventListener('click', function () {if (narrow.matches) mobileExpanded = !mobileExpanded; else desktopCollapsed = !desktopCollapsed; sync();});
     rail.addEventListener('keydown', function (e) {if (e.key === 'Escape' && narrow.matches && mobileExpanded) {e.preventDefault(); mobileExpanded = false; sync(); toggle.focus({preventScroll: true});}});
+    window.addEventListener('hashchange', revealAnchor);
     scroller.addEventListener('scroll', schedule, {passive: true}); narrow.addEventListener('change', sync);
     var resize = new ResizeObserver(layout); resize.observe(root); resize.observe(scroller); if (header) {resize.observe(header); var headerNav = header.querySelector('.header-nav'); if (headerNav) resize.observe(headerNav);}
-    navigationCleanup = function () {cancelAnimationFrame(frame); scroller.removeEventListener('scroll', schedule); narrow.removeEventListener('change', sync); resize.disconnect(); rail.remove(); page.classList.remove('knowledge-page', 'knowledge-rail-collapsed', 'knowledge-rail-expanded'); page.style.removeProperty('--knowledge-header-height'); navigationCleanup = null;};
-    sync(); layout();
+    navigationCleanup = function () {cancelAnimationFrame(frame); window.removeEventListener('hashchange', revealAnchor); scroller.removeEventListener('scroll', schedule); narrow.removeEventListener('change', sync); resize.disconnect(); rail.remove(); page.classList.remove('knowledge-page', 'knowledge-rail-collapsed', 'knowledge-rail-expanded'); page.style.removeProperty('--knowledge-header-height'); navigationCleanup = null;};
+    revealAnchor(); sync(); layout();
   }
   function enhance(root) {
     var marker = root.querySelector('.knowledge-topic');
@@ -189,8 +233,8 @@
       root.classList.remove('knowledge-reader'); delete root.dataset.view;
       // Reuse the article rail for ordinary Markdown, without adding reading modes.
       var currentHeadings = Array.from(root.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]'));
-      if (root.dataset.ordinaryRail === location.hash && currentHeadings.length === ordinaryHeadings.length && currentHeadings.every(function (h, i) {return h === ordinaryHeadings[i];}) && root.closest('.page').querySelector('.knowledge-rail')) return;
-      navigation(root, null, null); ordinaryHeadings = currentHeadings; root.dataset.ordinaryRail = location.hash; return;
+      if (root.dataset.ordinaryRail === route().path && currentHeadings.length === ordinaryHeadings.length && currentHeadings.every(function (h, i) {return h === ordinaryHeadings[i];}) && root.closest('.page').querySelector('.knowledge-rail')) return;
+      navigation(root, null, null); ordinaryHeadings = currentHeadings; root.dataset.ordinaryRail = route().path; return;
     }
     delete root.dataset.ordinaryRail;
     ordinaryHeadings = [];

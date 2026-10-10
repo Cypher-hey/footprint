@@ -1,3 +1,4 @@
+const {assertOutline} = require('./toc-assertions.cjs');
 /* Run against a built site in the Mini's existing Chrome. No new dependencies. */
 const {chromium, expect} = require(process.env.FOOTPRINT_PLAYWRIGHT || '@playwright/test');
 const fs = require('node:fs'), path = require('node:path');
@@ -43,6 +44,9 @@ fs.mkdirSync(out, {recursive: true});
         await screenshot(page, `navigation-${width}-expanded.png`);
         await page.keyboard.press('Escape'); await expect(toggle).toHaveAttribute('aria-expanded', 'false'); await expect(toggle).toBeFocused();
       } else {await expect(page.locator('.knowledge-chapter-name').first()).toBeHidden(); await toggle.click();}
+      // Compact links are roots only; expanded navigation can choose any nested item.
+      if (width < 769) await toggle.click();
+      await page.evaluate(() => document.querySelectorAll('.knowledge-branch-toggle[aria-expanded=false]').forEach(b => b.click()));
       const chapter = page.locator('.knowledge-chapter').nth(6), target = new URL(await chapter.getAttribute('href'), base).hash;
       await chapter.focus(); await page.keyboard.press('Enter'); await expect(page).toHaveURL(base + target); await ready(page);
       await expect(page.locator('.knowledge-diagram svg')).toHaveCount(4);
@@ -63,6 +67,8 @@ fs.mkdirSync(out, {recursive: true});
       await expect(page.locator('.knowledge-chapter[aria-current=location]')).toHaveAttribute('href', scrolledTarget);
       await expect(page).toHaveURL(base + target);
       // The long chapter list scrolls independently and stops wheel chaining at its boundary.
+      if (width < 769) await toggle.click();
+      await page.evaluate(() => document.querySelectorAll('.knowledge-branch-toggle[aria-expanded=false]').forEach(b => b.click()));
       const before = await page.locator('.content-wrap').evaluate(e => e.scrollTop);
       await page.locator('.knowledge-chapters').hover(); await page.mouse.wheel(0, 1600);
       await expect.poll(() => page.locator('.knowledge-chapters').evaluate(e => e.scrollTop)).toBeGreaterThan(0);
@@ -75,6 +81,7 @@ fs.mkdirSync(out, {recursive: true});
         await page.getByRole('tab', {name: label, exact: true}).click(); await expect(page).toHaveURL(new RegExp('view=' + key + '$')); await ready(page);
         await expect(page.locator('#knowledge-tab-' + key)).toHaveAttribute('aria-selected', 'true'); await expect(page.locator('#knowledge-tab-' + key)).toBeFocused();
         await expect(page.locator('.knowledge-chapter')).toHaveCount(await page.locator('.knowledge-panel h2[id], .knowledge-panel h3[id], .knowledge-panel h4[id], .knowledge-panel h5[id], .knowledge-panel h6[id]').count());
+        await assertOutline(page, expect);
         expect(await page.locator('.content-wrap').evaluate(e => e.scrollTop)).toBeLessThan(2);
       }
       await page.keyboard.press('ArrowRight'); await ready(page); await expect(page.locator('#knowledge-tab-diagrams')).toBeFocused();
@@ -111,6 +118,7 @@ fs.mkdirSync(out, {recursive: true});
         await page.goto(base + '#' + topic.legacyRoutes[0] + '?view=' + mode.id); await ready(page);
         if (mode.id !== 'overview') await expect(page.locator('.knowledge-diagram svg')).toHaveCount(topic.figureCount);
         const widths = await page.evaluate(() => {const el = document.querySelector('.content-wrap'); return {document: document.documentElement.scrollWidth, article: el.scrollWidth, available: el.clientWidth};});
+        await assertOutline(page, expect);
         expect(widths.document, topic.id + ':' + mode.id).toBe(320); expect(widths.article, topic.id + ':' + mode.id).toBe(widths.available);
       }
     }
@@ -118,6 +126,7 @@ fs.mkdirSync(out, {recursive: true});
     const context = await browser.newContext(); page = await context.newPage();
     await go(page); await page.evaluate(() => {docute.router.push('/note/ai/03-agent-loop?view=all');}); await ready(page);
     await expect(page.locator('.knowledge-diagram svg')).toHaveCount(8);
+    await assertOutline(page, expect);
     await page.emulateMedia({media: 'print'}); await expect(page.locator('.knowledge-rail')).toBeHidden(); await expect(page.locator('.knowledge-tabs')).toBeHidden();
     expect(await page.locator('.main').evaluate(e => e.getBoundingClientRect().width)).toBe(await page.evaluate(() => innerWidth));
     await page.pdf({path: path.join(out, 'navigation-complete-print.pdf')}); record('complete view print without navigation'); await context.close();

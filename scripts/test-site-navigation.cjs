@@ -1,3 +1,4 @@
+const {assertOutline} = require('./toc-assertions.cjs');
 const {chromium, expect} = require(process.env.FOOTPRINT_PLAYWRIGHT || '@playwright/test');
 const fs = require('node:fs'), path = require('node:path');
 const base = process.env.FOOTPRINT_BASE || 'http://127.0.0.1:9094/';
@@ -47,13 +48,14 @@ const out = path.resolve(process.env.FOOTPRINT_EVIDENCE || 'evidence/site-naviga
       await expect(page).toHaveURL(base + '#/note/basis/array'); await expect(page.locator('.markdown-body h1')).toContainText('数组'); await expect(page.locator('.catalog-panel')).toBeHidden();
       await expect(page.getByRole('tab')).toHaveCount(0); await expect(page.locator('.knowledge-rail')).toHaveCount(1);
       await expect(page.locator('.knowledge-chapter')).toHaveCount(await page.locator('.markdown-body h2[id],.markdown-body h3[id],.markdown-body h4[id],.markdown-body h5[id],.markdown-body h6[id]').count());
+      await assertOutline(page, expect);
       const layout = await page.evaluate(() => {const main = document.querySelector('.main').getBoundingClientRect(), p = document.querySelector('.markdown-body p').getBoundingClientRect(), scroll = document.querySelector('.content-wrap');return {right:main.right,left:main.left,width:main.width,paragraph:p.width,document:document.documentElement.scrollWidth,article:scroll.scrollWidth,available:scroll.clientWidth};});
       expect(layout.right).toBe(width); expect(layout.document).toBe(width); expect(layout.article).toBe(layout.available); if (width >= 1920) expect(layout.paragraph).toBeLessThan(layout.width - 200);
       await page.locator('.catalog-arrow').click(); await page.mouse.click(width - 6, height - 4); await expect(page.locator('.catalog-panel')).toBeHidden();
       await page.goBack(); await expect(page.locator('.knowledge-topic')).toHaveAttribute('data-status','ready');
       await page.goForward(); await expect(page.locator('.markdown-body h1')).toContainText('数组');
       if (width < 769) {await page.locator('.knowledge-rail-toggle').click(); await expect(page.locator('.knowledge-chapter-name').first()).toBeVisible(); await page.keyboard.press('Escape'); await expect(page.locator('.knowledge-rail-toggle')).toBeFocused();}
-      const ordinaryChapter = page.locator('.knowledge-chapter').nth(3), ordinaryHref = await ordinaryChapter.getAttribute('href');
+      const ordinaryChapter = page.locator('.knowledge-chapters > li > .knowledge-chapter-row > .knowledge-chapter').nth(3), ordinaryHref = await ordinaryChapter.getAttribute('href');
       await ordinaryChapter.focus(); await page.keyboard.press('Enter'); await expect(page).toHaveURL(base + ordinaryHref);
       const ordinaryId = new URLSearchParams(ordinaryHref.split('?')[1]).get('id');
       await expect(page.locator('[id="' + ordinaryId + '"]')).toBeFocused();
@@ -84,6 +86,7 @@ const out = path.resolve(process.env.FOOTPRINT_EVIDENCE || 'evidence/site-naviga
       await expect(page.locator('#nprogress')).toHaveCount(0);
       await expect(page.locator('.not-found')).toHaveCount(0);
       await expect(page.locator('.knowledge-chapter')).toHaveCount(await page.locator('.markdown-body h2[id],.markdown-body h3[id],.markdown-body h4[id],.markdown-body h5[id],.markdown-body h6[id]').count());
+      await assertOutline(page, expect);
     }
     record(process.env.FOOTPRINT_SKIP_ROUTE_SWEEP ? 'representative routes after final adjustment' : 'all 180 canonical articles navigate through actual routes', {routes:process.env.FOOTPRINT_SKIP_ROUTE_SWEEP ? 5 : routes.length});
     await page.setViewportSize({width:390,height:812}); await page.goto(base+'#/note/ai/03-agent-loop'); await expect(page.locator('.knowledge-topic')).toHaveAttribute('data-status','ready');
