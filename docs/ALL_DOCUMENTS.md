@@ -20,6 +20,8 @@
 - [AI 基础全景：模型、数据、推理与应用系统](note/ai/01-foundations.md)
 - [推理请求：输入、采样、结构化输出与流式传输](note/ai/02-inference.md)
 - [Agent Loop：工具结果怎样成为下一轮输入](note/ai/03-agent-loop.md)
+- [Tool Calling：模型提议怎样成为受控执行](note/ai/03-tool-calling.md)
+- [ReAct：推理与行动如何交替参与求解](note/ai/03-react.md)
 - [Context Builder：选择、预算、压缩与记忆](note/ai/04-context-memory.md)
 - [工具、MCP 与 Skills：三种不同的能力边界](note/ai/05-tools-mcp-skills.md)
 - [RAG 与长期记忆：从找得到到用得对](note/ai/06-retrieval.md)
