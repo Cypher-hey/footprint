@@ -4,6 +4,12 @@
 > 范围：AI 应用与 Agent 工程基础，向模型原理和专题实践延伸。更新：2026-10-08。
 > 18 篇 Base 主题正文，编号为稳定入口，不代表难度或阅读次序。模型/API/站点运行未因此视为已验证。
 
+## 三视图阅读样板
+
+[Agent Loop](03-agent-loop.md) · [Tool Calling](03-tool-calling.md) · [ReAct](03-react.md)
+
+每页先给显著摘要，再按“完整口语答案 / 书面精讲 / 概念图解”阅读。网站提供 Tab，GitHub 展示同一作者源的连续正文。仍保留 18 个 Base 主题入口；新增两个条目是 03 的细分解释，不另设课程次序。验收与实现说明见[三视图样板说明](../../implementation/READING_SAMPLES.md)。
+
 ## 1. 从哪里进入
 
 - [知识关系图](KNOWLEDGE_MAP.md)：按问题定位，不必按编号顺序阅读。
