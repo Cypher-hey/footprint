@@ -19,9 +19,10 @@
   "scripts": {
     "build": "node scripts/build-site.mjs",
     "check:content": "node scripts/check-reading-samples.mjs",
-    "test": "node scripts/check-reading-samples.mjs && node --check docs/asset/topic-loader.js && node --check docs/asset/knowledge-reader.js",
+    "test": "node scripts/check-reading-samples.mjs && node scripts/check-site-navigation.mjs && node --check docs/asset/topic-loader.js && node --check docs/asset/knowledge-reader.js && node --check docs/asset/site-navigation.js && node --check docs/asset/site-navigation-data.js",
     "test:browser": "node scripts/test-knowledge-reader.cjs",
-    "test:navigation": "node scripts/test-reading-navigation.cjs"
+    "test:navigation": "node scripts/test-reading-navigation.cjs",
+    "test:site-navigation": "node scripts/test-site-navigation.cjs"
   },
   "repository": {
     "type": "git",

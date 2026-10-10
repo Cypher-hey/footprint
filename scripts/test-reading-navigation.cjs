@@ -33,7 +33,7 @@ fs.mkdirSync(out, {recursive: true});
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
       expect(await page.locator('.content-wrap').evaluate(e => e.scrollWidth)).toBe(await page.locator('.content-wrap').evaluate(e => e.clientWidth));
       if (width > 768) {
-        const menu = await page.evaluate(() => ({bottom: Math.max(...Array.from(document.querySelectorAll('.header.is-desktop .nav-list > .nav-item'), e => e.getBoundingClientRect().bottom)), title: document.querySelector('.knowledge-reader h1').getBoundingClientRect().top, scroll: document.querySelector('.content-wrap').getBoundingClientRect().top}));
+        const menu = await page.evaluate(() => ({bottom: document.querySelector('.footprint-header').getBoundingClientRect().bottom, title: document.querySelector('.knowledge-reader h1').getBoundingClientRect().top, scroll: document.querySelector('.content-wrap').getBoundingClientRect().top}));
         expect(menu.title).toBeGreaterThan(menu.bottom); expect(menu.scroll).toBeGreaterThanOrEqual(menu.bottom);
       }
       await screenshot(page, `navigation-${width}-top.png`);
@@ -98,8 +98,9 @@ fs.mkdirSync(out, {recursive: true});
       await page.goForward(); await ready(page); await expect(page.locator('.knowledge-reader')).toHaveAttribute('data-view', 'overview');
       await go(page, '03-tool-calling'); await expect(page.locator('.knowledge-chapter')).not.toHaveCount(0);
       await page.goto(base + '#/note/basis/array'); await expect(page.locator('.markdown-body h1')).toBeVisible();
-      await expect(page.locator('.knowledge-rail')).toHaveCount(0); await expect(page.locator('.knowledge-page')).toHaveCount(0);
-      if (width < 769) {await page.locator('.mobile-header .header-left').click(); await expect(page.locator('.sidebar')).toHaveClass(/visible/); await expect(page.locator('.sidebar .header-nav')).toBeVisible();}
+      await expect(page.locator('.knowledge-rail')).toHaveCount(1); await expect(page.getByRole('tab')).toHaveCount(0);
+      await expect(page.locator('.knowledge-chapter')).not.toHaveCount(0);
+      if (width < 769) {await page.locator('.catalog-arrow').click(); await expect(page.locator('.catalog-panel')).toBeVisible(); await page.keyboard.press('Escape');}
       record(`navigation ${width}px`, {dimensions, geometry}); await context.close();
     }
     const sweep = await browser.newContext({viewport: {width: 320, height: 812}, isMobile: true, hasTouch: true});

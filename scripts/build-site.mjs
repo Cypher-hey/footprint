@@ -14,7 +14,7 @@ for (const file of files) {
   mkdirSync(dirname(resolve(out, relative)), {recursive: true}); copyFileSync(resolve(root, file), resolve(out, relative));
 }
 // New source files are explicit so an untracked preview is complete too.
-for (const file of ['topic-loader.js', 'mermaid-11.17.2.min.js', 'mermaid-LICENSE']) {mkdirSync(resolve(out, 'asset'), {recursive: true}); copyFileSync(resolve(root, 'docs/asset', file), resolve(out, 'asset', file));}
+for (const file of ['topic-loader.js', 'mermaid-11.17.2.min.js', 'mermaid-LICENSE', 'site-navigation-data.js', 'site-navigation.js', 'site-navigation.css']) {mkdirSync(resolve(out, 'asset'), {recursive: true}); copyFileSync(resolve(root, 'docs/asset', file), resolve(out, 'asset', file));}
 const result = build(out);
 const commit = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
 const branch = execFileSync('git', ['branch', '--show-current'], {cwd: root, encoding: 'utf8'}).trim();

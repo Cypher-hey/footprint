@@ -1,0 +1,710 @@
+{
+  "baselineCommit": "253a5e0ff7ed7cfff1e661b6c563a61626fdb260",
+  "baselineEntries": [
+    {
+      "title": "知识地图与全部主题",
+      "path": "/note/ai/README",
+      "oldDomain": "AI 知识"
+    },
+    {
+      "title": "Agent Loop",
+      "path": "/note/ai/03-agent-loop",
+      "oldDomain": "AI 知识"
+    },
+    {
+      "title": "Tool Calling",
+      "path": "/note/ai/03-tool-calling",
+      "oldDomain": "AI 知识"
+    },
+    {
+      "title": "ReAct",
+      "path": "/note/ai/03-react",
+      "oldDomain": "AI 知识"
+    },
+    {
+      "title": "基础概念",
+      "path": "/note/basis/concepts",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "函数",
+      "path": "/note/basis/func",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "数组",
+      "path": "/note/basis/array",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "字符串",
+      "path": "/note/basis/string",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "正则表达式",
+      "path": "/note/basis/regexp",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "cookie和storage",
+      "path": "/note/basis/cookie-storage",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "异步处理",
+      "path": "/note/basis/async",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "DOM操作",
+      "path": "/note/dom/dom",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "DOM事件",
+      "path": "/note/dom/dom-event",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "JS进阶",
+      "path": "/note/advanceJS/advance-base",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "improvement",
+      "path": "/note/advanceJS/useful-tips",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "JS-snippets",
+      "path": "/note/advanceJS/useful-snippets",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "stack-snippets",
+      "path": "/note/advanceJS/stackoverflow-snippets",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "design-pattern",
+      "path": "/note/advanceJS/design-pattern",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "js编码规范 .eslitrc.js",
+      "path": "/note/specification/eslintrc",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "无障碍访问与ARIA",
+      "path": "/note/specification/aria",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "文档模式",
+      "path": "/note/specification/dtd",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "计算机是怎样跑起来的",
+      "path": "/note/",
+      "oldDomain": "基础"
+    },
+    {
+      "title": "CSS选择器整理",
+      "path": "/note/css3/selector",
+      "oldDomain": "H5/CSS"
+    },
+    {
+      "title": "transform",
+      "path": "/note/css3/transform",
+      "oldDomain": "H5/CSS"
+    },
+    {
+      "title": "从矩阵与空间操作的关系理解CSS3的transform",
+      "path": "/note/css3/matrix",
+      "oldDomain": "H5/CSS"
+    },
+    {
+      "title": "BFC",
+      "path": "/note/css3/bfc",
+      "oldDomain": "H5/CSS"
+    },
+    {
+      "title": "常见布局",
+      "path": "/note/css3/layout",
+      "oldDomain": "H5/CSS"
+    },
+    {
+      "title": "git简明",
+      "path": "/note/git/git-base",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "git常用命令及技巧",
+      "path": "/note/git/commonly-used",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "config配置项",
+      "path": "/note/git/config",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "Git版本控制管理",
+      "path": "/note/",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "npm基础",
+      "path": "/note/npm/npm-base",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "Ubuntu使用知识积累",
+      "path": "/note/linux/ubuntu-utils",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "Linux基础",
+      "path": "/note/linux/linux-base",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "常用命令",
+      "path": "/note/linux/linux-command",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "Vim基础",
+      "path": "/note/linux/vim",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "nginx基础",
+      "path": "/note/nginx/nginx-base",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "代码规范与检查",
+      "path": "/note/deploy/norm",
+      "oldDomain": "Tools"
+    },
+    {
+      "title": "http相关基本概念",
+      "path": "/note/http/http-concepts",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "get和post请求的区别",
+      "path": "/note/http/get-post",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "从输入URL到页面加载完成的过程中都发生了什么事情？",
+      "path": "/note/http/url-render",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "DNS",
+      "path": "/note/http/dns",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "ajax及其优缺点",
+      "path": "/note/http/ajax",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "跨域及跨域的方案",
+      "path": "/note/http/cross-domain",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "强缓存与协商缓存",
+      "path": "/note/http/cache",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "CSP(内容安全策略)",
+      "path": "/note/security/csp",
+      "oldDomain": "网络/安全"
+    },
+    {
+      "title": "ECMAScript",
+      "path": "/note/performance/ECMAScript",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "DOM",
+      "path": "/note/performance/DOM",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "H5 性能优化整理",
+      "path": "/note/performance/h5-perf",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "基础性能知识",
+      "path": "/note/performance/performance",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "浏览器渲染页面的过程",
+      "path": "/note/performance/render-page",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "重排和重绘的概念及触发条件查看这里",
+      "path": "/note/performance/reflow-repaint",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "数据直出与服务端渲染的首屏优化",
+      "path": "/note/performance/ssr",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "兼容性",
+      "path": "/note/compatibility/compatibility",
+      "oldDomain": "性能/兼容"
+    },
+    {
+      "title": "数据结构以及相关术语的概念",
+      "path": "/note/algorithm/data-structure",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "栈",
+      "path": "/note/algorithm/stack",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "队列",
+      "path": "/note/algorithm/queue",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "链表",
+      "path": "/note/algorithm/linked-list",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "二叉树和二叉查找树",
+      "path": "/note/algorithm/bst",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "图",
+      "path": "/note/algorithm/graph",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "算法的时间复杂度和空间复杂度",
+      "path": "/note/algorithm/time-space",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "基本排序算法",
+      "path": "/note/algorithm/basic-sort",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "高级排序算法",
+      "path": "/note/algorithm/advance-sort",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "collection1",
+      "path": "/note/algorithm/example-1",
+      "oldDomain": "算法/数据结构"
+    },
+    {
+      "title": "Vue实例与生命周期",
+      "path": "/note/vue/cycle-life",
+      "oldDomain": "框架"
+    },
+    {
+      "title": "数据双向绑定",
+      "path": "/note/vue/data-bind",
+      "oldDomain": "框架"
+    },
+    {
+      "title": "React基础",
+      "path": "/note/react/react-base",
+      "oldDomain": "框架"
+    },
+    {
+      "title": "Redux",
+      "path": "/note/react/redux-base",
+      "oldDomain": "框架"
+    },
+    {
+      "title": "📚 文档首页",
+      "path": "/note/openclaw-agent/README",
+      "oldDomain": "OpenClaw Agent"
+    },
+    {
+      "title": "main (主 Agent)",
+      "path": "/note/openclaw-agent/main",
+      "oldDomain": "OpenClaw Agent"
+    },
+    {
+      "title": "agent-frontend",
+      "path": "/note/openclaw-agent/agent-frontend",
+      "oldDomain": "OpenClaw Agent"
+    },
+    {
+      "title": "agent-source-code",
+      "path": "/note/openclaw-agent/agent-source-code",
+      "oldDomain": "OpenClaw Agent"
+    },
+    {
+      "title": "agent-invoice",
+      "path": "/note/openclaw-agent/agent-invoice",
+      "oldDomain": "OpenClaw Agent"
+    },
+    {
+      "title": "架构设计",
+      "path": "/note/sourceLearn/openclaw-agent-skills/ch01-agent-architecture",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "技能系统",
+      "path": "/note/sourceLearn/openclaw-agent-skills/ch02-skills-system",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "技能集成",
+      "path": "/note/sourceLearn/openclaw-agent-skills/ch03-agent-skills-integration",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "架构对比",
+      "path": "/note/sourceLearn/openclaw-agent-skills/ch04-architecture-comparison",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "架构概览",
+      "path": "/note/sourceLearn/preactAnalysis/ch01-architecture-overview",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "h 函数与 VNode",
+      "path": "/note/sourceLearn/preactAnalysis/ch02-h-function-vnode",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "渲染挂载流程",
+      "path": "/note/sourceLearn/preactAnalysis/ch03-render-mount-flow",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Diff 算法核心",
+      "path": "/note/sourceLearn/preactAnalysis/ch04-diff-algorithm-core",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Children Diff 与 Key",
+      "path": "/note/sourceLearn/preactAnalysis/ch05-children-diff-keyed",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "组件生命周期",
+      "path": "/note/sourceLearn/preactAnalysis/ch06-component-lifecycle",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Hooks 实现",
+      "path": "/note/sourceLearn/preactAnalysis/ch07-hooks-implementation",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "总结与最佳实践",
+      "path": "/note/sourceLearn/preactAnalysis/ch08-summary-best-practices",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "架构概览",
+      "path": "/note/sourceLearn/react-native-analysis/ch01-architecture-overview",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "JavaScript 端",
+      "path": "/note/sourceLearn/react-native-analysis/ch02-javascript-side",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Native 端",
+      "path": "/note/sourceLearn/react-native-analysis/ch03-native-side",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "渲染系统",
+      "path": "/note/sourceLearn/react-native-analysis/ch04-rendering-system",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "总结与最佳实践",
+      "path": "/note/sourceLearn/react-native-analysis/ch05-summary-best-practices",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "概览",
+      "path": "/note/sourceLearn/zustandAnalysis/ch01-overview",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "第01章：Introduction",
+      "path": "/note/sourceLearn/mobxAnalysis/ch01-introduction",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "第02章：Core Algorithm",
+      "path": "/note/sourceLearn/mobxAnalysis/ch02-core-algorithm",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "第03章：Types Layer",
+      "path": "/note/sourceLearn/mobxAnalysis/ch03-types-layer",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "第04章：Api Layer",
+      "path": "/note/sourceLearn/mobxAnalysis/ch04-api-layer",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "第05章：Best Practices",
+      "path": "/note/sourceLearn/mobxAnalysis/ch05-best-practices",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Store 创建",
+      "path": "/note/sourceLearn/zustandAnalysis/ch02-store-creation",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "React 集成",
+      "path": "/note/sourceLearn/zustandAnalysis/ch03-react-integration",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "中间件",
+      "path": "/note/sourceLearn/zustandAnalysis/ch04-middleware",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "流程分析",
+      "path": "/note/sourceLearn/zustandAnalysis/ch05-flow-analysis",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "总结与最佳实践",
+      "path": "/note/sourceLearn/zustandAnalysis/ch06-summary-best-practices",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "项目概览",
+      "path": "/note/sourceLearn/webpackAnalysis/ch01-introduction",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Compiler 与 Compilation",
+      "path": "/note/sourceLearn/webpackAnalysis/ch02-compiler-compilation",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Module 与依赖解析",
+      "path": "/note/sourceLearn/webpackAnalysis/ch03-module-dependency",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Chunk 与代码分割",
+      "path": "/note/sourceLearn/webpackAnalysis/ch04-chunk-split",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "代码生成与输出",
+      "path": "/note/sourceLearn/webpackAnalysis/ch05-code-generation",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "运行时机制与 HMR",
+      "path": "/note/sourceLearn/webpackAnalysis/ch06-runtime-hmr",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "缓存机制与性能优化",
+      "path": "/note/sourceLearn/webpackAnalysis/ch07-cache-optimization",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Tree Shaking 与优化",
+      "path": "/note/sourceLearn/webpackAnalysis/ch08-tree-shaking",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "Module Federation",
+      "path": "/note/sourceLearn/webpackAnalysis/ch09-module-federation",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "总结与最佳实践",
+      "path": "/note/sourceLearn/webpackAnalysis/ch10-summary",
+      "oldDomain": "源码解构"
+    },
+    {
+      "title": "js",
+      "path": "/note/point/collect-js",
+      "oldDomain": "point"
+    },
+    {
+      "title": "http",
+      "path": "/note/point/collect-http",
+      "oldDomain": "point"
+    },
+    {
+      "title": "css",
+      "path": "/note/point/collect-css",
+      "oldDomain": "point"
+    },
+    {
+      "title": "html",
+      "path": "/note/point/collect-html",
+      "oldDomain": "point"
+    },
+    {
+      "title": "web",
+      "path": "/note/point/collect-web",
+      "oldDomain": "point"
+    },
+    {
+      "title": "音标与发音",
+      "path": "/note/cultureLanguage/english/pronunciation",
+      "oldDomain": "外语"
+    },
+    {
+      "title": "常用",
+      "path": "/note/cultureLanguage/english/commonly-used",
+      "oldDomain": "外语"
+    },
+    {
+      "title": "音标与发音",
+      "path": "/note/cultureLanguage/japanese/pronunciation",
+      "oldDomain": "外语"
+    },
+    {
+      "title": "常用",
+      "path": "/note/cultureLanguage/japanese/commonly-used",
+      "oldDomain": "外语"
+    },
+    {
+      "title": "this&OBJECT PROTOTYPE",
+      "path": "/note/ydkJS/this&OBJECT PROTOTYPES",
+      "oldDomain": "read"
+    },
+    {
+      "title": "JavaScript核心原理精讲",
+      "path": "/note/readings/lagou/js",
+      "oldDomain": "read"
+    },
+    {
+      "title": "Flutter",
+      "path": "/note/readings/lagou/flutter",
+      "oldDomain": "read"
+    }
+  ],
+  "removed": [
+    {
+      "title": "计算机是怎样跑起来的",
+      "path": "/note/",
+      "oldDomain": "基础",
+      "reason": "占位目录，未对应文章"
+    },
+    {
+      "title": "Git版本控制管理",
+      "path": "/note/",
+      "oldDomain": "Tools",
+      "reason": "占位目录，未对应文章"
+    },
+    {
+      "title": "常用",
+      "path": "/note/cultureLanguage/english/commonly-used",
+      "oldDomain": "外语",
+      "reason": "仓库无对应 Markdown"
+    },
+    {
+      "title": "常用",
+      "path": "/note/cultureLanguage/japanese/commonly-used",
+      "oldDomain": "外语",
+      "reason": "仓库无对应 Markdown"
+    }
+  ],
+  "added": [
+    "/note/advanceJS/APL",
+    "/note/advanceJS/js-in-use",
+    "/note/advanceJS/node",
+    "/note/ai/01-foundations",
+    "/note/ai/02-inference",
+    "/note/ai/04-context-memory",
+    "/note/ai/05-tools-mcp-skills",
+    "/note/ai/06-retrieval",
+    "/note/ai/07-ui-ir",
+    "/note/ai/08-workflow-state",
+    "/note/ai/09-reliability-security",
+    "/note/ai/10-evaluation",
+    "/note/ai/11-multi-agent",
+    "/note/ai/12-ai-coding",
+    "/note/ai/13-training-inference-systems",
+    "/note/ai/14-learning-project",
+    "/note/ai/15-machine-learning",
+    "/note/ai/16-language-models",
+    "/note/ai/17-prompt-behavior",
+    "/note/ai/18-multimodal",
+    "/note/ai/ADVANCE",
+    "/note/ai/CONTENT_REVIEW_2026-10-10",
+    "/note/ai/GLOSSARY",
+    "/note/ai/KNOWLEDGE_MAP",
+    "/note/ai/KNOWLEDGE_SPEC",
+    "/note/ai/REVIEW",
+    "/note/ai/TOPIC_AUTHORING",
+    "/note/basis/javascript-info",
+    "/note/basis/module",
+    "/note/collect/javascript",
+    "/note/collect/related-work",
+    "/note/functionalProgram/fp-base",
+    "/note/h5/rem",
+    "/note/linux/shell",
+    "/note/mermaid-diag",
+    "/note/mermaid-test",
+    "/note/openclaw-agent/01-soul",
+    "/note/openclaw-agent/02-agents",
+    "/note/openclaw-agent/03-user",
+    "/note/openclaw-agent/04-identity",
+    "/note/openclaw-agent/05-tools",
+    "/note/openclaw-agent/06-bootstrap",
+    "/note/openclaw-agent/07-memory",
+    "/note/point/collect-code",
+    "/note/point/collect-h5",
+    "/note/point/collect-ti",
+    "/note/readings/hjswks/memory-leaks",
+    "/note/sourceLearn/mermaid-test",
+    "/note/sourceLearn/mobxAnalysis/00-README",
+    "/note/sourceLearn/webpackAnalysis/00-README",
+    "/note/sourceLearn/webpackAnalysis/README",
+    "/note/specification/cypher",
+    "/note/ts/base",
+    "/note/ts/symbols",
+    "/note/vue/vue-records",
+    "/note/vue/vue3",
+    "/note/ydkJS/note",
+    "/README",
+    "/ALL_DOCUMENTS",
+    "/MERMAID_SPEC",
+    "/REVIEW_STATUS"
+  ],
+  "note": "旧空 TS/CSS label 移除；以仓库真实 TS 文件建立 TypeScript 分组。所有源码章节按路径归项目。AI topics 作者包通过既有主题路由访问，不重复列出模式/图源。"
+}

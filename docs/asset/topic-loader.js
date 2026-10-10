@@ -4,7 +4,7 @@
   var manifest = window.FootprintTopics, cache = new Map(), epoch = 0, activePage, api;
   var selected, focusMode, focusTopic, positions = new Map(), lastURL = '', restoring = false, normalizing = '';
   var aliases = {oral: 'overview', written: 'explanation', diagram: 'diagrams'};
-  var navigationCleanup, desktopCollapsed = false, mobileExpanded = false, anchorFocus = null;
+  var navigationCleanup, desktopCollapsed = false, mobileExpanded = false, anchorFocus = null, ordinaryHeadings = [];
   var modeIcons = {
     overview: '<path d="M4 5h16M4 12h11M4 19h7"/>',
     explanation: '<path d="M12 5v15M12 5C9 3 5 3 2 4v14c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 1Z"/>',
@@ -125,29 +125,34 @@
     toggle.innerHTML = icon('<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M14 9l3 3-3 3"/>');
     head.appendChild(title); head.appendChild(toggle); rail.appendChild(head);
     var list = document.createElement('ol'); list.id = 'knowledge-chapters'; list.className = 'knowledge-chapters'; rail.appendChild(list);
-    var headings = Array.from(root.querySelectorAll('.knowledge-panel h2[id], .knowledge-panel h3[id], .knowledge-panel h4[id], .knowledge-panel h5[id], .knowledge-panel h6[id]'));
+    var headings = Array.from(root.querySelectorAll(t ? '.knowledge-panel h2[id], .knowledge-panel h3[id], .knowledge-panel h4[id], .knowledge-panel h5[id], .knowledge-panel h6[id]' : 'h2[id], h3[id], h4[id], h5[id], h6[id]'));
     var links = headings.map(function (heading, i) {
       var label = heading.cloneNode(true); label.querySelectorAll('.anchor').forEach(function (a) {a.remove();});
       var text = label.textContent.trim(), item = document.createElement('li'), link = document.createElement('a');
-      link.className = 'knowledge-chapter'; link.href = href(t, marker.dataset.mode, heading.id); link.title = text; link.setAttribute('aria-label', String(i + 1) + '. ' + text); link.dataset.level = heading.tagName.slice(1);
+      link.className = 'knowledge-chapter'; link.href = t ? href(t, marker.dataset.mode, heading.id) : '#' + route().path + '?id=' + encodeURIComponent(heading.id); link.title = text; link.setAttribute('aria-label', String(i + 1) + '. ' + text); link.dataset.level = heading.tagName.slice(1);
       var number = document.createElement('span'); number.className = 'knowledge-chapter-number'; number.setAttribute('aria-hidden', 'true'); number.textContent = String(i + 1).padStart(2, '0');
       var name = document.createElement('span'); name.className = 'knowledge-chapter-name'; name.textContent = text;
       link.appendChild(number); link.appendChild(name); item.appendChild(link); list.appendChild(item);
       link.addEventListener('click', function (e) {
         if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault(); restoring = false; focusMode = null; anchorFocus = heading.id; mobileExpanded = false; sync();
+        if (!t) {
+          api.router.push(link.hash.slice(1));
+          heading.scrollIntoView({block: 'start'}); heading.tabIndex = -1; heading.focus({preventScroll: true});
+          return;
+        }
         if (location.hash === link.hash) readyPosition(selected, epoch);
         else api.router.push(link.hash.slice(1));
       }); return link;
     });
-    if (!headings.length) {var empty = document.createElement('li'); empty.className = 'knowledge-chapters-empty'; empty.textContent = marker.dataset.status === 'loading' ? '加载目录…' : '暂无章节'; list.appendChild(empty);}
+    if (!headings.length) {var empty = document.createElement('li'); empty.className = 'knowledge-chapters-empty'; empty.textContent = marker && marker.dataset.status === 'loading' ? '加载目录…' : '暂无章节'; list.appendChild(empty);}
     page.insertBefore(rail, page.querySelector('.main'));
     var narrow = window.matchMedia('(max-width: 768px)'), frame = 0, active = -1, header = page.querySelector('.main > .header');
     function update() {
       frame = 0; if (!headings.length || !root.isConnected) return;
       var tabs = root.querySelector('.knowledge-tabs');
-      if (!tabs || !headings[0].isConnected) return;
-      var threshold = scroller.getBoundingClientRect().top + Math.max(80, tabs.offsetHeight) + 4, index = 0;
+      if (!headings[0].isConnected) return;
+      var threshold = scroller.getBoundingClientRect().top + (tabs ? Math.max(80, tabs.offsetHeight) : 4) + 4, index = 0;
       headings.forEach(function (heading, i) {if (heading.getBoundingClientRect().top <= threshold) index = i;});
       if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2) index = headings.length - 1;
       if (index === active) return;
@@ -180,7 +185,15 @@
   }
   function enhance(root) {
     var marker = root.querySelector('.knowledge-topic');
-    if (!marker) {if (navigationCleanup) navigationCleanup(); root.classList.remove('knowledge-reader'); delete root.dataset.view; return;}
+    if (!marker) {
+      root.classList.remove('knowledge-reader'); delete root.dataset.view;
+      // Reuse the article rail for ordinary Markdown, without adding reading modes.
+      var currentHeadings = Array.from(root.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]'));
+      if (root.dataset.ordinaryRail === location.hash && currentHeadings.length === ordinaryHeadings.length && currentHeadings.every(function (h, i) {return h === ordinaryHeadings[i];}) && root.closest('.page').querySelector('.knowledge-rail')) return;
+      navigation(root, null, null); ordinaryHeadings = currentHeadings; root.dataset.ordinaryRail = location.hash; return;
+    }
+    delete root.dataset.ordinaryRail;
+    ordinaryHeadings = [];
     var t = manifest.topics.find(function (t) {return t.id === marker.dataset.topic;});
     root.classList.add('knowledge-reader'); root.dataset.view = marker.dataset.mode; root.dataset.contentVersion = manifest.version;
     if (root.querySelector('.knowledge-tabs')) return;

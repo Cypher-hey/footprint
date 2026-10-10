@@ -1,0 +1,63 @@
+/* Footprint shell overrides, after vendor and reader styles. */
+:root { --footprint-header: 60px; }
+.footprint-header { position: fixed; inset: 0 0 auto; height: var(--footprint-header); z-index: 1100; display: flex; align-items: center; gap: 12px; padding: 0 24px; background: #fff; border-bottom: 1px solid #dce4ee; color: #536175; }
+.footprint-brand { flex: none; font-size: 22px; font-weight: 500; letter-spacing: -.6px; color: #354863; }
+.footprint-brand span { color: #1763ac; }
+.footprint-header button, .catalog-panel button { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; min-height: 44px; border-radius: 6px; }
+.catalog-trigger { padding: 8px 12px; flex: none; font-weight: 600 !important; }
+.catalog-quick { flex: 1; min-width: 0; display: flex; gap: 4px; }
+.catalog-quick-tab { flex: none; white-space: nowrap; padding: 8px 14px; }
+.catalog-arrow { width: 44px; flex: none; font-size: 24px !important; }
+.footprint-header button:hover, .catalog-panel button:hover, .catalog-panel button[aria-pressed=true], .catalog-quick-tab[aria-expanded=true] { color: #1763ac; background: #f5f9ff; }
+.footprint-header :focus-visible, .catalog-panel :focus-visible { outline: 3px solid #669ee0; outline-offset: -3px; }
+.catalog-panel { position: fixed; top: var(--footprint-header); left: 16px; right: 16px; z-index: 1090; max-height: calc(100dvh - var(--footprint-header) - 12px); overflow: auto; overscroll-behavior: contain; background: #fff; border: 1px solid #dce4ee; border-radius: 0 0 12px 12px; box-shadow: 0 12px 35px #35486325; color: #536175; }
+.catalog-panel[hidden], .footprint-header [hidden] { display: none !important; }
+.catalog-head { display: flex; align-items: center; gap: 20px; padding: 12px 20px; position: sticky; top: 0; z-index: 1; background: #fff; border-bottom: 1px solid #dce4ee; }
+.catalog-head h2 { margin: 0; font-size: 18px; line-height: 44px; flex: none; color: #354863; }
+.catalog-search { flex: 1; min-width: 0; max-width: 560px; height: 44px; border: 1px solid #dce4ee; border-radius: 6px; padding: 8px 12px; font: inherit; background: #fafbfc; color: #354863; }
+.catalog-close { margin-left: auto; width: 44px; flex: none; font-size: 24px !important; }
+.catalog-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 20px; border-bottom: 1px solid #dce4ee; }
+.catalog-level { padding: 8px 14px; text-align: left; overflow-wrap: anywhere; max-width: 100%; }
+.catalog-secondary { background: #fafbfc; }
+.catalog-location, .catalog-foot { margin: 0; padding: 12px 22px; font-size: 12px; }
+.catalog-articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px,100%),1fr)); gap: 10px; padding: 0 20px 16px; }
+.catalog-article { display: flex; flex-direction: column; gap: 5px; padding: 14px; min-width: 0; border: 1px solid #dce4ee; border-radius: 8px; color: #354863; overflow-wrap: anywhere; line-height: 1.65; }
+.catalog-article:hover, .catalog-article[aria-current=page] { background: #f5f9ff; border-color: #669ee0; }
+.catalog-article span, .catalog-article small { font-size: 12px; color: #68737f; }
+.catalog-empty { grid-column: 1 / -1; margin: 0; padding: 16px; }
+.catalog-foot { border-top: 1px solid #dce4ee; background: #fafbfc; }
+.catalog-foot a { display: inline-block; margin-left: 16px; padding: 8px 0; color: #1763ac; }
+.page { max-width: none; width: 100%; margin: 0; position: absolute; top: var(--footprint-header); height: calc(100% - var(--footprint-header)); border: 0 !important; }
+.page .main { max-width: none; min-width: 0; margin: 0; padding-top: 0; }
+.page .main > .header, .page .mobile-header, .page > .sidebar-toggle, .page > .sidebar { display: none !important; }
+.page .main .content-wrap { height: 100%; min-width: 0; }
+.page.knowledge-page .main { width: calc(100% - var(--knowledge-rail-width)); }
+.page.knowledge-page .knowledge-rail { margin-top: 0; height: 100%; }
+.page .content { padding: 24px clamp(16px,3vw,64px) 64px; margin-top: 0; overflow-wrap: anywhere; }
+.markdown-body p, .markdown-body > ul, .markdown-body > ol, .markdown-body blockquote { max-width: 80ch; }
+.markdown-body pre, .markdown-body table { max-width: 100%; overflow-x: auto; }
+.markdown-body table { display: block; }
+.markdown-body img { max-width: 100%; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 { scroll-margin-top: 80px; }
+@media (max-width: 768px) {
+  :root { --footprint-header: 56px; }
+  .footprint-header { padding: 0 8px; gap: 4px; }
+  .footprint-brand { font-size: 17px; }
+  .catalog-trigger { padding: 8px; }
+  .catalog-quick-tab { padding: 8px; font-size: 13px !important; }
+  .catalog-panel { left: 6px; right: 6px; }
+  .catalog-head { gap: 8px; padding: 8px; }
+  .catalog-head h2 { font-size: 16px; }
+  .catalog-search { padding: 8px; font-size: 12px; }
+  .catalog-row { padding: 8px 12px; gap: 4px; }
+  .catalog-level { padding: 8px 10px; font-size: 13px !important; }
+  .catalog-articles { padding: 0 12px 12px; }
+  .page.knowledge-page .main { margin-left: 52px; }
+  .page.knowledge-page .knowledge-rail { top: 0; bottom: 0; height: auto; }
+  .page .content { padding: 20px 12px 48px; }
+}
+@media print {
+  .footprint-header, .catalog-panel { display: none !important; }
+  .page, .page .main, .page .main .content-wrap { position: static; display: block; width: 100% !important; height: auto; margin: 0 !important; overflow: visible; }
+  .page .content { padding: 0; }
+}
