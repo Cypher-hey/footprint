@@ -75,6 +75,9 @@
           var facade = Object.create(vm);
           Object.defineProperties(facade, {
             $route: {value: snapshot}, currentNavSource: {value: vm.currentNavSource},
+            // Keep Docute's deferred callback on its guarded anchor path. The AI
+            // adapter owns positioning, including unanchored history restoration.
+            id: {value: state ? (state.id || state.topic.titleAnchor) : snapshot.query.id},
             updatePage: {value: function (page) {if (token === epoch) vm.updatePage(page);}},
             jumpToId: {value: function (id) {if (token === epoch && !state) vm.jumpToId(id);}}
           });

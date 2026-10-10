@@ -87,9 +87,14 @@ fs.mkdirSync(out, {recursive: true});
       await expect(page.locator('.knowledge-diagram svg')).toHaveCount(4);
       await page.evaluate(() => {document.querySelector('.content-wrap').scrollTop = 700;});
       await expect.poll(() => page.locator('.content-wrap').evaluate(e => e.scrollTop)).toBeGreaterThan(600);
-      await page.getByRole('tab', {name: '核心概要', exact: true}).click(); await ready(page);
-      await page.goBack(); await ready(page); await expect(page.locator('.knowledge-diagram svg')).toHaveCount(4);
-      await expect.poll(() => page.locator('.content-wrap').evaluate(e => e.scrollTop)).toBeGreaterThan(600);
+      for (let historyRun = 0; historyRun < 4; historyRun++) {
+        const overviewBox = await page.getByRole('tab', {name: '核心概要', exact: true}).boundingBox();
+        await page.mouse.click(overviewBox.x + overviewBox.width / 2, overviewBox.y + overviewBox.height / 2); await ready(page);
+        await page.goBack(); await ready(page); await expect(page.locator('.knowledge-diagram svg')).toHaveCount(4);
+        await expect.poll(() => page.locator('.content-wrap').evaluate(e => e.scrollTop)).toBeGreaterThan(600);
+        await page.waitForTimeout(100);
+        expect(await page.locator('.content-wrap').evaluate(e => e.scrollTop)).toBeGreaterThan(600);
+      }
       await page.goForward(); await ready(page); await expect(page.locator('.knowledge-reader')).toHaveAttribute('data-view', 'overview');
       await go(page, '03-tool-calling'); await expect(page.locator('.knowledge-chapter')).not.toHaveCount(0);
       await page.goto(base + '#/note/basis/array'); await expect(page.locator('.markdown-body h1')).toBeVisible();
