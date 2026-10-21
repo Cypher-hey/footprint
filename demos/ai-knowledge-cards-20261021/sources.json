@@ -1,0 +1,87 @@
+{
+  "agents": [
+    "Building effective agents",
+    "https://www.anthropic.com/research/building-effective-agents",
+    "Anthropic 工程文章，2024-12-19；术语分类与循环模式，非统一行业标准。"
+  ],
+  "context": [
+    "Effective context engineering for AI agents",
+    "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。"
+  ],
+  "window": [
+    "Context windows",
+    "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+    "Claude 官方文档；上下文窗口与输入/输出预算，具体模型规则另查。"
+  ],
+  "tools": [
+    "Tool use with Claude",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+    "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。"
+  ],
+  "state": [
+    "Thinking in LangGraph",
+    "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+    "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。"
+  ],
+  "persistence": [
+    "Persistence",
+    "https://docs.langchain.com/oss/javascript/langgraph/persistence",
+    "LangGraph JS 官方文档；checkpointer/store 作用与内存存储限制。"
+  ],
+  "checkpoint": [
+    "Checkpointers",
+    "https://docs.langchain.com/oss/javascript/langgraph/checkpointers",
+    "LangGraph JS 官方文档；线程状态快照与恢复/重放。"
+  ],
+  "interrupt": [
+    "Interrupts",
+    "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+    "LangGraph JS 官方文档；暂停、恢复与节点重新执行的边界。"
+  ],
+  "memory": [
+    "Memory overview",
+    "https://docs.langchain.com/oss/javascript/concepts/memory",
+    "LangChain 官方概念文档；短期与长期记忆的作用域。"
+  ],
+  "rag": [
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "https://arxiv.org/abs/2005.11401",
+    "Lewis 等，NeurIPS 2020；参数化与非参数化记忆结合的原始研究。"
+  ],
+  "embedding": [
+    "Sentence-BERT",
+    "https://arxiv.org/abs/1908.10084",
+    "Reimers & Gurevych，EMNLP 2019；句向量与余弦相似度，非所有 embedding 的统一定义。"
+  ],
+  "rerank": [
+    "Passage Re-ranking with BERT",
+    "https://arxiv.org/abs/1901.04085",
+    "Nogueira & Cho，2019 / 修订 2020；查询与段落的重排序方法。"
+  ],
+  "schema": [
+    "JSON Schema · object",
+    "https://json-schema.org/understanding-json-schema/reference/object",
+    "JSON Schema 官方指南；properties、required 与额外属性约束。"
+  ],
+  "structured": [
+    "Structured outputs",
+    "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "Claude 官方文档；支持范围内的 schema 约束，不能推出业务事实正确。"
+  ],
+  "idempotency": [
+    "Making retries safe with idempotent APIs",
+    "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+    "AWS Builders’ Library；超时不确定性、调用方请求标识与安全重试。"
+  ],
+  "eval": [
+    "Demystifying evals for AI agents",
+    "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+    "Anthropic 工程文章，2026-01-09；任务、trial、grader、轨迹与结果。"
+  ],
+  "mcp": [
+    "MCP · Architecture overview",
+    "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+    "MCP 官方文档，2026-07-28 路径；host/client/server 与协议职责。"
+  ]
+}

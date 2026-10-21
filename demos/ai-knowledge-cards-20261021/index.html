@@ -1,0 +1,1470 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="20 张中文 AI 工程知识卡。独立、可审核、可离线阅读的候选 Demo。"><title>知间 · AI 工程知识卡</title>
+<style>
+:root{--bg:#f7f8f5;--paper:#fff;--ink:#25342e;--muted:#65736b;--green:#42b983;--dark:#226447;--line:#dce4dc;--soft:#edf6ef;--warm:#f7f1e7;--serif:"Noto Serif CJK SC","Songti SC",SimSun,serif;--sans:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}*{box-sizing:border-box}html{scroll-behavior:auto;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 var(--sans);overflow-wrap:anywhere}button,input,a,summary{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer;color:inherit}button,a,summary{touch-action:manipulation}a{color:var(--dark);text-decoration-thickness:1px;text-underline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,[tabindex="-1"]:focus-visible{outline:3px solid var(--green);outline-offset:4px}button{border:0;background:none}button:disabled{cursor:default;opacity:.45}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.4}svg{flex:none}a.skip{position:fixed;z-index:100;left:20px;top:-100px;background:white;padding:12px}.skip:focus{top:10px}.topbar{height:82px;border-bottom:1px solid var(--line);background:rgba(247,248,245,.97);position:sticky;top:0;z-index:20}.topinner{max-width:1320px;padding:0 40px;margin:auto;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;gap:13px;align-items:center;text-align:left;padding:0}.mark{display:grid;place-items:center;width:37px;height:37px;border:1px solid #9acdb0;border-radius:12px;background:#edf6ee;color:var(--dark);font:24px var(--serif)}.brand strong{font:600 23px var(--serif);letter-spacing:3px}.brand small{font:10px/1.3 var(--sans);letter-spacing:2px;display:block;color:var(--muted);margin-top:5px}.toplinks{display:flex;align-items:center;gap:25px;font-size:13px}.toplinks a{text-decoration:none}.edition{border-left:1px solid var(--line);padding-left:25px;color:var(--muted);font-size:11px;letter-spacing:1px}.wrap{max-width:1320px;padding:0 40px;margin:auto}.hero{padding:60px 0 43px;display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:end}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:600;color:var(--dark);display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";width:25px;height:1px;background:var(--green)}.hero h1{font:500 clamp(31px,3.5vw,49px)/1.5 var(--serif);letter-spacing:1px;margin:20px 0 18px}.hero h1 span{color:var(--dark)}.hero p{color:var(--muted);max-width:540px;font-size:14px}.intro-note{border-left:1px solid #c4d7ca;padding:4px 0 8px 25px;max-width:350px;justify-self:end}.intro-note .num{font:400 55px/1.1 var(--serif);color:#679f7f}.intro-note .num span{font:12px var(--sans);color:var(--muted);margin-left:12px;letter-spacing:1px}.intro-note p{font-size:12px;margin-top:14px}.scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:42px}.scene{display:flex;align-items:flex-start;gap:12px;text-align:left;padding:17px 15px;border:1px solid var(--line);border-radius:9px;background:#fff}.scene:hover,.scene[aria-pressed=true]{border-color:#7bbf97;background:var(--soft)}.scene .scene-no{font:italic 15px var(--serif);color:#779381;margin-top:4px}.scene strong{display:block;font-size:13px;font-weight:600}.scene small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.library-head{display:flex;gap:20px;justify-content:space-between;align-items:end;padding-bottom:20px;border-bottom:1px solid var(--line)}.section-title{font:500 25px var(--serif);display:flex;align-items:baseline;gap:12px}.section-title small{font:11px var(--sans);color:var(--muted);letter-spacing:1px}.searchwrap{position:relative;max-width:310px;width:100%}.searchwrap svg{position:absolute;left:12px;top:12px;color:var(--muted)}input[type=search]{width:100%;height:43px;padding:8px 35px;border:1px solid var(--line);background:#fff;border-radius:6px;color:var(--ink);font-size:13px}.filters{display:flex;align-items:center;gap:8px;margin:20px 0 25px;flex-wrap:wrap}.filter{font-size:12px;padding:7px 15px;border-radius:99px;border:1px solid transparent;color:var(--muted)}.filter:hover{background:#eef2ed}.filter[aria-pressed=true]{color:#fff;background:var(--dark)}.filter-info{margin-left:auto;color:var(--muted);font-size:11px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:21px}.tile{background:var(--paper);border:1px solid var(--line);border-radius:11px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:border-color .15s,box-shadow .15s}.tile:hover{border-color:#a3c9b0;box-shadow:0 7px 22px #243b2e08}.tile-top{padding:24px 25px 0;display:flex;gap:8px;align-items:center}.type{font-size:10px;letter-spacing:1px;color:var(--dark);background:var(--soft);border-radius:3px;padding:3px 7px}.type.relation{color:#635f84;background:#f1eff7}.type.mechanism{color:#716244;background:#f7f2e9}.card-num{margin-left:auto;font-size:10px;letter-spacing:1px;color:#8d998f}.tile-title{padding:17px 25px 12px;text-align:left;width:100%}.tile-title h3{font:500 21px var(--serif);letter-spacing:.1px}.tile-title span{display:block;color:var(--muted);font-size:12px;margin-top:7px}.tile-overview{font-size:13px;color:#526158;padding:0 25px;line-height:1.85;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.tile-visual{margin:21px 25px 22px;min-height:90px;display:flex;align-items:center}.mini-flow{display:flex;align-items:center;width:100%;gap:7px;flex-wrap:wrap}.mini-flow span{font-size:10px;color:var(--dark);padding:7px 9px;background:var(--soft);border-radius:4px}.mini-flow i{font-style:normal;font-size:11px;color:#8ba895}.mini-compare{display:grid;grid-template-columns:1fr 1fr;width:100%;border:1px solid var(--line);border-radius:6px}.mini-compare div{padding:12px 13px;font-size:12px}.mini-compare div+div{border-left:1px solid var(--line);background:#f8f9f7}.mini-compare small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.mini-note{padding:12px 14px;border-left:2px solid #baad8d;background:var(--warm);font-size:11px;color:#75664a;line-height:1.8;width:100%}.mini-code{background:#f3f5f2;padding:12px 14px;font:11px/1.7 monospace;width:100%;color:#4f6e5b;border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere}.mini-quote{font:16px/1.8 var(--serif);border-left:2px solid var(--green);padding-left:14px;color:#527260}.tile-footer{padding:13px 25px;margin-top:auto;border-top:1px solid #edf0eb;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:10px;gap:10px}.tile-footer button{font-size:11px;color:var(--dark);padding:5px 0 5px 10px}.pending{display:flex;align-items:center;gap:5px}.pending:before{content:"";width:5px;height:5px;border-radius:50%;border:1px solid #98a59c}.empty{text-align:center;background:white;padding:70px 20px;border:1px dashed var(--line);border-radius:10px}.empty p{color:var(--muted);margin:15px}.solid{background:var(--dark);color:#fff;padding:11px 20px;border-radius:5px;font-size:13px}.subtle{border:1px solid var(--line);border-radius:5px;padding:9px 14px;background:white;font-size:12px}.catalog-end{margin:40px 0 65px;padding:24px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:25px;font-size:12px;color:var(--muted)}.catalog-end strong{font-weight:500;color:var(--ink)}footer{border-top:1px solid var(--line);padding:25px 0 35px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}footer span:last-child{letter-spacing:1px}.reader-shell{display:grid;grid-template-columns:190px minmax(0,750px) 1fr;gap:35px;padding-top:29px;align-items:start}.reader-nav{position:sticky;top:108px;font-size:12px;color:var(--muted)}.reader-nav button{display:block;text-align:left;padding:8px 0}.back{color:var(--dark);font-size:13px}.reader-nav .smallcap{font-size:10px;letter-spacing:1px;margin:32px 0 11px}.toc a{display:block;text-decoration:none;padding:7px 0;font-size:11px;color:var(--muted);border-left:1px solid var(--line);padding-left:12px;line-height:1.5}.toc a:hover{color:var(--dark)}.reader-paper{background:#fff;border:1px solid var(--line);border-radius:9px;padding:43px 48px;margin-bottom:60px;min-width:0}.reader-head .eyebrow{margin-bottom:22px}.reader-head h1{font:500 clamp(26px,3vw,38px)/1.35 var(--serif);margin:14px 0 10px}.reader-head .subtitle{font-size:14px;color:var(--muted)}.readmeta{display:flex;gap:16px;align-items:center;font-size:10px;color:var(--muted);margin-top:21px;flex-wrap:wrap}.overview{margin:32px 0 35px;padding:22px 24px;background:var(--soft);border-radius:5px;border-left:3px solid var(--green);font:17px/1.95 var(--serif)}.overview small{display:block;font:10px var(--sans);letter-spacing:2px;color:var(--dark);margin-bottom:10px}.block{margin:30px 0;min-width:0}.block h2{font:600 16px/1.6 var(--sans);margin-bottom:13px}.block p{font-size:14px;line-height:2;color:#44584c}.block.example{background:#f8f9f6;border-radius:6px;padding:22px 24px}.block.example h2:before{content:"例";display:inline-grid;place-items:center;background:#e7eee6;font-size:10px;width:22px;height:22px;border-radius:4px;margin-right:9px;color:var(--dark)}.block.note{padding:18px 23px;background:var(--warm);border-left:2px solid #baa77f;border-radius:0 4px 4px 0}.block.note h2{font-size:13px;color:#756342}.block.note p{font-size:13px;color:#716750}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:6px;max-width:100%}table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.8}th,td{padding:13px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}th{background:#f0f5ef;font-weight:500;color:var(--dark)}th:first-child{width:22%}td:first-child{color:var(--muted);font-size:11px}td+td{border-left:1px solid #e8ece6}.flow{list-style:none;margin:0;padding:0;display:grid;gap:0}.flow li{display:flex;gap:13px;position:relative;padding-bottom:16px;font-size:13px;color:#43614e;align-items:center}.flow li:last-child{padding-bottom:0}.flow li:not(:last-child):after{content:"";position:absolute;left:13px;top:28px;bottom:0;border-left:1px solid #c5dccb}.flow b{display:grid;place-items:center;font-size:10px;width:27px;height:27px;flex-shrink:0;border:1px solid #bbd9c7;border-radius:50%;background:#f2f8f2;font-weight:400}.codebox{background:#283b31;border-radius:6px;color:#dcebdd;overflow:hidden}.codecap{font:10px var(--sans);color:#afc8b4;border-bottom:1px solid #45574b;padding:11px 16px;display:flex;justify-content:space-between;gap:10px}.codecap button{font-size:10px;color:#d3e9d6;padding:0 4px}pre{margin:0;padding:18px 17px;overflow:auto;max-width:100%;font:12px/1.9 "SFMono-Regular",Consolas,monospace;tab-size:2;white-space:pre}pre:focus-visible{outline-offset:-3px}.card-bottom{border-top:1px solid var(--line);padding-top:25px;margin-top:37px}.related-title{font-size:11px;letter-spacing:1px;color:var(--muted);margin-bottom:12px}.relations{display:flex;gap:8px;flex-wrap:wrap}.related{border:1px solid #cce1d2;border-radius:4px;color:var(--dark);padding:6px 11px;font-size:11px;background:#f8fbf7;text-align:left}.related:after{content:" ↗";opacity:.5}.related:hover{background:var(--soft)}.related-help{font-size:10px;color:var(--muted);margin-top:10px}.review-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:17px 0;font-size:12px;margin-top:25px;border-top:1px solid var(--line);color:var(--dark);text-align:left}.review-panel{padding:18px 21px;background:#f6f8f4;border-radius:6px;font-size:13px}.review-panel p{margin-bottom:14px}.review-answer{border-top:1px solid var(--line);padding-top:14px;margin-top:15px;color:#516057}.source-details{margin-top:17px;border-top:1px solid var(--line);font-size:12px}.source-details summary{cursor:pointer;padding:17px 0;color:var(--muted)}.source-list{padding-left:18px}.source-list li{margin-bottom:18px}.source-list p{font-size:11px;line-height:1.9;color:var(--muted);margin-top:6px}.editorial{font-size:10px;color:var(--muted);line-height:1.9}.endorsement{display:flex;align-items:flex-start;gap:12px;padding:17px 0 0;margin-top:18px;border-top:1px solid var(--line);font-size:11px}.endorsement small{display:block;color:var(--muted);font-size:10px;margin-top:5px}.reader-side{position:sticky;top:112px;font-size:10px;color:var(--muted);line-height:2;min-width:60px}.reader-side b{font:500 32px var(--serif);color:#b1c7b6}.reader-side p{margin-top:12px}.reader-actions{display:flex;justify-content:space-between;margin:35px 0 0;gap:15px}.reader-actions button{text-align:left;font-size:11px;color:var(--dark);line-height:1.8}.quick{position:fixed;width:355px;max-width:calc(100vw - 24px);z-index:50;background:#fff;padding:23px;border:1px solid #bcd7c5;box-shadow:0 14px 45px #1c362122;border-radius:9px;max-height:75vh;overflow:auto}.quick h3{font:500 22px var(--serif);margin:10px 0}.quick p{font-size:13px;line-height:1.9;color:#52675a}.quick .quick-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px}.quick small{font-size:10px;color:var(--muted)}dialog{color:var(--ink);border:0;border-radius:15px;padding:0;max-width:650px;width:calc(100% - 40px);max-height:85dvh;box-shadow:0 20px 100px #12302533;background:var(--paper)}dialog::backdrop{background:#1f332e66}.sheet-inner{padding:28px}.sheet-bar{display:flex;justify-content:space-between;gap:15px;align-items:center}.close{font-size:13px;min-height:36px;min-width:40px}.sheet-inner h2{font:500 26px var(--serif);margin:19px 0 8px}.sheet-inner .subtitle{font-size:12px;color:var(--muted)}.sheet-inner .overview{font-size:16px;margin:23px 0}.sheet-inner .block{margin:23px 0}.sheet-inner .block p{font-size:13px}.sheet-footer{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:24px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:10px 20px;z-index:80;border-radius:5px;font-size:12px}.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}[hidden]{display:none!important}body.modal-open{overflow:hidden}
+@media(min-width:1100px){.tile:first-child{grid-column:span 2;display:grid;grid-template-columns:1.15fr 1fr}.tile:first-child .tile-top,.tile:first-child .tile-title,.tile:first-child .tile-overview{grid-column:1}.tile:first-child .tile-title{padding-top:18px}.tile:first-child .tile-title h3{font-size:29px}.tile:first-child .tile-overview{display:block;font-size:13px;padding-bottom:26px}.tile:first-child .tile-visual{grid-column:2;grid-row:1/4;border-left:1px solid var(--line);margin:28px 25px 22px 10px;padding-left:24px}.tile:first-child .tile-footer{grid-column:1/-1}.tile:first-child .mini-flow{flex-direction:column;align-items:stretch;gap:6px}.tile:first-child .mini-flow i{text-align:center;line-height:1;transform:rotate(90deg)}.tile:first-child .mini-flow span{text-align:center;font-size:11px;padding:6px}.tile:nth-child(2) .tile-visual{display:none}}
+@media(max-width:1100px){.reader-shell{grid-template-columns:160px minmax(0,1fr);gap:25px}.reader-side{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{gap:35px}.reader-paper{padding:35px}.scenes{gap:8px}.scene{padding:13px 10px;gap:7px}}
+@media(max-width:700px){.topbar{height:68px}.topinner{padding:0 20px}.brand strong{font-size:20px}.brand small{font-size:8px}.mark{width:32px;height:32px;font-size:20px}.toplinks{gap:13px;font-size:11px}.edition{display:none}.wrap{padding:0 20px}.hero{display:block;padding:35px 0 28px}.hero h1{font-size:32px;margin:16px 0}.hero p{font-size:12px}.intro-note{display:none}.eyebrow{font-size:9px}.scenes{grid-template-columns:repeat(2,1fr);margin-bottom:31px;gap:9px}.scene{min-height:76px;padding:12px}.scene strong{font-size:12px}.scene small{font-size:10px}.scene-no{font-size:13px}.library-head{display:block;padding-bottom:16px}.section-title{font-size:23px;margin-bottom:17px}.searchwrap{max-width:none}.filters{gap:4px;margin:14px 0 18px}.filter{font-size:11px;padding:7px 12px}.filter-info{font-size:10px}.grid{grid-template-columns:1fr;gap:16px}.tile-top{padding:21px 22px 0}.tile-title{padding:14px 22px 10px}.tile-title h3{font-size:23px}.tile-overview{padding:0 22px;font-size:12px;-webkit-line-clamp:4}.tile-visual{margin:18px 22px;min-height:75px}.tile-footer{padding:11px 22px}.tile-footer button{min-height:32px}.catalog-end{display:block;margin:30px 0}.catalog-end div+div{margin-top:12px}footer{font-size:9px;padding:22px 0;display:block}footer span{display:block}footer span+span{margin-top:8px}.reader-shell{display:block;padding-top:15px}.reader-nav{position:static;margin-bottom:16px}.reader-nav .smallcap,.toc{display:none}.reader-nav button{padding:6px 0}.reader-paper{padding:26px 21px;margin:0 -6px 35px;border-radius:8px}.reader-head h1{font-size:30px}.reader-head .subtitle{font-size:12px}.reader-head .eyebrow{margin-bottom:15px}.readmeta{gap:12px;margin-top:18px}.overview{padding:18px 17px;font-size:16px;line-height:1.9;margin:25px 0 29px}.block{margin:27px 0}.block h2{font-size:15px}.block p{font-size:14px;line-height:2}.block.example{padding:18px}.block.note{padding:17px 18px}table{font-size:11px;line-height:1.8}th,td{padding:10px 8px}td:first-child{font-size:10px}th:first-child{width:19%}pre{font-size:11px;padding:16px 13px}.codecap{font-size:9px;padding:10px 13px}.related{font-size:11px;min-height:38px;padding:8px 10px}.review-toggle{padding:17px 0}.reader-actions button{font-size:10px}.source-list{padding-left:15px}.reader-actions{gap:13px}dialog{position:fixed;top:auto;bottom:0;margin:0;width:100%;max-width:none;max-height:84dvh;border-radius:19px 19px 0 0}.sheet-inner{padding:24px 23px 29px}.sheet-inner:before{content:"";display:block;width:34px;height:4px;border-radius:3px;background:#d2dcd4;margin:-12px auto 18px}.sheet-inner h2{font-size:25px}.sheet-footer .solid{font-size:12px}.related-help .desktop-hint{display:none}.reader-side{display:none}.quick{display:none}.sheet-inner .block.note p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}@media print{.topbar,.reader-nav,.reader-side,.reader-actions,.review-toggle,.relations,.scenes,.filters,.searchwrap,footer,.quick,dialog{display:none!important}.reader-shell{display:block}.reader-paper{border:0;padding:0}.wrap{padding:0}.source-details{display:block}.source-details>ol{display:block}.block{break-inside:avoid}body{background:white}}
+/* 手机顶栏保留明确文字，避免品牌副标题挤压导航。 */
+.toplinks button,.toplinks a{white-space:nowrap}.toplinks button{padding:0}
+.reader-head h1:focus{outline:none}.endorsement>.pending{flex:none;white-space:nowrap}.endorsement small{margin-top:0}.sheet-inner .block h2{font:600 15px/1.6 var(--sans);margin:0 0 12px}
+@media(max-width:700px){.brand small{display:none}.brand{gap:8px}.toplinks{gap:16px}.mobile-hide{display:none}}
+dialog.whitepaper-dialog{width:min(1050px,96vw);max-width:1050px;height:91dvh;max-height:91dvh;border-radius:12px;margin:auto;top:0;bottom:0;overflow:hidden}dialog.whitepaper-dialog .wp-head{height:51px;padding:8px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-size:12px}dialog.whitepaper-dialog iframe{border:0;width:100%;height:calc(100% - 51px);display:block;background:#f7f8f5}@media(max-width:700px){dialog.whitepaper-dialog{width:100%;height:96dvh;max-height:96dvh;top:auto;bottom:0;margin:0;border-radius:14px 14px 0 0}}
+</style></head>
+<body><a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="topinner"><button class="brand" id="home" aria-label="知间，返回卡片目录"><span class="mark" aria-hidden="true">间</span><span><strong>知间</strong><small>KNOWLEDGE IN CONNECTION</small></span></button><nav class="toplinks" aria-label="主导航"><button id="nav-cards">知识卡片</button><a href="whitepaper.html" id="whitepaper-link"><span class="mobile-hide">实施</span>白皮书 ↗</a><span class="edition">DEMO / 01<br>2026.10</span></nav></div></header>
+<main id="main" class="wrap" tabindex="-1"></main>
+<dialog id="sheet" aria-labelledby="sheet-title"><div id="sheet-content" class="sheet-inner"></div></dialog>
+<div id="quick" class="quick" role="dialog" aria-label="关联知识快速概览" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<script id="whitepaper-data" type="application/json">"<!doctype html><html lang=\"zh-CN\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>知间 · 完整实施计划白皮书<\/title><style>\n:root{--ink:#293e32;--muted:#63736a;--line:#dae4db;--green:#42b983}*{box-sizing:border-box}html{scroll-padding-top:30px}body{margin:0;background:#f6f8f4;color:var(--ink);font:15px/1.95 -apple-system,BlinkMacSystemFont,\"Noto Sans CJK SC\",\"Microsoft YaHei\",sans-serif;overflow-wrap:anywhere}a{color:#286d4d;text-underline-offset:4px}a:focus-visible,summary:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--green);outline-offset:4px}.layout{display:grid;grid-template-columns:220px minmax(0,840px);gap:40px;max-width:1160px;padding:40px 30px 80px;margin:auto}aside{position:sticky;top:30px;align-self:start;font-size:11px;line-height:1.7;color:var(--muted)}aside strong{font:22px \"Noto Serif CJK SC\",serif;display:block;color:var(--ink);margin-bottom:16px}aside a{display:block;text-decoration:none;margin:11px 0;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:10px;padding:45px 48px;min-width:0}h1{font:500 33px/1.6 \"Noto Serif CJK SC\",\"Songti SC\",serif;margin:0 0 20px}h2{font:600 21px/1.6 \"Noto Serif CJK SC\",serif;margin:43px 0 20px;padding-top:27px;border-top:1px solid var(--line)}h3{font-size:17px}p{margin:17px 0;font-size:14px;color:#44594b}blockquote{background:#edf6ee;border-left:3px solid var(--green);padding:19px 22px;margin:27px 0;font-size:14px;color:#365442}ul,ol{padding-left:22px;font-size:13px;color:#4b6052}li{margin:12px 0}code{font:12px/1.9 Consolas,monospace;background:#f0f4ef;border-radius:3px;padding:2px 4px;color:#365c42}pre{background:#283b31;color:#e1ece2;border-radius:7px;overflow:auto;padding:20px;font-size:11px;max-width:100%;white-space:pre}pre code{color:inherit;background:none;padding:0;font-size:11px}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:5px;margin:25px 0;max-width:100%}table{border-collapse:collapse;width:100%;font-size:11px;line-height:1.85}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}th{background:#eff5ed;font-weight:500;color:#2e6544}tr:last-child td{border-bottom:0}th:last-child,td:last-child{border-right:0}.masthead{font-size:10px;letter-spacing:3px;color:#38845c;margin-bottom:24px}.doc-end{margin-top:40px;border-top:1px solid var(--line);padding-top:20px;font-size:11px;color:var(--muted)}.mobile-toc{display:none}@media(max-width:800px){.layout{display:block;padding:17px 13px 40px}aside{display:none}article{padding:28px 22px}h1{font-size:27px}h2{font-size:20px;margin-top:35px}p{font-size:14px}table{font-size:11px;min-width:560px}th,td{padding:9px 10px}.mobile-toc{display:block;border:1px solid var(--line);padding:12px 17px;border-radius:5px;background:#f8faf6;margin:25px 0}.mobile-toc summary{cursor:pointer;font-size:13px}.mobile-toc a{display:block;font-size:12px;margin:10px 0;text-decoration:none}.masthead{font-size:9px}}@media print{@page{size:A4;margin:18mm 15mm}body{background:white;font-size:10pt}.layout{display:block;padding:0;max-width:none}aside,.mobile-toc{display:none}article{border:0;padding:0}h1{font-size:25pt}h2{font-size:16pt;break-after:avoid}h3{break-after:avoid}p{font-size:10pt}table{font-size:8pt}th,td{padding:7px}tr{break-inside:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}blockquote{break-inside:avoid}.table-scroll{overflow:visible}a{color:#286d4d}}\n<\/style><\/head><body><div class=\"layout\"><aside><strong>知间 / 白皮书<\/strong><p>候选审阅稿 · 0.1<br>2026.10.21<\/p><nav aria-label=\"白皮书目录\"><a href=\"#section-1\">1. 交付目的与阅读路径<\/a><a href=\"#section-2\">2. 用户已确认的结论<\/a><a href=\"#section-3\">3. 目标、非目标与权限边界<\/a><a href=\"#section-4\">4. 20 张卡的分类与组合清单<\/a><a href=\"#section-5\">5. 内容制作与来源核验标准<\/a><a href=\"#section-6\">6. 候选语义结构与真实样例<\/a><a href=\"#section-7\">7. 统一外壳、block 与交互规则<\/a><a href=\"#section-8\">8. 手工知识链接与个人认同<\/a><a href=\"#section-9\">9. 未来 AI 草稿流程<\/a><a href=\"#section-10\">10. footprint 接入阶段与待核验代码<\/a><a href=\"#section-11\">11. 里程碑与交付物<\/a><a href=\"#section-12\">12. 验收矩阵与风险<\/a><a href=\"#section-13\">13. 待 Cypher 决定的事项<\/a><a href=\"#section-14\">附录 A：来源目录<\/a><a href=\"#section-15\">附录 B：交付文件<\/a><\/nav><\/aside><article><div class=\"masthead\">KNOWLEDGE IN CONNECTION / WHITEPAPER<\/div><details class=\"mobile-toc\"><summary>展开目录 · 13 节与附录<\/summary><a href=\"#section-1\">1. 交付目的与阅读路径<\/a><a href=\"#section-2\">2. 用户已确认的结论<\/a><a href=\"#section-3\">3. 目标、非目标与权限边界<\/a><a href=\"#section-4\">4. 20 张卡的分类与组合清单<\/a><a href=\"#section-5\">5. 内容制作与来源核验标准<\/a><a href=\"#section-6\">6. 候选语义结构与真实样例<\/a><a href=\"#section-7\">7. 统一外壳、block 与交互规则<\/a><a href=\"#section-8\">8. 手工知识链接与个人认同<\/a><a href=\"#section-9\">9. 未来 AI 草稿流程<\/a><a href=\"#section-10\">10. footprint 接入阶段与待核验代码<\/a><a href=\"#section-11\">11. 里程碑与交付物<\/a><a href=\"#section-12\">12. 验收矩阵与风险<\/a><a href=\"#section-13\">13. 待 Cypher 决定的事项<\/a><a href=\"#section-14\">附录 A：来源目录<\/a><a href=\"#section-15\">附录 B：交付文件<\/a><\/details><h1 id=\"section-0\">知间：中文 AI 知识卡 Demo 与 footprint 实施计划白皮书<\/h1>\n<p>版本：0.1 候选审阅稿 · 2026-10-21 · 为 Cypher 编写<\/p>\n<blockquote>本文记录已对齐的产品原则、20 张真实样本和下一阶段实施门槛。本 Demo 已独立制作，但不代表生产架构、内容协议或 footprint 接入已获批准。所有卡片个人认同均为“待认同”。<\/blockquote>\n<h2 id=\"section-1\">1. 交付目的与阅读路径<\/h2>\n<p>Cypher 已具备 React / TypeScript 工程经验，计划转向 AI 工程。项目最终落地点是 footprint，KnowledgeBlocks 提供“内容可组合、语义与呈现分离”的思路。本轮先用足够真实的内容和交互，检验知识卡是否值得长期阅读，再根据审阅结果讨论协议。<\/p>\n<p>建议先打开 <code>index.html<\/code>：自由浏览 20 张卡，或选择“厘清概念”“理解循环”“可靠执行”。优先阅读 State vs Context、Agent Loop、Checkpoint 与 Structured Output vs Business Validation，分别检验关系对照、反馈流程、边界解释和代码场景。再沿关联进入其他卡，返回时检查是否回到刚才的阅读位置。默认阅读；需要时才打开复习并揭示参考答案。<\/p>\n<p>白皮书不是只有目录或摘要。第 2 节记录对齐结果，第 4–7 节说明内容与候选结构，第 8–12 节提供后续生产实施计划，附录保留真实来源与审查方法。完整的 20 张正文另存于 cards.json；H5 内嵌同一内容，无需联网取数。<\/p>\n<h2 id=\"section-2\">2. 用户已确认的结论<\/h2>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">议题<\/th><th scope=\"col\">已对齐内容<\/th><th scope=\"col\">本轮落实<\/th><\/tr><\/thead><tbody>\n<tr><td>通用外壳<\/td><td>标题、概览、正文、来源、认同、关联知识<\/td><td>20 卡统一具备，顺序兼顾正文与关联阅读<\/td><\/tr>\n<tr><td>主类型<\/td><td>概念回答是什么；关系回答区别与关系；机制回答如何运作<\/td><td>按中心学习目标分类，组件不决定类型<\/td><\/tr>\n<tr><td>正文<\/td><td>作者编排的有序语义块列表<\/td><td>renderer 逐块渲染，不重排正文<\/td><\/tr>\n<tr><td>组合<\/td><td>可采用不同 block 组合，不限制最多两个辅助块<\/td><td>多张卡包含 3–4 个不同语义块<\/td><\/tr>\n<tr><td>质量<\/td><td>概览先给核心认知；必要解释在例子之前；限定紧邻结论；一张卡一个目标<\/td><td>来源范围、框架范围与教学算例明确标记<\/td><\/tr>\n<tr><td>关联<\/td><td>手工建立知识链接；桌面 hover/focus 概览；移动点击 sheet<\/td><td>关联按钮、快速概览、完整卡与返回链路<\/td><\/tr>\n<tr><td>认同<\/td><td>来源支持与个人认同独立<\/td><td>所有内容标记待认同，不因阅读或复习改状态<\/td><\/tr>\n<tr><td>复习<\/td><td>可选提问/揭示层，沿用同一内容<\/td><td>默认收起，答案由用户主动揭示<\/td><\/tr>\n<tr><td>AI<\/td><td>未来仅用于构建期起草，附原文依据，人工确认<\/td><td>Demo 无 AI API 调用；既有 footprint AI 文本不作权威<\/td><\/tr>\n<tr><td>协议<\/td><td>Demo 是候选样本，审核后再制定<\/td><td>本文结构、TS 类型和 JSON 均为讨论材料<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>已明确撤回的设计：六条配方、role/target 挂载、逐段依赖图、逐卡布局配置、自动编排引擎。本轮没有恢复这些设计。目录的小型摘要由内容块类型映射到统一样式，属于展示密度，不是新的内容配方。卡片没有指定布局的字段。<\/p>\n<p>“解释先于例子”是可理解性的原则，不是每张卡必须采用完全相同 block 次序的机械规则。当前示例按中心目标手工编排；如果一句边界直接决定前文结论是否成立，应贴近那项结论，不应统一挪到文末免责声明。<\/p>\n<h2 id=\"section-3\">3. 目标、非目标与权限边界<\/h2>\n<p>本轮目标是：制作精致且可靠的 20 卡 H5、展示多类型和多组合、提供可审查证据及完整实施计划、交付易于保存和转发的离线文件。用户电脑离线，所以使用已保存的 KnowledgeBlocks 云工作区独立演示。<\/p>\n<p>本轮非目标包括：接入 footprint 生产代码、导入或覆盖现有知识、建立新数据库、引入大框架、冻结 schema、搭建自动布局系统、运行真实 Agent、训练或调用模型、自动产生用户认同、merge、push、公开或私有部署。没有增加重大依赖；H5 运行不依赖第三方 JS、CSS、字体、CDN 或网络接口。<\/p>\n<p>工作目录为 <code>/workspace/ai-knowledge-demo-20261021<\/code>。KnowledgeBlocks 仓库仅只读检查；已看到的版本为 <code>d3d5443701ccf4c44f0d0c5b03232fe57b2abe1f<\/code>。本轮不创建收费并行任务，不自行切换模型；遵守用户选择的 6.1 Sol high 执行范围。没有模型 API 调用，因此不虚构 token 成本估算。若后续需要外部服务、部署、付费生成或新增重大依赖，应单独说明具体范围与成本后再获得相应授权。<\/p>\n<h2 id=\"section-4\">4. 20 张卡的分类与组合清单<\/h2>\n<p>下表只是这 20 张内容的编排记录，不是允许组合的封闭清单。每张均有独立概览、至少一个例子或具体边界、来源范围、关联及复习问答。<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">#<\/th><th scope=\"col\">卡片<\/th><th scope=\"col\">主类型<\/th><th scope=\"col\">中心目标<\/th><th scope=\"col\">正文有序组合<\/th><\/tr><\/thead><tbody>\n<tr><td>01<\/td><td>Agent Loop<\/td><td>机制<\/td><td>行动结果如何影响下一轮<\/td><td>文字 → 流程 → 例子 → 提示<\/td><\/tr>\n<tr><td>02<\/td><td>Agent State<\/td><td>概念<\/td><td>应用维护的数据是什么<\/td><td>文字 → 代码 → 例子 → 提示<\/td><\/tr>\n<tr><td>03<\/td><td>LLM Context<\/td><td>概念<\/td><td>本次推理实际可用什么<\/td><td>文字 → 例子 → 提示<\/td><\/tr>\n<tr><td>04<\/td><td>State vs Context<\/td><td>关系<\/td><td>工作记录与输入如何相交<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>05<\/td><td>Context Builder<\/td><td>机制<\/td><td>如何选择和组织输入<\/td><td>文字 → 流程 → 例子 → 提示<\/td><\/tr>\n<tr><td>06<\/td><td>Tool Calling Loop<\/td><td>机制<\/td><td>调用提议如何得到执行反馈<\/td><td>流程 → 对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>07<\/td><td>Observation<\/td><td>概念<\/td><td>带来源与状态的反馈是什么<\/td><td>文字 → 代码 → 例子 → 提示<\/td><\/tr>\n<tr><td>08<\/td><td>Context Compression<\/td><td>机制<\/td><td>如何压缩且保留决策条件<\/td><td>文字 → 对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>09<\/td><td>Checkpoint<\/td><td>概念<\/td><td>状态快照能恢复什么<\/td><td>文字 → 例子 → 对比 → 提示<\/td><\/tr>\n<tr><td>10<\/td><td>Memory<\/td><td>概念<\/td><td>如何跨输入继续取用信息<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>11<\/td><td>Workflow vs Agent<\/td><td>关系<\/td><td>下一步控制权在哪里<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>12<\/td><td>Prompt vs Context Engineering<\/td><td>关系<\/td><td>指令组织与输入策展的区别<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>13<\/td><td>RAG<\/td><td>机制<\/td><td>外部证据如何进入生成<\/td><td>文字 → 流程 → 例子 → 提示<\/td><\/tr>\n<tr><td>14<\/td><td>Embedding<\/td><td>概念<\/td><td>可比较向量表达什么<\/td><td>文字 → 例子 → 代码 → 提示<\/td><\/tr>\n<tr><td>15<\/td><td>Retrieval vs Reranking<\/td><td>关系<\/td><td>找候选与排候选的分工<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<tr><td>16<\/td><td>Structured Output vs Business Validation<\/td><td>关系<\/td><td>结构与业务正确性为何不同<\/td><td>对比 → 代码 → 例子 → 提示<\/td><\/tr>\n<tr><td>17<\/td><td>Idempotency<\/td><td>概念<\/td><td>同一意图重复提交如何不重复效果<\/td><td>文字 → 流程 → 例子 → 提示<\/td><\/tr>\n<tr><td>18<\/td><td>Human Approval and Resume<\/td><td>机制<\/td><td>具体动作如何批准与恢复<\/td><td>流程 → 文字 → 例子 → 提示<\/td><\/tr>\n<tr><td>19<\/td><td>Agent Evaluation<\/td><td>机制<\/td><td>如何检查结果、过程与代价<\/td><td>文字 → 流程 → 例子 → 提示<\/td><\/tr>\n<tr><td>20<\/td><td>Tool Definition vs MCP<\/td><td>关系<\/td><td>能力描述与连接协议的分层<\/td><td>对比 → 例子 → 提示<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>计数：概念型 7 张、关系型 6 张、机制型 7 张。Idempotency 虽包含流程，核心目标是理解幂等性，因此归概念型；这正是按学习目标分类而非按组件分类的样本。<\/p>\n<h2 id=\"section-5\">5. 内容制作与来源核验标准<\/h2>\n<p>每卡先写一句学习目标，再写概览。概览应直接回答核心问题，并保留对结论成立至关重要的限制，不能只写“本文将介绍”。正文补足理解所需解释，随后使用有区分力的例子、反例、代码或流程。删掉不会改变读者认知的重复描述，不用同义改写填满格子。<\/p>\n<p>本轮来源优先官方文档与原始论文，核对日期为 2026-10-21。每个 sources 条目包含可打开链接、支持范围、来源性质和核对日期。来源支持只覆盖所写范围；中文总结、对比维度、场景和工程建议属于作者综合，不冒充官方原句。没有编造逐字引文，没有复制文档大段正文。论文性能数字没有移植到本 Demo，也未声称重现实验。<\/p>\n<p>关键核验要求：<\/p>\n<ol><li>State 是应用维护数据，可能有错误、猜测和 unknown；它不天然持久化，也不天然是事实。<\/li><li>Context 不是严格的 State 子集。静态指令、即时检索和服务端机制可能独立于应用保存的数据；还要区分窗口容量与实际输入。<\/li><li>Checkpoint 恢复应用状态，不自动回滚工单、邮件等外部效果；恢复或重放时需检查副作用与代码版本。<\/li><li>超时表示未及时收到响应，不能证明未执行。保留未知，先对账或查回执，再按服务合同重试。<\/li><li>schema 合格不等于对象存在、权限有效或业务状态允许；生成约束也需处理拒答、截断和所支持 schema 的范围。<\/li><li>客户端工具由应用执行并回传结果；服务端工具由厂商执行。不能把一个客户端工具循环当成所有工具执行方式。<\/li><li>向量相似不等于事实正确；不同 embedding 空间不能随意混用。本文不给未测过的相似度分数。<\/li><li>检索找候选、重排排候选；遗漏在候选集之外的证据通常不能靠重排找回来。<\/li><li>LangGraph 的 state、checkpoint、interrupt 细节标明是框架约定，不包装成全行业规范。<\/li><li>MCP 解决协议互通，不自动完成 Agent 的模型决策、授权、记忆或业务校验。<\/li><\/ol>\n<p>核验记录应能回答“哪一个页面的哪一部分支持哪条核心判断”。本轮 <code>evidence/SOURCE_AUDIT.md<\/code> 保留实际 URL、章节定位与支持范围；逐卡更细的范围位于 cards.json。未来如来源失效，保留原地址、最后核对日期与待复核状态，不悄悄换成一篇无关页面。<\/p>\n<p>已发现的版本变化：Anthropic 两篇工程文章从 engineering 路径重定向到 research；MCP 架构页落到 2026-07-28 版本；旧 LangGraph durable-execution 路径目前重定向到 Persistence，不能继续把该旧 URL 视作完整 durable execution 指南。本 Demo 改用当前 Checkpointers 与 Interrupts 页面核对恢复边界。<\/p>\n<p>人工审核顺序：先核查核心断言及紧邻限定，再看解释能否支撑例子，最后看关联和复习问题是否仍围绕同一目标。可标注“来源支持”“作者综合”“工程建议”“待复核”；这些是证据标签，不是替用户认同的等级。<\/p>\n<h2 id=\"section-6\">6. 候选语义结构与真实样例<\/h2>\n<p>本轮使用一个普通对象数组，保留卡片外壳与有序 blocks。它只是 Demo 载体，不是新建的通用内容 IR 或生产协议。是否使用 Markdown、JSON 或 TS 作者入口，应在用户确认效果、检查 footprint 现有代码后再定。<\/p>\n<p>候选字段的最小职责：<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">字段<\/th><th scope=\"col\">作用<\/th><th scope=\"col\">本轮处理与待定点<\/th><\/tr><\/thead><tbody>\n<tr><td>id<\/td><td>稳定关联目标<\/td><td>语义 slug；生产中如何迁移和别名待定<\/td><\/tr>\n<tr><td>title / subtitle<\/td><td>英文主题与中文短说明<\/td><td>是样式与检索所需，双语是否强制待定<\/td><\/tr>\n<tr><td>kind<\/td><td>中心学习目标<\/td><td>concept / relation / mechanism<\/td><\/tr>\n<tr><td>overview<\/td><td>同一份核心认知<\/td><td>完整卡、关联预览复用；目录仅限制展示行数<\/td><\/tr>\n<tr><td>blocks<\/td><td>有序正文<\/td><td>text、compare、flow、example、code、note<\/td><\/tr>\n<tr><td>related<\/td><td>人工选择的目标 id<\/td><td>不通过关键词自动推断；当前仅卡级关联<\/td><\/tr>\n<tr><td>sources<\/td><td>链接、范围、性质、核对日期<\/td><td>不把 URL 存在视作证明所有正文<\/td><\/tr>\n<tr><td>endorsement<\/td><td>个人态度<\/td><td>全部 pending；生产写入应绑定用户与内容版本<\/td><\/tr>\n<tr><td>review<\/td><td>可选问题与参考答案<\/td><td>阅读层之外；不必形成独立题库<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>以下是 <code>state-context<\/code> 的真实内容节选，完整对象见 cards.json；省略的其他 blocks 和 sources 并未被静默丢弃：<\/p>\n<pre tabindex=\"0\"><code>{\n  &quot;id&quot;: &quot;state-context&quot;,\n  &quot;title&quot;: &quot;State vs Context&quot;,\n  &quot;subtitle&quot;: &quot;工作记录与本轮输入如何相交&quot;,\n  &quot;kind&quot;: &quot;relation&quot;,\n  &quot;overview&quot;: &quot;State 是应用维护的工作数据，Context 是本轮推理使用的信息。Context 常从 State 取材，也会加入外部指令和即时检索结果；两者不存在天然的严格包含关系。&quot;,\n  &quot;blocks&quot;: [\n    {\n      &quot;type&quot;: &quot;compare&quot;,\n      &quot;title&quot;: &quot;按职责比较&quot;,\n      &quot;columns&quot;: [&quot;State&quot;, &quot;Context&quot;],\n      &quot;rows&quot;: [[&quot;主要用途&quot;, &quot;协调任务与后续步骤&quot;, &quot;支持本次模型推理&quot;]]\n    }\n  ],\n  &quot;related&quot;: [&quot;state&quot;, &quot;context&quot;, &quot;context-builder&quot;],\n  &quot;endorsement&quot;: &quot;pending&quot;\n}<\/code><\/pre>\n<p>完整卡与预览都读取该对象。桌面快速概览直接使用 overview；点击 sheet 展示相同 overview 和首个正文块，再给出“进入完整卡”。它们没有各写一份内容，也不会用实时 AI 重新总结。此处采用局部摘取以适应阅读密度，不声称预览已经包含整张卡。<\/p>\n<p>候选 TS 类型保存在 <code>candidate-types.ts<\/code>，仅辅助工程师审阅。未引入 schema 库或生产验证器。unknown block 在正式接入前应明确报错或显示降级信息，不能静默消失；具体编辑和迁移协议待定。<\/p>\n<h2 id=\"section-7\">7. 统一外壳、block 与交互规则<\/h2>\n<p>视觉基线：白色纸面、暖灰背景、深灰绿色正文、柔和绿 <code>#42b983<\/code> 标记关联与强调。英文主题用衬线建立阅读层级，正文使用系统中文无衬线字体。高密度信息依靠留白、线条、字级、段落节奏区分，不使用整屏强渐变和夸张的大标题。<\/p>\n<p>同类 block 使用固定样式：文字为连续段落；对比为带表头的数据表；流程为编号步骤并明确循环或出口；例子有轻背景与“例”标记；代码使用等宽暗底、可横向滚动并可复制；提示使用暖色边界块。流程不是执行器，代码只渲染不运行。每张卡只调整内容与块次序，没有逐卡布局参数。<\/p>\n<p>布局响应视口改变：桌面目录为多列，并对首张精选做编辑式展示；移动目录为单列。完整阅读桌面保留局部目录与返回，移动优先正文宽度。对比表保持语义；代码溢出限制在代码框内部，不把整页撑宽。不同组合不是随机排版；任何布局都不得改变作者 block 顺序或删去关键限定。<\/p>\n<p>交互合同：<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">场景<\/th><th scope=\"col\">预期行为<\/th><th scope=\"col\">验收重点<\/th><\/tr><\/thead><tbody>\n<tr><td>选题<\/td><td>搜索覆盖标题与正文、来源、复习文本；按三主类型筛选；场景过滤<\/td><td>条件组合、数量、清空、无匹配提示<\/td><\/tr>\n<tr><td>完整卡<\/td><td>明确概览、正文层级、来源及认同；不强制先答题<\/td><td>长文阅读、表格和代码可用<\/td><\/tr>\n<tr><td>桌面关联<\/td><td>hover 或键盘 focus 显示同一份概览；能进入完整卡<\/td><td>focus 可见、浮层可悬停、Esc 关闭<\/td><\/tr>\n<tr><td>移动关联<\/td><td>点击打开底部 sheet；背景不可操作<\/td><td>原生 dialog 焦点范围、关闭和 Esc<\/td><\/tr>\n<tr><td>来源<\/td><td>点击展开条目与支持范围；原文新窗口打开<\/td><td>链接有效、外部打开需联网提示<\/td><\/tr>\n<tr><td>复习<\/td><td>主动展开问题，主动揭示/收起答案<\/td><td>默认不暴露答案，不改变认同<\/td><\/tr>\n<tr><td>关联返回<\/td><td>完整卡可返回上一张和原阅读位置<\/td><td>关联链、多级返回、展开状态恢复<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>外部链接使用正常 https 地址；离线时仍可看范围说明，但打开原文要联网。白皮书入口在完整包里访问相邻 HTML；另提供“单文件离线版”把白皮书内嵌进同一个 HTML，用于只收一个附件的情况。<\/p>\n<p>键盘要求包括原生按钮/链接、可见焦点、跳过导航、语义标题、表格表头、dialog 关闭、快速概览 Escape。正式版还应在目标 Android 浏览器、屏幕阅读器及 iOS Safari 进行真人验收；本轮 Chromium 的自动化结果不扩大为所有设备认证。<\/p>\n<h2 id=\"section-8\">8. 手工知识链接与个人认同<\/h2>\n<p>关联由作者选择，当前只做卡级跳转，不建立段落依赖图。挑选关联时应能解释它解决了读者的哪一个后续问题。例如 Checkpoint 关联 Idempotency，是为了理解恢复为什么可能重复外部效果；State vs Context 关联 Context Builder，是为了理解两类信息之间如何装配。<\/p>\n<p>生产阶段可以给关联加简短说明，但不应因此恢复复杂 role/target 挂载。失效链接必须在内容检查时暴露。允许单向关联；是否需要双向反链、关系名和正文内锚点由阅读反馈决定。浏览历史只是临时 UI 状态，不当成内容依赖。<\/p>\n<p>个人认同独立于来源。所有 20 张保持待认同；当前 Demo 没有“自动已认同”动作，也不保存用户身份或学习记录。正式认同至少应绑定用户、内容版本、态度与时间；正文大改后如何提示重新审阅，需要用户决定。它不是“官方正确”的投票，也不是来源审核的替代品。<\/p>\n<h2 id=\"section-9\">9. 未来 AI 草稿流程<\/h2>\n<p>AI 的位置是构建期起草，不进入阅读时的实时内容生成。先选定学习目标与原始资料，再由 AI 提供带来源位置的草稿；人工逐条核查并修改，确认后才进入可阅读卡库。不能直接把 footprint 既有 AI 内容当权威或批量认同。<\/p>\n<p>候选流程：<\/p>\n<ol><li>编辑建立选题、受众、中心问题、来源候选和明确边界。<\/li><li>取回原文，记录 URL、日期、章节或稳定定位；找不到原文就标待补证据。<\/li><li>AI 输出候选概览、blocks、来源支持映射、待确认问题与手工关联建议。<\/li><li>人工先核事实，再改表达与次序，明确原创例子、工程建议和框架限定。<\/li><li>执行结构及关联检查，并在桌面/移动阅读视图检查正文、预览和复习。<\/li><li>人工确认可入库；个人认同仍由 Cypher 明确选择，不由编辑或 AI 代填。<\/li><\/ol>\n<p>草稿版本和已确认版本应可区分。需要模型服务时，先说明模型、单次或批量范围、预算与失败处理；本轮不提前批准该未来收费流程。没有必要为了起草先建设多 Agent 系统。<\/p>\n<h2 id=\"section-10\">10. footprint 接入阶段与待核验代码<\/h2>\n<p>本环境只有 KnowledgeBlocks 设计包。其 README 明确写着尚无应用实现。它对旧 footprint、aicards-lab 的分析是历史固定版本记录；不能把它当作当前源码已验证的事实，也不能宣称组件现已可直接复用。<\/p>\n<p>当前只借鉴内容与展示分离的原则。没有访问 footprint 当前分支、安装其依赖或运行它的构建。后续接入先 read-only 核验实际源码，再提出最小改动方案；不直接采用 KnowledgeBlocks 的大协议、编译层或 UI IR 架构。<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">需检查的位置/职责<\/th><th scope=\"col\">想回答的问题<\/th><th scope=\"col\">产出<\/th><\/tr><\/thead><tbody>\n<tr><td>卡片内容目录与加载器<\/td><td>当前真源是 Markdown、JSON 还是 TS？ID 是否稳定？<\/td><td>内容流图与迁移约束<\/td><\/tr>\n<tr><td>内容类型与 parser<\/td><td>现有哪些块可复用？是否用标题猜字段？<\/td><td>字段对照、最小适配提案<\/td><\/tr>\n<tr><td>卡片页 / 路由 / 历史<\/td><td>关联跳转和返回是否已有模式？<\/td><td>路由与阅读位置恢复方案<\/td><\/tr>\n<tr><td>基础组件与 token<\/td><td>已有 Table、Code、Dialog 能否满足阅读？<\/td><td>直接复用/小改/重写清单<\/td><\/tr>\n<tr><td>认同与用户数据<\/td><td>认同绑定版本吗？旧记录能否保留？<\/td><td>非破坏兼容与回退计划<\/td><\/tr>\n<tr><td>AI 内容入口<\/td><td>草稿与人工确认怎样分开？<\/td><td>关闭自动覆盖的导入流程<\/td><\/tr>\n<tr><td>构建、测试及安全渲染<\/td><td>已用哪些工具？富文本如何防注入？<\/td><td>必要依赖、检查命令与风险记录<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>候选接法优先级：复用现有基础组件和路由，在新样本目录加入只读卡片数据，通过窄 adapter 呈现有序块。只有现有约束确实无法表达样本时，才讨论增加字段或小型迁移。不会因为本 Demo 使用 JSON 就强迫 footprint 改作者入口。<\/p>\n<h2 id=\"section-11\">11. 里程碑与交付物<\/h2>\n<p>以下为顺序和相对工作量估计，不是已承诺上线日期。实际时长取决于 footprint 源码与用户审核。<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">阶段<\/th><th scope=\"col\">工作<\/th><th scope=\"col\">交付物<\/th><th scope=\"col\">完成门槛<\/th><\/tr><\/thead><tbody>\n<tr><td>M0 本轮<\/td><td>20 卡、独立 H5、来源审查、白皮书与 QA<\/td><td>单文件 H5、完整包、JSON/TS、截图、报告<\/td><td>实际渲染与关键交互检查；缺口如实列出<\/td><\/tr>\n<tr><td>M1 效果审阅<\/td><td>Cypher 阅读 4–6 张代表卡并给反馈，预计 1 次集中评审<\/td><td>内容/视觉修改清单、接受与暂缓项<\/td><td>先确认读懂、可长读和关联有帮助<\/td><\/tr>\n<tr><td>M2 只读代码核验<\/td><td>检查 footprint 当前版本，预计半天至一天<\/td><td>复用清单、兼容图、最小接入差异<\/td><td>明确已有能力，识别数据与路由风险<\/td><\/tr>\n<tr><td>M3 候选协议收敛<\/td><td>从已认可样本提炼最小字段，预计半天<\/td><td>小型类型与示例，不引入大编译系统<\/td><td>用户确认字段和认同语义，不恢复撤回设计<\/td><\/tr>\n<tr><td>M4 隔离试接<\/td><td>独立分支/目录接入 3 张代表卡，预计 1–2 天<\/td><td>可审查代码与截图、回退方法<\/td><td>不覆盖旧知识，测试通过，审阅差异明确<\/td><\/tr>\n<tr><td>M5 扩展与验收<\/td><td>迁入已审核 20 卡并补设备验收，预计 1–2 天<\/td><td>全量样本、设备记录、必要迁移脚本<\/td><td>引用和关联有效，正文不丢，用户认同不被伪造<\/td><\/tr>\n<tr><td>M6 交付决定<\/td><td>确认合并/发布计划与权限<\/td><td>具体可审查 PR 或发布包<\/td><td>获得相应授权后才 merge、push 或部署<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>每阶段都可停在可阅读、可回退的成果上。M0 成功不自动启动 M2–M6，也不意味着批准新依赖或生产数据库变化。<\/p>\n<h2 id=\"section-12\">12. 验收矩阵与风险<\/h2>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">编号<\/th><th scope=\"col\">领域<\/th><th scope=\"col\">通过标准<\/th><th scope=\"col\">本轮证据<\/th><\/tr><\/thead><tbody>\n<tr><td>A01<\/td><td>内容完整<\/td><td>恰好 20 卡，三类 7/6/7，每卡有目标与边界<\/td><td>cards.json、内容静态检查<\/td><\/tr>\n<tr><td>A02<\/td><td>来源<\/td><td>核心事实有官方或原论文链接，范围与综合分清<\/td><td>SOURCE_AUDIT、逐卡 sources<\/td><\/tr>\n<tr><td>A03<\/td><td>组合<\/td><td>6 类 block，至少 7 种顺序组合<\/td><td>内容矩阵和实际卡页<\/td><\/tr>\n<tr><td>A04<\/td><td>搜索筛选<\/td><td>条件组合正确，无匹配可恢复<\/td><td>浏览器 QA 日志<\/td><\/tr>\n<tr><td>A05<\/td><td>阅读<\/td><td>20 张均正常打开，所有 block 渲染<\/td><td>桌面/390px 检查<\/td><\/tr>\n<tr><td>A06<\/td><td>关联<\/td><td>桌面 hover/focus、移动 sheet、进入与返回<\/td><td>浏览器 QA 与截图<\/td><\/tr>\n<tr><td>A07<\/td><td>可选复习<\/td><td>默认收起，揭示/收起可控<\/td><td>QA 日志<\/td><\/tr>\n<tr><td>A08<\/td><td>来源/认同<\/td><td>来源展开可读；全部 pending，未自动认可<\/td><td>UI 与数据检查<\/td><\/tr>\n<tr><td>A09<\/td><td>键盘<\/td><td>Esc、焦点、dialog 范围与返回可用<\/td><td>QA 日志；真人辅助技术仍待测<\/td><\/tr>\n<tr><td>A10<\/td><td>响应式<\/td><td>1440 和 390px 无整页横向溢出，代码可滚动<\/td><td>QA 几何数据与实际截图<\/td><\/tr>\n<tr><td>A11<\/td><td>离线<\/td><td>H5 无外部运行依赖，断网 HTTP 可完成阅读操作<\/td><td>断网检查；本环境 file 协议受策略限制<\/td><\/tr>\n<tr><td>A12<\/td><td>范围<\/td><td>独立目录，源仓库不改，无推送/部署<\/td><td>仓库状态与实现说明<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<p>具体的运行版本、检查数、失败修复与限制以 <code>QA_REPORT.md<\/code> 为准，不用计划中的“会检查”替代已执行证据。<\/p>\n<p>主要风险与处置：<\/p>\n<div class=\"table-scroll\" tabindex=\"0\"><table><thead><tr><th scope=\"col\">风险<\/th><th scope=\"col\">影响<\/th><th scope=\"col\">处置与下一门槛<\/th><\/tr><\/thead><tbody>\n<tr><td>术语跨框架不同<\/td><td>学到过度概括<\/td><td>每卡明确工作定义与框架范围；接入时版本核验<\/td><\/tr>\n<tr><td>文档随时间更新<\/td><td>来源可能漂移<\/td><td>保留核对日期和实际落地 URL；关键变更重新审查<\/td><\/tr>\n<tr><td>摘要吞掉条件<\/td><td>决策或理解错误<\/td><td>概览与预览同源；保留边界；人工看反例<\/td><\/tr>\n<tr><td>Demo 被误当协议冻结<\/td><td>过早迁移与重构<\/td><td>所有结构标候选；M1 后再收敛<\/td><\/tr>\n<tr><td>返回丢阅读位置<\/td><td>关联阅读被打断<\/td><td>保存阅读位置与展开状态；多级返回测试<\/td><\/tr>\n<tr><td>Android 打开 HTML 的应用限制<\/td><td>附件无法直接交互<\/td><td>同时给完整 zip、独立 H5 与易读白皮书；可保存后用支持本地 HTML 的浏览器打开<\/td><\/tr>\n<tr><td>自动化代替真人阅读<\/td><td>视觉或无障碍问题漏检<\/td><td>截图人工检查；目标设备和屏幕阅读器列为后续门槛<\/td><\/tr>\n<tr><td>字体/操作系统差异<\/td><td>换行、字重不同<\/td><td>系统字体 fallback；不依赖远程字体，不承诺像素一致<\/td><\/tr>\n<tr><td>旧内容被覆盖<\/td><td>丢失用户知识与认同<\/td><td>本轮不导入；后续备份、隔离、明确映射和回退<\/td><\/tr>\n<\/tbody><\/table><\/div>\n<h2 id=\"section-13\">13. 待 Cypher 决定的事项<\/h2>\n<p>这些问题不阻塞本轮制作，也不作为默认批准：<\/p>\n<ol><li>20 张的内容深度是否合适？优先指出哪张仍有“看了但没懂”的段落。<\/li><li>目录摘要、单卡正文、关联 sheet 三种密度是否适合手机长期阅读？是否更偏中文主标题？<\/li><li>一卡一目标与三主类型是否已足够？先验证样本，不追加类型体系。<\/li><li>正式认同需要哪些态度？正文更新时是保留并提示，还是要求重新确认？<\/li><li>footprint 作者入口保留什么？先核验现有实现，再选择最小变化。<\/li><li>是否允许进入只读代码核验与 3 卡隔离试接？任何实际接入、依赖和发布另列可审查方案。<\/li><\/ol>\n<h2 id=\"section-14\">附录 A：来源目录<\/h2>\n<p>以下链接均在 2026-10-21 通过浏览工具打开核对。支持范围及章节在 <code>evidence/SOURCE_AUDIT.md<\/code>，逐卡归因在 cards.json；没有“挂一个官方 URL 就证明全卡”的安排。<\/p>\n<ul><li><a href=\"https://www.anthropic.com/research/building-effective-agents\" target=\"_blank\" rel=\"noopener noreferrer\">Building effective agents ↗<\/a>：控制权分类、反馈与停止。<\/li><li><a href=\"https://www.anthropic.com/research/effective-context-engineering-for-ai-agents\" target=\"_blank\" rel=\"noopener noreferrer\">Effective context engineering for AI agents ↗<\/a>：输入策展与压缩。<\/li><li><a href=\"https://platform.claude.com/docs/en/build-with-claude/context-windows\" target=\"_blank\" rel=\"noopener noreferrer\">Claude Context windows ↗<\/a>：窗口与输入/输出。<\/li><li><a href=\"https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview\" target=\"_blank\" rel=\"noopener noreferrer\">Claude Tool use ↗<\/a>：工具执行责任与往返。<\/li><li><a href=\"https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph\" target=\"_blank\" rel=\"noopener noreferrer\">Thinking in LangGraph ↗<\/a>：共享 state 与按需输入。<\/li><li><a href=\"https://docs.langchain.com/oss/javascript/langgraph/persistence\" target=\"_blank\" rel=\"noopener noreferrer\">Persistence ↗<\/a>：checkpointer、store 与内存限制。<\/li><li><a href=\"https://docs.langchain.com/oss/javascript/langgraph/checkpointers\" target=\"_blank\" rel=\"noopener noreferrer\">Checkpointers ↗<\/a>：状态快照与恢复。<\/li><li><a href=\"https://docs.langchain.com/oss/javascript/langgraph/interrupts\" target=\"_blank\" rel=\"noopener noreferrer\">Interrupts ↗<\/a>：暂停、恢复与重跑。<\/li><li><a href=\"https://docs.langchain.com/oss/javascript/concepts/memory\" target=\"_blank\" rel=\"noopener noreferrer\">Memory overview ↗<\/a>：记忆作用域。<\/li><li><a href=\"https://arxiv.org/abs/2005.11401\" target=\"_blank\" rel=\"noopener noreferrer\">RAG 原始论文 ↗<\/a>：检索与生成结合。<\/li><li><a href=\"https://arxiv.org/abs/1908.10084\" target=\"_blank\" rel=\"noopener noreferrer\">Sentence-BERT 原始论文 ↗<\/a>：句向量与余弦比较。<\/li><li><a href=\"https://arxiv.org/abs/1901.04085\" target=\"_blank\" rel=\"noopener noreferrer\">Passage Re-ranking with BERT ↗<\/a>：查询-段落重排序。<\/li><li><a href=\"https://json-schema.org/understanding-json-schema/reference/object\" target=\"_blank\" rel=\"noopener noreferrer\">JSON Schema object ↗<\/a>：对象结构约束。<\/li><li><a href=\"https://platform.claude.com/docs/en/build-with-claude/structured-outputs\" target=\"_blank\" rel=\"noopener noreferrer\">Claude Structured outputs ↗<\/a>：schema 约束输出。<\/li><li><a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\" target=\"_blank\" rel=\"noopener noreferrer\">AWS 幂等 API 文章 ↗<\/a>：超时、请求标识与重试。<\/li><li><a href=\"https://www.anthropic.com/research/demystifying-evals-for-ai-agents\" target=\"_blank\" rel=\"noopener noreferrer\">Demystifying evals for AI agents ↗<\/a>：任务、轨迹与结果。<\/li><li><a href=\"https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture\" target=\"_blank\" rel=\"noopener noreferrer\">MCP Architecture overview ↗<\/a>：协议职责及参与方。<\/li><\/ul>\n<h2 id=\"section-15\">附录 B：交付文件<\/h2>\n<p><code>index.html<\/code> 为目录及完整阅读的单文件应用；<code>AI知识卡-离线单文件.html<\/code> 同时内嵌完整白皮书；<code>whitepaper.html<\/code> 是易读且可打印的完整白皮书；<code>WHITEPAPER.md<\/code> 为 Markdown 源；<code>cards.json<\/code> 与 <code>content.py<\/code> 是内容与导出来源；<code>candidate-types.ts<\/code> 是候选类型；<code>screenshots/<\/code> 保存真实渲染截图；<code>QA_REPORT.md<\/code> 与 <code>qa-results.json<\/code> 保存验收事实；<code>evidence/<\/code> 保存来源审查及仓库边界证据；完整 zip 便于一次保存。<\/p>\n<p>此版的价值是让内容、边界和阅读体验变得具体可审查。下一步依据实际阅读反馈修订样本，再讨论 footprint 的最小接入。<\/p><div class=\"doc-end\">完整内容 · 独立 Demo / 不代表生产协议已批准<\/div><\/article><\/div><\/body><\/html>"</script>
+<noscript><p style="padding:30px">本离线 Demo 需要浏览器启用 JavaScript。完整内容也保存在随包 cards.json 与白皮书中。</p></noscript>
+<script id="card-data" type="application/json">[
+  {
+    "id": "agent-loop",
+    "title": "Agent Loop",
+    "subtitle": "让行动结果进入下一次决策",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "Agent Loop 把决策、行动和观察连成反馈循环：上一轮的结果会改变下一轮输入。模型提出行动，运行时负责调度与执行；完成、等待和预算耗尽应有明确出口。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "循环里谁做什么",
+        "text": "模型根据本轮输入生成回答或行动提议；运行时检查工具、权限和停止条件；工具返回结果；应用记录观察。这里描述的是教学分工，不要求每个框架都提供同名组件。"
+      },
+      {
+        "type": "flow",
+        "title": "最小反馈路径",
+        "steps": [
+          "构造本轮输入",
+          "模型提议",
+          "检查与执行",
+          "记录观察",
+          "继续 → 回到输入；或结束 / 等待"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查一处 bug",
+        "text": "先读取报错文件，发现调用方传了空值，再读取调用方。第二次读取的理由来自第一次观察。若工具报权限错误，应记录阻塞并停止依赖动作，不能编造文件内容。"
+      },
+      {
+        "type": "note",
+        "title": "轮数不是成果",
+        "text": "达到轮数上限只说明预算用完。应用还需区分成功、失败、等待人工与结果未知，不能把退出循环直接显示为“已完成”。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "observation",
+      "state",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "agents",
+        "title": "Building effective agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "scope": "支持模型动态选择行动、环境反馈与停止条件；本卡分工与状态名是作者教学综合。",
+        "basis": "Anthropic 工程文章，2024-12-19；术语分类与循环模式，非统一行业标准。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "工具返回错误后，再调用一次模型就一定构成有效反馈吗？",
+      "answer": "不一定。错误及其含义必须进入下一轮可见输入，且后续决策实际能据此调整；循环次数本身不证明反馈有效。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "state",
+    "title": "Agent State",
+    "subtitle": "应用的工作记录，不是模型的全部认知",
+    "kind": "concept",
+    "group": "context",
+    "overview": "State 是应用在任务推进中维护的数据，例如目标、观察、草稿和执行状态。它可以包含错误或猜测；是否跨进程保存、是否提供给模型，都由应用另行决定。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先问下一步需要什么",
+        "text": "把跨步骤要使用的信息显式留下：原始输入、已取得结果、待执行动作及状态。能从原始数据稳定推导的展示文本，可以到使用时再生成。"
+      },
+      {
+        "type": "code",
+        "title": "借用 React / TS 的直觉",
+        "language": "TypeScript · 示意，不执行",
+        "code": "type TaskState = {\n  goal: string;\n  observations: { text: string; source: string }[];\n  status: \"running\" | \"waiting\" | \"unknown\";\n};\n// 有类型 ≠ 已持久化；有字段 ≠ 内容已经核实"
+      },
+      {
+        "type": "example",
+        "title": "草稿也能是状态",
+        "text": "“订单可能已创建”可以保存，但必须带 unknown。若下一步把它当成“订单已创建”，错误来自状态解释与更新规则。"
+      },
+      {
+        "type": "note",
+        "title": "框架范围",
+        "text": "LangGraph 用共享 state 连接节点，是一个具体实现约定。普通函数、数据库记录或 reducer 也能维护应用状态；无需先引入图框架。"
+      }
+    ],
+    "related": [
+      "state-context",
+      "checkpoint",
+      "observation"
+    ],
+    "sources": [
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持节点共享 state、原始数据保存与按需格式化；通用定义为作者综合。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "persistence",
+        "title": "Persistence",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/persistence",
+        "scope": "支持持久化需另选机制，内存 checkpointer 不跨进程重启。",
+        "basis": "LangGraph JS 官方文档；checkpointer/store 作用与内存存储限制。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "把一段摘要放入 state，是否意味着它已成为事实且重启后仍在？",
+      "answer": "两者都不成立。事实可靠性取决于证据与审核，重启可恢复取决于实际存储和恢复机制。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "context",
+    "title": "LLM Context",
+    "subtitle": "这一次推理实际能用到什么",
+    "kind": "concept",
+    "group": "context",
+    "overview": "Context 指本次模型推理使用的输入信息，可能包括指令、消息、工具定义和检索片段。数据库里存着什么，与这一次模型实际收到什么，是两件事。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "历史存在，不等于本轮可见",
+        "text": "应用通常要把选定信息放入请求或由服务端机制纳入本次推理。模型参数中的训练知识不等同于本轮输入；各 API 对内部状态与 token 计费的规则也不完全相同。"
+      },
+      {
+        "type": "example",
+        "title": "一条偏好如何被用到",
+        "text": "用户偏好“解释先给 TS 示例”虽保存在资料库，只有被检索、选择并加入这次输入后，才能以这条外部记录影响回答。模型仍可能不遵循它。"
+      },
+      {
+        "type": "note",
+        "title": "窗口与内容要区分",
+        "text": "上下文窗口是容量约束，通常还涉及生成输出预算；Context 是具体信息。本 Demo 不硬编码任何厂商当前最大窗口或通用 token 公式。"
+      }
+    ],
+    "related": [
+      "state-context",
+      "context-builder",
+      "memory"
+    ],
+    "sources": [
+      {
+        "key": "window",
+        "title": "Context windows",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "scope": "支持上下文窗口涵盖输入与生成响应；本文不复述当前模型容量。",
+        "basis": "Claude 官方文档；上下文窗口与输入/输出预算，具体模型规则另查。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持每次推理时选择输入信息的工作定义。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "资料库已有一份手册，为什么模型仍可能回答不知道？",
+      "answer": "它可能没有被检索或装入本轮输入，也可能装入后未被正确利用。先检查实际请求，不能只检查存储。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "state-context",
+    "title": "State vs Context",
+    "subtitle": "工作记录与本轮输入如何相交",
+    "kind": "relation",
+    "group": "context",
+    "overview": "State 是应用维护的工作数据，Context 是本轮推理使用的信息。Context 常从 State 取材，也会加入外部指令和即时检索结果；两者不存在天然的严格包含关系。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按职责比较",
+        "columns": [
+          "State",
+          "Context"
+        ],
+        "rows": [
+          [
+            "主要用途",
+            "协调任务与后续步骤",
+            "支持本次模型推理"
+          ],
+          [
+            "典型内容",
+            "目标、观察、动作状态、草稿",
+            "指令、选中消息、工具说明、证据片段"
+          ],
+          [
+            "保存方式",
+            "内存或外部存储，需显式设计",
+            "请求装配与服务端上下文机制"
+          ],
+          [
+            "关系",
+            "可能有永不交给模型的字段",
+            "可能有未存入应用 State 的指令"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "一个交集之外的例子",
+        "text": "state 内部的重试计数可以只给运行时使用；本轮注入的安全指令可以来自静态配置而未写回 state。检索片段也可以直接进入 context。"
+      },
+      {
+        "type": "note",
+        "title": "先说明自己的词义",
+        "text": "有的框架把运行输入也叫 state 或 context。讨论时应明确是应用数据、模型输入还是配置对象，避免仅凭字段名称下结论。"
+      }
+    ],
+    "related": [
+      "state",
+      "context",
+      "context-builder"
+    ],
+    "sources": [
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持从原始 state 按节点需求构造输入。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "window",
+        "title": "Context windows",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "scope": "支持模型可用窗口的范围；集合关系是本卡基于职责的作者综合，非官方定理。",
+        "basis": "Claude 官方文档；上下文窗口与输入/输出预算，具体模型规则另查。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "“Context 一定是 State 的子集”错在哪里？",
+      "answer": "它把具体应用的一种存储选择当成普遍关系；context 可以加入 state 以外的配置与检索信息，state 也可保留模型不可见数据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "context-builder",
+    "title": "Context Builder",
+    "subtitle": "为下一次调用挑选并组织信息",
+    "kind": "mechanism",
+    "group": "context",
+    "overview": "Context Builder 是本 Demo 对输入装配逻辑的命名：按当前任务选择信息、安排顺序并控制预算。它是应用职责，不要求成为独立服务，也没有统一官方接口。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "它的输入与产出",
+        "text": "输入可来自 state、系统配置、检索和工具目录；产出是某一次模型调用所需请求。选择哪些信息会影响结果，不能把它简化为字符串拼接。"
+      },
+      {
+        "type": "flow",
+        "title": "一次装配的候选步骤",
+        "steps": [
+          "识别本轮目标",
+          "选择相关证据与指令",
+          "组织并标明来源",
+          "检查容量与输出预留",
+          "发起调用并记录输入版本"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "预算只作算例",
+        "text": "假设教学系统总预算为 32k，输出预留 4k、固定指令和工具 2k，则动态输入暂留 26k。这不是任何真实模型的规格，实际还需按所用 API 统计。"
+      },
+      {
+        "type": "note",
+        "title": "删除的代价",
+        "text": "若预算不足，应优先保留用户限制、待解决问题和关键证据。具体裁剪策略需要任务评估；不存在每次都安全的“只保留最后 N 条”。"
+      }
+    ],
+    "related": [
+      "context",
+      "compression",
+      "prompt-context"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持输入策展和有限上下文资源；Builder 名称、步骤与预算算例由作者提出。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持保存原始数据、按需格式化模型输入。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "为什么“保存全部历史再拼起来”不等于完成 Context Builder？",
+      "answer": "它没有解决相关性、来源、冲突和容量问题。还需要明确本轮目标并选择、组织与验证输入。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "tool-loop",
+    "title": "Tool Calling Loop",
+    "subtitle": "从调用提议到可核查的执行结果",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "工具调用让模型以结构化方式请求外部能力。客户端工具由应用执行并回传结果；服务端工具由提供商执行。模型生成调用参数本身不证明操作已经发生。",
+    "blocks": [
+      {
+        "type": "flow",
+        "title": "客户端工具的一次往返",
+        "steps": [
+          "提供定义与输入",
+          "模型返回调用及 ID",
+          "应用校验并执行",
+          "按调用 ID 回传结果",
+          "模型继续或给出答案"
+        ]
+      },
+      {
+        "type": "compare",
+        "title": "执行责任不同",
+        "columns": [
+          "客户端工具",
+          "服务端工具"
+        ],
+        "rows": [
+          [
+            "执行位置",
+            "应用自己的运行环境",
+            "提供商托管环境"
+          ],
+          [
+            "应用工作",
+            "校验、鉴权、执行、回传",
+            "配置工具并处理其返回与异常"
+          ],
+          [
+            "共同边界",
+            "调用提议不能代替执行回执",
+            "结果仍需按任务核验"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查天气与发邮件",
+        "text": "天气查询失败可以反馈错误。发邮件超时则可能已发送，应先查回执或幂等记录，不能因为模型愿意重试就再次发送。"
+      },
+      {
+        "type": "note",
+        "title": "不自动获得授权",
+        "text": "工具定义描述可调用能力；真正可执行的对象与权限由应用或服务校验。参数结构正确也不等于获准操作。"
+      }
+    ],
+    "related": [
+      "observation",
+      "structured-validation",
+      "idempotency",
+      "tool-mcp"
+    ],
+    "sources": [
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持客户端/服务端工具与调用结果往返；邮件重试与授权为工程示例。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "看到 tool_use 是否能在 UI 上显示“执行成功”？",
+      "answer": "不能。它只是调用请求；应等待实际执行回执并根据操作语义核查成功或未知状态。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "observation",
+    "title": "Observation",
+    "subtitle": "带来源与状态的行动反馈",
+    "kind": "concept",
+    "group": "agent",
+    "overview": "Observation 是系统记录的行动反馈，例如查询结果、错误或超时。它描述这次观察到了什么，不代表环境的全部事实；“没有收到响应”也不能推出“没有执行”。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先区分记录与解释",
+        "text": "工具回了 HTTP 200 是传输或接口层的结果，是否取得目标数据还要看响应内容。模型从结果推断的结论，应与原始返回及来源区分保存。"
+      },
+      {
+        "type": "code",
+        "title": "一个可审计的教学记录",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const observation = {\n  callId: \"send-17\",\n  status: \"unknown\",\n  receivedAt: \"2026-10-21T02:00:00Z\",\n  detail: \"请求超时，尚未获得发送回执\"\n};"
+      },
+      {
+        "type": "example",
+        "title": "空结果有条件",
+        "text": "搜索返回空列表，只能说明本次查询在当前索引、权限和过滤条件下未找到内容；不能直接概括为“世界上不存在”。"
+      },
+      {
+        "type": "note",
+        "title": "外部文本并非新指令",
+        "text": "网页或工具结果里的“忽略前面的要求”是外部数据。运行时应隔离其来源，不让它自行改变用户授权或系统规则。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "state",
+      "idempotency"
+    ],
+    "sources": [
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持工具结果是返回给模型的独立反馈；Observation 数据结构是本 Demo 作者综合。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "idempotency",
+        "title": "Making retries safe with idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+        "scope": "支持超时后执行结果仍不确定。",
+        "basis": "AWS Builders’ Library；超时不确定性、调用方请求标识与安全重试。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "搜索没结果与邮件超时，分别能确认什么？",
+      "answer": "前者确认本次检索条件下无命中；后者确认未及时收到响应。都不能扩大成对外部世界的无条件断言。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "compression",
+    "title": "Context Compression",
+    "subtitle": "缩短输入时保住决策所需条件",
+    "kind": "mechanism",
+    "group": "context",
+    "overview": "Context Compression 用摘要、选择或清理替代部分历史，以减少后续输入。它会丢失信息；质量取决于关键约束、未决事项和证据是否仍能支持下一步。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "压缩的是呈现，不是历史事实",
+        "text": "保留原始记录可供追溯，压缩稿用于后续调用。摘要至少应能区分已完成、待办、被撤回和结果未知，避免把不确定状态写成成功。"
+      },
+      {
+        "type": "compare",
+        "title": "一处否定就会改变行动",
+        "columns": [
+          "原记录 / 保真摘要",
+          "危险摘要"
+        ],
+        "rows": [
+          [
+            "用户限制",
+            "允许写草稿；不允许发送",
+            "用户允许处理邮件"
+          ],
+          [
+            "执行结果",
+            "发送超时，结果未知",
+            "邮件未发送"
+          ],
+          [
+            "决策变化",
+            "已撤回自动部署方案",
+            "采用自动部署方案"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "检查压缩是否可用",
+        "text": "拿下一步需要判断的具体问题回查：可否发送？操作是否完成？哪些方案已经否决？任一答案从摘要中变了，就需要修订。"
+      },
+      {
+        "type": "note",
+        "title": "不承诺无损",
+        "text": "原文引用与摘要标记应分开。若细节成为当前任务核心，应重新读取原始证据，而不是让摘要继续自我扩写。"
+      }
+    ],
+    "related": [
+      "context-builder",
+      "memory",
+      "observation"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持 compaction 的目的及过度压缩会丢关键细节；表格与检查项为作者工程建议。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "为什么“发送超时”不能被压成“发送失败，待重试”？",
+      "answer": "超时只确定响应未到，不能确定副作用未发生；这样的摘要把未知改成未执行，会诱发重复发送。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "checkpoint",
+    "title": "Checkpoint",
+    "subtitle": "恢复工作位置，不是撤销外部世界",
+    "kind": "concept",
+    "group": "reliability",
+    "overview": "Checkpoint 保存某个执行位置的应用状态，帮助恢复、分支或排查。在 LangGraph 中它关联线程及图执行信息；恢复旧 checkpoint 不会自动撤销已经发生的外部副作用。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "恢复需要实际存储",
+        "text": "内存保存器可以演示同进程恢复，但进程退出后数据可能丢失。生产恢复还取决于持久存储、线程标识、代码版本与恢复策略。"
+      },
+      {
+        "type": "example",
+        "title": "已经创建的工单仍在",
+        "text": "状态在“创建工单”之前留了快照，随后服务端创建成功。重放旧状态可能再次进入创建步骤；如果没有幂等保护，就可能新增第二张工单。"
+      },
+      {
+        "type": "compare",
+        "title": "两个不同问题",
+        "columns": [
+          "状态恢复",
+          "外部补偿"
+        ],
+        "rows": [
+          [
+            "目标",
+            "找回任务进度与运行数据",
+            "处理已经产生的外部效果"
+          ],
+          [
+            "手段",
+            "读取快照并按框架规则继续",
+            "业务补偿、对账或人工处理"
+          ],
+          [
+            "不能替代",
+            "不能保证外部服务回到旧状态",
+            "不能凭补偿推回所有内部状态"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "框架语义需实测",
+        "text": "快照粒度、重放起点和 pending writes 属于具体框架机制。接入 footprint 前，应锁定实际版本并用真实故障点验证。"
+      }
+    ],
+    "related": [
+      "state",
+      "idempotency",
+      "approval"
+    ],
+    "sources": [
+      {
+        "key": "checkpoint",
+        "title": "Checkpointers",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/checkpointers",
+        "scope": "支持线程状态快照与恢复；不自动回滚副作用是基于恢复范围的工程边界。",
+        "basis": "LangGraph JS 官方文档；线程状态快照与恢复/重放。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "persistence",
+        "title": "Persistence",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/persistence",
+        "scope": "支持内存 checkpointer 的重启限制。",
+        "basis": "LangGraph JS 官方文档；checkpointer/store 作用与内存存储限制。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "interrupt",
+        "title": "Interrupts",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+        "scope": "支持恢复可能重跑节点，副作用需幂等。",
+        "basis": "LangGraph JS 官方文档；暂停、恢复与节点重新执行的边界。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "恢复到发邮件之前的快照，邮箱里的邮件会消失吗？",
+      "answer": "不会。checkpoint 恢复应用状态；外部邮件是否撤回取决于邮件系统的独立能力和业务操作。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "memory",
+    "title": "Memory",
+    "subtitle": "让有用信息跨越当前输入继续可用",
+    "kind": "concept",
+    "group": "context",
+    "overview": "Agent Memory 是保存并再次取用信息的机制。它可以是线程内记录，也可以跨会话；保存、检索和注入是不同步骤，存进去不意味着模型会自动记住或相信。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按取用范围区分",
+        "columns": [
+          "线程内记忆",
+          "跨线程记忆"
+        ],
+        "rows": [
+          [
+            "例子",
+            "当前任务的消息与草稿",
+            "经确认的用户偏好"
+          ],
+          [
+            "常见实现",
+            "状态与 checkpoint",
+            "按用户或组织划分的 store"
+          ],
+          [
+            "主要风险",
+            "历史膨胀、恢复不完整",
+            "串用户、过期信息、错误固化"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "一次偏好更新",
+        "text": "用户先要求“详细解释”，后来改成“默认简洁”。读取偏好时需要版本、时间和适用范围；不能把两句无条件并列交给模型解决。"
+      },
+      {
+        "type": "note",
+        "title": "并非模型权重更新",
+        "text": "这里说的外部应用记忆，不等同于重新训练模型。写入个人认同也必须由用户明确完成，不能从一次阅读推断。"
+      }
+    ],
+    "related": [
+      "context",
+      "state",
+      "compression"
+    ],
+    "sources": [
+      {
+        "key": "memory",
+        "title": "Memory overview",
+        "url": "https://docs.langchain.com/oss/javascript/concepts/memory",
+        "scope": "支持线程内短期与跨线程长期记忆的划分；偏好冲突处理为作者建议。",
+        "basis": "LangChain 官方概念文档；短期与长期记忆的作用域。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "长期记忆最重要的验证是否只是“能写入数据库”？",
+      "answer": "不是。还需验证作用域隔离、更新/删除、检索相关性和本轮实际使用，避免过期或越权信息进入输入。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "workflow-agent",
+    "title": "Workflow vs Agent",
+    "subtitle": "下一步由预定路径还是模型动态决定",
+    "kind": "relation",
+    "group": "agent",
+    "overview": "依 Anthropic 这篇文章的用法，Workflow 主要沿预定义代码路径推进，Agent 让模型动态选择过程与工具。关键是控制权，是否调用 LLM 或是否画成图，都不足以单独分类。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "看下一步如何选择",
+        "columns": [
+          "Workflow",
+          "Agent"
+        ],
+        "rows": [
+          [
+            "路径来源",
+            "代码预先规定的步骤与分支",
+            "模型依据目标和反馈动态选择"
+          ],
+          [
+            "适合情况",
+            "步骤清楚、可预测的任务",
+            "需要探索且路径难预先列尽"
+          ],
+          [
+            "工程代价",
+            "分支维护与覆盖",
+            "预算、停止、权限与评估更难"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "两个写作工具",
+        "text": "“先列提纲，再写稿，再校对”可由固定流程完成；“调查这次故障，并决定下一步读哪个日志”可能需要动态循环。两者也能在一个系统中组合。"
+      },
+      {
+        "type": "note",
+        "title": "术语不统一",
+        "text": "部分产品把固定流程也称 Agent。这张卡采用指定来源的分类用于讨论，不据名称判断能力，也不把 Agent 当成更高级的必选项。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "evaluation",
+      "tool-loop"
+    ],
+    "sources": [
+      {
+        "key": "agents",
+        "title": "Building effective agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "scope": "直接支持 workflow / agent 的控制权区分；本文来源有 2024 年工具生态的历史限制。",
+        "basis": "Anthropic 工程文章，2024-12-19；术语分类与循环模式，非统一行业标准。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "一个流程包含三次 LLM 调用，就必然是 Agent 吗？",
+      "answer": "不是。若下一步始终由预设代码路径决定，按本卡采用的分类仍可以是 Workflow。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "prompt-context",
+    "title": "Prompt vs Context Engineering",
+    "subtitle": "写好指令与维护整轮输入",
+    "kind": "relation",
+    "group": "context",
+    "overview": "Prompt Engineering 聚焦指令如何表达与组织；Context Engineering 还处理本轮该提供哪些历史、工具与外部证据。两者相互包含工作内容，并非换一个名称就能获得新能力。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "同一问题的两个工作面",
+        "columns": [
+          "Prompt Engineering",
+          "Context Engineering"
+        ],
+        "rows": [
+          [
+            "核心关注",
+            "任务、限制、示例是否清楚",
+            "整轮信息是否相关、充分、可容纳"
+          ],
+          [
+            "常见修改",
+            "改写回答要求与示范",
+            "选择证据、裁剪历史、组织工具"
+          ],
+          [
+            "验证对象",
+            "同一输入条件下的行为变化",
+            "完整输入策略对任务结果的影响"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "回答总用旧版接口",
+        "text": "若检索提供的全是旧文档，仅改一句“请用最新版”无法补齐事实。应核查检索版本、筛选条件和装配后的实际内容，再调整指令。"
+      },
+      {
+        "type": "note",
+        "title": "不是唯一术语标准",
+        "text": "本卡借用 Anthropic 文章的工作区分。实践中 prompt 常泛指整个请求；讨论时应说明自己指的是指令文本还是全部输入。"
+      }
+    ],
+    "related": [
+      "context-builder",
+      "context",
+      "rag"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持 prompt 指令组织与 context 输入策展的区分；接口案例是原创示例。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "模型持续引用过时资料，应优先检查哪一层？",
+      "answer": "检查实际输入里资料的来源和版本，以及检索与装配策略；清晰指令有帮助，但不能替代缺失的新证据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "rag",
+    "title": "RAG",
+    "subtitle": "先取得相关证据，再据此生成",
+    "kind": "mechanism",
+    "group": "retrieval",
+    "overview": "RAG 将检索得到的外部材料用于生成回答。原始论文研究特定的检索与生成模型组合；工程里常用“检索 → 组装证据 → 生成”的广义模式，不能把二者实现细节等同。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "检索到什么，决定回答能依据什么",
+        "text": "知识库先被索引，查询时取出候选片段并保留来源。生成环节还需说明哪些材料回答了问题，缺失时应承认不足；向量库不是必需的唯一检索方式。"
+      },
+      {
+        "type": "flow",
+        "title": "广义工程示意",
+        "steps": [
+          "索引文档与元数据",
+          "接收问题并检索",
+          "筛选 / 可选重排",
+          "装配片段及来源",
+          "生成并核查引用"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查报销制度",
+        "text": "检索到 2023 版和 2026 版规定时，应按适用日期和用户范围筛选。两段都相似，却可能只有一段有效。回答引用必须确实支持那项金额或条件。"
+      },
+      {
+        "type": "note",
+        "title": "不能保证事实正确",
+        "text": "索引过期、漏检、权限过滤错误、片段断章取义或生成误读都可能失败。RAG 提供可检查的证据路径，仍需评估召回、引用与答案。"
+      }
+    ],
+    "related": [
+      "embedding",
+      "retrieval-rerank",
+      "context-builder",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "rag",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "url": "https://arxiv.org/abs/2005.11401",
+        "scope": "支持检索的非参数化记忆与生成结合；本卡工程管线是广义教学综合，不声称重现论文训练方案。",
+        "basis": "Lewis 等，NeurIPS 2020；参数化与非参数化记忆结合的原始研究。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "有向量数据库和引用链接，是否已经保证答案可靠？",
+      "answer": "没有。还要检查材料版本、是否检索到关键证据，以及引用是否真能支持答案中的具体断言。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "embedding",
+    "title": "Embedding",
+    "subtitle": "把对象编码为可比较的向量",
+    "kind": "concept",
+    "group": "retrieval",
+    "overview": "Embedding 把文本等对象编码为向量，以便按选定度量比较。语义检索常希望相关文本更接近；相似度表达模型学到的相关性，不是事实正确、逻辑蕴含或授权判断。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "向量的意义来自模型与任务",
+        "text": "句向量可以用余弦相似度比较。维度、归一化和距离度量应按模型说明选择；不同模型生成的向量通常不能直接混入同一空间比较。"
+      },
+      {
+        "type": "example",
+        "title": "很相似，也可能互相否定",
+        "text": "“这个接口支持退款”与“这个接口不支持退款”词汇与主题很接近，具体分数需实际模型测试。仅凭接近，无法决定哪句是真的。"
+      },
+      {
+        "type": "code",
+        "title": "示意接口，不绑定依赖",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const hits = await index.search({\n  vector: await embed(question),\n  filter: { tenantId, documentVersion: \"2026\" },\n  topK: 20\n});\n// 相似度选候选；权限与事实需要各自验证"
+      },
+      {
+        "type": "note",
+        "title": "迁移不是只换 API Key",
+        "text": "更换 embedding 模型通常需要重建文档向量并重测检索质量；本文没有运行任何模型，也不提供虚构相似度分数。"
+      }
+    ],
+    "related": [
+      "rag",
+      "retrieval-rerank"
+    ],
+    "sources": [
+      {
+        "key": "embedding",
+        "title": "Sentence-BERT",
+        "url": "https://arxiv.org/abs/1908.10084",
+        "scope": "支持句向量和余弦比较；模型兼容性、权限及否定句示例为作者工程边界。",
+        "basis": "Reimers & Gurevych，EMNLP 2019；句向量与余弦相似度，非所有 embedding 的统一定义。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "相似度最高的句子能直接当事实答案吗？",
+      "answer": "不能。它只是候选相关性信号，需要回看原文、版本、条件与其他证据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "retrieval-rerank",
+    "title": "Retrieval vs Reranking",
+    "subtitle": "先找候选，再细排候选",
+    "kind": "relation",
+    "group": "retrieval",
+    "overview": "Retrieval 从大集合中找出候选；Reranking 对已取得的候选进一步评分排序。二阶段系统常用前者争取召回、后者提高前排相关性；重排通常无法补回从未召回的文档。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "候选集在哪里变化",
+        "columns": [
+          "Retrieval",
+          "Reranking"
+        ],
+        "rows": [
+          [
+            "输入规模",
+            "整个可检索语料或索引",
+            "已召回的一小组候选"
+          ],
+          [
+            "目标",
+            "高效找到可能相关材料",
+            "更精细比较查询与候选相关性"
+          ],
+          [
+            "常见手段",
+            "关键词、向量或混合检索",
+            "查询-段落联合评分等"
+          ],
+          [
+            "主要失败",
+            "关键证据漏进候选集之外",
+            "错排、成本增加、证据仍缺失"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "50 → 5 的教学算例",
+        "text": "先召回 50 段，再选 5 段装入输入。如果正确条款没有进入这 50 段，重排再准确也选不到它；应先检查索引、过滤与召回。数字仅为示意。"
+      },
+      {
+        "type": "note",
+        "title": "相关不等于可信",
+        "text": "重排器不天然审核文档真实性、权限或时效。评估应分别观察候选召回与前排质量，不只看最终回答是否流畅。"
+      }
+    ],
+    "related": [
+      "rag",
+      "embedding",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "rerank",
+        "title": "Passage Re-ranking with BERT",
+        "url": "https://arxiv.org/abs/1901.04085",
+        "scope": "支持查询导向的 BERT 段落重排；二阶段边界与算例为教学综合。",
+        "basis": "Nogueira & Cho，2019 / 修订 2020；查询与段落的重排序方法。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "embedding",
+        "title": "Sentence-BERT",
+        "url": "https://arxiv.org/abs/1908.10084",
+        "scope": "支持向量相似检索这一候选取得方式。",
+        "basis": "Reimers & Gurevych，EMNLP 2019；句向量与余弦相似度，非所有 embedding 的统一定义。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "正确条款未进入候选集，换更强 reranker 能解决吗？",
+      "answer": "通常不能。先修复检索范围、索引、过滤和召回，再评估重排。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "structured-validation",
+    "title": "Structured Output vs Business Validation",
+    "subtitle": "结构合格以后，仍要检验含义",
+    "kind": "relation",
+    "group": "reliability",
+    "overview": "Structured Output 约束输出形状，业务校验判断数据是否符合真实规则。合法 JSON、通过 schema 的对象，仍可能引用不存在的订单、超出权限或违反当前业务状态。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "两个校验层",
+        "columns": [
+          "结构校验",
+          "业务校验"
+        ],
+        "rows": [
+          [
+            "典型问题",
+            "字段是否存在、类型与枚举是否符合",
+            "对象存在吗、状态可变吗、用户有权限吗"
+          ],
+          [
+            "执行位置",
+            "解析器 / schema 验证器 / 支持的生成约束",
+            "应用服务与事实数据源"
+          ],
+          [
+            "随环境变化",
+            "通常随 schema 版本变化",
+            "会随库存、权限、账户状态变化"
+          ]
+        ]
+      },
+      {
+        "type": "code",
+        "title": "类型正确，动作仍需拒绝",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const result = { orderId: \"O-17\", action: \"refund\" };\n// 假设它已通过 schema\nconst order = await loadOrder(result.orderId);\nassertCanRefund(actor, order); // 权限、金额、状态等\n// 通过后才进入受控执行；不是直接信任模型"
+      },
+      {
+        "type": "example",
+        "title": "不存在的订单",
+        "text": "orderId 是字符串，不能保证该订单存在。JSON Schema 可表达许多静态约束，但不会自动替你访问实时订单系统或确认用户权限。"
+      },
+      {
+        "type": "note",
+        "title": "还要处理未正常完成",
+        "text": "具体 API 对拒答、截断、支持的 schema 关键字有各自规定。不要把“开启结构化输出”理解为所有响应路径都可直接按业务成功处理。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "approval",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "schema",
+        "title": "JSON Schema · object",
+        "url": "https://json-schema.org/understanding-json-schema/reference/object",
+        "scope": "支持对象、属性与 required 等结构约束。",
+        "basis": "JSON Schema 官方指南；properties、required 与额外属性约束。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "structured",
+        "title": "Structured outputs",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "scope": "支持 schema 受控生成；业务边界与订单例子是作者综合。",
+        "basis": "Claude 官方文档；支持范围内的 schema 约束，不能推出业务事实正确。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "通过 schema 的退款对象，为什么仍可能必须拒绝？",
+      "answer": "订单可能不存在，或已退款、超限、无权限。结构校验不替代应用层对实时事实和业务规则的检查。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "idempotency",
+    "title": "Idempotency",
+    "subtitle": "重复请求不重复产生额外效果",
+    "kind": "concept",
+    "group": "reliability",
+    "overview": "幂等性让同一个业务操作在被重复提交时，不额外产生重复效果。对会写外部系统的 Agent，超时后的安全重试依赖明确的操作标识、服务端去重与结果核对，不能只靠模型记住“做过了”。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "标识一次意图，而非一段相同参数",
+        "text": "两次相同金额的转账可能是两次独立意图；一次因超时重试的请求才应复用操作标识。标识作用域、有效期与参数不一致时的行为要写进接口合同。"
+      },
+      {
+        "type": "flow",
+        "title": "结果未知时的处理示意",
+        "steps": [
+          "记录 operationId",
+          "提交受控请求",
+          "超时 → 标为未知",
+          "查询回执 / 幂等记录",
+          "按服务合同决定是否复用同一 ID 重试"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "工单创建响应丢失",
+        "text": "服务端已创建 T-123，响应在网络里丢了。若重试携带同一个有效幂等键并由服务端正确实现去重，可返回原结果；若每次生成新键，仍可能重复创建。"
+      },
+      {
+        "type": "note",
+        "title": "前端禁用按钮不够",
+        "text": "它能减少误点，挡不住网络重试、进程恢复与并发请求。外部服务不支持去重时，要设计对账、补偿或人工处理，不能承诺恰好一次。"
+      }
+    ],
+    "related": [
+      "checkpoint",
+      "observation",
+      "approval"
+    ],
+    "sources": [
+      {
+        "key": "idempotency",
+        "title": "Making retries safe with idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+        "scope": "支持调用方请求标识、安全重试与未知结果；Agent 工单流程是作者改编。",
+        "basis": "AWS Builders’ Library；超时不确定性、调用方请求标识与安全重试。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "重试时生成新的随机 operationId，是否实现了幂等？",
+      "answer": "没有。同一次意图的重试需要复用服务识别的标识；还必须有服务端正确去重和约定的有效期。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "approval",
+    "title": "Human Approval and Resume",
+    "subtitle": "把批准绑定到可审查的具体动作",
+    "kind": "mechanism",
+    "group": "reliability",
+    "overview": "人工批准流程应先展示具体动作及其对象，暂停后保存进度，再根据批准结果恢复。批准某个草稿不等于批准后续任意修改；恢复执行也需要重新检查版本与权限。",
+    "blocks": [
+      {
+        "type": "flow",
+        "title": "候选批准路径",
+        "steps": [
+          "形成具体动作草稿",
+          "展示对象、参数、影响",
+          "暂停并保存进度",
+          "记录批准或拒绝",
+          "核对版本后受控执行"
+        ]
+      },
+      {
+        "type": "text",
+        "title": "LangGraph 的具体边界",
+        "text": "interrupt() 暂停图并通过 Command 恢复；需要 checkpointer 与 thread_id。恢复可能从节点开头重跑，因此中断之前的非幂等副作用有重复风险。这里不提供未经版本核验的生产代码。"
+      },
+      {
+        "type": "example",
+        "title": "批准后收件人变了",
+        "text": "用户批准给 A 的草稿，但恢复时数据已改为 B。应作废旧批准并重新展示具体动作；不能把一个布尔 approved 当成永久通行证。"
+      },
+      {
+        "type": "note",
+        "title": "一次批准不是无限授权",
+        "text": "工程上可将批准绑定动作版本、参数摘要和有效期。实际动作超时后仍要处理结果未知，不能因为曾批准就无条件重复发送。"
+      }
+    ],
+    "related": [
+      "checkpoint",
+      "idempotency",
+      "structured-validation"
+    ],
+    "sources": [
+      {
+        "key": "interrupt",
+        "title": "Interrupts",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+        "scope": "支持 interrupt/Command、线程恢复和节点重跑边界；批准绑定参数、版本与有效期为作者工程建议。",
+        "basis": "LangGraph JS 官方文档；暂停、恢复与节点重新执行的边界。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "批准以后动作参数变化，能否沿用原来的 approved=true？",
+      "answer": "不应直接沿用。先核对批准绑定的对象和版本；语义改变时应重新让用户审查具体动作。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "evaluation",
+    "title": "Agent Evaluation",
+    "subtitle": "评估结果，也看过程和代价",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "Agent Evaluation 用明确任务和成功条件检查整个系统，包括模型、工具与运行时。答案声称成功不等于环境中真的成功；可重复的样例与多次试验能帮助区分改进和偶然波动。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先写清什么叫完成",
+        "text": "把用户任务转成可检查结果：记录是否创建、引用是否支持断言、被禁止动作是否未发生。再看工具轨迹、权限边界、延迟与成本；不要只凭回答流畅打分。"
+      },
+      {
+        "type": "flow",
+        "title": "一个小型评估闭环",
+        "steps": [
+          "选真实任务及反例",
+          "定义结果与约束",
+          "隔离环境重复试验",
+          "代码检查 + 人工审阅",
+          "分析失败并回归验证"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "退款助手的三项检查",
+        "text": "数据库是否只有一次正确退款；未授权账户是否始终被拒绝；超时后是否对账再重试。三项分别检验成果、约束与恢复行为，不以“已退款”的文字代替。"
+      },
+      {
+        "type": "note",
+        "title": "模型裁判也需校准",
+        "text": "开放质量可用模型辅助评分，但要和人工判断定期比对，并保留原始轨迹。本 Demo 只测试静态阅读产品，没有运行真实 Agent benchmark。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "rag",
+      "structured-validation",
+      "idempotency"
+    ],
+    "sources": [
+      {
+        "key": "eval",
+        "title": "Demystifying evals for AI agents",
+        "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+        "scope": "支持 task/trial/grader、轨迹与环境 outcome 区分，以及代码/模型/人工评分；退款样例为原创。",
+        "basis": "Anthropic 工程文章，2026-01-09；任务、trial、grader、轨迹与结果。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "一次演示成功为何还不足以认定 Agent 稳定？",
+      "answer": "输出与执行有波动，且成功可能只覆盖正常路径。需要多次试验、失败反例和实际环境结果验证。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "tool-mcp",
+    "title": "Tool Definition vs MCP",
+    "subtitle": "能力描述与连接协议分处不同层",
+    "kind": "relation",
+    "group": "agent",
+    "overview": "Tool Definition 说明某项能力做什么、接受什么参数；MCP 规定应用与能力提供方如何交换信息和调用能力。工具可以不经 MCP 调用，MCP 也不只承载工具。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按解决的问题区分",
+        "columns": [
+          "Tool Definition",
+          "MCP"
+        ],
+        "rows": [
+          [
+            "主要问题",
+            "模型怎样理解和填写一个能力",
+            "host、client 与 server 怎样互通"
+          ],
+          [
+            "典型内容",
+            "名称、描述、输入 schema",
+            "发现、请求、响应与连接机制"
+          ],
+          [
+            "能否替代对方",
+            "定义本身不建立跨系统连接",
+            "协议不替你写清每项业务语义"
+          ],
+          [
+            "共同限制",
+            "描述不能代替实际鉴权与业务校验",
+            "连接成功不能证明工具结果可信"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "同一个 get_weather",
+        "text": "应用可以把本地函数直接注册给模型，也可以从 MCP server 获得能力后适配为模型工具。底层连接改变了，天气数据仍需校验时间、单位和地点。"
+      },
+      {
+        "type": "note",
+        "title": "别把 MCP 当 Agent 大脑",
+        "text": "MCP 的范围是上下文交换协议，应用如何选择模型、维护状态和批准动作仍由 host 等应用逻辑决定。服务器在本地还是远程也不是信任结论。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "structured-validation",
+      "context"
+    ],
+    "sources": [
+      {
+        "key": "mcp",
+        "title": "MCP · Architecture overview",
+        "url": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+        "scope": "支持 host/client/server、协议范围与多种能力原语；定义层与业务校验对照为作者综合。",
+        "basis": "MCP 官方文档，2026-07-28 路径；host/client/server 与协议职责。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持工具名称、描述、输入 schema 与执行责任。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "接上 MCP server 是否自动完成 Agent 的权限和状态管理？",
+      "answer": "不会。连接协议提供互通机制，应用仍需设计能力授权、状态、结果处理和具体动作批准。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  }
+]
+</script>
+<script>
+'use strict';
+const cards=JSON.parse(document.querySelector('#card-data').textContent);
+const byId=Object.fromEntries(cards.map(c=>[c.id,c]));
+const types={concept:'概念型',relation:'关系型',mechanism:'机制型'};
+const groups={agent:'Agent 基础',context:'上下文工程',retrieval:'检索与生成',reliability:'可靠执行'};
+const scenes=[['all','自由选题','20 张卡 · 按好奇心阅读'],['context','厘清概念','状态、输入与记忆的边界'],['agent','理解循环','决策、工具与反馈如何连接'],['reliability','可靠执行','校验、恢复与人工批准']];
+const main=document.querySelector('#main'),quick=document.querySelector('#quick'),sheet=document.querySelector('#sheet');
+let filter='all',scene='all',query='',current=null,trail=[],catalogY=0,quickAnchor=null,hideTimer,toastTimer;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=c=>String(cards.indexOf(c)+1).padStart(2,'0');
+const link=(id,label)=>`<button class="related" data-related="${esc(id)}" aria-haspopup="dialog">${esc(label||byId[id].title)}</button>`;
+function block(b,i=0,prefix='block'){
+ const title=`<h2 id="${prefix}-${i}">${esc(b.title)}</h2>`;
+ let body='';
+ if(b.type==='flow')body=`<ol class="flow">${b.steps.map((s,j)=>`<li><b aria-hidden="true">${j+1}</b><span>${esc(s)}</span></li>`).join('')}</ol>`;
+ else if(b.type==='compare')body=`<div class="table-scroll" role="region" aria-label="${esc(b.title)}对比表" tabindex="0"><table><thead><tr><th scope="col">比较维度</th>${b.columns.map(x=>`<th scope="col">${esc(x)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></div>`;
+ else if(b.type==='code')body=`<div class="codebox"><div class="codecap"><span>${esc(b.language)}</span><button data-copy="${i}">复制</button></div><pre tabindex="0" aria-label="${esc(b.title)}代码，可横向滚动"><code>${esc(b.code)}</code></pre></div>`;
+ else body=`<p>${esc(b.text)}</p>`;
+ return `<section class="block ${esc(b.type)}">${title}${body}</section>`;
+}
+function mini(c){
+ const flow=c.blocks.find(b=>b.type==='flow'),compare=c.blocks.find(b=>b.type==='compare'),code=c.blocks.find(b=>b.type==='code'),note=c.blocks.find(b=>b.type==='note');
+ if(flow)return `<div class="mini-flow">${flow.steps.slice(0,4).map((s,i)=>`${i?'<i aria-hidden="true">→</i>':''}<span>${esc(s)}</span>`).join('')}</div>`;
+ if(compare)return `<div class="mini-compare">${compare.columns.map((s,i)=>`<div>${esc(s)}<small>${esc(compare.rows[0][i+1])}</small></div>`).join('')}</div>`;
+ if(code)return `<div class="mini-code">${esc(code.code.split('\n').slice(0,3).join('\n'))}</div>`;
+ if(note)return `<div class="mini-note">${esc(note.title)}<br>${esc(note.text.slice(0,48))}…</div>`;
+ return `<div class="mini-quote">${esc(c.subtitle)}</div>`;
+}
+function tile(c){return `<article class="tile"><div class="tile-top"><span class="type ${c.kind}">${types[c.kind]}</span><span class="card-num">${num(c)} / 20</span></div><button class="tile-title" data-open="${c.id}"><h3>${esc(c.title)}</h3><span>${esc(c.subtitle)}</span></button><p class="tile-overview">${esc(c.overview)}</p><div class="tile-visual" aria-hidden="true">${mini(c)}</div><div class="tile-footer"><span class="pending">待认同</span><span>${groups[c.group]} · ${c.sources.length} 项来源</span><button data-open="${c.id}" aria-label="阅读全文：${esc(c.title)}">阅读全文 <span aria-hidden="true">↗</span></button></div></article>`}
+function footer(){return `<footer><span>知间 · 为理解而连接。内容由来源核对与作者综合构成，个人认同独立。</span><span>20 CARDS / CANDIDATE DEMO</span></footer>`}
+function catalog(restore=false){
+ closeQuick();current=null;
+ main.innerHTML=`<section class="hero"><div><div class="eyebrow">A FIELD GUIDE TO AI ENGINEERING</div><h1>把零散概念，读成<br><span>可连接的知识。</span></h1><p>从 React / TS 走向 AI 工程的 20 个认知支点。<br>先读懂一张卡，再沿着关联，建立自己的理解。</p></div><aside class="intro-note"><div class="num">20<span>知识卡片 / 三种主类型</span></div><p>概念回答「是什么」，关系厘清「区别与联系」，机制解释「如何运作」。来源可审核，认同由你决定。</p></aside></section><nav class="scenes" aria-label="阅读场景">${scenes.map(([id,title,sub],i)=>`<button class="scene" data-scene="${id}" aria-pressed="${scene===id}"><span class="scene-no">0${i+1}</span><span><strong>${title}</strong><small>${sub}</small></span></button>`).join('')}</nav><section aria-labelledby="catalog-title"><div class="library-head"><h2 class="section-title" id="catalog-title">知识卡片集 <small>THE COLLECTION</small></h2><div class="searchwrap"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.5" stroke="currentColor"/><path d="m12 12 5 5" stroke="currentColor"/></svg><label for="search" class="visually-hidden">搜索标题、正文、来源或复习内容</label><input type="search" id="search" placeholder="搜索概念、正文或来源…" value="${esc(query)}" autocomplete="off"></div></div><div class="filters" role="group" aria-label="按主类型筛选">${[['all','全部'],...Object.entries(types)].map(([key,label])=>`<button class="filter" data-filter="${key}" aria-pressed="${filter===key}">${label}</button>`).join('')}<span class="filter-info" id="filter-info" role="status"></span></div><div class="grid" id="grid"></div><div class="empty" id="empty" hidden><h3>还没有匹配的知识卡</h3><p>试试“状态”“重试”或清除当前筛选。</p><button class="solid" data-reset>清除筛选</button></div></section><aside class="catalog-end"><div><strong>建议的第一条阅读线</strong><br>State vs Context → Context Builder → Agent Loop → Checkpoint</div><div>本版用于审阅内容与呈现。<br>全部 20 张卡均为待认同，协议仍是候选。</div></aside>${footer()}`;
+ updateGrid();
+ document.querySelector('#search').addEventListener('input',e=>{query=e.target.value;updateGrid()});
+ if(restore)requestAnimationFrame(()=>window.scrollTo(0,catalogY));
+}
+function updateGrid(){
+ const q=query.trim().toLocaleLowerCase();
+ const selected=cards.filter(c=>(scene==='all'||c.group===scene)&&(filter==='all'||c.kind===filter)&&(!q||JSON.stringify(c).toLocaleLowerCase().includes(q)));
+ document.querySelector('#grid').innerHTML=selected.map(tile).join('');
+ document.querySelector('#empty').hidden=!!selected.length;
+ document.querySelector('#filter-info').textContent=`${selected.length} / 20 张`;
+ document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.filter===filter));
+ document.querySelectorAll('[data-scene]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.scene===scene));
+}
+function openCard(id,push=true){
+ if(!byId[id])return;
+ closeQuick();closeSheet();
+ if(push){rememberRoute();if(current)trail.push({id:current,y:window.scrollY,focusRelated:id,reviewOpen:!!document.querySelector('#review-panel:not([hidden])'),answerOpen:!!document.querySelector('#review-answer:not([hidden])'),sourceOpen:!!document.querySelector('.source-details[open]')});else catalogY=window.scrollY;}
+ current=id;const c=byId[id];
+ document.title=`${c.title} · 知间`;
+ main.innerHTML=`<div class="reader-shell"><aside class="reader-nav"><button class="back" id="back">← ${trail.length?'返回上张卡':'返回卡片集'}</button><div class="smallcap">本卡阅读 / ${num(c)}</div><nav class="toc" aria-label="本卡目录"><a href="#overview">核心认知</a>${c.blocks.map((b,i)=>`<a href="#block-${i}">${esc(b.title)}</a>`).join('')}<a href="#connections">关联知识与来源</a></nav></aside><article class="reader-paper"><header class="reader-head"><div class="eyebrow">${groups[c.group]} / ${num(c)} OF 20</div><span class="type ${c.kind}">${types[c.kind]} · ${c.kind==='concept'?'是什么':c.kind==='relation'?'区别与联系':'如何运作'}</span><h1 tabindex="-1">${esc(c.title)}</h1><p class="subtitle">${esc(c.subtitle)}</p><div class="readmeta"><span class="pending">待认同</span><span>${c.blocks.length} 个语义块</span><span>来源核对 2026.10.21</span></div></header><div class="overview" id="overview"><small>核心认知 / OVERVIEW</small>${esc(c.overview)}</div>${c.blocks.map((b,i)=>block(b,i)).join('')}<div class="card-bottom" id="connections"><h2 class="related-title">沿着关联，继续理解</h2><div class="relations">${c.related.map(id=>link(id)).join('')}</div><p class="related-help"><span class="desktop-hint">悬停或键盘聚焦可快速概览；</span>点击预览，进入完整卡后可返回原阅读位置。</p><button id="review-toggle" class="review-toggle" aria-expanded="false" aria-controls="review-panel"><span>可选复习 · 试着用自己的话解释</span><span id="review-sign">＋</span></button><section id="review-panel" class="review-panel" hidden aria-label="复习问题"><p>${esc(c.review.question)}</p><button class="subtle" id="reveal" aria-expanded="false" aria-controls="review-answer">揭示参考答案</button><div id="review-answer" class="review-answer" hidden>${esc(c.review.answer)}</div></section><details class="source-details"><summary>来源与支持范围 · ${c.sources.length} 项</summary><ol class="source-list">${c.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a><p>${esc(s.scope)}<br>${esc(s.basis)}<br>核对日期 ${s.verifiedAt}；离线可阅读说明，打开原文需要联网。</p></li>`).join('')}</ol><p class="editorial">${esc(c.editorial)}</p></details><div class="endorsement"><span class="pending">个人认同：待认同</span><div><small>来源支持与个人认同独立。本 Demo 不替你认同，也不把阅读或答题记录为认可。</small></div></div></div><nav class="reader-actions" aria-label="相邻卡片"><button data-open="${cards[(cards.indexOf(c)+19)%20].id}">← 上一张<br>${esc(cards[(cards.indexOf(c)+19)%20].title)}</button><button data-open="${cards[(cards.indexOf(c)+1)%20].id}">下一张 →<br>${esc(cards[(cards.indexOf(c)+1)%20].title)}</button></nav></article><aside class="reader-side"><b>${num(c)}</b><p>慢一点读。<br>连接概念，<br>也保留边界。</p></aside></div>${footer()}`;
+ window.scrollTo(0,0);main.querySelector('h1').focus({preventScroll:true});
+ if(push){routeDepth++;history.pushState(routeSnapshot(),'',`#card=${id}`)}
+}
+function back(){
+ if(routeDepth>0){history.back();return}
+ closeQuick();closeSheet();
+ if(trail.length){const prev=trail.pop();openCard(prev.id,false);if(prev.reviewOpen)document.querySelector('#review-toggle').click();if(prev.answerOpen)document.querySelector('#reveal').click();if(prev.sourceOpen)document.querySelector('.source-details').open=true;requestAnimationFrame(()=>{window.scrollTo(0,prev.y);const b=main.querySelector(`[data-related="${prev.focusRelated}"]`);if(b){suppressFocusPreview=true;b.focus({preventScroll:true});setTimeout(()=>suppressFocusPreview=false,120)}})}
+ else{const leaving=current;catalog(true);document.title='知间 · AI 工程知识卡';requestAnimationFrame(()=>{const target=main.querySelector(`[data-open="${leaving}"]`);if(target)target.focus({preventScroll:true})})}
+}
+let suppressFocusPreview=false;
+function closeQuick(){clearTimeout(hideTimer);quick.hidden=true;if(quickAnchor){quickAnchor.removeAttribute('aria-describedby');quickAnchor=null}}
+function preview(anchor){
+ if(innerWidth<=700||suppressFocusPreview||sheet.open)return;
+ clearTimeout(hideTimer);const c=byId[anchor.dataset.related];if(!c)return;
+ quickAnchor=anchor;anchor.insertAdjacentElement('afterend',quick);quick.innerHTML=`<span class="type ${c.kind}">${types[c.kind]} · 关联知识</span><h3>${esc(c.title)}</h3><p id="quick-summary">${esc(c.overview)}</p><div class="quick-actions"><small>待认同 · ${c.sources.length} 项来源</small><button class="solid" data-open="${c.id}">进入完整卡 →</button></div>`;quick.hidden=false;
+ anchor.setAttribute('aria-describedby','quick-summary');
+ const r=anchor.getBoundingClientRect(),w=Math.min(355,innerWidth-24),height=quick.offsetHeight;
+ quick.style.left=Math.max(12,Math.min(r.left,innerWidth-w-12))+'px';quick.style.top=Math.max(12,Math.min(r.top-height-10,innerHeight-height-12))+'px';
+}
+function deferHide(){clearTimeout(hideTimer);hideTimer=setTimeout(()=>{if(!quick.matches(':hover')&&!quick.contains(document.activeElement)&&document.activeElement!==quickAnchor)closeQuick()},130)}
+function showSheet(id){
+ closeQuick();const c=byId[id];if(!c)return;
+ document.querySelector('#sheet-content').innerHTML=`<div class="sheet-bar"><span class="type ${c.kind}">${types[c.kind]} · 关联预览</span><button class="close" id="close-sheet" autofocus aria-label="关闭关联预览">关闭 ×</button></div><h2 id="sheet-title">${esc(c.title)}</h2><p class="subtitle">${esc(c.subtitle)}</p><div class="overview"><small>核心认知</small>${esc(c.overview)}</div>${block(c.blocks[0],0,'sheet-block')}<div class="sheet-footer"><small class="pending">待认同 · ${c.sources.length} 项来源</small><button class="solid" data-open="${c.id}">进入完整卡 →</button></div>`;
+ sheet.showModal();document.body.classList.add('modal-open');
+}
+function closeSheet(){if(sheet.open)sheet.close();document.body.classList.remove('modal-open')}
+function toast(x){clearTimeout(toastTimer);const el=document.querySelector('#toast');el.textContent=x;el.hidden=false;toastTimer=setTimeout(()=>el.hidden=true,2200)}
+document.addEventListener('click',async ev=>{
+ if(ev.target.closest('#whitepaper-link')){const data=document.querySelector('#whitepaper-data');if(data&&data.textContent.trim().startsWith('"')){ev.preventDefault();closeQuick();let d=document.querySelector('#whitepaper-dialog');if(!d){d=document.createElement('dialog');d.id='whitepaper-dialog';d.className='whitepaper-dialog';d.setAttribute('aria-label','完整实施计划白皮书');d.innerHTML='<div class="wp-head"><span>完整实施计划白皮书</span><button class="close" id="close-whitepaper" autofocus>关闭 ×</button></div><iframe title="完整白皮书正文"></iframe>';document.body.append(d);d.querySelector('iframe').srcdoc=JSON.parse(data.textContent);d.addEventListener('close',()=>document.body.classList.remove('modal-open'))}d.showModal();document.body.classList.add('modal-open')}return}
+ const b=ev.target.closest('button');if(!b)return;
+ if(b.dataset.open){openCard(b.dataset.open);return}
+ if(b.dataset.related){showSheet(b.dataset.related);return}
+ if(b.id==='home'||b.id==='nav-cards'){rememberRoute();trail=[];catalog();document.title='知间 · AI 工程知识卡';window.scrollTo(0,0);routeDepth++;history.pushState(routeSnapshot(),'','#collection');return}
+ if(b.id==='back'){back();return}
+ if(b.dataset.scene){scene=b.dataset.scene;updateGrid();return}
+ if(b.dataset.filter){filter=b.dataset.filter;updateGrid();return}
+ if(b.hasAttribute('data-reset')){filter='all';scene='all';query='';document.querySelector('#search').value='';updateGrid();document.querySelector('#search').focus();return}
+ if(b.id==='close-sheet'){closeSheet();return}
+ if(b.id==='close-whitepaper'){document.querySelector('#whitepaper-dialog').close();return}
+ if(b.id==='review-toggle'){const p=document.querySelector('#review-panel');p.hidden=!p.hidden;b.setAttribute('aria-expanded',!p.hidden);document.querySelector('#review-sign').textContent=p.hidden?'＋':'−';return}
+ if(b.id==='reveal'){const a=document.querySelector('#review-answer');a.hidden=!a.hidden;b.setAttribute('aria-expanded',!a.hidden);b.textContent=a.hidden?'揭示参考答案':'收起参考答案';return}
+ if(b.hasAttribute('data-copy')){const code=b.closest('.codebox').querySelector('code').textContent;try{await navigator.clipboard.writeText(code);toast('代码已复制')}catch{toast('当前浏览器不允许复制，请选中代码手动复制')}return}
+});
+document.addEventListener('mouseover',e=>{const a=e.target.closest('[data-related]');if(a)preview(a)});
+document.addEventListener('mouseout',e=>{if(e.target.closest('[data-related]'))deferHide()});
+document.addEventListener('focusin',e=>{const a=e.target.closest('[data-related]');if(a)preview(a)});
+document.addEventListener('focusout',e=>{if(e.target.closest('[data-related]')||quick.contains(e.target))deferHide()});
+quick.addEventListener('mouseenter',()=>clearTimeout(hideTimer));quick.addEventListener('mouseleave',deferHide);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.open&&!quick.hidden){const a=quickAnchor;closeQuick();suppressFocusPreview=true;a?.focus({preventScroll:true});setTimeout(()=>suppressFocusPreview=false,120)}if(e.key==='ArrowDown'&&e.target===quickAnchor&&!quick.hidden){e.preventDefault();quick.querySelector('button').focus()}});
+document.addEventListener('pointerdown',e=>{if(!quick.hidden&&!quick.contains(e.target)&&!e.target.closest('[data-related]'))closeQuick()});
+sheet.addEventListener('close',()=>document.body.classList.remove('modal-open'));
+sheet.addEventListener('click',e=>{if(e.target===sheet){const r=sheet.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeSheet()}});
+window.addEventListener('resize',closeQuick);window.addEventListener('scroll',()=>{if(!quick.hidden)closeQuick()},{passive:true});
+let routeDepth=0;
+function routeSnapshot(){return {demo:true,id:current,y:window.scrollY,trail:JSON.parse(JSON.stringify(trail)),catalogY,filter,scene,query,depth:routeDepth,reviewOpen:!!document.querySelector('#review-panel:not([hidden])'),answerOpen:!!document.querySelector('#review-answer:not([hidden])'),sourceOpen:!!document.querySelector('.source-details[open]')}}
+function rememberRoute(){history.replaceState(routeSnapshot(),'')}
+window.addEventListener('popstate',e=>{if(!e.state?.demo)return;const s=e.state,leaving=current;closeQuick();closeSheet();filter=s.filter;scene=s.scene;query=s.query;catalogY=s.catalogY;trail=s.trail||[];routeDepth=s.depth||0;if(s.id){openCard(s.id,false);if(s.reviewOpen)document.querySelector('#review-toggle').click();if(s.answerOpen)document.querySelector('#reveal').click();if(s.sourceOpen)document.querySelector('.source-details').open=true}else{catalog();document.title='知间 · AI 工程知识卡'}requestAnimationFrame(()=>{window.scrollTo(0,s.y);const target=s.id?main.querySelector(`[data-related="${leaving}"]`):main.querySelector(`[data-open="${leaving}"]`);if(target){suppressFocusPreview=true;target.focus({preventScroll:true});setTimeout(()=>suppressFocusPreview=false,120)}})});
+catalog();
+const initial=location.hash.match(/^#card=(.+)$/)?.[1];if(initial&&byId[initial])openCard(initial,false);
+history.replaceState(routeSnapshot(),'');
+</script></body></html>

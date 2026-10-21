@@ -1,0 +1,23 @@
+{
+  "single_file_matches_index": true,
+  "h5_sha256": "75d900610cf9160eac0cdcd0493636b6dc9d5d0b9376c52e954a93e5972998c9",
+  "knowledgeblocks_commit": "d3d5443701ccf4c44f0d0c5b03232fe57b2abe1f",
+  "knowledgeblocks_status": "",
+  "knowledgeblocks_diff_stat": "",
+  "screenshots": [
+    "01-desktop-catalog.png",
+    "02-desktop-mechanism.png",
+    "03-desktop-hover-preview.png",
+    "04-mobile-relation.png",
+    "05-mobile-sheet.png",
+    "06-mobile-code-and-sources.png",
+    "07-mobile-concept.png",
+    "08-empty-state.png",
+    "09-whitepaper-desktop.png",
+    "10-whitepaper-mobile.png"
+  ],
+  "pdf_pages": 12,
+  "pdf_contains_final_sections": true,
+  "standalone_html_loads": true,
+  "standalone_embedded_whitepaper": true
+}

@@ -1,0 +1,1331 @@
+[
+  {
+    "id": "agent-loop",
+    "title": "Agent Loop",
+    "subtitle": "让行动结果进入下一次决策",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "Agent Loop 把决策、行动和观察连成反馈循环：上一轮的结果会改变下一轮输入。模型提出行动，运行时负责调度与执行；完成、等待和预算耗尽应有明确出口。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "循环里谁做什么",
+        "text": "模型根据本轮输入生成回答或行动提议；运行时检查工具、权限和停止条件；工具返回结果；应用记录观察。这里描述的是教学分工，不要求每个框架都提供同名组件。"
+      },
+      {
+        "type": "flow",
+        "title": "最小反馈路径",
+        "steps": [
+          "构造本轮输入",
+          "模型提议",
+          "检查与执行",
+          "记录观察",
+          "继续 → 回到输入；或结束 / 等待"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查一处 bug",
+        "text": "先读取报错文件，发现调用方传了空值，再读取调用方。第二次读取的理由来自第一次观察。若工具报权限错误，应记录阻塞并停止依赖动作，不能编造文件内容。"
+      },
+      {
+        "type": "note",
+        "title": "轮数不是成果",
+        "text": "达到轮数上限只说明预算用完。应用还需区分成功、失败、等待人工与结果未知，不能把退出循环直接显示为“已完成”。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "observation",
+      "state",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "agents",
+        "title": "Building effective agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "scope": "支持模型动态选择行动、环境反馈与停止条件；本卡分工与状态名是作者教学综合。",
+        "basis": "Anthropic 工程文章，2024-12-19；术语分类与循环模式，非统一行业标准。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "工具返回错误后，再调用一次模型就一定构成有效反馈吗？",
+      "answer": "不一定。错误及其含义必须进入下一轮可见输入，且后续决策实际能据此调整；循环次数本身不证明反馈有效。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "state",
+    "title": "Agent State",
+    "subtitle": "应用的工作记录，不是模型的全部认知",
+    "kind": "concept",
+    "group": "context",
+    "overview": "State 是应用在任务推进中维护的数据，例如目标、观察、草稿和执行状态。它可以包含错误或猜测；是否跨进程保存、是否提供给模型，都由应用另行决定。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先问下一步需要什么",
+        "text": "把跨步骤要使用的信息显式留下：原始输入、已取得结果、待执行动作及状态。能从原始数据稳定推导的展示文本，可以到使用时再生成。"
+      },
+      {
+        "type": "code",
+        "title": "借用 React / TS 的直觉",
+        "language": "TypeScript · 示意，不执行",
+        "code": "type TaskState = {\n  goal: string;\n  observations: { text: string; source: string }[];\n  status: \"running\" | \"waiting\" | \"unknown\";\n};\n// 有类型 ≠ 已持久化；有字段 ≠ 内容已经核实"
+      },
+      {
+        "type": "example",
+        "title": "草稿也能是状态",
+        "text": "“订单可能已创建”可以保存，但必须带 unknown。若下一步把它当成“订单已创建”，错误来自状态解释与更新规则。"
+      },
+      {
+        "type": "note",
+        "title": "框架范围",
+        "text": "LangGraph 用共享 state 连接节点，是一个具体实现约定。普通函数、数据库记录或 reducer 也能维护应用状态；无需先引入图框架。"
+      }
+    ],
+    "related": [
+      "state-context",
+      "checkpoint",
+      "observation"
+    ],
+    "sources": [
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持节点共享 state、原始数据保存与按需格式化；通用定义为作者综合。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "persistence",
+        "title": "Persistence",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/persistence",
+        "scope": "支持持久化需另选机制，内存 checkpointer 不跨进程重启。",
+        "basis": "LangGraph JS 官方文档；checkpointer/store 作用与内存存储限制。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "把一段摘要放入 state，是否意味着它已成为事实且重启后仍在？",
+      "answer": "两者都不成立。事实可靠性取决于证据与审核，重启可恢复取决于实际存储和恢复机制。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "context",
+    "title": "LLM Context",
+    "subtitle": "这一次推理实际能用到什么",
+    "kind": "concept",
+    "group": "context",
+    "overview": "Context 指本次模型推理使用的输入信息，可能包括指令、消息、工具定义和检索片段。数据库里存着什么，与这一次模型实际收到什么，是两件事。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "历史存在，不等于本轮可见",
+        "text": "应用通常要把选定信息放入请求或由服务端机制纳入本次推理。模型参数中的训练知识不等同于本轮输入；各 API 对内部状态与 token 计费的规则也不完全相同。"
+      },
+      {
+        "type": "example",
+        "title": "一条偏好如何被用到",
+        "text": "用户偏好“解释先给 TS 示例”虽保存在资料库，只有被检索、选择并加入这次输入后，才能以这条外部记录影响回答。模型仍可能不遵循它。"
+      },
+      {
+        "type": "note",
+        "title": "窗口与内容要区分",
+        "text": "上下文窗口是容量约束，通常还涉及生成输出预算；Context 是具体信息。本 Demo 不硬编码任何厂商当前最大窗口或通用 token 公式。"
+      }
+    ],
+    "related": [
+      "state-context",
+      "context-builder",
+      "memory"
+    ],
+    "sources": [
+      {
+        "key": "window",
+        "title": "Context windows",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "scope": "支持上下文窗口涵盖输入与生成响应；本文不复述当前模型容量。",
+        "basis": "Claude 官方文档；上下文窗口与输入/输出预算，具体模型规则另查。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持每次推理时选择输入信息的工作定义。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "资料库已有一份手册，为什么模型仍可能回答不知道？",
+      "answer": "它可能没有被检索或装入本轮输入，也可能装入后未被正确利用。先检查实际请求，不能只检查存储。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "state-context",
+    "title": "State vs Context",
+    "subtitle": "工作记录与本轮输入如何相交",
+    "kind": "relation",
+    "group": "context",
+    "overview": "State 是应用维护的工作数据，Context 是本轮推理使用的信息。Context 常从 State 取材，也会加入外部指令和即时检索结果；两者不存在天然的严格包含关系。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按职责比较",
+        "columns": [
+          "State",
+          "Context"
+        ],
+        "rows": [
+          [
+            "主要用途",
+            "协调任务与后续步骤",
+            "支持本次模型推理"
+          ],
+          [
+            "典型内容",
+            "目标、观察、动作状态、草稿",
+            "指令、选中消息、工具说明、证据片段"
+          ],
+          [
+            "保存方式",
+            "内存或外部存储，需显式设计",
+            "请求装配与服务端上下文机制"
+          ],
+          [
+            "关系",
+            "可能有永不交给模型的字段",
+            "可能有未存入应用 State 的指令"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "一个交集之外的例子",
+        "text": "state 内部的重试计数可以只给运行时使用；本轮注入的安全指令可以来自静态配置而未写回 state。检索片段也可以直接进入 context。"
+      },
+      {
+        "type": "note",
+        "title": "先说明自己的词义",
+        "text": "有的框架把运行输入也叫 state 或 context。讨论时应明确是应用数据、模型输入还是配置对象，避免仅凭字段名称下结论。"
+      }
+    ],
+    "related": [
+      "state",
+      "context",
+      "context-builder"
+    ],
+    "sources": [
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持从原始 state 按节点需求构造输入。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "window",
+        "title": "Context windows",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "scope": "支持模型可用窗口的范围；集合关系是本卡基于职责的作者综合，非官方定理。",
+        "basis": "Claude 官方文档；上下文窗口与输入/输出预算，具体模型规则另查。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "“Context 一定是 State 的子集”错在哪里？",
+      "answer": "它把具体应用的一种存储选择当成普遍关系；context 可以加入 state 以外的配置与检索信息，state 也可保留模型不可见数据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "context-builder",
+    "title": "Context Builder",
+    "subtitle": "为下一次调用挑选并组织信息",
+    "kind": "mechanism",
+    "group": "context",
+    "overview": "Context Builder 是本 Demo 对输入装配逻辑的命名：按当前任务选择信息、安排顺序并控制预算。它是应用职责，不要求成为独立服务，也没有统一官方接口。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "它的输入与产出",
+        "text": "输入可来自 state、系统配置、检索和工具目录；产出是某一次模型调用所需请求。选择哪些信息会影响结果，不能把它简化为字符串拼接。"
+      },
+      {
+        "type": "flow",
+        "title": "一次装配的候选步骤",
+        "steps": [
+          "识别本轮目标",
+          "选择相关证据与指令",
+          "组织并标明来源",
+          "检查容量与输出预留",
+          "发起调用并记录输入版本"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "预算只作算例",
+        "text": "假设教学系统总预算为 32k，输出预留 4k、固定指令和工具 2k，则动态输入暂留 26k。这不是任何真实模型的规格，实际还需按所用 API 统计。"
+      },
+      {
+        "type": "note",
+        "title": "删除的代价",
+        "text": "若预算不足，应优先保留用户限制、待解决问题和关键证据。具体裁剪策略需要任务评估；不存在每次都安全的“只保留最后 N 条”。"
+      }
+    ],
+    "related": [
+      "context",
+      "compression",
+      "prompt-context"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持输入策展和有限上下文资源；Builder 名称、步骤与预算算例由作者提出。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "state",
+        "title": "Thinking in LangGraph",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph",
+        "scope": "支持保存原始数据、按需格式化模型输入。",
+        "basis": "LangGraph JS 官方指南；共享状态、节点及按需格式化输入。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "为什么“保存全部历史再拼起来”不等于完成 Context Builder？",
+      "answer": "它没有解决相关性、来源、冲突和容量问题。还需要明确本轮目标并选择、组织与验证输入。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "tool-loop",
+    "title": "Tool Calling Loop",
+    "subtitle": "从调用提议到可核查的执行结果",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "工具调用让模型以结构化方式请求外部能力。客户端工具由应用执行并回传结果；服务端工具由提供商执行。模型生成调用参数本身不证明操作已经发生。",
+    "blocks": [
+      {
+        "type": "flow",
+        "title": "客户端工具的一次往返",
+        "steps": [
+          "提供定义与输入",
+          "模型返回调用及 ID",
+          "应用校验并执行",
+          "按调用 ID 回传结果",
+          "模型继续或给出答案"
+        ]
+      },
+      {
+        "type": "compare",
+        "title": "执行责任不同",
+        "columns": [
+          "客户端工具",
+          "服务端工具"
+        ],
+        "rows": [
+          [
+            "执行位置",
+            "应用自己的运行环境",
+            "提供商托管环境"
+          ],
+          [
+            "应用工作",
+            "校验、鉴权、执行、回传",
+            "配置工具并处理其返回与异常"
+          ],
+          [
+            "共同边界",
+            "调用提议不能代替执行回执",
+            "结果仍需按任务核验"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查天气与发邮件",
+        "text": "天气查询失败可以反馈错误。发邮件超时则可能已发送，应先查回执或幂等记录，不能因为模型愿意重试就再次发送。"
+      },
+      {
+        "type": "note",
+        "title": "不自动获得授权",
+        "text": "工具定义描述可调用能力；真正可执行的对象与权限由应用或服务校验。参数结构正确也不等于获准操作。"
+      }
+    ],
+    "related": [
+      "observation",
+      "structured-validation",
+      "idempotency",
+      "tool-mcp"
+    ],
+    "sources": [
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持客户端/服务端工具与调用结果往返；邮件重试与授权为工程示例。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "看到 tool_use 是否能在 UI 上显示“执行成功”？",
+      "answer": "不能。它只是调用请求；应等待实际执行回执并根据操作语义核查成功或未知状态。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "observation",
+    "title": "Observation",
+    "subtitle": "带来源与状态的行动反馈",
+    "kind": "concept",
+    "group": "agent",
+    "overview": "Observation 是系统记录的行动反馈，例如查询结果、错误或超时。它描述这次观察到了什么，不代表环境的全部事实；“没有收到响应”也不能推出“没有执行”。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先区分记录与解释",
+        "text": "工具回了 HTTP 200 是传输或接口层的结果，是否取得目标数据还要看响应内容。模型从结果推断的结论，应与原始返回及来源区分保存。"
+      },
+      {
+        "type": "code",
+        "title": "一个可审计的教学记录",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const observation = {\n  callId: \"send-17\",\n  status: \"unknown\",\n  receivedAt: \"2026-10-21T02:00:00Z\",\n  detail: \"请求超时，尚未获得发送回执\"\n};"
+      },
+      {
+        "type": "example",
+        "title": "空结果有条件",
+        "text": "搜索返回空列表，只能说明本次查询在当前索引、权限和过滤条件下未找到内容；不能直接概括为“世界上不存在”。"
+      },
+      {
+        "type": "note",
+        "title": "外部文本并非新指令",
+        "text": "网页或工具结果里的“忽略前面的要求”是外部数据。运行时应隔离其来源，不让它自行改变用户授权或系统规则。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "state",
+      "idempotency"
+    ],
+    "sources": [
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持工具结果是返回给模型的独立反馈；Observation 数据结构是本 Demo 作者综合。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "idempotency",
+        "title": "Making retries safe with idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+        "scope": "支持超时后执行结果仍不确定。",
+        "basis": "AWS Builders’ Library；超时不确定性、调用方请求标识与安全重试。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "搜索没结果与邮件超时，分别能确认什么？",
+      "answer": "前者确认本次检索条件下无命中；后者确认未及时收到响应。都不能扩大成对外部世界的无条件断言。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "compression",
+    "title": "Context Compression",
+    "subtitle": "缩短输入时保住决策所需条件",
+    "kind": "mechanism",
+    "group": "context",
+    "overview": "Context Compression 用摘要、选择或清理替代部分历史，以减少后续输入。它会丢失信息；质量取决于关键约束、未决事项和证据是否仍能支持下一步。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "压缩的是呈现，不是历史事实",
+        "text": "保留原始记录可供追溯，压缩稿用于后续调用。摘要至少应能区分已完成、待办、被撤回和结果未知，避免把不确定状态写成成功。"
+      },
+      {
+        "type": "compare",
+        "title": "一处否定就会改变行动",
+        "columns": [
+          "原记录 / 保真摘要",
+          "危险摘要"
+        ],
+        "rows": [
+          [
+            "用户限制",
+            "允许写草稿；不允许发送",
+            "用户允许处理邮件"
+          ],
+          [
+            "执行结果",
+            "发送超时，结果未知",
+            "邮件未发送"
+          ],
+          [
+            "决策变化",
+            "已撤回自动部署方案",
+            "采用自动部署方案"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "检查压缩是否可用",
+        "text": "拿下一步需要判断的具体问题回查：可否发送？操作是否完成？哪些方案已经否决？任一答案从摘要中变了，就需要修订。"
+      },
+      {
+        "type": "note",
+        "title": "不承诺无损",
+        "text": "原文引用与摘要标记应分开。若细节成为当前任务核心，应重新读取原始证据，而不是让摘要继续自我扩写。"
+      }
+    ],
+    "related": [
+      "context-builder",
+      "memory",
+      "observation"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持 compaction 的目的及过度压缩会丢关键细节；表格与检查项为作者工程建议。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "为什么“发送超时”不能被压成“发送失败，待重试”？",
+      "answer": "超时只确定响应未到，不能确定副作用未发生；这样的摘要把未知改成未执行，会诱发重复发送。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "checkpoint",
+    "title": "Checkpoint",
+    "subtitle": "恢复工作位置，不是撤销外部世界",
+    "kind": "concept",
+    "group": "reliability",
+    "overview": "Checkpoint 保存某个执行位置的应用状态，帮助恢复、分支或排查。在 LangGraph 中它关联线程及图执行信息；恢复旧 checkpoint 不会自动撤销已经发生的外部副作用。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "恢复需要实际存储",
+        "text": "内存保存器可以演示同进程恢复，但进程退出后数据可能丢失。生产恢复还取决于持久存储、线程标识、代码版本与恢复策略。"
+      },
+      {
+        "type": "example",
+        "title": "已经创建的工单仍在",
+        "text": "状态在“创建工单”之前留了快照，随后服务端创建成功。重放旧状态可能再次进入创建步骤；如果没有幂等保护，就可能新增第二张工单。"
+      },
+      {
+        "type": "compare",
+        "title": "两个不同问题",
+        "columns": [
+          "状态恢复",
+          "外部补偿"
+        ],
+        "rows": [
+          [
+            "目标",
+            "找回任务进度与运行数据",
+            "处理已经产生的外部效果"
+          ],
+          [
+            "手段",
+            "读取快照并按框架规则继续",
+            "业务补偿、对账或人工处理"
+          ],
+          [
+            "不能替代",
+            "不能保证外部服务回到旧状态",
+            "不能凭补偿推回所有内部状态"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "框架语义需实测",
+        "text": "快照粒度、重放起点和 pending writes 属于具体框架机制。接入 footprint 前，应锁定实际版本并用真实故障点验证。"
+      }
+    ],
+    "related": [
+      "state",
+      "idempotency",
+      "approval"
+    ],
+    "sources": [
+      {
+        "key": "checkpoint",
+        "title": "Checkpointers",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/checkpointers",
+        "scope": "支持线程状态快照与恢复；不自动回滚副作用是基于恢复范围的工程边界。",
+        "basis": "LangGraph JS 官方文档；线程状态快照与恢复/重放。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "persistence",
+        "title": "Persistence",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/persistence",
+        "scope": "支持内存 checkpointer 的重启限制。",
+        "basis": "LangGraph JS 官方文档；checkpointer/store 作用与内存存储限制。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "interrupt",
+        "title": "Interrupts",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+        "scope": "支持恢复可能重跑节点，副作用需幂等。",
+        "basis": "LangGraph JS 官方文档；暂停、恢复与节点重新执行的边界。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "恢复到发邮件之前的快照，邮箱里的邮件会消失吗？",
+      "answer": "不会。checkpoint 恢复应用状态；外部邮件是否撤回取决于邮件系统的独立能力和业务操作。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "memory",
+    "title": "Memory",
+    "subtitle": "让有用信息跨越当前输入继续可用",
+    "kind": "concept",
+    "group": "context",
+    "overview": "Agent Memory 是保存并再次取用信息的机制。它可以是线程内记录，也可以跨会话；保存、检索和注入是不同步骤，存进去不意味着模型会自动记住或相信。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按取用范围区分",
+        "columns": [
+          "线程内记忆",
+          "跨线程记忆"
+        ],
+        "rows": [
+          [
+            "例子",
+            "当前任务的消息与草稿",
+            "经确认的用户偏好"
+          ],
+          [
+            "常见实现",
+            "状态与 checkpoint",
+            "按用户或组织划分的 store"
+          ],
+          [
+            "主要风险",
+            "历史膨胀、恢复不完整",
+            "串用户、过期信息、错误固化"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "一次偏好更新",
+        "text": "用户先要求“详细解释”，后来改成“默认简洁”。读取偏好时需要版本、时间和适用范围；不能把两句无条件并列交给模型解决。"
+      },
+      {
+        "type": "note",
+        "title": "并非模型权重更新",
+        "text": "这里说的外部应用记忆，不等同于重新训练模型。写入个人认同也必须由用户明确完成，不能从一次阅读推断。"
+      }
+    ],
+    "related": [
+      "context",
+      "state",
+      "compression"
+    ],
+    "sources": [
+      {
+        "key": "memory",
+        "title": "Memory overview",
+        "url": "https://docs.langchain.com/oss/javascript/concepts/memory",
+        "scope": "支持线程内短期与跨线程长期记忆的划分；偏好冲突处理为作者建议。",
+        "basis": "LangChain 官方概念文档；短期与长期记忆的作用域。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "长期记忆最重要的验证是否只是“能写入数据库”？",
+      "answer": "不是。还需验证作用域隔离、更新/删除、检索相关性和本轮实际使用，避免过期或越权信息进入输入。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "workflow-agent",
+    "title": "Workflow vs Agent",
+    "subtitle": "下一步由预定路径还是模型动态决定",
+    "kind": "relation",
+    "group": "agent",
+    "overview": "依 Anthropic 这篇文章的用法，Workflow 主要沿预定义代码路径推进，Agent 让模型动态选择过程与工具。关键是控制权，是否调用 LLM 或是否画成图，都不足以单独分类。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "看下一步如何选择",
+        "columns": [
+          "Workflow",
+          "Agent"
+        ],
+        "rows": [
+          [
+            "路径来源",
+            "代码预先规定的步骤与分支",
+            "模型依据目标和反馈动态选择"
+          ],
+          [
+            "适合情况",
+            "步骤清楚、可预测的任务",
+            "需要探索且路径难预先列尽"
+          ],
+          [
+            "工程代价",
+            "分支维护与覆盖",
+            "预算、停止、权限与评估更难"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "两个写作工具",
+        "text": "“先列提纲，再写稿，再校对”可由固定流程完成；“调查这次故障，并决定下一步读哪个日志”可能需要动态循环。两者也能在一个系统中组合。"
+      },
+      {
+        "type": "note",
+        "title": "术语不统一",
+        "text": "部分产品把固定流程也称 Agent。这张卡采用指定来源的分类用于讨论，不据名称判断能力，也不把 Agent 当成更高级的必选项。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "evaluation",
+      "tool-loop"
+    ],
+    "sources": [
+      {
+        "key": "agents",
+        "title": "Building effective agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "scope": "直接支持 workflow / agent 的控制权区分；本文来源有 2024 年工具生态的历史限制。",
+        "basis": "Anthropic 工程文章，2024-12-19；术语分类与循环模式，非统一行业标准。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "一个流程包含三次 LLM 调用，就必然是 Agent 吗？",
+      "answer": "不是。若下一步始终由预设代码路径决定，按本卡采用的分类仍可以是 Workflow。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "prompt-context",
+    "title": "Prompt vs Context Engineering",
+    "subtitle": "写好指令与维护整轮输入",
+    "kind": "relation",
+    "group": "context",
+    "overview": "Prompt Engineering 聚焦指令如何表达与组织；Context Engineering 还处理本轮该提供哪些历史、工具与外部证据。两者相互包含工作内容，并非换一个名称就能获得新能力。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "同一问题的两个工作面",
+        "columns": [
+          "Prompt Engineering",
+          "Context Engineering"
+        ],
+        "rows": [
+          [
+            "核心关注",
+            "任务、限制、示例是否清楚",
+            "整轮信息是否相关、充分、可容纳"
+          ],
+          [
+            "常见修改",
+            "改写回答要求与示范",
+            "选择证据、裁剪历史、组织工具"
+          ],
+          [
+            "验证对象",
+            "同一输入条件下的行为变化",
+            "完整输入策略对任务结果的影响"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "回答总用旧版接口",
+        "text": "若检索提供的全是旧文档，仅改一句“请用最新版”无法补齐事实。应核查检索版本、筛选条件和装配后的实际内容，再调整指令。"
+      },
+      {
+        "type": "note",
+        "title": "不是唯一术语标准",
+        "text": "本卡借用 Anthropic 文章的工作区分。实践中 prompt 常泛指整个请求；讨论时应说明自己指的是指令文本还是全部输入。"
+      }
+    ],
+    "related": [
+      "context-builder",
+      "context",
+      "rag"
+    ],
+    "sources": [
+      {
+        "key": "context",
+        "title": "Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+        "scope": "支持 prompt 指令组织与 context 输入策展的区分；接口案例是原创示例。",
+        "basis": "Anthropic 工程文章，2025-09-29；输入策展、压缩与外部笔记。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "模型持续引用过时资料，应优先检查哪一层？",
+      "answer": "检查实际输入里资料的来源和版本，以及检索与装配策略；清晰指令有帮助，但不能替代缺失的新证据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "rag",
+    "title": "RAG",
+    "subtitle": "先取得相关证据，再据此生成",
+    "kind": "mechanism",
+    "group": "retrieval",
+    "overview": "RAG 将检索得到的外部材料用于生成回答。原始论文研究特定的检索与生成模型组合；工程里常用“检索 → 组装证据 → 生成”的广义模式，不能把二者实现细节等同。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "检索到什么，决定回答能依据什么",
+        "text": "知识库先被索引，查询时取出候选片段并保留来源。生成环节还需说明哪些材料回答了问题，缺失时应承认不足；向量库不是必需的唯一检索方式。"
+      },
+      {
+        "type": "flow",
+        "title": "广义工程示意",
+        "steps": [
+          "索引文档与元数据",
+          "接收问题并检索",
+          "筛选 / 可选重排",
+          "装配片段及来源",
+          "生成并核查引用"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "查报销制度",
+        "text": "检索到 2023 版和 2026 版规定时，应按适用日期和用户范围筛选。两段都相似，却可能只有一段有效。回答引用必须确实支持那项金额或条件。"
+      },
+      {
+        "type": "note",
+        "title": "不能保证事实正确",
+        "text": "索引过期、漏检、权限过滤错误、片段断章取义或生成误读都可能失败。RAG 提供可检查的证据路径，仍需评估召回、引用与答案。"
+      }
+    ],
+    "related": [
+      "embedding",
+      "retrieval-rerank",
+      "context-builder",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "rag",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "url": "https://arxiv.org/abs/2005.11401",
+        "scope": "支持检索的非参数化记忆与生成结合；本卡工程管线是广义教学综合，不声称重现论文训练方案。",
+        "basis": "Lewis 等，NeurIPS 2020；参数化与非参数化记忆结合的原始研究。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "有向量数据库和引用链接，是否已经保证答案可靠？",
+      "answer": "没有。还要检查材料版本、是否检索到关键证据，以及引用是否真能支持答案中的具体断言。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "embedding",
+    "title": "Embedding",
+    "subtitle": "把对象编码为可比较的向量",
+    "kind": "concept",
+    "group": "retrieval",
+    "overview": "Embedding 把文本等对象编码为向量，以便按选定度量比较。语义检索常希望相关文本更接近；相似度表达模型学到的相关性，不是事实正确、逻辑蕴含或授权判断。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "向量的意义来自模型与任务",
+        "text": "句向量可以用余弦相似度比较。维度、归一化和距离度量应按模型说明选择；不同模型生成的向量通常不能直接混入同一空间比较。"
+      },
+      {
+        "type": "example",
+        "title": "很相似，也可能互相否定",
+        "text": "“这个接口支持退款”与“这个接口不支持退款”词汇与主题很接近，具体分数需实际模型测试。仅凭接近，无法决定哪句是真的。"
+      },
+      {
+        "type": "code",
+        "title": "示意接口，不绑定依赖",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const hits = await index.search({\n  vector: await embed(question),\n  filter: { tenantId, documentVersion: \"2026\" },\n  topK: 20\n});\n// 相似度选候选；权限与事实需要各自验证"
+      },
+      {
+        "type": "note",
+        "title": "迁移不是只换 API Key",
+        "text": "更换 embedding 模型通常需要重建文档向量并重测检索质量；本文没有运行任何模型，也不提供虚构相似度分数。"
+      }
+    ],
+    "related": [
+      "rag",
+      "retrieval-rerank"
+    ],
+    "sources": [
+      {
+        "key": "embedding",
+        "title": "Sentence-BERT",
+        "url": "https://arxiv.org/abs/1908.10084",
+        "scope": "支持句向量和余弦比较；模型兼容性、权限及否定句示例为作者工程边界。",
+        "basis": "Reimers & Gurevych，EMNLP 2019；句向量与余弦相似度，非所有 embedding 的统一定义。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "相似度最高的句子能直接当事实答案吗？",
+      "answer": "不能。它只是候选相关性信号，需要回看原文、版本、条件与其他证据。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "retrieval-rerank",
+    "title": "Retrieval vs Reranking",
+    "subtitle": "先找候选，再细排候选",
+    "kind": "relation",
+    "group": "retrieval",
+    "overview": "Retrieval 从大集合中找出候选；Reranking 对已取得的候选进一步评分排序。二阶段系统常用前者争取召回、后者提高前排相关性；重排通常无法补回从未召回的文档。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "候选集在哪里变化",
+        "columns": [
+          "Retrieval",
+          "Reranking"
+        ],
+        "rows": [
+          [
+            "输入规模",
+            "整个可检索语料或索引",
+            "已召回的一小组候选"
+          ],
+          [
+            "目标",
+            "高效找到可能相关材料",
+            "更精细比较查询与候选相关性"
+          ],
+          [
+            "常见手段",
+            "关键词、向量或混合检索",
+            "查询-段落联合评分等"
+          ],
+          [
+            "主要失败",
+            "关键证据漏进候选集之外",
+            "错排、成本增加、证据仍缺失"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "50 → 5 的教学算例",
+        "text": "先召回 50 段，再选 5 段装入输入。如果正确条款没有进入这 50 段，重排再准确也选不到它；应先检查索引、过滤与召回。数字仅为示意。"
+      },
+      {
+        "type": "note",
+        "title": "相关不等于可信",
+        "text": "重排器不天然审核文档真实性、权限或时效。评估应分别观察候选召回与前排质量，不只看最终回答是否流畅。"
+      }
+    ],
+    "related": [
+      "rag",
+      "embedding",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "rerank",
+        "title": "Passage Re-ranking with BERT",
+        "url": "https://arxiv.org/abs/1901.04085",
+        "scope": "支持查询导向的 BERT 段落重排；二阶段边界与算例为教学综合。",
+        "basis": "Nogueira & Cho，2019 / 修订 2020；查询与段落的重排序方法。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "embedding",
+        "title": "Sentence-BERT",
+        "url": "https://arxiv.org/abs/1908.10084",
+        "scope": "支持向量相似检索这一候选取得方式。",
+        "basis": "Reimers & Gurevych，EMNLP 2019；句向量与余弦相似度，非所有 embedding 的统一定义。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "正确条款未进入候选集，换更强 reranker 能解决吗？",
+      "answer": "通常不能。先修复检索范围、索引、过滤和召回，再评估重排。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "structured-validation",
+    "title": "Structured Output vs Business Validation",
+    "subtitle": "结构合格以后，仍要检验含义",
+    "kind": "relation",
+    "group": "reliability",
+    "overview": "Structured Output 约束输出形状，业务校验判断数据是否符合真实规则。合法 JSON、通过 schema 的对象，仍可能引用不存在的订单、超出权限或违反当前业务状态。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "两个校验层",
+        "columns": [
+          "结构校验",
+          "业务校验"
+        ],
+        "rows": [
+          [
+            "典型问题",
+            "字段是否存在、类型与枚举是否符合",
+            "对象存在吗、状态可变吗、用户有权限吗"
+          ],
+          [
+            "执行位置",
+            "解析器 / schema 验证器 / 支持的生成约束",
+            "应用服务与事实数据源"
+          ],
+          [
+            "随环境变化",
+            "通常随 schema 版本变化",
+            "会随库存、权限、账户状态变化"
+          ]
+        ]
+      },
+      {
+        "type": "code",
+        "title": "类型正确，动作仍需拒绝",
+        "language": "TypeScript · 示意，不执行",
+        "code": "const result = { orderId: \"O-17\", action: \"refund\" };\n// 假设它已通过 schema\nconst order = await loadOrder(result.orderId);\nassertCanRefund(actor, order); // 权限、金额、状态等\n// 通过后才进入受控执行；不是直接信任模型"
+      },
+      {
+        "type": "example",
+        "title": "不存在的订单",
+        "text": "orderId 是字符串，不能保证该订单存在。JSON Schema 可表达许多静态约束，但不会自动替你访问实时订单系统或确认用户权限。"
+      },
+      {
+        "type": "note",
+        "title": "还要处理未正常完成",
+        "text": "具体 API 对拒答、截断、支持的 schema 关键字有各自规定。不要把“开启结构化输出”理解为所有响应路径都可直接按业务成功处理。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "approval",
+      "evaluation"
+    ],
+    "sources": [
+      {
+        "key": "schema",
+        "title": "JSON Schema · object",
+        "url": "https://json-schema.org/understanding-json-schema/reference/object",
+        "scope": "支持对象、属性与 required 等结构约束。",
+        "basis": "JSON Schema 官方指南；properties、required 与额外属性约束。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "structured",
+        "title": "Structured outputs",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "scope": "支持 schema 受控生成；业务边界与订单例子是作者综合。",
+        "basis": "Claude 官方文档；支持范围内的 schema 约束，不能推出业务事实正确。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "通过 schema 的退款对象，为什么仍可能必须拒绝？",
+      "answer": "订单可能不存在，或已退款、超限、无权限。结构校验不替代应用层对实时事实和业务规则的检查。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "idempotency",
+    "title": "Idempotency",
+    "subtitle": "重复请求不重复产生额外效果",
+    "kind": "concept",
+    "group": "reliability",
+    "overview": "幂等性让同一个业务操作在被重复提交时，不额外产生重复效果。对会写外部系统的 Agent，超时后的安全重试依赖明确的操作标识、服务端去重与结果核对，不能只靠模型记住“做过了”。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "标识一次意图，而非一段相同参数",
+        "text": "两次相同金额的转账可能是两次独立意图；一次因超时重试的请求才应复用操作标识。标识作用域、有效期与参数不一致时的行为要写进接口合同。"
+      },
+      {
+        "type": "flow",
+        "title": "结果未知时的处理示意",
+        "steps": [
+          "记录 operationId",
+          "提交受控请求",
+          "超时 → 标为未知",
+          "查询回执 / 幂等记录",
+          "按服务合同决定是否复用同一 ID 重试"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "工单创建响应丢失",
+        "text": "服务端已创建 T-123，响应在网络里丢了。若重试携带同一个有效幂等键并由服务端正确实现去重，可返回原结果；若每次生成新键，仍可能重复创建。"
+      },
+      {
+        "type": "note",
+        "title": "前端禁用按钮不够",
+        "text": "它能减少误点，挡不住网络重试、进程恢复与并发请求。外部服务不支持去重时，要设计对账、补偿或人工处理，不能承诺恰好一次。"
+      }
+    ],
+    "related": [
+      "checkpoint",
+      "observation",
+      "approval"
+    ],
+    "sources": [
+      {
+        "key": "idempotency",
+        "title": "Making retries safe with idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+        "scope": "支持调用方请求标识、安全重试与未知结果；Agent 工单流程是作者改编。",
+        "basis": "AWS Builders’ Library；超时不确定性、调用方请求标识与安全重试。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "重试时生成新的随机 operationId，是否实现了幂等？",
+      "answer": "没有。同一次意图的重试需要复用服务识别的标识；还必须有服务端正确去重和约定的有效期。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "approval",
+    "title": "Human Approval and Resume",
+    "subtitle": "把批准绑定到可审查的具体动作",
+    "kind": "mechanism",
+    "group": "reliability",
+    "overview": "人工批准流程应先展示具体动作及其对象，暂停后保存进度，再根据批准结果恢复。批准某个草稿不等于批准后续任意修改；恢复执行也需要重新检查版本与权限。",
+    "blocks": [
+      {
+        "type": "flow",
+        "title": "候选批准路径",
+        "steps": [
+          "形成具体动作草稿",
+          "展示对象、参数、影响",
+          "暂停并保存进度",
+          "记录批准或拒绝",
+          "核对版本后受控执行"
+        ]
+      },
+      {
+        "type": "text",
+        "title": "LangGraph 的具体边界",
+        "text": "interrupt() 暂停图并通过 Command 恢复；需要 checkpointer 与 thread_id。恢复可能从节点开头重跑，因此中断之前的非幂等副作用有重复风险。这里不提供未经版本核验的生产代码。"
+      },
+      {
+        "type": "example",
+        "title": "批准后收件人变了",
+        "text": "用户批准给 A 的草稿，但恢复时数据已改为 B。应作废旧批准并重新展示具体动作；不能把一个布尔 approved 当成永久通行证。"
+      },
+      {
+        "type": "note",
+        "title": "一次批准不是无限授权",
+        "text": "工程上可将批准绑定动作版本、参数摘要和有效期。实际动作超时后仍要处理结果未知，不能因为曾批准就无条件重复发送。"
+      }
+    ],
+    "related": [
+      "checkpoint",
+      "idempotency",
+      "structured-validation"
+    ],
+    "sources": [
+      {
+        "key": "interrupt",
+        "title": "Interrupts",
+        "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+        "scope": "支持 interrupt/Command、线程恢复和节点重跑边界；批准绑定参数、版本与有效期为作者工程建议。",
+        "basis": "LangGraph JS 官方文档；暂停、恢复与节点重新执行的边界。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "批准以后动作参数变化，能否沿用原来的 approved=true？",
+      "answer": "不应直接沿用。先核对批准绑定的对象和版本；语义改变时应重新让用户审查具体动作。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "evaluation",
+    "title": "Agent Evaluation",
+    "subtitle": "评估结果，也看过程和代价",
+    "kind": "mechanism",
+    "group": "agent",
+    "overview": "Agent Evaluation 用明确任务和成功条件检查整个系统，包括模型、工具与运行时。答案声称成功不等于环境中真的成功；可重复的样例与多次试验能帮助区分改进和偶然波动。",
+    "blocks": [
+      {
+        "type": "text",
+        "title": "先写清什么叫完成",
+        "text": "把用户任务转成可检查结果：记录是否创建、引用是否支持断言、被禁止动作是否未发生。再看工具轨迹、权限边界、延迟与成本；不要只凭回答流畅打分。"
+      },
+      {
+        "type": "flow",
+        "title": "一个小型评估闭环",
+        "steps": [
+          "选真实任务及反例",
+          "定义结果与约束",
+          "隔离环境重复试验",
+          "代码检查 + 人工审阅",
+          "分析失败并回归验证"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "退款助手的三项检查",
+        "text": "数据库是否只有一次正确退款；未授权账户是否始终被拒绝；超时后是否对账再重试。三项分别检验成果、约束与恢复行为，不以“已退款”的文字代替。"
+      },
+      {
+        "type": "note",
+        "title": "模型裁判也需校准",
+        "text": "开放质量可用模型辅助评分，但要和人工判断定期比对，并保留原始轨迹。本 Demo 只测试静态阅读产品，没有运行真实 Agent benchmark。"
+      }
+    ],
+    "related": [
+      "agent-loop",
+      "rag",
+      "structured-validation",
+      "idempotency"
+    ],
+    "sources": [
+      {
+        "key": "eval",
+        "title": "Demystifying evals for AI agents",
+        "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+        "scope": "支持 task/trial/grader、轨迹与环境 outcome 区分，以及代码/模型/人工评分；退款样例为原创。",
+        "basis": "Anthropic 工程文章，2026-01-09；任务、trial、grader、轨迹与结果。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "一次演示成功为何还不足以认定 Agent 稳定？",
+      "answer": "输出与执行有波动，且成功可能只覆盖正常路径。需要多次试验、失败反例和实际环境结果验证。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  },
+  {
+    "id": "tool-mcp",
+    "title": "Tool Definition vs MCP",
+    "subtitle": "能力描述与连接协议分处不同层",
+    "kind": "relation",
+    "group": "agent",
+    "overview": "Tool Definition 说明某项能力做什么、接受什么参数；MCP 规定应用与能力提供方如何交换信息和调用能力。工具可以不经 MCP 调用，MCP 也不只承载工具。",
+    "blocks": [
+      {
+        "type": "compare",
+        "title": "按解决的问题区分",
+        "columns": [
+          "Tool Definition",
+          "MCP"
+        ],
+        "rows": [
+          [
+            "主要问题",
+            "模型怎样理解和填写一个能力",
+            "host、client 与 server 怎样互通"
+          ],
+          [
+            "典型内容",
+            "名称、描述、输入 schema",
+            "发现、请求、响应与连接机制"
+          ],
+          [
+            "能否替代对方",
+            "定义本身不建立跨系统连接",
+            "协议不替你写清每项业务语义"
+          ],
+          [
+            "共同限制",
+            "描述不能代替实际鉴权与业务校验",
+            "连接成功不能证明工具结果可信"
+          ]
+        ]
+      },
+      {
+        "type": "example",
+        "title": "同一个 get_weather",
+        "text": "应用可以把本地函数直接注册给模型，也可以从 MCP server 获得能力后适配为模型工具。底层连接改变了，天气数据仍需校验时间、单位和地点。"
+      },
+      {
+        "type": "note",
+        "title": "别把 MCP 当 Agent 大脑",
+        "text": "MCP 的范围是上下文交换协议，应用如何选择模型、维护状态和批准动作仍由 host 等应用逻辑决定。服务器在本地还是远程也不是信任结论。"
+      }
+    ],
+    "related": [
+      "tool-loop",
+      "structured-validation",
+      "context"
+    ],
+    "sources": [
+      {
+        "key": "mcp",
+        "title": "MCP · Architecture overview",
+        "url": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+        "scope": "支持 host/client/server、协议范围与多种能力原语；定义层与业务校验对照为作者综合。",
+        "basis": "MCP 官方文档，2026-07-28 路径；host/client/server 与协议职责。",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "key": "tools",
+        "title": "Tool use with Claude",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "scope": "支持工具名称、描述、输入 schema 与执行责任。",
+        "basis": "Claude 官方文档；客户端/服务端工具执行与 tool_use/tool_result。",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
+    "review": {
+      "question": "接上 MCP server 是否自动完成 Agent 的权限和状态管理？",
+      "answer": "不会。连接协议提供互通机制，应用仍需设计能力授权、状态、结果处理和具体动作批准。"
+    },
+    "endorsement": "pending",
+    "editorial": "作者综合：正文为中文教学改编；虚构案例与代码仅用于解释，未运行真实 Agent。"
+  }
+]

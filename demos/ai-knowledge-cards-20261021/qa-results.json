@@ -1,0 +1,1770 @@
+{
+  "date": "2026-10-21T02:30:25.875788+00:00",
+  "browser": "Chromium /usr/bin/chromium",
+  "playwright": "environment-installed",
+  "viewports": [
+    "1440x1050",
+    "390x844"
+  ],
+  "results": [
+    {
+      "name": "20 unique complete cards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Three learning types",
+      "passed": true,
+      "detail": {
+        "mechanism": 7,
+        "concept": 7,
+        "relation": 6
+      }
+    },
+    {
+      "name": "All pending; all manual links resolve",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Diverse ordered combinations",
+      "passed": true,
+      "detail": {
+        "count": 10,
+        "combinations": [
+          [
+            "compare",
+            "code",
+            "example",
+            "note"
+          ],
+          [
+            "compare",
+            "example",
+            "note"
+          ],
+          [
+            "flow",
+            "compare",
+            "example",
+            "note"
+          ],
+          [
+            "flow",
+            "text",
+            "example",
+            "note"
+          ],
+          [
+            "text",
+            "code",
+            "example",
+            "note"
+          ],
+          [
+            "text",
+            "compare",
+            "example",
+            "note"
+          ],
+          [
+            "text",
+            "example",
+            "code",
+            "note"
+          ],
+          [
+            "text",
+            "example",
+            "compare",
+            "note"
+          ],
+          [
+            "text",
+            "example",
+            "note"
+          ],
+          [
+            "text",
+            "flow",
+            "example",
+            "note"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "HTTP entry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Catalog 20 items",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Desktop catalog no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "Relation filter has 6 cards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Scene + type intersection",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Empty state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Clear restores cards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Full text search reaches non-title paragraph",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Full text search inside body",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Default reading; review hidden",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Question visible; answer still hidden",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Answer reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Answer hide",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Source details expand",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Desktop hover preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Preview uses same overview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape closes quick preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keyboard focus preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Tab reaches preview full card button",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape restores link focus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Click preview modal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No duplicate DOM IDs with preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Related full card opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Back restores reading position",
+      "passed": true,
+      "detail": {
+        "expected": 850,
+        "actual": 850
+      }
+    },
+    {
+      "name": "Back restores expanded states",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Back restores link focus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Browser back reaches catalog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Browser forward restores card",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 agent-loop: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 agent-loop: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 agent-loop: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 agent-loop: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 agent-loop: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 agent-loop: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 state: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state-context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state-context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 state-context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state-context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state-context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 state-context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context-builder: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context-builder: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 context-builder: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context-builder: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context-builder: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 context-builder: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-loop: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-loop: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 tool-loop: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-loop: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-loop: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-loop: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 observation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 observation: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 compression: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 compression: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 compression: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 compression: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 compression: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 compression: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 checkpoint: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 checkpoint: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 checkpoint: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 checkpoint: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 checkpoint: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 checkpoint: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 memory: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 memory: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 memory: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 memory: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 memory: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 memory: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 workflow-agent: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 workflow-agent: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 workflow-agent: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 workflow-agent: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 workflow-agent: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 workflow-agent: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 prompt-context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 prompt-context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 prompt-context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 prompt-context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 prompt-context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 prompt-context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 rag: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 rag: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 rag: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 rag: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 rag: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 rag: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 embedding: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 embedding: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 retrieval-rerank: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 retrieval-rerank: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 retrieval-rerank: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 retrieval-rerank: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 retrieval-rerank: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 retrieval-rerank: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 structured-validation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 structured-validation: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 idempotency: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 idempotency: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 idempotency: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 idempotency: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 idempotency: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 idempotency: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 approval: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 approval: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 approval: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 approval: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 approval: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 approval: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 evaluation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 evaluation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 evaluation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 evaluation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 evaluation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 evaluation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-mcp: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-mcp: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "1440 tool-mcp: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-mcp: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-mcp: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 tool-mcp: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "1440 all 20 rendered",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 agent-loop: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 agent-loop: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 agent-loop: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 agent-loop: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 agent-loop: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 agent-loop: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 state: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state-context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state-context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 state-context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state-context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state-context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 state-context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context-builder: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context-builder: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 context-builder: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context-builder: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context-builder: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 context-builder: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-loop: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-loop: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 tool-loop: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-loop: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-loop: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-loop: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 observation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 observation: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 compression: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 compression: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 compression: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 compression: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 compression: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 compression: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 checkpoint: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 checkpoint: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 checkpoint: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 checkpoint: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 checkpoint: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 checkpoint: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 memory: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 memory: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 memory: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 memory: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 memory: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 memory: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 workflow-agent: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 workflow-agent: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 workflow-agent: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 workflow-agent: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 workflow-agent: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 workflow-agent: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 prompt-context: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 prompt-context: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 prompt-context: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 prompt-context: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 prompt-context: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 prompt-context: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 rag: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 rag: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 rag: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 rag: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 rag: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 rag: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 embedding: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 embedding: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 retrieval-rerank: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 retrieval-rerank: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 retrieval-rerank: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 retrieval-rerank: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 retrieval-rerank: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 retrieval-rerank: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 structured-validation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 structured-validation: code scroll container",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 idempotency: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 idempotency: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 idempotency: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 idempotency: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 idempotency: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 idempotency: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 approval: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 approval: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 approval: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 approval: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 approval: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 approval: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 evaluation: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 evaluation: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 evaluation: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 evaluation: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 evaluation: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 evaluation: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-mcp: body order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-mcp: no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "390 tool-mcp: source URLs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-mcp: answer exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-mcp: sources visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 tool-mcp: all related targets",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390 all 20 rendered",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile bottom sheet open",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile sheet within viewport",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Modal keyboard focus remains inside",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile Esc closes modal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Modal close restores related focus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Visible close button works",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Long code scrolls internally",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Code can be horizontally scrolled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Scrolled code still no page overflow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Embedded complete whitepaper opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Whitepaper includes full sections",
+      "passed": true,
+      "detail": [
+        "1. 交付目的与阅读路径",
+        "2. 用户已确认的结论",
+        "3. 目标、非目标与权限边界",
+        "4. 20 张卡的分类与组合清单",
+        "5. 内容制作与来源核验标准",
+        "6. 候选语义结构与真实样例",
+        "7. 统一外壳、block 与交互规则",
+        "8. 手工知识链接与个人认同",
+        "9. 未来 AI 草稿流程",
+        "10. footprint 接入阶段与待核验代码",
+        "11. 里程碑与交付物",
+        "12. 验收矩阵与风险",
+        "13. 待 Cypher 决定的事项",
+        "附录 A：来源目录",
+        "附录 B：交付文件"
+      ]
+    },
+    {
+      "name": "Whitepaper close works",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Offline reading, filtering, related and whitepaper",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No external runtime requests",
+      "passed": true,
+      "detail": [
+        "http://127.0.0.1:8765/index.html",
+        "http://127.0.0.1:8765/whitepaper.html"
+      ]
+    },
+    {
+      "name": "No JS runtime errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Standalone whitepaper HTML",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile whitepaper no page overflow",
+      "passed": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    }
+  ],
+  "passed": 299,
+  "failed": 0,
+  "limits": [
+    "file:// navigation blocked by browser administrator policy; did not change policy or retry",
+    "Real Android browser/file opener not tested",
+    "No screen reader or iOS Safari testing",
+    "No actual model, tool or Agent benchmark execution"
+  ]
+}

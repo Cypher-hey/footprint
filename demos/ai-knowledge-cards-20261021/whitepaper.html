@@ -1,0 +1,182 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>知间 · 完整实施计划白皮书</title><style>
+:root{--ink:#293e32;--muted:#63736a;--line:#dae4db;--green:#42b983}*{box-sizing:border-box}html{scroll-padding-top:30px}body{margin:0;background:#f6f8f4;color:var(--ink);font:15px/1.95 -apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;overflow-wrap:anywhere}a{color:#286d4d;text-underline-offset:4px}a:focus-visible,summary:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--green);outline-offset:4px}.layout{display:grid;grid-template-columns:220px minmax(0,840px);gap:40px;max-width:1160px;padding:40px 30px 80px;margin:auto}aside{position:sticky;top:30px;align-self:start;font-size:11px;line-height:1.7;color:var(--muted)}aside strong{font:22px "Noto Serif CJK SC",serif;display:block;color:var(--ink);margin-bottom:16px}aside a{display:block;text-decoration:none;margin:11px 0;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:10px;padding:45px 48px;min-width:0}h1{font:500 33px/1.6 "Noto Serif CJK SC","Songti SC",serif;margin:0 0 20px}h2{font:600 21px/1.6 "Noto Serif CJK SC",serif;margin:43px 0 20px;padding-top:27px;border-top:1px solid var(--line)}h3{font-size:17px}p{margin:17px 0;font-size:14px;color:#44594b}blockquote{background:#edf6ee;border-left:3px solid var(--green);padding:19px 22px;margin:27px 0;font-size:14px;color:#365442}ul,ol{padding-left:22px;font-size:13px;color:#4b6052}li{margin:12px 0}code{font:12px/1.9 Consolas,monospace;background:#f0f4ef;border-radius:3px;padding:2px 4px;color:#365c42}pre{background:#283b31;color:#e1ece2;border-radius:7px;overflow:auto;padding:20px;font-size:11px;max-width:100%;white-space:pre}pre code{color:inherit;background:none;padding:0;font-size:11px}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:5px;margin:25px 0;max-width:100%}table{border-collapse:collapse;width:100%;font-size:11px;line-height:1.85}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}th{background:#eff5ed;font-weight:500;color:#2e6544}tr:last-child td{border-bottom:0}th:last-child,td:last-child{border-right:0}.masthead{font-size:10px;letter-spacing:3px;color:#38845c;margin-bottom:24px}.doc-end{margin-top:40px;border-top:1px solid var(--line);padding-top:20px;font-size:11px;color:var(--muted)}.mobile-toc{display:none}@media(max-width:800px){.layout{display:block;padding:17px 13px 40px}aside{display:none}article{padding:28px 22px}h1{font-size:27px}h2{font-size:20px;margin-top:35px}p{font-size:14px}table{font-size:11px;min-width:560px}th,td{padding:9px 10px}.mobile-toc{display:block;border:1px solid var(--line);padding:12px 17px;border-radius:5px;background:#f8faf6;margin:25px 0}.mobile-toc summary{cursor:pointer;font-size:13px}.mobile-toc a{display:block;font-size:12px;margin:10px 0;text-decoration:none}.masthead{font-size:9px}}@media print{@page{size:A4;margin:18mm 15mm}body{background:white;font-size:10pt}.layout{display:block;padding:0;max-width:none}aside,.mobile-toc{display:none}article{border:0;padding:0}h1{font-size:25pt}h2{font-size:16pt;break-after:avoid}h3{break-after:avoid}p{font-size:10pt}table{font-size:8pt}th,td{padding:7px}tr{break-inside:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}blockquote{break-inside:avoid}.table-scroll{overflow:visible}a{color:#286d4d}}
+</style></head><body><div class="layout"><aside><strong>知间 / 白皮书</strong><p>候选审阅稿 · 0.1<br>2026.10.21</p><nav aria-label="白皮书目录"><a href="#section-1">1. 交付目的与阅读路径</a><a href="#section-2">2. 用户已确认的结论</a><a href="#section-3">3. 目标、非目标与权限边界</a><a href="#section-4">4. 20 张卡的分类与组合清单</a><a href="#section-5">5. 内容制作与来源核验标准</a><a href="#section-6">6. 候选语义结构与真实样例</a><a href="#section-7">7. 统一外壳、block 与交互规则</a><a href="#section-8">8. 手工知识链接与个人认同</a><a href="#section-9">9. 未来 AI 草稿流程</a><a href="#section-10">10. footprint 接入阶段与待核验代码</a><a href="#section-11">11. 里程碑与交付物</a><a href="#section-12">12. 验收矩阵与风险</a><a href="#section-13">13. 待 Cypher 决定的事项</a><a href="#section-14">附录 A：来源目录</a><a href="#section-15">附录 B：交付文件</a></nav></aside><article><div class="masthead">KNOWLEDGE IN CONNECTION / WHITEPAPER</div><details class="mobile-toc"><summary>展开目录 · 13 节与附录</summary><a href="#section-1">1. 交付目的与阅读路径</a><a href="#section-2">2. 用户已确认的结论</a><a href="#section-3">3. 目标、非目标与权限边界</a><a href="#section-4">4. 20 张卡的分类与组合清单</a><a href="#section-5">5. 内容制作与来源核验标准</a><a href="#section-6">6. 候选语义结构与真实样例</a><a href="#section-7">7. 统一外壳、block 与交互规则</a><a href="#section-8">8. 手工知识链接与个人认同</a><a href="#section-9">9. 未来 AI 草稿流程</a><a href="#section-10">10. footprint 接入阶段与待核验代码</a><a href="#section-11">11. 里程碑与交付物</a><a href="#section-12">12. 验收矩阵与风险</a><a href="#section-13">13. 待 Cypher 决定的事项</a><a href="#section-14">附录 A：来源目录</a><a href="#section-15">附录 B：交付文件</a></details><h1 id="section-0">知间：中文 AI 知识卡 Demo 与 footprint 实施计划白皮书</h1>
+<p>版本：0.1 候选审阅稿 · 2026-10-21 · 为 Cypher 编写</p>
+<blockquote>本文记录已对齐的产品原则、20 张真实样本和下一阶段实施门槛。本 Demo 已独立制作，但不代表生产架构、内容协议或 footprint 接入已获批准。所有卡片个人认同均为“待认同”。</blockquote>
+<h2 id="section-1">1. 交付目的与阅读路径</h2>
+<p>Cypher 已具备 React / TypeScript 工程经验，计划转向 AI 工程。项目最终落地点是 footprint，KnowledgeBlocks 提供“内容可组合、语义与呈现分离”的思路。本轮先用足够真实的内容和交互，检验知识卡是否值得长期阅读，再根据审阅结果讨论协议。</p>
+<p>建议先打开 <code>index.html</code>：自由浏览 20 张卡，或选择“厘清概念”“理解循环”“可靠执行”。优先阅读 State vs Context、Agent Loop、Checkpoint 与 Structured Output vs Business Validation，分别检验关系对照、反馈流程、边界解释和代码场景。再沿关联进入其他卡，返回时检查是否回到刚才的阅读位置。默认阅读；需要时才打开复习并揭示参考答案。</p>
+<p>白皮书不是只有目录或摘要。第 2 节记录对齐结果，第 4–7 节说明内容与候选结构，第 8–12 节提供后续生产实施计划，附录保留真实来源与审查方法。完整的 20 张正文另存于 cards.json；H5 内嵌同一内容，无需联网取数。</p>
+<h2 id="section-2">2. 用户已确认的结论</h2>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">议题</th><th scope="col">已对齐内容</th><th scope="col">本轮落实</th></tr></thead><tbody>
+<tr><td>通用外壳</td><td>标题、概览、正文、来源、认同、关联知识</td><td>20 卡统一具备，顺序兼顾正文与关联阅读</td></tr>
+<tr><td>主类型</td><td>概念回答是什么；关系回答区别与关系；机制回答如何运作</td><td>按中心学习目标分类，组件不决定类型</td></tr>
+<tr><td>正文</td><td>作者编排的有序语义块列表</td><td>renderer 逐块渲染，不重排正文</td></tr>
+<tr><td>组合</td><td>可采用不同 block 组合，不限制最多两个辅助块</td><td>多张卡包含 3–4 个不同语义块</td></tr>
+<tr><td>质量</td><td>概览先给核心认知；必要解释在例子之前；限定紧邻结论；一张卡一个目标</td><td>来源范围、框架范围与教学算例明确标记</td></tr>
+<tr><td>关联</td><td>手工建立知识链接；桌面 hover/focus 概览；移动点击 sheet</td><td>关联按钮、快速概览、完整卡与返回链路</td></tr>
+<tr><td>认同</td><td>来源支持与个人认同独立</td><td>所有内容标记待认同，不因阅读或复习改状态</td></tr>
+<tr><td>复习</td><td>可选提问/揭示层，沿用同一内容</td><td>默认收起，答案由用户主动揭示</td></tr>
+<tr><td>AI</td><td>未来仅用于构建期起草，附原文依据，人工确认</td><td>Demo 无 AI API 调用；既有 footprint AI 文本不作权威</td></tr>
+<tr><td>协议</td><td>Demo 是候选样本，审核后再制定</td><td>本文结构、TS 类型和 JSON 均为讨论材料</td></tr>
+</tbody></table></div>
+<p>已明确撤回的设计：六条配方、role/target 挂载、逐段依赖图、逐卡布局配置、自动编排引擎。本轮没有恢复这些设计。目录的小型摘要由内容块类型映射到统一样式，属于展示密度，不是新的内容配方。卡片没有指定布局的字段。</p>
+<p>“解释先于例子”是可理解性的原则，不是每张卡必须采用完全相同 block 次序的机械规则。当前示例按中心目标手工编排；如果一句边界直接决定前文结论是否成立，应贴近那项结论，不应统一挪到文末免责声明。</p>
+<h2 id="section-3">3. 目标、非目标与权限边界</h2>
+<p>本轮目标是：制作精致且可靠的 20 卡 H5、展示多类型和多组合、提供可审查证据及完整实施计划、交付易于保存和转发的离线文件。用户电脑离线，所以使用已保存的 KnowledgeBlocks 云工作区独立演示。</p>
+<p>本轮非目标包括：接入 footprint 生产代码、导入或覆盖现有知识、建立新数据库、引入大框架、冻结 schema、搭建自动布局系统、运行真实 Agent、训练或调用模型、自动产生用户认同、merge、push、公开或私有部署。没有增加重大依赖；H5 运行不依赖第三方 JS、CSS、字体、CDN 或网络接口。</p>
+<p>工作目录为 <code>/workspace/ai-knowledge-demo-20261021</code>。KnowledgeBlocks 仓库仅只读检查；已看到的版本为 <code>d3d5443701ccf4c44f0d0c5b03232fe57b2abe1f</code>。本轮不创建收费并行任务，不自行切换模型；遵守用户选择的 6.1 Sol high 执行范围。没有模型 API 调用，因此不虚构 token 成本估算。若后续需要外部服务、部署、付费生成或新增重大依赖，应单独说明具体范围与成本后再获得相应授权。</p>
+<h2 id="section-4">4. 20 张卡的分类与组合清单</h2>
+<p>下表只是这 20 张内容的编排记录，不是允许组合的封闭清单。每张均有独立概览、至少一个例子或具体边界、来源范围、关联及复习问答。</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">#</th><th scope="col">卡片</th><th scope="col">主类型</th><th scope="col">中心目标</th><th scope="col">正文有序组合</th></tr></thead><tbody>
+<tr><td>01</td><td>Agent Loop</td><td>机制</td><td>行动结果如何影响下一轮</td><td>文字 → 流程 → 例子 → 提示</td></tr>
+<tr><td>02</td><td>Agent State</td><td>概念</td><td>应用维护的数据是什么</td><td>文字 → 代码 → 例子 → 提示</td></tr>
+<tr><td>03</td><td>LLM Context</td><td>概念</td><td>本次推理实际可用什么</td><td>文字 → 例子 → 提示</td></tr>
+<tr><td>04</td><td>State vs Context</td><td>关系</td><td>工作记录与输入如何相交</td><td>对比 → 例子 → 提示</td></tr>
+<tr><td>05</td><td>Context Builder</td><td>机制</td><td>如何选择和组织输入</td><td>文字 → 流程 → 例子 → 提示</td></tr>
+<tr><td>06</td><td>Tool Calling Loop</td><td>机制</td><td>调用提议如何得到执行反馈</td><td>流程 → 对比 → 例子 → 提示</td></tr>
+<tr><td>07</td><td>Observation</td><td>概念</td><td>带来源与状态的反馈是什么</td><td>文字 → 代码 → 例子 → 提示</td></tr>
+<tr><td>08</td><td>Context Compression</td><td>机制</td><td>如何压缩且保留决策条件</td><td>文字 → 对比 → 例子 → 提示</td></tr>
+<tr><td>09</td><td>Checkpoint</td><td>概念</td><td>状态快照能恢复什么</td><td>文字 → 例子 → 对比 → 提示</td></tr>
+<tr><td>10</td><td>Memory</td><td>概念</td><td>如何跨输入继续取用信息</td><td>对比 → 例子 → 提示</td></tr>
+<tr><td>11</td><td>Workflow vs Agent</td><td>关系</td><td>下一步控制权在哪里</td><td>对比 → 例子 → 提示</td></tr>
+<tr><td>12</td><td>Prompt vs Context Engineering</td><td>关系</td><td>指令组织与输入策展的区别</td><td>对比 → 例子 → 提示</td></tr>
+<tr><td>13</td><td>RAG</td><td>机制</td><td>外部证据如何进入生成</td><td>文字 → 流程 → 例子 → 提示</td></tr>
+<tr><td>14</td><td>Embedding</td><td>概念</td><td>可比较向量表达什么</td><td>文字 → 例子 → 代码 → 提示</td></tr>
+<tr><td>15</td><td>Retrieval vs Reranking</td><td>关系</td><td>找候选与排候选的分工</td><td>对比 → 例子 → 提示</td></tr>
+<tr><td>16</td><td>Structured Output vs Business Validation</td><td>关系</td><td>结构与业务正确性为何不同</td><td>对比 → 代码 → 例子 → 提示</td></tr>
+<tr><td>17</td><td>Idempotency</td><td>概念</td><td>同一意图重复提交如何不重复效果</td><td>文字 → 流程 → 例子 → 提示</td></tr>
+<tr><td>18</td><td>Human Approval and Resume</td><td>机制</td><td>具体动作如何批准与恢复</td><td>流程 → 文字 → 例子 → 提示</td></tr>
+<tr><td>19</td><td>Agent Evaluation</td><td>机制</td><td>如何检查结果、过程与代价</td><td>文字 → 流程 → 例子 → 提示</td></tr>
+<tr><td>20</td><td>Tool Definition vs MCP</td><td>关系</td><td>能力描述与连接协议的分层</td><td>对比 → 例子 → 提示</td></tr>
+</tbody></table></div>
+<p>计数：概念型 7 张、关系型 6 张、机制型 7 张。Idempotency 虽包含流程，核心目标是理解幂等性，因此归概念型；这正是按学习目标分类而非按组件分类的样本。</p>
+<h2 id="section-5">5. 内容制作与来源核验标准</h2>
+<p>每卡先写一句学习目标，再写概览。概览应直接回答核心问题，并保留对结论成立至关重要的限制，不能只写“本文将介绍”。正文补足理解所需解释，随后使用有区分力的例子、反例、代码或流程。删掉不会改变读者认知的重复描述，不用同义改写填满格子。</p>
+<p>本轮来源优先官方文档与原始论文，核对日期为 2026-10-21。每个 sources 条目包含可打开链接、支持范围、来源性质和核对日期。来源支持只覆盖所写范围；中文总结、对比维度、场景和工程建议属于作者综合，不冒充官方原句。没有编造逐字引文，没有复制文档大段正文。论文性能数字没有移植到本 Demo，也未声称重现实验。</p>
+<p>关键核验要求：</p>
+<ol><li>State 是应用维护数据，可能有错误、猜测和 unknown；它不天然持久化，也不天然是事实。</li><li>Context 不是严格的 State 子集。静态指令、即时检索和服务端机制可能独立于应用保存的数据；还要区分窗口容量与实际输入。</li><li>Checkpoint 恢复应用状态，不自动回滚工单、邮件等外部效果；恢复或重放时需检查副作用与代码版本。</li><li>超时表示未及时收到响应，不能证明未执行。保留未知，先对账或查回执，再按服务合同重试。</li><li>schema 合格不等于对象存在、权限有效或业务状态允许；生成约束也需处理拒答、截断和所支持 schema 的范围。</li><li>客户端工具由应用执行并回传结果；服务端工具由厂商执行。不能把一个客户端工具循环当成所有工具执行方式。</li><li>向量相似不等于事实正确；不同 embedding 空间不能随意混用。本文不给未测过的相似度分数。</li><li>检索找候选、重排排候选；遗漏在候选集之外的证据通常不能靠重排找回来。</li><li>LangGraph 的 state、checkpoint、interrupt 细节标明是框架约定，不包装成全行业规范。</li><li>MCP 解决协议互通，不自动完成 Agent 的模型决策、授权、记忆或业务校验。</li></ol>
+<p>核验记录应能回答“哪一个页面的哪一部分支持哪条核心判断”。本轮 <code>evidence/SOURCE_AUDIT.md</code> 保留实际 URL、章节定位与支持范围；逐卡更细的范围位于 cards.json。未来如来源失效，保留原地址、最后核对日期与待复核状态，不悄悄换成一篇无关页面。</p>
+<p>已发现的版本变化：Anthropic 两篇工程文章从 engineering 路径重定向到 research；MCP 架构页落到 2026-07-28 版本；旧 LangGraph durable-execution 路径目前重定向到 Persistence，不能继续把该旧 URL 视作完整 durable execution 指南。本 Demo 改用当前 Checkpointers 与 Interrupts 页面核对恢复边界。</p>
+<p>人工审核顺序：先核查核心断言及紧邻限定，再看解释能否支撑例子，最后看关联和复习问题是否仍围绕同一目标。可标注“来源支持”“作者综合”“工程建议”“待复核”；这些是证据标签，不是替用户认同的等级。</p>
+<h2 id="section-6">6. 候选语义结构与真实样例</h2>
+<p>本轮使用一个普通对象数组，保留卡片外壳与有序 blocks。它只是 Demo 载体，不是新建的通用内容 IR 或生产协议。是否使用 Markdown、JSON 或 TS 作者入口，应在用户确认效果、检查 footprint 现有代码后再定。</p>
+<p>候选字段的最小职责：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">字段</th><th scope="col">作用</th><th scope="col">本轮处理与待定点</th></tr></thead><tbody>
+<tr><td>id</td><td>稳定关联目标</td><td>语义 slug；生产中如何迁移和别名待定</td></tr>
+<tr><td>title / subtitle</td><td>英文主题与中文短说明</td><td>是样式与检索所需，双语是否强制待定</td></tr>
+<tr><td>kind</td><td>中心学习目标</td><td>concept / relation / mechanism</td></tr>
+<tr><td>overview</td><td>同一份核心认知</td><td>完整卡、关联预览复用；目录仅限制展示行数</td></tr>
+<tr><td>blocks</td><td>有序正文</td><td>text、compare、flow、example、code、note</td></tr>
+<tr><td>related</td><td>人工选择的目标 id</td><td>不通过关键词自动推断；当前仅卡级关联</td></tr>
+<tr><td>sources</td><td>链接、范围、性质、核对日期</td><td>不把 URL 存在视作证明所有正文</td></tr>
+<tr><td>endorsement</td><td>个人态度</td><td>全部 pending；生产写入应绑定用户与内容版本</td></tr>
+<tr><td>review</td><td>可选问题与参考答案</td><td>阅读层之外；不必形成独立题库</td></tr>
+</tbody></table></div>
+<p>以下是 <code>state-context</code> 的真实内容节选，完整对象见 cards.json；省略的其他 blocks 和 sources 并未被静默丢弃：</p>
+<pre tabindex="0"><code>{
+  &quot;id&quot;: &quot;state-context&quot;,
+  &quot;title&quot;: &quot;State vs Context&quot;,
+  &quot;subtitle&quot;: &quot;工作记录与本轮输入如何相交&quot;,
+  &quot;kind&quot;: &quot;relation&quot;,
+  &quot;overview&quot;: &quot;State 是应用维护的工作数据，Context 是本轮推理使用的信息。Context 常从 State 取材，也会加入外部指令和即时检索结果；两者不存在天然的严格包含关系。&quot;,
+  &quot;blocks&quot;: [
+    {
+      &quot;type&quot;: &quot;compare&quot;,
+      &quot;title&quot;: &quot;按职责比较&quot;,
+      &quot;columns&quot;: [&quot;State&quot;, &quot;Context&quot;],
+      &quot;rows&quot;: [[&quot;主要用途&quot;, &quot;协调任务与后续步骤&quot;, &quot;支持本次模型推理&quot;]]
+    }
+  ],
+  &quot;related&quot;: [&quot;state&quot;, &quot;context&quot;, &quot;context-builder&quot;],
+  &quot;endorsement&quot;: &quot;pending&quot;
+}</code></pre>
+<p>完整卡与预览都读取该对象。桌面快速概览直接使用 overview；点击 sheet 展示相同 overview 和首个正文块，再给出“进入完整卡”。它们没有各写一份内容，也不会用实时 AI 重新总结。此处采用局部摘取以适应阅读密度，不声称预览已经包含整张卡。</p>
+<p>候选 TS 类型保存在 <code>candidate-types.ts</code>，仅辅助工程师审阅。未引入 schema 库或生产验证器。unknown block 在正式接入前应明确报错或显示降级信息，不能静默消失；具体编辑和迁移协议待定。</p>
+<h2 id="section-7">7. 统一外壳、block 与交互规则</h2>
+<p>视觉基线：白色纸面、暖灰背景、深灰绿色正文、柔和绿 <code>#42b983</code> 标记关联与强调。英文主题用衬线建立阅读层级，正文使用系统中文无衬线字体。高密度信息依靠留白、线条、字级、段落节奏区分，不使用整屏强渐变和夸张的大标题。</p>
+<p>同类 block 使用固定样式：文字为连续段落；对比为带表头的数据表；流程为编号步骤并明确循环或出口；例子有轻背景与“例”标记；代码使用等宽暗底、可横向滚动并可复制；提示使用暖色边界块。流程不是执行器，代码只渲染不运行。每张卡只调整内容与块次序，没有逐卡布局参数。</p>
+<p>布局响应视口改变：桌面目录为多列，并对首张精选做编辑式展示；移动目录为单列。完整阅读桌面保留局部目录与返回，移动优先正文宽度。对比表保持语义；代码溢出限制在代码框内部，不把整页撑宽。不同组合不是随机排版；任何布局都不得改变作者 block 顺序或删去关键限定。</p>
+<p>交互合同：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">场景</th><th scope="col">预期行为</th><th scope="col">验收重点</th></tr></thead><tbody>
+<tr><td>选题</td><td>搜索覆盖标题与正文、来源、复习文本；按三主类型筛选；场景过滤</td><td>条件组合、数量、清空、无匹配提示</td></tr>
+<tr><td>完整卡</td><td>明确概览、正文层级、来源及认同；不强制先答题</td><td>长文阅读、表格和代码可用</td></tr>
+<tr><td>桌面关联</td><td>hover 或键盘 focus 显示同一份概览；能进入完整卡</td><td>focus 可见、浮层可悬停、Esc 关闭</td></tr>
+<tr><td>移动关联</td><td>点击打开底部 sheet；背景不可操作</td><td>原生 dialog 焦点范围、关闭和 Esc</td></tr>
+<tr><td>来源</td><td>点击展开条目与支持范围；原文新窗口打开</td><td>链接有效、外部打开需联网提示</td></tr>
+<tr><td>复习</td><td>主动展开问题，主动揭示/收起答案</td><td>默认不暴露答案，不改变认同</td></tr>
+<tr><td>关联返回</td><td>完整卡可返回上一张和原阅读位置</td><td>关联链、多级返回、展开状态恢复</td></tr>
+</tbody></table></div>
+<p>外部链接使用正常 https 地址；离线时仍可看范围说明，但打开原文要联网。白皮书入口在完整包里访问相邻 HTML；另提供“单文件离线版”把白皮书内嵌进同一个 HTML，用于只收一个附件的情况。</p>
+<p>键盘要求包括原生按钮/链接、可见焦点、跳过导航、语义标题、表格表头、dialog 关闭、快速概览 Escape。正式版还应在目标 Android 浏览器、屏幕阅读器及 iOS Safari 进行真人验收；本轮 Chromium 的自动化结果不扩大为所有设备认证。</p>
+<h2 id="section-8">8. 手工知识链接与个人认同</h2>
+<p>关联由作者选择，当前只做卡级跳转，不建立段落依赖图。挑选关联时应能解释它解决了读者的哪一个后续问题。例如 Checkpoint 关联 Idempotency，是为了理解恢复为什么可能重复外部效果；State vs Context 关联 Context Builder，是为了理解两类信息之间如何装配。</p>
+<p>生产阶段可以给关联加简短说明，但不应因此恢复复杂 role/target 挂载。失效链接必须在内容检查时暴露。允许单向关联；是否需要双向反链、关系名和正文内锚点由阅读反馈决定。浏览历史只是临时 UI 状态，不当成内容依赖。</p>
+<p>个人认同独立于来源。所有 20 张保持待认同；当前 Demo 没有“自动已认同”动作，也不保存用户身份或学习记录。正式认同至少应绑定用户、内容版本、态度与时间；正文大改后如何提示重新审阅，需要用户决定。它不是“官方正确”的投票，也不是来源审核的替代品。</p>
+<h2 id="section-9">9. 未来 AI 草稿流程</h2>
+<p>AI 的位置是构建期起草，不进入阅读时的实时内容生成。先选定学习目标与原始资料，再由 AI 提供带来源位置的草稿；人工逐条核查并修改，确认后才进入可阅读卡库。不能直接把 footprint 既有 AI 内容当权威或批量认同。</p>
+<p>候选流程：</p>
+<ol><li>编辑建立选题、受众、中心问题、来源候选和明确边界。</li><li>取回原文，记录 URL、日期、章节或稳定定位；找不到原文就标待补证据。</li><li>AI 输出候选概览、blocks、来源支持映射、待确认问题与手工关联建议。</li><li>人工先核事实，再改表达与次序，明确原创例子、工程建议和框架限定。</li><li>执行结构及关联检查，并在桌面/移动阅读视图检查正文、预览和复习。</li><li>人工确认可入库；个人认同仍由 Cypher 明确选择，不由编辑或 AI 代填。</li></ol>
+<p>草稿版本和已确认版本应可区分。需要模型服务时，先说明模型、单次或批量范围、预算与失败处理；本轮不提前批准该未来收费流程。没有必要为了起草先建设多 Agent 系统。</p>
+<h2 id="section-10">10. footprint 接入阶段与待核验代码</h2>
+<p>本环境只有 KnowledgeBlocks 设计包。其 README 明确写着尚无应用实现。它对旧 footprint、aicards-lab 的分析是历史固定版本记录；不能把它当作当前源码已验证的事实，也不能宣称组件现已可直接复用。</p>
+<p>当前只借鉴内容与展示分离的原则。没有访问 footprint 当前分支、安装其依赖或运行它的构建。后续接入先 read-only 核验实际源码，再提出最小改动方案；不直接采用 KnowledgeBlocks 的大协议、编译层或 UI IR 架构。</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">需检查的位置/职责</th><th scope="col">想回答的问题</th><th scope="col">产出</th></tr></thead><tbody>
+<tr><td>卡片内容目录与加载器</td><td>当前真源是 Markdown、JSON 还是 TS？ID 是否稳定？</td><td>内容流图与迁移约束</td></tr>
+<tr><td>内容类型与 parser</td><td>现有哪些块可复用？是否用标题猜字段？</td><td>字段对照、最小适配提案</td></tr>
+<tr><td>卡片页 / 路由 / 历史</td><td>关联跳转和返回是否已有模式？</td><td>路由与阅读位置恢复方案</td></tr>
+<tr><td>基础组件与 token</td><td>已有 Table、Code、Dialog 能否满足阅读？</td><td>直接复用/小改/重写清单</td></tr>
+<tr><td>认同与用户数据</td><td>认同绑定版本吗？旧记录能否保留？</td><td>非破坏兼容与回退计划</td></tr>
+<tr><td>AI 内容入口</td><td>草稿与人工确认怎样分开？</td><td>关闭自动覆盖的导入流程</td></tr>
+<tr><td>构建、测试及安全渲染</td><td>已用哪些工具？富文本如何防注入？</td><td>必要依赖、检查命令与风险记录</td></tr>
+</tbody></table></div>
+<p>候选接法优先级：复用现有基础组件和路由，在新样本目录加入只读卡片数据，通过窄 adapter 呈现有序块。只有现有约束确实无法表达样本时，才讨论增加字段或小型迁移。不会因为本 Demo 使用 JSON 就强迫 footprint 改作者入口。</p>
+<h2 id="section-11">11. 里程碑与交付物</h2>
+<p>以下为顺序和相对工作量估计，不是已承诺上线日期。实际时长取决于 footprint 源码与用户审核。</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">阶段</th><th scope="col">工作</th><th scope="col">交付物</th><th scope="col">完成门槛</th></tr></thead><tbody>
+<tr><td>M0 本轮</td><td>20 卡、独立 H5、来源审查、白皮书与 QA</td><td>单文件 H5、完整包、JSON/TS、截图、报告</td><td>实际渲染与关键交互检查；缺口如实列出</td></tr>
+<tr><td>M1 效果审阅</td><td>Cypher 阅读 4–6 张代表卡并给反馈，预计 1 次集中评审</td><td>内容/视觉修改清单、接受与暂缓项</td><td>先确认读懂、可长读和关联有帮助</td></tr>
+<tr><td>M2 只读代码核验</td><td>检查 footprint 当前版本，预计半天至一天</td><td>复用清单、兼容图、最小接入差异</td><td>明确已有能力，识别数据与路由风险</td></tr>
+<tr><td>M3 候选协议收敛</td><td>从已认可样本提炼最小字段，预计半天</td><td>小型类型与示例，不引入大编译系统</td><td>用户确认字段和认同语义，不恢复撤回设计</td></tr>
+<tr><td>M4 隔离试接</td><td>独立分支/目录接入 3 张代表卡，预计 1–2 天</td><td>可审查代码与截图、回退方法</td><td>不覆盖旧知识，测试通过，审阅差异明确</td></tr>
+<tr><td>M5 扩展与验收</td><td>迁入已审核 20 卡并补设备验收，预计 1–2 天</td><td>全量样本、设备记录、必要迁移脚本</td><td>引用和关联有效，正文不丢，用户认同不被伪造</td></tr>
+<tr><td>M6 交付决定</td><td>确认合并/发布计划与权限</td><td>具体可审查 PR 或发布包</td><td>获得相应授权后才 merge、push 或部署</td></tr>
+</tbody></table></div>
+<p>每阶段都可停在可阅读、可回退的成果上。M0 成功不自动启动 M2–M6，也不意味着批准新依赖或生产数据库变化。</p>
+<h2 id="section-12">12. 验收矩阵与风险</h2>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">编号</th><th scope="col">领域</th><th scope="col">通过标准</th><th scope="col">本轮证据</th></tr></thead><tbody>
+<tr><td>A01</td><td>内容完整</td><td>恰好 20 卡，三类 7/6/7，每卡有目标与边界</td><td>cards.json、内容静态检查</td></tr>
+<tr><td>A02</td><td>来源</td><td>核心事实有官方或原论文链接，范围与综合分清</td><td>SOURCE_AUDIT、逐卡 sources</td></tr>
+<tr><td>A03</td><td>组合</td><td>6 类 block，至少 7 种顺序组合</td><td>内容矩阵和实际卡页</td></tr>
+<tr><td>A04</td><td>搜索筛选</td><td>条件组合正确，无匹配可恢复</td><td>浏览器 QA 日志</td></tr>
+<tr><td>A05</td><td>阅读</td><td>20 张均正常打开，所有 block 渲染</td><td>桌面/390px 检查</td></tr>
+<tr><td>A06</td><td>关联</td><td>桌面 hover/focus、移动 sheet、进入与返回</td><td>浏览器 QA 与截图</td></tr>
+<tr><td>A07</td><td>可选复习</td><td>默认收起，揭示/收起可控</td><td>QA 日志</td></tr>
+<tr><td>A08</td><td>来源/认同</td><td>来源展开可读；全部 pending，未自动认可</td><td>UI 与数据检查</td></tr>
+<tr><td>A09</td><td>键盘</td><td>Esc、焦点、dialog 范围与返回可用</td><td>QA 日志；真人辅助技术仍待测</td></tr>
+<tr><td>A10</td><td>响应式</td><td>1440 和 390px 无整页横向溢出，代码可滚动</td><td>QA 几何数据与实际截图</td></tr>
+<tr><td>A11</td><td>离线</td><td>H5 无外部运行依赖，断网 HTTP 可完成阅读操作</td><td>断网检查；本环境 file 协议受策略限制</td></tr>
+<tr><td>A12</td><td>范围</td><td>独立目录，源仓库不改，无推送/部署</td><td>仓库状态与实现说明</td></tr>
+</tbody></table></div>
+<p>具体的运行版本、检查数、失败修复与限制以 <code>QA_REPORT.md</code> 为准，不用计划中的“会检查”替代已执行证据。</p>
+<p>主要风险与处置：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th scope="col">风险</th><th scope="col">影响</th><th scope="col">处置与下一门槛</th></tr></thead><tbody>
+<tr><td>术语跨框架不同</td><td>学到过度概括</td><td>每卡明确工作定义与框架范围；接入时版本核验</td></tr>
+<tr><td>文档随时间更新</td><td>来源可能漂移</td><td>保留核对日期和实际落地 URL；关键变更重新审查</td></tr>
+<tr><td>摘要吞掉条件</td><td>决策或理解错误</td><td>概览与预览同源；保留边界；人工看反例</td></tr>
+<tr><td>Demo 被误当协议冻结</td><td>过早迁移与重构</td><td>所有结构标候选；M1 后再收敛</td></tr>
+<tr><td>返回丢阅读位置</td><td>关联阅读被打断</td><td>保存阅读位置与展开状态；多级返回测试</td></tr>
+<tr><td>Android 打开 HTML 的应用限制</td><td>附件无法直接交互</td><td>同时给完整 zip、独立 H5 与易读白皮书；可保存后用支持本地 HTML 的浏览器打开</td></tr>
+<tr><td>自动化代替真人阅读</td><td>视觉或无障碍问题漏检</td><td>截图人工检查；目标设备和屏幕阅读器列为后续门槛</td></tr>
+<tr><td>字体/操作系统差异</td><td>换行、字重不同</td><td>系统字体 fallback；不依赖远程字体，不承诺像素一致</td></tr>
+<tr><td>旧内容被覆盖</td><td>丢失用户知识与认同</td><td>本轮不导入；后续备份、隔离、明确映射和回退</td></tr>
+</tbody></table></div>
+<h2 id="section-13">13. 待 Cypher 决定的事项</h2>
+<p>这些问题不阻塞本轮制作，也不作为默认批准：</p>
+<ol><li>20 张的内容深度是否合适？优先指出哪张仍有“看了但没懂”的段落。</li><li>目录摘要、单卡正文、关联 sheet 三种密度是否适合手机长期阅读？是否更偏中文主标题？</li><li>一卡一目标与三主类型是否已足够？先验证样本，不追加类型体系。</li><li>正式认同需要哪些态度？正文更新时是保留并提示，还是要求重新确认？</li><li>footprint 作者入口保留什么？先核验现有实现，再选择最小变化。</li><li>是否允许进入只读代码核验与 3 卡隔离试接？任何实际接入、依赖和发布另列可审查方案。</li></ol>
+<h2 id="section-14">附录 A：来源目录</h2>
+<p>以下链接均在 2026-10-21 通过浏览工具打开核对。支持范围及章节在 <code>evidence/SOURCE_AUDIT.md</code>，逐卡归因在 cards.json；没有“挂一个官方 URL 就证明全卡”的安排。</p>
+<ul><li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener noreferrer">Building effective agents ↗</a>：控制权分类、反馈与停止。</li><li><a href="https://www.anthropic.com/research/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Effective context engineering for AI agents ↗</a>：输入策展与压缩。</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/context-windows" target="_blank" rel="noopener noreferrer">Claude Context windows ↗</a>：窗口与输入/输出。</li><li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview" target="_blank" rel="noopener noreferrer">Claude Tool use ↗</a>：工具执行责任与往返。</li><li><a href="https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph" target="_blank" rel="noopener noreferrer">Thinking in LangGraph ↗</a>：共享 state 与按需输入。</li><li><a href="https://docs.langchain.com/oss/javascript/langgraph/persistence" target="_blank" rel="noopener noreferrer">Persistence ↗</a>：checkpointer、store 与内存限制。</li><li><a href="https://docs.langchain.com/oss/javascript/langgraph/checkpointers" target="_blank" rel="noopener noreferrer">Checkpointers ↗</a>：状态快照与恢复。</li><li><a href="https://docs.langchain.com/oss/javascript/langgraph/interrupts" target="_blank" rel="noopener noreferrer">Interrupts ↗</a>：暂停、恢复与重跑。</li><li><a href="https://docs.langchain.com/oss/javascript/concepts/memory" target="_blank" rel="noopener noreferrer">Memory overview ↗</a>：记忆作用域。</li><li><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">RAG 原始论文 ↗</a>：检索与生成结合。</li><li><a href="https://arxiv.org/abs/1908.10084" target="_blank" rel="noopener noreferrer">Sentence-BERT 原始论文 ↗</a>：句向量与余弦比较。</li><li><a href="https://arxiv.org/abs/1901.04085" target="_blank" rel="noopener noreferrer">Passage Re-ranking with BERT ↗</a>：查询-段落重排序。</li><li><a href="https://json-schema.org/understanding-json-schema/reference/object" target="_blank" rel="noopener noreferrer">JSON Schema object ↗</a>：对象结构约束。</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/structured-outputs" target="_blank" rel="noopener noreferrer">Claude Structured outputs ↗</a>：schema 约束输出。</li><li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/" target="_blank" rel="noopener noreferrer">AWS 幂等 API 文章 ↗</a>：超时、请求标识与重试。</li><li><a href="https://www.anthropic.com/research/demystifying-evals-for-ai-agents" target="_blank" rel="noopener noreferrer">Demystifying evals for AI agents ↗</a>：任务、轨迹与结果。</li><li><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP Architecture overview ↗</a>：协议职责及参与方。</li></ul>
+<h2 id="section-15">附录 B：交付文件</h2>
+<p><code>index.html</code> 为目录及完整阅读的单文件应用；<code>AI知识卡-离线单文件.html</code> 同时内嵌完整白皮书；<code>whitepaper.html</code> 是易读且可打印的完整白皮书；<code>WHITEPAPER.md</code> 为 Markdown 源；<code>cards.json</code> 与 <code>content.py</code> 是内容与导出来源；<code>candidate-types.ts</code> 是候选类型；<code>screenshots/</code> 保存真实渲染截图；<code>QA_REPORT.md</code> 与 <code>qa-results.json</code> 保存验收事实；<code>evidence/</code> 保存来源审查及仓库边界证据；完整 zip 便于一次保存。</p>
+<p>此版的价值是让内容、边界和阅读体验变得具体可审查。下一步依据实际阅读反馈修订样本，再讨论 footprint 的最小接入。</p><div class="doc-end">完整内容 · 独立 Demo / 不代表生产协议已批准</div></article></div></body></html>
